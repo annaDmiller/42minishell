@@ -12,5 +12,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
+extern volatile int g_sig;
+
 char    *print_prompt(void);
 #endif
