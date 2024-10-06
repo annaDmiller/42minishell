@@ -68,6 +68,8 @@ static char *shorten_addr(char **path)
     char    *temp;
 
     addr_short = ft_strnstr(*path, getenv("USER"), ft_strlen(*path));
+    if (!addr_short)
+        return (*path);
     new_path = ft_strdup(addr_short + ft_strlen(getenv("USER")));
     temp = new_path;
     new_path = ft_strjoin("~", temp);
