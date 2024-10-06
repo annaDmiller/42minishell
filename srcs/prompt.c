@@ -2,18 +2,23 @@
 
 static void    get_user_host(char **prompt);
 static char    *get_host(char *addr);
+static char *shorten_addr(char **path);
 
 char    *print_prompt(void)
 {
     char *prompt;
     char path[PATH_MAX];
     char *temp;
+    char    *sh_path;
 
     get_user_host(&prompt);
     getcwd(path, sizeof(path));
+    temp = &(path[0]);
+    sh_path = shorten_addr(&(temp));
     temp = prompt;
-    prompt = ft_strjoin(temp, &(path[0]));
+    prompt = ft_strjoin(temp, sh_path);
     free(temp);
+    free(sh_path);
     temp = prompt;
     prompt = ft_strjoin(temp, " ");
     free(temp);
@@ -54,4 +59,18 @@ static char    *get_host(char *addr)
         exit(1);
     host[ft_strlen(host) - 1] = '\0';
     return (host);
+}
+
+static char *shorten_addr(char **path)
+{
+    char    *new_path;
+    char    *addr_short;
+    char    *temp;
+
+    addr_short = ft_strnstr(*path, getenv("USER"), ft_strlen(*path));
+    new_path = ft_strdup(addr_short + ft_strlen(getenv("USER")));
+    temp = new_path;
+    new_path = ft_strjoin("~", temp);
+    free(temp);
+    return (new_path);
 }
