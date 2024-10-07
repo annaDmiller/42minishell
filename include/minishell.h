@@ -12,6 +12,7 @@
 #ifndef MINIHELL_H
 # define MINIHELL_H
 
+# include "pipex.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
@@ -24,6 +25,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct msh
 {
@@ -32,6 +36,26 @@ typedef struct msh
 	char	**argv;
 }		t_msh;
 
-void	minishell(struct msh *msh, int argc, char **argv, char **env);
+typedef enum w_type
+{
+	PIPE,
+	cmd,
+	file,
+	redir,
+}		t_type;
+
+// void	minishell(struct msh *msh, int argc, char **argv, char **env);
+
+void	redirin(char *str, char *file);
+void	redirout(char *str, char *file);
+void	append(char *str, char *file);
+char	*fpath_tt(char *cmd, int i);
+
+
+char	*gnl(int fd);
+int	trouve(const char *str);
+char	*tjoin(char *str, char *add);
+char	*save_static(char *str, int rv);
+char	*org(char *str);
 
 #endif

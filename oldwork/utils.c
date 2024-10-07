@@ -74,21 +74,15 @@ char	*tjoin(char *str, char *add)
 	int		i;
 	int		t;
 
-	i = 0;
-	t = 0;
+	i = -1;
+	t = -1;
 	tzy = malloc(sizeof(char) * (tstrlen(add) + tstrlen(str) + 1));
 	if (!tzy)
 		return (NULL);
-	while (str[i] != '\0')
-	{
+	while (str[++i] != '\0')
 		tzy[i] = str[i];
-		i++;
-	}
-	while (add[t] != '\0')
-	{
+	while (add[++t] != '\0')
 		tzy[i + t] = add[t];
-		t++;
-	}
 	tzy[i + t] = '\0';
 	free(str);
 	return (tzy);

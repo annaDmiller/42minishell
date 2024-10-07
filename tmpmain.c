@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   tmpmain.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amelniko <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 11:56:59 by amelniko          #+#    #+#             */
-/*   Updated: 2024/06/20 11:57:01 by amelniko         ###   ########.fr       */
+/*   Created: 2024/10/06 16:51:07 by tespandj          #+#    #+#             */
+/*   Updated: 2024/10/06 17:40:23 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../include/minishell.h"
 
-#include "libft.h"
+// void	minishell(struct msh *msh, int argc, char **argv, char **env)
+// {
+// 	(void)msh;
+// 	(void)argc;
+// 	(void)argv;
+// 	(void)env;
+// }
 
-void	*ft_memset(void *mem, int let, size_t n)
+int	main(void)
 {
-	char			*str;
-	unsigned char	car;
-
-	if (!mem)
-		return (NULL);
-	str = (char *) mem;
-	car = (unsigned char) let;
-	while (n--)
-		str[n] = car;
-	return (mem);
+	printf("%s\n", fpath_tt("ls", -1));
+	return (0);
 }
