@@ -9,7 +9,7 @@
 /*   Updated: 2024/09/11 21:47:34 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+#include "../include/pipex.h"
 
 void	pipex(struct ppx *ppx, char **argv, char *const *env)
 {
@@ -32,6 +32,8 @@ void	pipex(struct ppx *ppx, char **argv, char *const *env)
 	waitpid(ppx->pid2, NULL, 0);
 }
 
+/*
+
 int	main(int argc, char **argv, char *const *envp)
 {
 	struct ppx	ppx;
@@ -46,3 +48,4 @@ int	main(int argc, char **argv, char *const *envp)
 	}
 	return (0);
 }
+*/

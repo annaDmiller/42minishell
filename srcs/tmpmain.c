@@ -21,12 +21,11 @@ void	minishell(struct msh *msh, int argc, char **argv, char **env)
 
 void	out_redirect(char *str, char *file)
 {
-	int	i;
-	int	tfd;
+//	int	tfd;
 	DIR	*test;
 
-	i = 0;
 	
+	(void)str;
 	// check if the file is a directyory by using opendir ? if it success then it is one 
 	test = opendir(file);
 	if (!(!test))
@@ -35,7 +34,7 @@ void	out_redirect(char *str, char *file)
 		exit (1); // bash --posix return 1 for that error and display "bash: file: Is a directory"
 	}
 	// if its not a directory we can create the file or trunc it if it already exists
-	tfd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+//	tfd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 
 }
 

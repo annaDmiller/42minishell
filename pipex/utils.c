@@ -9,7 +9,7 @@
 /*   Updated: 2024/09/12 16:03:38 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+#include "../include/pipex.h"
 
 int	tstrlen(char *str)
 {

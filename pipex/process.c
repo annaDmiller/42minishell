@@ -9,7 +9,7 @@
 /*   Updated: 2024/09/12 17:20:24 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+#include "../include/pipex.h"
 
 void	everinit(struct ppx *ppx, char **argv, char **env)
 {
