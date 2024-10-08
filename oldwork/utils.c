@@ -21,7 +21,7 @@ int	tstrlen(char *str)
 	return (i);
 }
 
-char	*ft_strdup(char *src)
+char	*tstrdup(char *src)
 {
 	int		i;
 	char	*dest;
@@ -63,7 +63,7 @@ char	*fpath(char **env, char *cmd, int i)
 		if (!access(str[i], F_OK | X_OK))
 			break ;
 	if (str[i])
-		path = ft_strdup(str[i]);
+		path = tstrdup(str[i]);
 	fsplit(str);
 	return (path);
 }

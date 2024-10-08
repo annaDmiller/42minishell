@@ -29,7 +29,7 @@ typedef struct ppx
 	char		*path;
 	char		**cmd1;
 	char		**cmd2;
-	char		*in;
+	char		*in;	
 	char		*out;
 }			t_ppx;
 
@@ -53,7 +53,7 @@ void			fsplit(char **str);
 void			wegotasplituation(struct spt x);
 
 int				tstrlen(char *str);
-char			*ft_strdup(char *src);
+char			*tstrdup(char *src);
 char			*fpath(char **env, char *cmd, int i);
 char			*tjoin(char *str, char *add);
 char			*first_path(char *str);

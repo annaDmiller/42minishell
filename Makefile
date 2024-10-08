@@ -9,6 +9,7 @@ SRC = oldwork/gnl.c \
 	oldwork/pipex.c \
 	oldwork/process.c \
 	oldwork/execute.c \
+	env.c \
 	redir.c \
 	tmpmain.c \
 

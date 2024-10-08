@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../include/minishell.h"
 
-int	trouve(const char *str)
+static int	trouve(const char *str)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ int	trouve(const char *str)
 	return (0);
 }
 
-char	*init_save(char *save)
+static char	*init_save(char *save)
 {
 	if (BUFFER_SIZE == 0)
 		return (NULL);
@@ -38,7 +38,7 @@ char	*init_save(char *save)
 	return (save);
 }
 
-char	*reset(char *buf, char **save, int i)
+static char	*reset(char *buf, char **save, int i)
 {
 	if (i == 1)
 		free(buf);

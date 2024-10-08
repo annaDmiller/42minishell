@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/08 20:19:11 by tespandj          #+#    #+#             */
+/*   Updated: 2024/10/08 20:19:13 by tespandj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "include/minishell.h"
 
 void	redirin(char *str, char *file);
@@ -24,6 +35,8 @@ void	redirout(char *str, char *file)
 
 void	append(char *str, char *file);
 
+void	heredoc(char *str);
+
 
 char	*fpath_tt(char *cmd, int i)
 {
@@ -43,7 +56,7 @@ char	*fpath_tt(char *cmd, int i)
 			break ;		// if yes we break the loop
 	}
 	if (str[i])	// if we didnt find any path str[i] == NULL it wont check the condition
-		path = ft_strdup(str[i]);
+		path = tstrdup(str[i]);
 	fsplit(str);
 	return (path);
 }

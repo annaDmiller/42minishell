@@ -29,33 +29,63 @@
 #  define BUFFER_SIZE 42
 # endif
 
+typedef struct env
+{
+	struct env	*next;
+	char		*var;
+	char		*name;
+	int			id;
+	int			index;
+	int			status;
+}		t_env;
+
 typedef struct msh
 {
 	int	argc;
-	char	**env;
+	t_env	*env;
 	char	**argv;
 }		t_msh;
 
 typedef enum w_type
 {
-	PIPE,
+	PIPE, // "|"
 	cmd,
 	file,
-	redir,
+	redir, // ">" "<" ">>" "<<"
+	var // "$USER"
 }		t_type;
 
-// void	minishell(struct msh *msh, int argc, char **argv, char **env);
+void	minishell(struct msh *msh, int argc, char **argv, char **env);
 
-void	redirin(char *str, char *file);
-void	redirout(char *str, char *file);
-void	append(char *str, char *file);
-char	*fpath_tt(char *cmd, int i);
+///// REDIR.c
+void	redirin(char *str, char *file); // will take care of "<"
+void	redirout(char *str, char *file); // will take care of ">"
+void	append(char *str, char *file); // will take care of ">>"
+void	heredoc(char *str); // will take care of "<<"
+char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can execve it
+///// REDIR.c
 
+///// ENV.c
+void	envinit(struct msh *msh, char **env); // init the linked list that will stock our env pointer
+char	*env_var(char *str); // function to stock the content of the env variable
+char	*env_varname(char *str); // function to stock the name of the variable
+t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name
+void	freenv(t_env *env); // free the linked list \\ "lst_env" leak l.23
+///// ENV.c
 
-char	*gnl(int fd);
-int	trouve(const char *str);
+///// UTILS.c
+int	tstrlen(char *str);
+char	*tstrdup(char *src);
+char	*fpath(char **env, char *cmd, int i);
 char	*tjoin(char *str, char *add);
+char	*first_path(char *str);
+///// UTILS.c
+
+char	*gnl(int fd); // get_next_line
+
+///// GNLV2.c
 char	*save_static(char *str, int rv);
 char	*org(char *str);
+///// GNLV2.c
 
 #endif
