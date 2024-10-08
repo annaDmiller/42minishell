@@ -9,7 +9,7 @@
 /*   Updated: 2024/05/11 23:08:00 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 int	trouve(const char *str)
 {

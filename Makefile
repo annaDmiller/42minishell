@@ -2,15 +2,15 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -O3 -g3 
 
-SRC = gnl.c \
-	gnlv2.c \
-	srcs/redir.c \
-	old_work/split.c \
-	old_work/utils.c \
-	old_work/process.c \
-	old_work/pipex.c \
-	old_work/execute.c \
-	srcs/tmpmain.c \
+SRC = oldwork/gnl.c \
+	oldwork/gnlv2.c \
+	oldwork/split.c \
+	oldwork/utils.c \
+	oldwork/pipex.c \
+	oldwork/process.c \
+	oldwork/execute.c \
+	redir.c \
+	tmpmain.c \
 
 SRCS = $(SRC) $(PIPEX)
 

@@ -9,7 +9,7 @@
 /*   Updated: 2024/05/11 23:08:10 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 static int	g_value(char *str, int a)
 {

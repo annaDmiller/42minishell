@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/06 17:40:23 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/minishell.h"
+#include "include/minishell.h"
 
 // void	minishell(struct msh *msh, int argc, char **argv, char **env)
 // {
