@@ -1,16 +1,21 @@
 #include "../../includes/minishell.h"
 
-void    free_lst(t_cmd *lst_cmd)
+void    free_all_struct(t_all *al)
 {
-    t_cmd   *temp;
 
-    while (lst_cmd)
-    {
-        temp = lst_cmd->next;
-        free(lst_cmd->name);
-        ft_free_arr(lst_cmd->args);
-        free(lst_cmd);
-        lst_cmd = temp;
-    }
-    return ;
+}
+
+void    free_cmd_struct(t_cmd *lst_cmd)
+{
+
+}
+
+void    free_redir_struct(t_redir *redir)
+{
+
+}
+
+void    free_env_struct(t_env *lst_env)
+{
+    
 }

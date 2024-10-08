@@ -32,7 +32,7 @@ char    *print_prompt(void)
     free(temp);
     free(sh_path);
     temp = prompt;
-    prompt = ft_strjoin(temp, " ");
+    prompt = ft_strjoin(temp, "$ ");
     free(temp);
     return (prompt);
 }

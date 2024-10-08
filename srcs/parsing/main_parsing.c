@@ -12,8 +12,21 @@
 
 #include "../../includes/minishell.h"
 
-t_cmd   *parse_line(char *cmd_line)
+void    parse_line(t_all *all)
 {
-    
-    return ();
+    char    *temp_line;
+
+    temp_line = all->line;
+    all->lst_cmd = cmd_new(all);
+    while (all->line)
+    {
+        parse_cmd(all);
+    }
+    all->line = temp_line;
+    return ;
+}
+
+void    parse_cmd(t_all *all)
+{
+
 }

@@ -16,22 +16,35 @@ volatile int    g_sig;
 
 int main(int argc, char **argv, char **env)
 {
-    char    *prompt;
-    char    *cmd_line;
-    t_cmd   *lst_cmd;
+    t_all   *all;
 
 //    init_signal;
+    all = init_all_struct();
     while (1)
     {
-        prompt = print_prompt();
-        cmd_line = readline(prompt);
-        add_history(cmd_line);
-        lst_cmd = parse_line(cmd_line);
-        free (cmd_line);
-        free(prompt);
-        free_lst(lst_cmd);
-        rl_on_new_line();
+        all->prompt = print_prompt();
+        all->line = readline(all->prompt);
+        if (is_empty_line(all->line))
+        {
+            add_history(all->line);
+        //parse_line(all->line);
+        //free_lst(all->lst_cmd);
+        }
+        free (all->line);
+        free(all->prompt);
+        //rl_on_new_line();
     }
     rl_clear_history();
+    free(all);
     return (0);
+}
+
+static t_all    *init_all_struct(void)
+{
+    t_all   *ret;
+
+    ret = (t_all*) malloc(sizeof(t_all));
+    if (!ret)
+        error("init_all_struct: Malloc error\n", NULL);
+    return (ret);
 }

@@ -27,6 +27,9 @@
 extern volatile int g_sig;
 
 char    *print_prompt(void);
-t_cmd   *parse_line(char *cmd_line);
+void    parse_line(t_all *all);
 void    free_lst(t_cmd *lst_cmd);
+int is_empty_line(char *cmd_line);
+int  find_end_cmd(char   *cmd_line);
+t_cmd   *cmd_new(t_all *all);
 #endif
