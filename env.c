@@ -19,17 +19,15 @@ void	envinit(struct msh *msh, char **envp)
 	int			i;
 
 	i = -1;
-	nvx = NULL;
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!env)
 		return ; // error handling
 	if (!envp[0])
 	{
-		env->status = -1;
-		env->id = 0;
 		env->name = NULL;
 		env->var = NULL;
 		env->next = NULL;
+		free(env);
 		return ; // error handling
 	}
 	while (envp[++i])
@@ -37,11 +35,8 @@ void	envinit(struct msh *msh, char **envp)
 		nvx = (t_env *)malloc(sizeof(t_env));
 		if (!nvx) // return i to know how much node we have to free
 			return ;
-		nvx->status = 1;
-		nvx->id = i + 1;
 		nvx->next = NULL;
 		nvx->name = env_varname(envp[i]); // function to stock the name of the variable
-		// printf("%s\n", nvx->name);
 		nvx->var = env_var(envp[i]); // function to stock the content of the env variable
 		env->next = nvx;
 		env = nvx;

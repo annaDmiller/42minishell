@@ -17,7 +17,6 @@ void	redirout(char *str, char *file)
 {
 //	int	tfd;
 	DIR	*test;
-
 	
 	(void)str;
 	// check if the file is a directyory by using opendir ? if it success then it is one 

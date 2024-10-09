@@ -9,9 +9,13 @@ SRC = oldwork/gnl.c \
 	oldwork/pipex.c \
 	oldwork/process.c \
 	oldwork/execute.c \
+	cd.c \
 	env.c \
 	redir.c \
 	main.c \
+	expand.c \
+	built-in.c \
+	processing.c \
 
 SRCS = $(SRC) $(PIPEX)
 

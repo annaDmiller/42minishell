@@ -29,12 +29,12 @@ typedef struct env
 	char		*name;
 	int			id;
 	int			index;
-	int			status;
 }		t_env;
 
 typedef struct msh
 {
 	t_env		*env;
+	char		*pwd;
 	char		**argv;
 	int			argc;
 }		t_msh;

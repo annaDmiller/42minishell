@@ -9,6 +9,11 @@
 /*   Updated: 2024/10/08 23:31:58 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+#include "include/minishell.h"
 
 // void	builtins(enum w_type, t_all *line)
+
+void    pwd(t_msh *msh)
+{
+	printf("%s\n", msh->pwd);
+}

@@ -11,19 +11,13 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-void	minishell(struct msh *msh, int argc, char **argv, char **env)
+void	minishell(struct msh *msh, int argc, char **argv, char **envp)
 {
 	// t_env	*tmp;
-	envinit(msh, env);
-	// tmp = env_retrieve_var(msh->env, "DISPLAY");
-	// tmp = env_retrieve_var(msh->env, "USER");
-	// if (tmp)
-	// 	printf("%s\n", tmp->var);
-	// else
-	// 	printf("\n"); // bash --posix printf a \n at the end of everything it had to write && exit(0), no error
+	everyinit(msh, argc, argv, envp);
 	(void)argc;
 	(void)argv;
-	(void)env;
+	(void)envp;
 }
 
 int	main(int argc, char **argv, char **envp)

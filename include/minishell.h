@@ -33,6 +33,21 @@
 
 void	minishell(struct msh *msh, int argc, char **argv, char **env);
 
+///// processing.c
+void    everyinit(struct msh *msh, int argc, char **argv, char **envp);
+///// processing.c
+
+///// built-in.c
+void    cd(t_msh *msh, char *path);
+void    pwd(t_msh *msh);
+void    cd_backward(struct msh *msh);
+///// built-in.c
+
+///// EXPAND.c
+char	*expand(struct msh *msh, char *str);
+///// EXPAND.c
+
+
 ///// REDIR.c
 void	redirin(char *str, char *file); // will take care of "<"
 void	redirout(char *str, char *file); // will take care of ">"
