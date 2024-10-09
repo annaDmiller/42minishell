@@ -12,16 +12,6 @@
 #ifndef MINISTRUCT_H
 # define MINISTRUCT_H
 
-typedef enum w_type
-{
-	PIPE, // "|"
-	cmd,
-	file,
-	redir, // ">" "<" ">>" "<<"
-	var, // "$USER"
-	builtins
-}		t_type;
-
 typedef struct env
 {
 	struct env	*next;
@@ -38,14 +28,5 @@ typedef struct msh
 	char		**argv;
 	int			argc;
 }		t_msh;
-
-typedef struct  s_all
-{
-    struct s_cmd    	*lst_cmd;
-    char            	*prompt;
-    char            	*line;
-//    struct s_env    *lst_env;
-}               t_all;
-
 
 #endif

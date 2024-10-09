@@ -6,15 +6,15 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 16:51:07 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/09 03:28:50 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:48:25 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "include/minishell.h"
 
 void	minishell(struct msh *msh, int argc, char **argv, char **envp)
 {
-	// t_env	*tmp;
 	everyinit(msh, argc, argv, envp);
+	export_alpha(msh);
 	(void)argc;
 	(void)argv;
 	(void)envp;
@@ -29,5 +29,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	freenv(msh.env);
+	free(msh.pwd);
 	return (0);
 }

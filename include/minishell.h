@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 16:54:17 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/09 00:06:13 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:48:04 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIHELL_H
@@ -40,7 +40,8 @@ void    everyinit(struct msh *msh, int argc, char **argv, char **envp);
 ///// built-in.c
 void    cd(t_msh *msh, char *path);
 void    pwd(t_msh *msh);
-void    cd_backward(struct msh *msh);
+void    up_pwd(struct msh *msh, char *dir);
+void    down_pwd(struct msh *msh);
 ///// built-in.c
 
 ///// EXPAND.c
@@ -57,7 +58,7 @@ char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can e
 ///// REDIR.c
 
 ///// ENV.c
-void	envinit(struct msh *msh, char **env); // init the linked list that will stock our env pointer
+void	envinit(struct msh *msh, char **env, int i); // init the linked list that will stock our env pointer
 char	*env_var(char *str); // function to stock the content of the env variable
 char	*env_varname(char *str); // function to stock the name of the variable
 t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name
@@ -78,5 +79,9 @@ char	*gnl(int fd); // get_next_line
 char	*save_static(char *str, int rv);
 char	*org(char *str);
 ///// GNLV2.c
+
+///// EXPORT.c
+void	export_alpha(struct msh *msh);
+///// EXPORT.c
 
 #endif
