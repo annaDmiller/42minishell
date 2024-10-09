@@ -11,7 +11,7 @@ SRC = oldwork/gnl.c \
 	oldwork/execute.c \
 	env.c \
 	redir.c \
-	tmpmain.c \
+	main.c \
 
 SRCS = $(SRC) $(PIPEX)
 

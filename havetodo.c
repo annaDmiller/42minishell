@@ -15,13 +15,18 @@ gerer les pipes |
         
 gerer les variables env
 
-        [ ]=  echo $variable est censé retrouvé la variable d env si elle existe et printf son contenu
-                sur le terminal /// dans tous les cas rtval == 0
+        [ ]=  $variable est censé etre remplace par le contenu de la variable si elle existe 
                 
                 PBLM with $_ variable
         printf("%s\n", env_var("_=/usr/bin/env")); // does work the right way \\ strange that env_find_var return the good node but var in it isnt good
 
         [ ]=  rebuilt la fonction export qui permet d/add une variable a env
 
+        [ ]=  PWD Set by the shell to be an absolute pathname of the current working directory, containing no components of type symbolic link, no components
+                that are dot, and no components that are dot-dot when the shell is initialized. If an application sets
+                        or unsets the value of PWD , the behaviors of the cd and pwd utilities are unspecified.
+
         [ ]=  export with no options
+
+        [ ]=  when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
         

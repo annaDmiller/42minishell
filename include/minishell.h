@@ -6,13 +6,14 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 16:54:17 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/06 17:13:44 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/10/09 00:06:13 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIHELL_H
 # define MINIHELL_H
 
 # include "pipex.h"
+# include "ministruct.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
@@ -29,31 +30,6 @@
 #  define BUFFER_SIZE 42
 # endif
 
-typedef struct env
-{
-	struct env	*next;
-	char		*var;
-	char		*name;
-	int			id;
-	int			index;
-	int			status;
-}		t_env;
-
-typedef struct msh
-{
-	int	argc;
-	t_env	*env;
-	char	**argv;
-}		t_msh;
-
-typedef enum w_type
-{
-	PIPE, // "|"
-	cmd,
-	file,
-	redir, // ">" "<" ">>" "<<"
-	var // "$USER"
-}		t_type;
 
 void	minishell(struct msh *msh, int argc, char **argv, char **env);
 
