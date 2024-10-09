@@ -25,10 +25,37 @@ int	tstrcmp(char *str, char *cmp)
 	return (0);
 }
 
-///		faire un compteur du nombre de nom qui sont plus petit que lui
-			// ainsi on aura sa position
+void	export(struct msh *msh)
+{
+	// if (no option for export)
+		export_no_opt(msh);
+	// if (def a variable)
+		// export_def(msh, str);
+}
 
-void	export_alpha(struct msh *msh)
+void	export_def(struct msh *msh, char *str)
+{
+	t_env	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = msh->env;
+	while (msh->env)
+		msh->env = msh->env->next;
+	// printf("\%d\n\n", msh->env->id);
+	msh->env = (t_env *)malloc(sizeof(t_env));
+	if (!msh->env)
+		return ; // handle error
+	while (str[i] && str[i] != '=')
+		i++;
+	tmp->name = env_varname(str);
+ 	tmp->var = env_var(str);
+	tmp->id = -2;
+	tmp->next = NULL;
+	msh->env = tmp;
+}
+
+void	export_no_opt(struct msh *msh)
 {
 	t_env	*tmp;
 	int		*order;
@@ -74,7 +101,7 @@ void	export_alpha(struct msh *msh)
 		while (tmp)
 		{
 			if (tmp->id == order[i])
-				printf("%s=%s\n", tmp->name, tmp->var);
+				printf("export %s=\"%s\"\n", tmp->name, tmp->var);
 			tmp = tmp->next;
 		}
 	}

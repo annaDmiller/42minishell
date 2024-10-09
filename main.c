@@ -14,7 +14,10 @@
 void	minishell(struct msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
-	export_alpha(msh);
+	// export_no_opt(msh);
+	env(msh);
+	export_def(msh, argv[1]);
+	env(msh);
 	(void)argc;
 	(void)argv;
 	(void)envp;

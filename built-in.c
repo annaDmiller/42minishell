@@ -15,3 +15,15 @@ void    pwd(t_msh *msh)
 {	
 	printf("%s\n", msh->pwd);
 }
+
+void    env(t_msh *msh)
+{
+	t_env	*tmp;
+
+	tmp = msh->env;
+	while (tmp)
+	{
+		printf("%s=%s\n", tmp->name, tmp->var);
+		tmp = tmp->next;
+	}
+}

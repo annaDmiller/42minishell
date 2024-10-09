@@ -39,6 +39,7 @@ void    everyinit(struct msh *msh, int argc, char **argv, char **envp);
 
 ///// built-in.c
 void    cd(t_msh *msh, char *path);
+void    env(t_msh *msh);
 void    pwd(t_msh *msh);
 void    up_pwd(struct msh *msh, char *dir);
 void    down_pwd(struct msh *msh);
@@ -81,7 +82,8 @@ char	*org(char *str);
 ///// GNLV2.c
 
 ///// EXPORT.c
-void	export_alpha(struct msh *msh);
+void	export_no_opt(struct msh *msh);
+void	export_def(struct msh *msh, char *str);
 ///// EXPORT.c
 
 #endif
