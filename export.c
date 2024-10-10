@@ -20,15 +20,31 @@ void	export(struct msh *msh)
 	(void)msh;
 }
 
-static	char	*
-
+//	leaks sur env_varname(str) && env_var(str) ! le noeud cree n'est pas relie correctement a la list ?
 
 void	export_def(struct msh *msh, char *str)
 {
+	char	*name;
 	t_env	*head;
 	t_env	*new;
+	t_env	*var;
 	int	tmpid;
 
+	if (!str)
+		return ;	
+	name = setup_name(str);
+	var = env_retrieve_var(msh->env, name);
+	if (var) // si la variable existe deja on modifie seulement son contenu
+	{
+		free(var->var);
+		var->var = env_var(str);
+		return (freestr(name));
+	}
+	if (!((str[0] >= 65 && str[0] <= 90) || (str[0] >= 97 && str[0] <= 122)) && str[0] != '_')
+	{
+		printf("export: `%s': not a valid indentifier\n", str);
+		return (freestr(name));
+	}
 	head = msh->env;
 	tmpid = msh->env->id;
 	while (msh->env->next)
@@ -38,7 +54,7 @@ void	export_def(struct msh *msh, char *str)
 	}
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		return ; // handle error
+		return (freestr(name)); // handle error
 	new->name = env_varname(str);
  	new->var = env_var(str);
 	new->id = tmpid + 1;

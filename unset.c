@@ -15,31 +15,49 @@
 // env: ‘unset’: No such file or directory
 // bash-5.1$
 
+char	*setup_name(char *str)
+{
+	char    *name;
+	int		i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	name = malloc(sizeof(char) * (i + 1));
+	if (!name)
+		return (NULL);
+	name[i] = '\0';
+	while (--i >= 0)
+		name[i] = str[i];
+	return (name);
+}
+
 void    unset(struct msh *msh, char *str)
 {
-        // ideally doubly linked list ill go previous but dk how to implement it
-        t_env   *node;
-        t_env   *tmp;
-        // int             i;
+	// ideally doubly linked list ill go previous but dk how to implement it
+	t_env   *node;
+	t_env   *tmp;
+	char	*name;
+	// int             i;
 
-        printf("\n\n\n\tje rentre dans unset\n\n");
-        node = env_retrieve_var(msh->env, str); // pcque le nom de la variable est export nomdelavariable
-        if (!node)
-                return ;
-        printf("l'id du node que je veux retirer = %d\n", node->id);
-        tmp = msh->env;
-        while (tmp && tmp->next->id != node->id) // je parcours ma liste avec tmp, lorsque le prochaine correspond a la var que je veux enlever je m'arrete
-                tmp = tmp->next;
-        if (!node->next) // if the var i want to unset is the last one in the list
-        {
-                free(node); // i just free it
-                tmp->next = NULL; // and set ->next of the one before him to NULL
-                return ;
-        }
-        tmp->next = node->next;
-        printf("tmp->id = %d, node->next->id = %d", tmp->id, node->next->id);
-        free(node->name);
-        free(node->var);
-        free(node);
-        printf("\n\n\n\tje sors d'unset\n\n");
+	name = setup_name(str);
+	if (!name)
+		return (freestr(name));
+	node = env_retrieve_var(msh->env, name); // pcque le nom de la variable est export nomdelavariable
+	if (!node)
+		return (freestr(name));
+	tmp = msh->env;	
+	while (tmp && tmp->next->id != node->id) // je parcours ma liste avec tmp, lorsque le prochaine correspond a la var que je veux enlever je m'arrete
+		tmp = tmp->next;
+	if (!node->next) // if the var i want to unset is the last one in the list
+	{
+		free(node); // i just free it
+		tmp->next = NULL; // and set ->next of the one before him to NULL
+		return (freestr(name));
+	}
+	tmp->next = node->next;
+	freestr(name);
+	free(node->name);
+	free(node->var);
+	free(node);
 }

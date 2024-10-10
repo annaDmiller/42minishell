@@ -14,17 +14,16 @@
 void	minishell(struct msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
-	env(msh);
-	sleep(1);
-	if (argv[1])
-		export_def(msh, argv[1]);
-	env(msh);
-	if (argv[1])
-		unset(msh, argv[1]);
-	env(msh);
+	export_def(msh, argv[1]);
+	// env(msh);
 	(void)argc;
 	(void)argv;
 	(void)envp;
+}
+
+void	freestr(char *str)
+{
+	free(str);
 }
 
 int	main(int argc, char **argv, char **envp)

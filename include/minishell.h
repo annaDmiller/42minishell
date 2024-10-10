@@ -90,7 +90,10 @@ int	tstrcmp(char *str, char *cmp);
 ///// EXPORT.c
 
 ///// UNSET.c
+char	*setup_name(char *str);
 void    unset(struct msh *msh, char *str);
 ///// UNSET.c
+
+void	freestr(char *str);
 
 #endif

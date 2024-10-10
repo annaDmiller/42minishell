@@ -23,8 +23,6 @@ gerer les variables env
 	printf("%s\n", env_var("_=/usr/bin/env")); // does work the right way \\ strange that env_find_var return the good node but var in it isnt good
 
 
-	
-
 BUILTINS
 
 	[✅]=  echo with option -n
@@ -35,11 +33,11 @@ BUILTINS
 
 	[✅]=  env with no options or arguments
 
+	[✅]=  export with no options
+
+	[✅]=  unset with no options
+
 	[ ]=  cd with only a relative or absolute path
-
-	[ ]=  export with no options
-
-	[ ]=  unset with no options
 
 	[ ]=  exit with no options
 		when exiting our ./minishell, exit value should have the value of the last exit value if its not 0

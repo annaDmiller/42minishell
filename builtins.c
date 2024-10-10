@@ -16,6 +16,14 @@ void    pwd(t_msh *msh)
 	printf("%s\n", msh->pwd);
 }
 
+
+// echo -nnnnnnnnnnn talan
+// should work
+// echo -nd talan
+// should printf -nd talan
+
+
+
 void	echo(t_msh *msh, char *str)
 {
 	putstrfd(str, STDOUT_FILENO);
@@ -29,12 +37,15 @@ void    env(t_msh *msh)
 	t_env	*tmp;
 
 	tmp = msh->env;
+	printf("\n");
 	while (tmp)
 	{
-		// printf("%s=%s\n", tmp->name, tmp->var);
-		printf("%d\t%s\n", tmp->id, tmp->name);
+		printf("%s=%s\n", tmp->name, tmp->var);
+		// printf("%d\t%s\n", tmp->id, tmp->name);
+		// printf("%s // %s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
+	printf("\n");
 }
 
 char	*expand(struct msh *msh, char *str)
