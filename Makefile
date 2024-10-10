@@ -11,12 +11,11 @@ SRC = oldwork/gnl.c \
 	oldwork/execute.c \
 	cd.c \
 	env.c \
-	redir.c \
-	main.c \
 	unset.c \
+	redir.c \
 	export.c \
-	expand.c \
 	builtins.c \
+	minishell.c \
 	processing.c \
 
 SRCS = $(SRC) $(PIPEX)

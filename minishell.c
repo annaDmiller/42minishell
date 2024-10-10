@@ -14,12 +14,14 @@
 void	minishell(struct msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
-	export_no_opt(msh);
-	// env(msh);
-	// sleep(1);
-	// if (argv[1])
-		// export_def(msh, argv[1]);
-	// env(msh);
+	env(msh);
+	sleep(1);
+	if (argv[1])
+		export_def(msh, argv[1]);
+	env(msh);
+	if (argv[1])
+		unset(msh, argv[1]);
+	env(msh);
 	(void)argc;
 	(void)argv;
 	(void)envp;

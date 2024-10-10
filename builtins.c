@@ -21,6 +21,7 @@ void	echo(t_msh *msh, char *str)
 	putstrfd(str, STDOUT_FILENO);
 	// if (!cmd_line->next || !(tstrcmp(cmd_line->next, "-n") == 0)) // check if there is echo -n or not 
 		// write(STDOUT_FILENO, "\n", 1);
+	(void)msh;
 }
 
 void    env(t_msh *msh)
@@ -30,7 +31,13 @@ void    env(t_msh *msh)
 	tmp = msh->env;
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->name, tmp->var);
+		// printf("%s=%s\n", tmp->name, tmp->var);
+		printf("%d\t%s\n", tmp->id, tmp->name);
 		tmp = tmp->next;
 	}
+}
+
+char	*expand(struct msh *msh, char *str)
+{
+	return (env_retrieve_var(msh->env, str)->var);
 }

@@ -41,14 +41,15 @@ void    everyinit(struct msh *msh, int argc, char **argv, char **envp);
 void    env(t_msh *msh);
 void    pwd(t_msh *msh);
 void	echo(t_msh *msh, char *str);
+char	*expand(struct msh *msh, char *str);
 ///// BUILTINS.c
+
+///// CD.c
 void    cd(t_msh *msh, char *path);
 void    up_pwd(struct msh *msh, char *dir);
 void    down_pwd(struct msh *msh);
+///// CD.c
 
-///// EXPAND.c
-char	*expand(struct msh *msh, char *str);
-///// EXPAND.c
 
 
 ///// REDIR.c

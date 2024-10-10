@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-
 void	export(struct msh *msh)
 {
 	// if (no option for export)
@@ -21,20 +20,28 @@ void	export(struct msh *msh)
 	(void)msh;
 }
 
+static	char	*
+
+
 void	export_def(struct msh *msh, char *str)
 {
 	t_env	*head;
 	t_env	*new;
-	
+	int	tmpid;
+
 	head = msh->env;
+	tmpid = msh->env->id;
 	while (msh->env->next)
+	{
 		msh->env = msh->env->next;
+		tmpid = msh->env->id;
+	}
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return ; // handle error
 	new->name = env_varname(str);
  	new->var = env_var(str);
-	new->id = -2;
+	new->id = tmpid + 1;
 	new->next = NULL;
 	msh->env->next = new;
 	msh->env = head;
@@ -44,13 +51,10 @@ int	tstrcmp(char *str, char *cmp)
 {
 	int	i;
 
-	i = 0;
-	while (str[i] || cmp[i])
-	{
+	i = -1;
+	while (str[++i] || cmp[i])
 		if (str[i] != cmp[i])
 			return (str[i] - cmp[i]);
-		i++;
-	}
 	return (0);
 }
 
