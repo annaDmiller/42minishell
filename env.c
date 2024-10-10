@@ -77,7 +77,7 @@ void	envinit(struct msh *msh, char **envp, int i)
 		}
 		tmp->name = env_varname(envp[i]); // function to stock the name of the variable
  		tmp->var = env_var(envp[i]); // function to stock the content of the env variable
- 		tmp->id = i + 1;
+ 		tmp->id = i + 1; // index idk for what purpose yet
 		tmp->next = NULL;
 	}
 }

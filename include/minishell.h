@@ -37,13 +37,14 @@ void	minishell(struct msh *msh, int argc, char **argv, char **env);
 void    everyinit(struct msh *msh, int argc, char **argv, char **envp);
 ///// processing.c
 
-///// built-in.c
-void    cd(t_msh *msh, char *path);
+///// BUILTINS.c
 void    env(t_msh *msh);
 void    pwd(t_msh *msh);
+void	echo(t_msh *msh, char *str);
+///// BUILTINS.c
+void    cd(t_msh *msh, char *path);
 void    up_pwd(struct msh *msh, char *dir);
 void    down_pwd(struct msh *msh);
-///// built-in.c
 
 ///// EXPAND.c
 char	*expand(struct msh *msh, char *str);
@@ -84,6 +85,7 @@ char	*org(char *str);
 ///// EXPORT.c
 void	export_no_opt(struct msh *msh);
 void	export_def(struct msh *msh, char *str);
+int	tstrcmp(char *str, char *cmp);
 ///// EXPORT.c
 
 ///// UNSET.c

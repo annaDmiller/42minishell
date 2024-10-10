@@ -13,7 +13,8 @@
 
 void    everyinit(struct msh *msh, int argc, char **argv, char **envp)
 {
-	envinit(msh, envp, -1);
+	if (envp[0])
+		envinit(msh, envp, -1);
 	msh->pwd = malloc(sizeof(char) * 1000);
 	getcwd(msh->pwd, 1000); // stock the pwd at the start, then we'll change it according to every directory change we do
 //		 handle if !getcwd

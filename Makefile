@@ -16,7 +16,7 @@ SRC = oldwork/gnl.c \
 	unset.c \
 	export.c \
 	expand.c \
-	built-in.c \
+	builtins.c \
 	processing.c \
 
 SRCS = $(SRC) $(PIPEX)

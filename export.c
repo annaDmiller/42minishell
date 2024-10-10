@@ -40,7 +40,7 @@ void	export_def(struct msh *msh, char *str)
 	msh->env = head;
 }
 
-static int	tstrcmp(char *str, char *cmp)
+int	tstrcmp(char *str, char *cmp)
 {
 	int	i;
 

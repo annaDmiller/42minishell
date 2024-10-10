@@ -12,23 +12,36 @@ gerer les pipes |
 
 	[ ]=  appeler une fonction lorsque un pipe est signalé qui permet de prendre en input la partie gauche
 		du pipe au côté droit pipe
-	
+
+
+
 gerer les variables env
 
-	[ ]=  $variable est censé etre remplace par le contenu de la variable si elle existe 
+	[✅]=  $variable est censé etre remplace par le contenu de la variable si elle existe // env+var
 		
 		PBLM with $_ variable
 	printf("%s\n", env_var("_=/usr/bin/env")); // does work the right way \\ strange that env_find_var return the good node but var in it isnt good
 
 
-	[ ]=  when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
 	
 
-BUILT-in
+BUILTINS
 
-	[ ]=  EXPORT function, with and without options
+	[✅]=  echo with option -n
 
-	[ ]=  PWD Set by the shell to be an absolute pathname of the current working directory. If an application sets
-		or unsets the value of PWD , the behaviors of the cd and pwd utilities are unspecified.
+	[✅]=  pwd with no options
+		PWD Set by the shell to be an absolute pathname of the current working directory. If an application sets
+			or unsets the value of PWD , the behaviors of the cd and pwd utilities are unspecified.
+
+	[✅]=  env with no options or arguments
+
+	[ ]=  cd with only a relative or absolute path
+
+	[ ]=  export with no options
+
+	[ ]=  unset with no options
+
+	[ ]=  exit with no options
+		when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
+
 	
-	[ ]=  echo -n // -n cancel the backline after everything echo printed
