@@ -86,4 +86,8 @@ void	export_no_opt(struct msh *msh);
 void	export_def(struct msh *msh, char *str);
 ///// EXPORT.c
 
+///// UNSET.c
+void    unset(struct msh *msh, char *str);
+///// UNSET.c
+
 #endif

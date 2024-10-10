@@ -13,6 +13,7 @@ SRC = oldwork/gnl.c \
 	env.c \
 	redir.c \
 	main.c \
+	unset.c \
 	export.c \
 	expand.c \
 	built-in.c \

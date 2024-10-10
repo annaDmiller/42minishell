@@ -11,26 +11,14 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-int	tstrcmp(char *str, char *cmp)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] || cmp[i])
-	{
-		if (str[i] != cmp[i])
-			return (str[i] - cmp[i]);
-		i++;
-	}
-	return (0);
-}
 
 void	export(struct msh *msh)
 {
 	// if (no option for export)
-		export_no_opt(msh);
+		// export_no_opt(msh);
 	// if (def a variable)
 		// export_def(msh, str);
+	(void)msh;
 }
 
 void	export_def(struct msh *msh, char *str)
@@ -50,7 +38,20 @@ void	export_def(struct msh *msh, char *str)
 	new->next = NULL;
 	msh->env->next = new;
 	msh->env = head;
-	printf("\n\n");
+}
+
+static int	tstrcmp(char *str, char *cmp)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] || cmp[i])
+	{
+		if (str[i] != cmp[i])
+			return (str[i] - cmp[i]);
+		i++;
+	}
+	return (0);
 }
 
 void	export_no_opt(struct msh *msh)
@@ -108,6 +109,4 @@ void	export_no_opt(struct msh *msh)
 		free(names[i]);
 	free(names);
 	free(order);
-}		
-
-
+}
