@@ -31,11 +31,11 @@ void    up_pwd(struct msh *msh, char *dir)
 void    down_pwd(struct msh *msh)
 {
 	char	*nvx_pwd;
-	char	*tmp;
+	// char	*tmp;
 	int	i;
 	int	d;
 
-	tmp = msh->pwd;
+	// tmp = msh->pwd;
 	i = tstrlen(msh->pwd);
 	while (msh->pwd[--i])
 		if (msh->pwd[i] == '/')

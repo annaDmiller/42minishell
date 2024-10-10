@@ -35,24 +35,22 @@ void	export(struct msh *msh)
 
 void	export_def(struct msh *msh, char *str)
 {
-	t_env	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = msh->env;
-	while (msh->env)
+	t_env	*head;
+	t_env	*new;
+	
+	head = msh->env;
+	while (msh->env->next)
 		msh->env = msh->env->next;
-	// printf("\%d\n\n", msh->env->id);
-	msh->env = (t_env *)malloc(sizeof(t_env));
-	if (!msh->env)
+	new = (t_env *)malloc(sizeof(t_env));
+	if (!new)
 		return ; // handle error
-	while (str[i] && str[i] != '=')
-		i++;
-	tmp->name = env_varname(str);
- 	tmp->var = env_var(str);
-	tmp->id = -2;
-	tmp->next = NULL;
-	msh->env = tmp;
+	new->name = env_varname(str);
+ 	new->var = env_var(str);
+	new->id = -2;
+	new->next = NULL;
+	msh->env->next = new;
+	msh->env = head;
+	printf("\n\n");
 }
 
 void	export_no_opt(struct msh *msh)
