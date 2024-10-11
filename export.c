@@ -24,26 +24,26 @@ void	export(struct msh *msh)
 
 void	export_def(struct msh *msh, char *str)
 {
-	char	*name;
 	t_env	*head;
 	t_env	*new;
 	t_env	*var;
-	int	tmpid;
+	char	*n;
+	int		tmpid;
 
 	if (!str)
 		return ;	
-	name = setup_name(str);
-	var = env_retrieve_var(msh->env, name);
+	n = setup_name(str);
+	var = env_retrieve_var(msh->env, n);
 	if (var) // si la variable existe deja on modifie seulement son contenu
 	{
 		free(var->var);
 		var->var = env_var(str);
-		return (freestr(name));
+		return (freestr(n));
 	}
-	if (!((str[0] >= 65 && str[0] <= 90) || (str[0] >= 97 && str[0] <= 122)) && str[0] != '_')
+	if (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 && n[0] <= 122)) && n[0] != '_')
 	{
 		printf("export: `%s': not a valid indentifier\n", str);
-		return (freestr(name));
+		return (freestr(n));
 	}
 	head = msh->env;
 	tmpid = msh->env->id;
@@ -54,7 +54,7 @@ void	export_def(struct msh *msh, char *str)
 	}
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		return (freestr(name)); // handle error
+		return (freestr(n)); // handle error
 	new->name = env_varname(str);
  	new->var = env_var(str);
 	new->id = tmpid + 1;

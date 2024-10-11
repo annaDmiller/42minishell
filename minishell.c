@@ -14,7 +14,8 @@
 void	minishell(struct msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
-//	export_def(msh, argv[1]);
+	export_def(msh, "HOLA=bonjour");
+	env(msh);
 //	env(msh);
 //	unset(msh, argv[1]);
 	(void)argc;

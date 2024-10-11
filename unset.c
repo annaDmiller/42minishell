@@ -19,16 +19,23 @@ char	*setup_name(char *str)
 {
 	char    *name;
 	int		i;
+	int		r;
 
 	i = 0;
+	r = 0;
 	while (str[i] && str[i] != '=')
 		i++;
+	printf("\n\n");
 	name = malloc(sizeof(char) * (i + 1));
 	if (!name)
 		return (NULL);
+	printf("name taille ==  %d \ton malloc cette taille // %d\n", i, i + 1);
 	name[i] = '\0';
 	while (--i >= 0)
+	{
 		name[i] = str[i];
+		printf("\tname[%d] == %c\n", i, name[i]);
+	}
 	return (name);
 }
 
@@ -42,7 +49,7 @@ void    unset(struct msh *msh, char *str)
 
 	name = setup_name(str);
 	if (!name)
-		return (freestr(name));
+		return ;
 	node = env_retrieve_var(msh->env, name); // pcque le nom de la variable est export nomdelavariable
 	if (!node)
 		return (freestr(name));

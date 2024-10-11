@@ -26,26 +26,26 @@ gerer les variables env
 BUILTINS
 
 	[✅]=  echo with option -n
-			echo -nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn TEST
-			echo -nnnnno TEST
-			echo -n -n -n -n -n -n TEST
+			// echo -nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn TEST
+			// echo -nnnnno TEST
+			// echo -n -n -n -n -n -n TEST
 
 	[✅]=  pwd with no options
-		PWD Set by the shell to be an absolute pathname of the current working directory. If an application sets
-			or unsets the value of PWD , the behaviors of the cd and pwd utilities are unspecified.
+		// PWD Set by the shell to be an absolute pathname of the current working directory. If an application sets
+		// 	or unsets the value of PWD , the behaviors of the cd and pwd utilities are unspecified.
 
 	[✅]=  env with no options or arguments
 
 	[✅]=  export with no options
-			echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
-			export 1 \\A
+			// echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
+			// export 1 \\A
 
 	[✅]=  unset with no options
-			handles "_" not being able to be unset
+			// handles "_" not being able to be unset
 
 	[ ]=  cd with only a relative or absolute path
 
 	[ ]=  exit with no options
-		when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
+		// when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
 
 	
