@@ -20,12 +20,15 @@ gerer les variables env
 	[✅]=  $variable est censé etre remplace par le contenu de la variable si elle existe // env+var
 		
 		PBLM with $_ variable
-	printf("%s\n", env_var("_=/usr/bin/env")); // does work the right way \\ strange that env_find_var return the good node but var in it isnt good
+	printf("%s\n", env_var("_=/usr/bin/env")); // does work the right way \\ var in it isnt good
 
 
 BUILTINS
 
 	[✅]=  echo with option -n
+			echo -nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn TEST
+			echo -nnnnno TEST
+			echo -n -n -n -n -n -n TEST
 
 	[✅]=  pwd with no options
 		PWD Set by the shell to be an absolute pathname of the current working directory. If an application sets
@@ -34,8 +37,11 @@ BUILTINS
 	[✅]=  env with no options or arguments
 
 	[✅]=  export with no options
+			echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
+			export 1 \\A
 
 	[✅]=  unset with no options
+			handles "_" not being able to be unset
 
 	[ ]=  cd with only a relative or absolute path
 

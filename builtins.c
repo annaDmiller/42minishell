@@ -16,13 +16,10 @@ void    pwd(t_msh *msh)
 	printf("%s\n", msh->pwd);
 }
 
-
 // echo -nnnnnnnnnnn talan
 // should work
 // echo -nd talan
 // should printf -nd talan
-
-
 
 void	echo(t_msh *msh, char *str)
 {
