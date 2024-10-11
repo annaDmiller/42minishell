@@ -11,7 +11,18 @@ t_cmd   *cmd_new(t_all *all)
     new->prev = NULL;
     new->name = NULL;
     new->argv = NULL;
-    new->opts = NULL;
     new->redir = NULL;
+    new->is_last = 0;
+    new->quote = 0;
     return (new);
+}
+
+void    cmd_add_el_back(t_all *all, t_cmd *new_el)
+{
+    t_cmd   *last;
+
+    last = cmd_last_el(all);
+    last->next = new_el;
+    new_el->prev = last;
+    return ;
 }

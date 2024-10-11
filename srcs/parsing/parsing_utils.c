@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-static int  is_white_space(char car);
 static int  is_end_cmd(char car);
 
 int is_empty_line(char *cmd_line)
@@ -17,7 +16,7 @@ int is_empty_line(char *cmd_line)
     return (0);
 }
 
-static int  is_white_space(char car)
+int  is_white_space(char car)
 {
     if (car == ' ' || car == '\v' || car == '\t' || car == '\r'
         || car == '\f' || car == '\n')
@@ -41,7 +40,14 @@ int  find_end_cmd(char   *cmd_line)
 
 static int  is_end_cmd(char car)
 {
-    if (car == ';' || car == '|')
+    if (car == '|')
         return ((int) car);
     return (0);
+}
+
+int is_quote(char car)
+{
+    if (car == '\'' || car == '"')
+        return (0);
+    return (1);
 }

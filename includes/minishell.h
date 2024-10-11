@@ -32,4 +32,6 @@ void    free_lst(t_cmd *lst_cmd);
 int is_empty_line(char *cmd_line);
 int  find_end_cmd(char   *cmd_line);
 t_cmd   *cmd_new(t_all *all);
+int  is_white_space(char car);
+void    add_cmd(t_all *all);
 #endif

@@ -16,20 +16,28 @@
 typedef struct s_redir
 {
     int     pipe_fd[2];
-    char    *in_file;
-    char    **out_file;
+    char    is_pipe;
+    int     fd_infile;
+    char    in_type;
+    int     fd_outfile;
     char    out_type;
-    char    **err_file;
-    char    err_type;
 }           t_redir;
+
+typedef struct s_args
+{
+    char            *arg;
+    struct s_args   *next;
+    struct s_args   *prev;
+}                   t_args;
 
 
 typedef struct s_cmd
 {
     char            *name;
-    char            **opts;
-    char            **argv;
-    struct s_redit  *redir;
+    struct s_args   *argv;
+    int             quote;
+    int             is_last;
+    struct s_redir  *redir;
     struct s_cmd    *next;
     struct s_cmd    *prev;
 }               t_cmd;
