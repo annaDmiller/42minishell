@@ -36,7 +36,6 @@ typedef struct s_cmd
     char            *name;
     struct s_args   *argv;
     int             quote;
-    int             is_last;
     struct s_redir  *redir;
     struct s_cmd    *next;
     struct s_cmd    *prev;
@@ -53,6 +52,7 @@ typedef struct  s_all
     struct s_cmd    *lst_cmd;
     char            *prompt;
     char            *line;
+    char            *temp_l;
 //    struct s_env    *lst_env;
 }               t_all;
 #endif

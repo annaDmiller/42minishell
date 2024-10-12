@@ -12,24 +12,18 @@
 
 #include "../../includes/minishell.h"
 
+static void add_cmd(t_all *all);
+
 void    parse_line(t_all *all)
 {
-    char    *temp_line;
-    t_cmd   *last;
-
-    temp_line = all->line;
-    while (all->line)
-    {
+    all->temp_l = all->line;
+    while (*(all->line))
         add_cmd(all);
-        last = cmd_last_el(all);
-        if (last->is_last)
-            break ;
-    }
-    all->line = temp_line;
+    all->line = all->temp_l;
     return ;
 }
 
-void    add_cmd(t_all *all)
+static void add_cmd(t_all *all)
 {
     t_cmd   *new_el;
 
@@ -39,4 +33,5 @@ void    add_cmd(t_all *all)
     else
         cmd_add_el_back(all, new_el);
     parse_cmd(all);
+    return ;
 }

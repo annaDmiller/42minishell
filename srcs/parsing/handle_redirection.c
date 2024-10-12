@@ -1,24 +1,26 @@
 #include "../../includes/minishell.h"
 
 static void init_redir(t_redir *redir);
-static void    handle_pipe(t_all *all, int ind, t_cmd *cmd);
+static void handle_pipe(t_all *all, t_cmd *cmd);
 
-int handle_redir(t_all *all, int ind, t_cmd *cmd)
+char    *handle_redir(t_all *all, t_cmd *cmd)
 {
     t_redir *redir;
+    char    *str;
 
     redir = (t_redir*) malloc(sizeof(t_redir));
     if (!redir)
         error("handle_redir: Malloc error\n", all);
     init_redir(redir);
     cmd->redir = redir;
-    if (all->line[ind] == '>')
-        handle_output(all, ind, cmd);
-    if (all->line[ind] == '<')
-        handle_input(all, ind, cmd);
-    if (all->line[ind] == '|')
-        handle_pipe(all, ind++, cmd);
-    return (ind);
+    str = NULL;
+    if (*(all->line) == '>')
+        handle_output(all, cmd);
+    if (*(all->line) == '<')
+        str = handle_input(all, cmd);
+    if (*(all->line) == '|')
+        handle_pipe(all, cmd);
+    return (str);
 }
 
 static void init_redir(t_redir *redir)
@@ -33,7 +35,7 @@ static void init_redir(t_redir *redir)
     return ;
 }
 
-static void    handle_pipe(t_all *all, int ind, t_cmd *cmd)
+static void    handle_pipe(t_all *all, t_cmd *cmd)
 {
     cmd->redir->is_pipe = '1';
     return ;

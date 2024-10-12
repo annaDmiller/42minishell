@@ -1,34 +1,53 @@
 #include "../../includes/minishell.h"
 
-int handle_quotes(t_all *all, int ind, t_cmd *cmd, char *act)
+char    *handle_quotes(t_all *all, t_cmd *cmd)
 {
-    if (all->line[ind] == '"')
-        ind = handle_double_quotes(all, ind, cmd, act);
-    else
-        ind = handle_single_quote(all, ind, cmd, act);
-    return (ind);
-}
+    if (*(all->line++) == '"' && cmd->quote != 1)
+        return (handle_double_quotes(all, cmd));
+    return (handle_single_quote(all, cmd));
+    }
 
-int handle_double_quotes(t_all *all, int ind, t_cmd *cmd, char *act)
+char    *handle_double_quotes(t_all *all, t_cmd *cmd)
 {
+    char    *str;
+    int     ind;
+    int     len;
+
+    ind =  0;
     cmd->quote = 2;
-    //reading line until another double quote is met
-    //if there is a dollar sign, then the env var value must be replaced instead of the 
+    str = NULL;
+    while (all->line[ind])
+    {
+        if (all->line[ind] == '"')
+            break ;
+        if (all->line[ind] != '\'')
+            len++;
+        ind++;
+    }
+    str = (char *) malloc(sizeof(char) * (len + 1));
+    if (!str)
+        error("handle_doub_quotes: Malloc error\n", all);
+    copy_without_car(str, all->line, len + 1, "\'");
     cmd->quote = 0;
-    return (ind);
+    all->line += ind;
+    return (str);
 }
 
-int handle_single_quotes(t_all *all, int ind, t_cmd *cmd, char *act)
+void copy_without_car(char *dest, char *src, int size, char car)
 {
-    cmd->quote = 1;
-    //reading line until another single quote is met
-    //add line as an arguement to the list of arguements
-    cmd->quote = 0;
-    return (ind);
-}
+    int ind;
+    int add_ind;
 
-void    include_env_quote(t_all *all, t_cmd *cd, char *env_val, int len_env)
-{
-    //add logic to add the env_value to the current string for arguement inside the quotes sentence
+    ind = -1;
+    add_ind = 0;
+    while (++ind < size - 1 && src[ind + add_ind])
+    {
+        if (src[ind + add_ind] != car)
+            dest[ind] = src[ind];
+        else
+            add_ind++;
+        ind++;
+    }
+    dest[ind] = '\0';
     return ;
 }

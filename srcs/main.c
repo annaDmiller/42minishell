@@ -18,6 +18,7 @@ int main(int argc, char **argv, char **env)
 {
     t_all   *all;
 
+    g_sig = 0;
 //    init_signal;
     all = init_all_struct();
     while (1)
