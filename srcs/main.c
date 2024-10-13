@@ -17,14 +17,16 @@ volatile int    g_sig;
 int main(int argc, char **argv, char **env)
 {
     t_all   *all;
+    char    *prompt;
 
     g_sig = 0;
 //    init_signal;
     all = init_all_struct();
     while (1)
     {
-        all->prompt = print_prompt();
-        all->line = readline(all->prompt);
+        prompt = print_prompt();
+        all->line = readline(prompt);
+        free(prompt);
         if (is_empty_line(all->line))
         {
             add_history(all->line);
@@ -32,7 +34,7 @@ int main(int argc, char **argv, char **env)
         //free_lst(all->lst_cmd);
         }
         free (all->line);
-        free(all->prompt);
+        //free_all(all);
         //rl_on_new_line();
     }
     rl_clear_history();
@@ -50,8 +52,8 @@ static t_all    *init_all_struct(void)
     ret->exitstatus = 0;
     ret->line = NULL;
     ret->lst_cmd = NULL;
-    ret->prompt = NULL;
     ret->temp_l = NULL;
     ret->temp_for_free = NULL;
+    ret->lst_env = NULL;
     return (ret);
 }

@@ -30,6 +30,16 @@ typedef struct s_args
     struct s_args   *prev;
 }                   t_args;
 
+typedef struct s_msh
+{
+	t_env		*env;
+	t_args		*l_args;
+	char		*pwd;
+	char		**argv;
+	int			argc;
+	int                     exitstatus;
+
+}		t_msh;
 
 typedef struct s_cmd
 {
@@ -41,20 +51,22 @@ typedef struct s_cmd
     struct s_cmd    *prev;
 }               t_cmd;
 
-typedef struct  s_env
+typedef struct s_env
 {
-    struct s_env    *next;
-    struct s_env    *prev;
-}                   t_env;
+	struct s_env	*next;
+	char			*var;
+	char			*name;
+	int				id;
+	int				index;
+}               t_env;
 
 typedef struct  s_all
 {
     struct s_cmd    *lst_cmd; //list of command
-    char            *prompt; //maybe free before parsing and, therefore, remove from the structure?
-    char            *line;
-    char            *temp_l;
-    int             exitstatus;
-    char            *temp_for_free;
-//    struct s_env    *lst_env;
+    char            *line; //line of command; freed after parsing part
+    char            *temp_l; //temporary copy of line; freed after parsing part
+    int             exitstatus; //exit status of the most recently executed foreground pipeline (needed for $? processing)
+    char            *temp_for_free; //temporary copy of separate char to free in case of error; freed after utilisation
+    struct s_env    *lst_env;
 }               t_all;
 #endif
