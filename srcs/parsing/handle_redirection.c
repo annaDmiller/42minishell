@@ -44,6 +44,7 @@ static void init_redir(t_redir *redir)
     redir->out_type = '0';
     redir->pipe_fd[0] = -1;
     redir->pipe_fd[1] = -1;
+    redir->in_txt = NULL;
     return ;
 }
 

@@ -30,6 +30,7 @@ static void output_append(t_all *all, t_cmd *cmd)
     //read the file to open (can be included into quotes)
     //check if fd != -1, then firstly clear the opened file and close it
     //open the new file and reach its end with get_next_line function
+    //proceed /dev/stdout to leave at the -1 fd
     return ;
 }
 
@@ -42,5 +43,6 @@ static void output_replace(t_all *all, t_cmd *cmd)
     //read the file to open (can be included into quotes)
     //check if fd != -1, then firstly clear the opened file and close it
     //open the new file
+    //proceed /dev/stdout to leave at the -1 fd
     return ;
 }

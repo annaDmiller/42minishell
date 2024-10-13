@@ -31,7 +31,8 @@ static char *input_from_stdin(t_all *all, t_cmd *cmd)
     //skip ws
     //read the keyword to stop reading (keyword can be included into quotes)
     //read from stdin with get_next_line until the keyword is met (str_realloc + cycle) - + print "> " before input line
-    //add the read 
+    //add the read line into in_txt char
+    //if in_txt != NULL, then rewrite that string with the new one
     return (str);
 }
 
