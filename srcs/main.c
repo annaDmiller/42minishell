@@ -47,5 +47,11 @@ static t_all    *init_all_struct(void)
     ret = (t_all*) malloc(sizeof(t_all));
     if (!ret)
         error("init_all_struct: Malloc error\n", NULL);
+    ret->exitstatus = 0;
+    ret->line = NULL;
+    ret->lst_cmd = NULL;
+    ret->prompt = NULL;
+    ret->temp_l = NULL;
+    ret->temp_for_free = NULL;
     return (ret);
 }
