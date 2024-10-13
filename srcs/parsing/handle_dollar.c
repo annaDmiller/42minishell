@@ -4,12 +4,26 @@ static char *add_env_var(t_all *all, t_cmd *cmd);
 
 char    *handle_dollar(t_all *all, t_cmd *cmd)
 {
+    char    *exitstatus;
+
     all->line++;
-// what is last exit foreground exit status???
-//    if (*(++all->line) == '?')
-//    {
-//        return (NULL);
-//    }
+    if (ft_isalnum(*(all->line)))
+    {
+        if (*(all->line) != '?')
+        {
+            all->line++;
+            return (NULL);
+        }
+        exitstatus = ft_itoa(all->exitstatus);
+        if (!exitstatus)
+            error("handle_dollar: ft_itoa error\n", all);
+        return (exitstatus);
+    }
+    else if (ft_isalpha(*(all->line)))
+    {
+        all->line++;
+        return (NULL);
+    }
     return (add_env_var(all, cmd));
 }
 

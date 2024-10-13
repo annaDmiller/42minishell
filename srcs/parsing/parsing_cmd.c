@@ -46,7 +46,7 @@ static char *take_str(t_all *all, t_cmd *cmd)
             cmd->name = handle_dollar(all, cmd);
         return (NULL);
     }
-    if (*(all->line) == '$')
+    if (*(all->line) == '$' && !is_white_space(*(all->line + 1)))
         return (handle_dollar(all, cmd));
     if (!is_quote(*(all->line)))
         return (handle_quotes(all, cmd));
