@@ -37,7 +37,7 @@ static void init_redir(t_redir *redir)
 
 static void    handle_pipe(t_all *all, t_cmd *cmd)
 {
-    cmd->redir->is_pipe = '1';
+    cmd->redir->is_pipe = 'y';
     return ;
 }
 
