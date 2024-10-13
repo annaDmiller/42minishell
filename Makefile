@@ -10,6 +10,7 @@ SRC = oldwork/gnl.c \
 	oldwork/process.c \
 	oldwork/execute.c \
 	env.c \
+	free.c \
 	exit.c \
 	temp.c \
 	unset.c \
@@ -18,6 +19,7 @@ SRC = oldwork/gnl.c \
 	builtins.c \
 	minishell.c \
 	processing.c \
+	temporary_parsing.c \
 
 SRCS = $(SRC) $(PIPEX)
 

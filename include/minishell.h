@@ -64,7 +64,6 @@ void	envinit(t_msh *msh, char **env, int i); // init the linked list that will s
 char	*env_var(char *str); // function to stock the content of the env variable
 char	*env_varname(char *str); // function to stock the name of the variable
 t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name
-void	freenv(t_env *env); // free the linked list \\ "lst_env" leak l.23
 ///// ENV.c
 
 ///// UTILS.c
@@ -94,8 +93,14 @@ char	*setup_name(char *str);
 void    unset(t_msh *msh, t_args *argv);
 ///// UNSET.c
 
+///// FREE.c
 void	freestr(char *str);
+void	freecmdline(t_args *arg);
+void	freenv(t_env *env); // free the linked list \\ "lst_env" leak l.23
+///// FREE.c
 
 void	texit(t_msh *msh, t_args *argv);
+
+void	parse_cmd_line(t_msh *msh, char **argv);
 
 #endif

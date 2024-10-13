@@ -58,7 +58,7 @@ void	export_def(t_msh *msh, t_args *argv)
 				}
 				new = (t_env *)malloc(sizeof(t_env));
 				if (!new)
-					return (freestr(n)); // handle error
+					return ; // handle error
 				new->name = env_varname(argv->arg);
  				new->var = env_var(argv->arg);
 				new->id = tmpid + 1;

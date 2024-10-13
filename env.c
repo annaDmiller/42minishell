@@ -52,6 +52,14 @@ char	*env_var(char *str)
 		i++;
 	i++;
 	d = tstrlen(str) - i;
+	if (d == -1)
+	{
+		var = (char *)malloc(sizeof(char) * 1);
+		if (!var)
+			return (NULL); // error handling
+		var[0] = '\0';
+		return (var);
+	}
 	var = (char *)malloc(sizeof(char) * d + 1);
 	if (!var)
 		return (NULL); // error handling
@@ -97,19 +105,4 @@ t_env	*env_retrieve_var(t_env *env, char *str)
 		tmp = tmp->next;		
 	}
 	return (NULL);
-}
-
-void	freenv(t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (env)
-	{
-		tmp = env;
-		env = env->next;
-		free(tmp->name);
-		free(tmp->var);
-		free(tmp);
-	}
 }

@@ -30,7 +30,7 @@ BUILTINS
 			// echo -nnnnno TEST
 			// echo -n -n -n -n -n -n TEST
 
-	[✅]=  pwd with no options
+	[]=  pwd with no options + updating pwd after using cd
 		// PWD Set by the shell to be an absolute pathname of the current working directory. If an application sets
 		// 	or unsets the value of PWD , the behaviors of the cd and pwd utilities are unspecified.
 
