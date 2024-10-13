@@ -53,6 +53,8 @@ typedef struct  s_all
     char            *prompt; //maybe free before parsing and, therefore, remove from the structure?
     char            *line;
     char            *temp_l;
+    int             exitstatus;
+    char            *temp_for_free;
 //    struct s_env    *lst_env;
 }               t_all;
 #endif
