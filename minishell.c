@@ -11,13 +11,10 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-void	minishell(struct msh *msh, int argc, char **argv, char **envp)
+void	minishell(t_msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
-	export_def(msh, "HOLA=bonjour");
-	env(msh);
-//	env(msh);
-//	unset(msh, argv[1]);
+	env(msh->env);
 	(void)argc;
 	(void)argv;
 	(void)envp;
@@ -30,7 +27,7 @@ void	freestr(char *str)
 
 int	main(int argc, char **argv, char **envp)
 {
-	struct msh	msh;
+	t_msh	msh;
 
 	minishell(&msh, argc, argv, envp);
 	freenv(msh.env);

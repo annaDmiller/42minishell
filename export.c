@@ -11,18 +11,21 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-void	export(struct msh *msh)
+void	export(t_msh *msh, t_args *argv)
 {
-	// if (no option for export)
-		// export_no_opt(msh);
-	// if (def a variable)
-		// export_def(msh, str);
-	(void)msh;
+	if (!argv)
+		export_no_opt(msh);
+	else
+		export_def(msh, argv);
 }
 
 //	leaks sur env_varname(str) && env_var(str) ! le noeud cree n'est pas relie correctement a la list ?
 
-void	export_def(struct msh *msh, char *str)
+/// @brief leaks sur env_varname(str) && env_var(str)
+/// le noeud cree n'est pas relie correctement a la list ?
+/// Reamenager avec t_args *argv en argument
+/// if not a valid indentifier we still need to create the node 
+void	export_def(t_msh *msh, t_args *argv)
 {
 	t_env	*head;
 	t_env	*new;
@@ -30,19 +33,19 @@ void	export_def(struct msh *msh, char *str)
 	char	*n;
 	int		tmpid;
 
-	if (!str)
+	if (!argv)
 		return ;	
-	n = setup_name(str);
+	n = setup_name(argv->arg);
 	var = env_retrieve_var(msh->env, n);
 	if (var) // si la variable existe deja on modifie seulement son contenu
 	{
 		free(var->var);
-		var->var = env_var(str);
+		var->var = env_var(argv->arg);
 		return (freestr(n));
 	}
 	if (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 && n[0] <= 122)) && n[0] != '_')
 	{
-		printf("export: `%s': not a valid indentifier\n", str);
+		printf("export: `%s': not a valid indentifier\n", argv->arg);
 		return (freestr(n));
 	}
 	head = msh->env;
@@ -55,8 +58,8 @@ void	export_def(struct msh *msh, char *str)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (freestr(n)); // handle error
-	new->name = env_varname(str);
- 	new->var = env_var(str);
+	new->name = env_varname(argv->arg);
+ 	new->var = env_var(argv->arg);
 	new->id = tmpid + 1;
 	new->next = NULL;
 	msh->env->next = new;
@@ -74,7 +77,7 @@ int	tstrcmp(char *str, char *cmp)
 	return (0);
 }
 
-void	export_no_opt(struct msh *msh)
+void	export_no_opt(t_msh *msh)
 {
 	t_env	*tmp;
 	int		*order;
@@ -130,3 +133,57 @@ void	export_no_opt(struct msh *msh)
 	free(names);
 	free(order);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+////		SAVE BEFORE UPDATING WTH *argv
+
+// void	export_def(t_msh *msh, t_cmd *cmd)
+// {
+// 	t_env	*head;
+// 	t_env	*new;
+// 	t_env	*var;
+// 	char	*n;
+// 	int		tmpid;
+
+// 	if (!str)
+// 		return ;	
+// 	n = setup_name(str);
+// 	var = env_retrieve_var(msh->env, n);
+// 	if (var) // si la variable existe deja on modifie seulement son contenu
+// 	{
+// 		free(var->var);
+// 		var->var = env_var(str);
+// 		return (freestr(n));
+// 	}
+// 	if (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 && n[0] <= 122)) && n[0] != '_')
+// 	{
+// 		printf("export: `%s': not a valid indentifier\n", str);
+// 		return (freestr(n));
+// 	}
+// 	head = msh->env;
+// 	tmpid = msh->env->id;
+// 	while (msh->env->next)
+// 	{
+// 		msh->env = msh->env->next;
+// 		tmpid = msh->env->id;
+// 	}
+// 	new = (t_env *)malloc(sizeof(t_env));
+// 	if (!new)
+// 		return (freestr(n)); // handle error
+// 	new->name = env_varname(str);
+//  	new->var = env_var(str);
+// 	new->id = tmpid + 1;
+// 	new->next = NULL;
+// 	msh->env->next = new;
+// 	msh->env = head;
+// }

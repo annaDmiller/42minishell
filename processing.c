@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-void    everyinit(struct msh *msh, int argc, char **argv, char **envp)
+void    everyinit(t_msh *msh, int argc, char **argv, char **envp)
 {
 	if (envp[0])
 		envinit(msh, envp, -1);

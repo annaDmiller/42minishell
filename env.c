@@ -6,53 +6,12 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 18:41:33 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/09 08:56:48 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:52:41 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-// void	envinit(struct msh *msh, char **envp)
-// {
-// 	t_env	*env = NULL;
-// 	t_env	*nvx;
-// 	t_env	*head;
-// 	int			i;
-
-// 	i = -1;
-// 	env = (t_env *)malloc(sizeof(t_env));
-// 	if (!env)
-// 		return ; // error handling
-// 	if (!envp[0])
-// 	{
-// 		env->name = NULL;
-// 		env->var = NULL;
-// 		env->next = NULL;
-// 		free(env);
-// 		return ; // error handling
-// 	}
-// 	// free(env);
-// 	while (envp[++i])
-// 	{
-// 		nvx = (t_env *)malloc(sizeof(t_env));
-// 		if (!nvx) // return i to know how much node we have to free
-// 			return ;
-// 		nvx->next = NULL;
-// 		nvx->name = env_varname(envp[i]); // function to stock the name of the variable
-// 		nvx->var = env_var(envp[i]); // function to stock the content of the env variable
-// 		nvx->id = i + 1;
-// 		env->next = nvx;
-// 		// if (env)
-// 		// 	free(env);
-// 		env = nvx;
-// 		if (i == 0)
-// 			head = nvx;
-// 		// nvx = nvx->next;
-// 	}
-// 	msh->env = head;
-// }
-
-
-void	envinit(struct msh *msh, char **envp, int i)
+void	envinit(t_msh *msh, char **envp, int i)
 {
 	t_env	*tmp;
 

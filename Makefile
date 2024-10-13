@@ -9,8 +9,9 @@ SRC = oldwork/gnl.c \
 	oldwork/pipex.c \
 	oldwork/process.c \
 	oldwork/execute.c \
-	cd.c \
 	env.c \
+	exit.c \
+	temp.c \
 	unset.c \
 	redir.c \
 	export.c \

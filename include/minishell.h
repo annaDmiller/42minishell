@@ -13,7 +13,8 @@
 # define MINIHELL_H
 
 # include "pipex.h"
-# include "ministruct.h"
+# include "structures.h"
+
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
@@ -31,26 +32,24 @@
 # endif
 
 
-void	minishell(struct msh *msh, int argc, char **argv, char **env);
+void	minishell(t_msh *msh, int argc, char **argv, char **env);
 
 ///// processing.c
-void    everyinit(struct msh *msh, int argc, char **argv, char **envp);
+void    everyinit(t_msh *msh, int argc, char **argv, char **envp);
 ///// processing.c
 
 ///// BUILTINS.c
-void    env(t_msh *msh);
+void    env(t_env *env);
 void    pwd(t_msh *msh);
-void	echo(t_msh *msh, char *str);
-char	*expand(struct msh *msh, char *str);
+void	echo(t_msh *msh, t_cmd *cmd);
+char	*expand(t_msh *msh, char *str);
 ///// BUILTINS.c
 
 ///// CD.c
-void    cd(t_msh *msh, char *path);
-void    up_pwd(struct msh *msh, char *dir);
-void    down_pwd(struct msh *msh);
+void    cd(t_msh *msh, t_args *argv);
+void    up_pwd(t_msh *msh, char *dir);
+void    down_pwd(t_msh *msh);
 ///// CD.c
-
-
 
 ///// REDIR.c
 void	redirin(char *str, char *file); // will take care of "<"
@@ -61,7 +60,7 @@ char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can e
 ///// REDIR.c
 
 ///// ENV.c
-void	envinit(struct msh *msh, char **env, int i); // init the linked list that will stock our env pointer
+void	envinit(t_msh *msh, char **env, int i); // init the linked list that will stock our env pointer
 char	*env_var(char *str); // function to stock the content of the env variable
 char	*env_varname(char *str); // function to stock the name of the variable
 t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name
@@ -84,16 +83,19 @@ char	*org(char *str);
 ///// GNLV2.c
 
 ///// EXPORT.c
-void	export_no_opt(struct msh *msh);
-void	export_def(struct msh *msh, char *str);
+void	export(t_msh *msh, t_args *argv);
+void	export_no_opt(t_msh *msh);
+void	export_def(t_msh *msh, t_args *argv);
 int	tstrcmp(char *str, char *cmp);
 ///// EXPORT.c
 
 ///// UNSET.c
 char	*setup_name(char *str);
-void    unset(struct msh *msh, char *str);
+void    unset(t_msh *msh, t_args *argv);
 ///// UNSET.c
 
 void	freestr(char *str);
+
+void	texit(t_msh *msh, t_args *argv);
 
 #endif
