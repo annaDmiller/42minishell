@@ -2,10 +2,30 @@
 
 void	export(t_msh *msh, t_args *argv)
 {
+	t_env	*var;
+	char		*n;
+
 	if (!argv)
 		export_no_opt(msh);
-	else
-		export_def(msh, argv);
+	while (argv)
+	{
+		n = setup_name(argv->arg);
+		if (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 && n[0] <= 122)) && n[0] != '_')
+			printf("export: `%s': not a valid indentifier\n", argv->arg);
+		else
+		{
+			var = env_retrieve_var(msh->env, n);
+			if (var) // si la variable existe deja on modifie seulement son contenu
+			{
+				free(var->var);
+				var->var = env_var(argv->arg);
+			}
+			else
+				export_def(msh, argv);
+		}
+		argv = argv->next;
+		free(n);
+	}
 }
 
 //	leaks sur env_varname(str) && env_var(str) ! le noeud cree n'est pas relie correctement a la list ?
@@ -16,50 +36,26 @@ void	export(t_msh *msh, t_args *argv)
 /// if not a valid indentifier we still need to create the node 
 void	export_def(t_msh *msh, t_args *argv)
 {
-	t_env	*head;
 	t_env	*new;
-	t_env	*var;
-	char	*n;
-	int		tmpid;
-	int	i = 1;
-
-	while (argv)
+	t_env	*head;
+	int		index;
+	
+	head = msh->env;
+	index = msh->env->id;
+	while (msh->env->next)
 	{
-		n = setup_name(argv->arg);
-		var = env_retrieve_var(msh->env, n);
-		if (var) // si la variable existe deja on modifie seulement son contenu
-		{
-			free(var->var);
-			var->var = env_var(argv->arg);
-		}
-		else
-		{
-			if (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 && n[0] <= 122)) && n[0] != '_')
-				printf("export: `%s': not a valid indentifier\n", argv->arg);
-			else
-			{
-				head = msh->env;
-				tmpid = msh->env->id;
-				while (msh->env->next)
-				{
-					msh->env = msh->env->next;
-					tmpid = msh->env->id;
-				}
-				new = (t_env *)malloc(sizeof(t_env));
-				if (!new)
-					return ; // handle error
-				new->name = env_varname(argv->arg);
- 				new->var = env_var(argv->arg);
-				new->id = tmpid + 1;
-				new->next = NULL;
-				msh->env->next = new;
-				msh->env = head;
-			}
-		}
-		freestr(n);
-		i++;
-		argv = argv->next;
+		msh->env = msh->env->next;
+		index = msh->env->id;
 	}
+	new = (t_env *)malloc(sizeof(t_env));
+	if (!new)
+		return ; // handle error
+	msh->env->next = new;
+	new->id = index + 1;
+	new->name = env_varname(argv->arg);
+	new->var = env_var(argv->arg);
+	new->next = NULL;
+	msh->env = head;
 }
 
 void	export_no_opt(t_msh *msh)

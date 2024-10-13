@@ -7,10 +7,8 @@ char	*setup_name(char *str)
 {
 	char    *name;
 	int		i;
-	int		r;
 
 	i = 0;
-	r = 0;
 	if (!str)
 		return (NULL);
 	while (str[i] && str[i] != '=')
@@ -35,13 +33,13 @@ void    unset(t_msh *msh, t_args *argv)
 	t_env   *tmp;
 	char	*name;
 	// int             i;
-	while(argv)
+	while (argv)
 	{
 		tmp = msh->env;	
 		name = setup_name(argv->arg);
 		node = env_retrieve_var(msh->env, name); // pcque le nom de la variable est export nomdelavariable
 		if (!name || !node)
-			freestr(name);
+			free(name);
 		else
 			while (tmp && tmp->next->id != node->id) // je parcours ma liste avec tmp, lorsque le prochaine correspond a la var que je veux enlever je m'arrete
 				tmp = tmp->next;
@@ -53,12 +51,12 @@ void    unset(t_msh *msh, t_args *argv)
 		else
 		{
 			tmp->next = node->next;
-			freestr(name);
+			free(name);
 			free(node->name);
 			free(node->var);
 			free(node);
 		}
 		argv = argv->next;
-		freestr(name);
+		free(name);
 	}
 }

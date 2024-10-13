@@ -2,11 +2,6 @@
 
 
 
-void	freestr(char *str)
-{
-	free(str);
-}
-
 void	freecmdline(t_args *arg)
 {
 	t_args	*tmp;

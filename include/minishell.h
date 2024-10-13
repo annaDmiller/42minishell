@@ -83,7 +83,6 @@ void    unset(t_msh *msh, t_args *argv);
 ///// UNSET.c
 
 ///// FREE.c
-void	freestr(char *str);
 void	freecmdline(t_args *arg);
 void	freenv(t_env *env); // free env linked list 
 void	wegotasplituation(struct spt x); // free split if there is an error in it
