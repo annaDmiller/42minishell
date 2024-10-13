@@ -27,17 +27,12 @@ char	*setup_name(char *str)
 		return (NULL);
 	while (str[i] && str[i] != '=')
 		i++;
-	printf("\n\n");
 	name = malloc(sizeof(char) * (i + 1));
 	if (!name)
 		return (NULL);
-	printf("name taille ==  %d \ton malloc cette taille // %d\n", i, i + 1);
 	name[i] = '\0';
 	while (--i >= 0)
-	{
 		name[i] = str[i];
-		printf("\tname[%d] == %c\n", i, name[i]);
-	}
 	return (name);
 }
 
