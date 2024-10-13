@@ -42,12 +42,12 @@ void    env(t_env *env)
 	while (tmp)
 	{
 		/// si la variable n'a pas de valeur on affiche des double quotes sans rien
-		printf("%s=", tmp->name);
-		if (tmp->var)
-			printf("%s\n", tmp->var);
-		else
-			printf("""\n");
-		// printf("%d\t%s\n", tmp->id, tmp->name);
+		// printf("%s=", tmp->name);
+		// if (tmp->var)
+			// printf("%s\n", tmp->var);
+		// else
+			// printf("qoiwodqindqw\n");
+		printf("%d\t%s\n", tmp->id, tmp->name);
 		// printf("%s // %s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}

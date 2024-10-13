@@ -103,4 +103,9 @@ void	texit(t_msh *msh, t_args *argv);
 
 void	parse_cmd_line(t_msh *msh, char **argv);
 
+
+///// TLIST.c
+int	lsize(t_env *env);
+///// TLIST.c
+
 #endif

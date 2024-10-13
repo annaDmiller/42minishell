@@ -37,5 +37,6 @@ void	parse_cmd_line(t_msh *msh, char **argv)
 		}
 		tmp->arg = argv[i];
 		tmp->next = NULL;
+		// printf("\t\t\t// // %d\n", i);
 	}
 }

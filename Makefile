@@ -15,6 +15,7 @@ SRC = oldwork/gnl.c \
 	temp.c \
 	unset.c \
 	redir.c \
+	tlist.c \
 	export.c \
 	builtins.c \
 	minishell.c \
