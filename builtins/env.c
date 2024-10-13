@@ -1,15 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 18:41:33 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/13 15:52:41 by tespandj         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 void	envinit(t_msh *msh, char **envp, int i)
 {
@@ -39,6 +28,30 @@ void	envinit(t_msh *msh, char **envp, int i)
  		tmp->id = i + 1; // index idk for what purpose yet
 		tmp->next = NULL;
 	}
+}
+
+/// @brief Display the environnement		variable=value
+/// // //   if there is no value, it just print variable=""
+/// @param t_env *env 
+void    env(t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	printf("\n");
+	while (tmp)
+	{
+		// si la variable n'a pas de valeur on affiche des double quotes sans rien
+		printf("%s=", tmp->name);
+		if (tmp->var)
+			printf("%s\n", tmp->var);
+		else
+			printf("qoiwodqindqw\n");
+		// printf("%d\t%s\n", tmp->id, tmp->name);
+		// printf("%s // %s\n", tmp->name, tmp->var);
+		tmp = tmp->next;
+	}
+	printf("\n");
 }
 
 char	*env_var(char *str)

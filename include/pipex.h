@@ -52,10 +52,8 @@ void			wgas(char *str);
 void			fsplit(char **str);
 void			wegotasplituation(struct spt x);
 
-int				tstrlen(char *str);
-char			*tstrdup(char *src);
+
 char			*fpath(char **env, char *cmd, int i);
-char			*tjoin(char *str, char *add);
 char			*first_path(char *str);
 
 char			**split(char const *str, char c);

@@ -34,3 +34,23 @@ void	freenv(t_env *env)
 		free(tmp);
 	}
 }
+
+void	wegotasplituation(struct spt x)
+{
+	int	i;
+
+	i = -1;
+	while (x.split[++i] && i <= x.op)
+		free(x.split[i]);
+	free(x.split);
+}
+
+void	fsplit(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
+}

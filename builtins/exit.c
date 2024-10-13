@@ -1,4 +1,4 @@
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 void	texit(t_msh *msh, t_args *argv)
 {

@@ -11,34 +11,6 @@
 /* ************************************************************************** */
 #include "../include/pipex.h"
 
-int	tstrlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*tstrdup(char *src)
-{
-	int		i;
-	char	*dest;
-
-	dest = malloc(sizeof(char) * (tstrlen(src) + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
 char	*fpath(char **env, char *cmd, int i)
 {
 	char	**str;
@@ -66,26 +38,6 @@ char	*fpath(char **env, char *cmd, int i)
 		path = tstrdup(str[i]);
 	fsplit(str);
 	return (path);
-}
-
-char	*tjoin(char *str, char *add)
-{
-	char	*tzy;
-	int		i;
-	int		t;
-
-	i = -1;
-	t = -1;
-	tzy = malloc(sizeof(char) * (tstrlen(add) + tstrlen(str) + 1));
-	if (!tzy)
-		return (NULL);
-	while (str[++i] != '\0')
-		tzy[i] = str[i];
-	while (add[++t] != '\0')
-		tzy[i + t] = add[t];
-	tzy[i + t] = '\0';
-	free(str);
-	return (tzy);
 }
 
 char	*first_path(char *str)

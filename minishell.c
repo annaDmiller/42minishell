@@ -16,9 +16,12 @@ void	minishell(t_msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
 	parse_cmd_line(msh, argv);
+	show_args(msh);
+	printf("\n\n\n");
 	// export_def(msh, msh->l_args);
 	// env(msh->env);
-	// printf("\n\n\n");
+	// fprintf(stderr, "\n\n\n====print unset====\n\n\n");
+	// unset(msh , msh->l_args);
 	// export_no_opt(msh);
 	(void)argc;
 	(void)argv;

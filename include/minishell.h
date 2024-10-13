@@ -9,12 +9,11 @@
 /*   Updated: 2024/10/09 08:48:04 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef MINIHELL_H
-# define MINIHELL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "pipex.h"
 # include "structures.h"
-
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
@@ -66,26 +65,16 @@ char	*env_varname(char *str); // function to stock the name of the variable
 t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name
 ///// ENV.c
 
-///// UTILS.c
-int	tstrlen(char *str);
-char	*tstrdup(char *src);
-char	*fpath(char **env, char *cmd, int i);
-char	*tjoin(char *str, char *add);
-char	*first_path(char *str);
-///// UTILS.c
-
+///// GNL
 char	*gnl(int fd); // get_next_line
-
-///// GNLV2.c
 char	*save_static(char *str, int rv);
 char	*org(char *str);
-///// GNLV2.c
+///// GNL
 
 ///// EXPORT.c
 void	export(t_msh *msh, t_args *argv);
 void	export_no_opt(t_msh *msh);
 void	export_def(t_msh *msh, t_args *argv);
-int	tstrcmp(char *str, char *cmp);
 ///// EXPORT.c
 
 ///// UNSET.c
@@ -96,16 +85,26 @@ void    unset(t_msh *msh, t_args *argv);
 ///// FREE.c
 void	freestr(char *str);
 void	freecmdline(t_args *arg);
-void	freenv(t_env *env); // free the linked list \\ "lst_env" leak l.23
+void	freenv(t_env *env); // free env linked list 
+void	wegotasplituation(struct spt x); // free split if there is an error in it
 ///// FREE.c
 
-void	texit(t_msh *msh, t_args *argv);
-
-void	parse_cmd_line(t_msh *msh, char **argv);
-
+///// TLIB.c
+void	show_args(t_msh *msh);
+int	tstrcmp(char *str, char *cmp);
+int	tstrlen(char *str);
+char	*tstrdup(char *src);
+char	*tjoin(char *str, char *add);
+void	putstrfd(char *str, int fd);
+void	fsplit(char **str);
+///// TLIB.c
 
 ///// TLIST.c
 int	lsize(t_env *env);
 ///// TLIST.c
+
+void	texit(t_msh *msh, t_args *argv);
+
+void	parse_cmd_line(t_msh *msh, char **argv);
 
 #endif

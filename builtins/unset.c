@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 14:03:26 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/13 14:31:38 by tespandj         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 // bash-5.1$ env -i unset PATH
 // env: ‘unset’: No such file or directory
 // bash-5.1$
-
 char	*setup_name(char *str)
 {
 	char    *name;

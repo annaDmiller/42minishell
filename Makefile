@@ -2,27 +2,25 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -O3 -g3 
 
-SRC = oldwork/gnl.c \
-	oldwork/gnlv2.c \
-	oldwork/split.c \
-	oldwork/utils.c \
-	oldwork/pipex.c \
-	oldwork/process.c \
-	oldwork/execute.c \
-	env.c \
-	free.c \
-	exit.c \
-	temp.c \
-	unset.c \
-	redir.c \
-	tlist.c \
-	export.c \
-	builtins.c \
-	minishell.c \
-	processing.c \
-	temporary_parsing.c \
+MINISHELL = redir.c \
+		free.c \
+		tlib.c \
+		tlist.c \
+		builtins.c \
+		minishell.c \
+		processing.c \
+		oldwork/split.c \
+		temporary_parsing.c \
 
-SRCS = $(SRC) $(PIPEX)
+BUILTINS = builtins/env.c \
+		builtins/cd.c \
+		builtins/pwd.c \
+		builtins/echo.c \
+		builtins/exit.c \
+		builtins/unset.c \
+		builtins/export.c \
+
+SRCS = $(MINISHELL) $(BUILTINS)
 
 OBJS = $(SRCS:.c=.o)
 

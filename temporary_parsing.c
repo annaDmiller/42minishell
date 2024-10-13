@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-/// @brief parse argv given after ./minishell and parse it into a linked list to test for the final parsing
+/// @brief parse argv given after ./minishell and parse it into a linked list to test before final version of parsing
 void	parse_cmd_line(t_msh *msh, char **argv)
 {
 	t_args	*tmp;
