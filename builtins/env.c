@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/14 19:54:24 by tespandj          #+#    #+#             */
+/*   Updated: 2024/10/14 19:54:25 by tespandj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/minishell.h"
 
 void	envinit(t_msh *msh, char **envp, int i)
@@ -66,13 +77,7 @@ char	*env_var(char *str)
 	i++;
 	d = tstrlen(str) - i;
 	if (d == -1)
-	{
-		var = (char *)malloc(sizeof(char) * 1);
-		if (!var)
-			return (NULL); // error handling
-		var[0] = '\0';
-		return (var);
-	}
+		return (NULL);
 	var = (char *)malloc(sizeof(char) * d + 1);
 	if (!var)
 		return (NULL); // error handling

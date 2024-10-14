@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/14 19:54:36 by tespandj          #+#    #+#             */
+/*   Updated: 2024/10/14 19:54:37 by tespandj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/minishell.h"
 
 void	export(t_msh *msh, t_args *argv)
@@ -97,7 +108,12 @@ void	export_no_opt(t_msh *msh)
 		while (tmp)
 		{
 			if (tmp->id == order[i])
-				printf("export %s=\"%s\"\n", tmp->name, tmp->var);
+			{
+				printf("export %s", tmp->name);
+				if (tmp->var)
+					printf("=\"%s\"", tmp->var);
+				printf("\n");
+			}
 			tmp = tmp->next;
 		}
 		free(names[i]);

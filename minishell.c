@@ -23,7 +23,9 @@ void	minishell(t_msh *msh, int argc, char **argv, char **envp)
 	// unset(msh , msh->l_args);
 	export(msh, msh->l_args);
 	export_no_opt(msh);
-	unset(msh, msh->l_args);
+	// unset(msh, msh->l_args);
+	// printf("\n\n\n\n\n");
+	// export_no_opt(msh);
 	(void)argc;
 	(void)argv;
 	(void)envp;

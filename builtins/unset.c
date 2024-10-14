@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/14 19:54:06 by tespandj          #+#    #+#             */
+/*   Updated: 2024/10/14 19:54:09 by tespandj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/minishell.h"
 
 // bash-5.1$ env -i unset PATH
@@ -28,35 +39,34 @@ char	*setup_name(char *str)
 /// @retval > 0  // At least one name could not be unset.
 void    unset(t_msh *msh, t_args *argv)
 {
-	// ideally doubly linked list ill go previous but dk how to implement it
-	t_env   *node;
-	t_env   *tmp;
-	char	*name;
-	// int             i;
+	t_env	*find;
+	t_env	*save;
+	t_env	*tmp;
+
 	while (argv)
 	{
-		tmp = msh->env;	
-		name = setup_name(argv->arg);
-		node = env_retrieve_var(msh->env, name); // pcque le nom de la variable est export nomdelavariable
-		if (!name || !node)
-			free(name);
-		else
-			while (tmp && tmp->next->id != node->id) // je parcours ma liste avec tmp, lorsque le prochaine correspond a la var que je veux enlever je m'arrete
+		tmp = msh->env;
+		find = env_retrieve_var(msh->env, argv->arg);
+		if (find)
+		{
+			while (tmp->next != find)
 				tmp = tmp->next;
-		if (!node->next) // if the var I want to unset is the last one in the list
-		{
-			free(node); // I just free it
-			tmp->next = NULL; // and set ->next of the one before him to NULL
-		}
-		else
-		{
-			tmp->next = node->next;
-			free(name);
-			free(node->name);
-			free(node->var);
-			free(node);
+			if (tmp->next->next)
+			{
+				save = tmp->next->next;
+				free(tmp->next->name);
+				free(tmp->next->var);
+				free(tmp->next);
+				tmp->next = save;
+			}
+			else
+			{
+				free(tmp->next->name);
+				free(tmp->next->var);
+				free(tmp->next);
+				tmp->next = NULL;
+			}
 		}
 		argv = argv->next;
-		free(name);
 	}
 }

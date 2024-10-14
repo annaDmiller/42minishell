@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/14 19:54:16 by tespandj          #+#    #+#             */
+/*   Updated: 2024/10/14 19:54:18 by tespandj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/minishell.h"
 
 /// @brief if path given argv->arg is not valid it prints pathname: No such file or directory
