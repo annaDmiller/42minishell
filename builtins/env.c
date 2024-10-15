@@ -16,8 +16,6 @@ void	envinit(t_msh *msh, char **envp, int i)
 	t_env	*tmp;
 
 	msh->env = NULL;
-	if (!envp[0])
-		return ; // error handling
 	while (envp[++i])
 	{
 		if (msh->env == NULL)
@@ -34,12 +32,62 @@ void	envinit(t_msh *msh, char **envp, int i)
 				return ; // error malloc
 			tmp = tmp->next;
 		}
-		tmp->name = env_varname(envp[i]); // function to stock the name of the variable
- 		tmp->var = env_var(envp[i]); // function to stock the content of the env variable
- 		tmp->id = i + 1; // index idk for what purpose yet
+		tmp->name = env_varname(envp[i]);
+ 		tmp->var = env_var(envp[i]);
+ 		tmp->id = i + 1;
 		tmp->next = NULL;
 	}
 }
+// PWD=
+// SHLVL=
+// _=
+
+void	env_build(t_msh *msh, int i)
+{
+	t_env	*tmp;
+
+	while (++i < 3)
+	{
+		if (msh->env == NULL)
+		{
+			msh->env = (t_env *)malloc(sizeof(t_env));
+			if (msh->env == NULL)
+				return ;
+			tmp = msh->env;
+		}
+		else if (msh->env)
+		{
+			tmp->next = (t_env *)malloc(sizeof(t_env));
+			if (tmp->next == NULL)
+				return ; // error malloc
+			tmp = tmp->next;
+		}
+		if (i == 1)
+		{
+			tmp->name = env_varname("PWD");
+			tmp->var = tstrdup(msh->pwd);
+			tmp->id = i + 1;
+			tmp->next = NULL;
+		}
+		if (i == 2)
+		{
+			tmp->name = env_varname("SHLVL");
+			tmp->var = env_var("SHLVL=1");
+			tmp->id = i + 1;
+			tmp->next = NULL;
+		}
+		if (i == 3)
+		{
+			tmp->name = env_varname("_");
+			tmp->var = env_var("_=/usr/bin/env");
+			tmp->id = i + 1;
+			tmp->next = NULL;
+		}
+	}
+	(void)msh;
+	(void)tmp;
+}
+
 
 /// @brief Display the environnement		variable=value
 /// // //   if there is no value, it just print variable=""

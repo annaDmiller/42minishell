@@ -11,13 +11,16 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-void    everyinit(t_msh *msh, int argc, char **argv, char **envp)
+void	everyinit(t_msh *msh, int argc, char **argv, char **envp)
 {
+	msh->pwd = malloc(sizeof(char) * 1000);
+	getcwd(msh->pwd, 1000); // stock the pwd at the start, cd(directory);
+//		handle if !getcwd
 	if (envp[0])
 		envinit(msh, envp, -1);
-	msh->pwd = malloc(sizeof(char) * 1000);
-	getcwd(msh->pwd, 1000); // stock the pwd at the start, then we'll change it according to every directory change we do
-//		 handle if !getcwd
+	else
+		env_build(msh, -1);
 	msh->argc = argc;
 	msh->argv = argv;
+	// printf("OJIWDWJOIQWDJIOQDWJIOQDWOJIQWD\n");
 }

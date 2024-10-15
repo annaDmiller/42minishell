@@ -60,6 +60,7 @@ char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can e
 
 ///// ENV.c
 void	envinit(t_msh *msh, char **env, int i); // init the linked list that will stock our env pointer
+void	env_build(t_msh *msh, int i); // build env if there is no env available
 char	*env_var(char *str); // function to stock the content of the env variable
 char	*env_varname(char *str); // function to stock the name of the variable
 t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name

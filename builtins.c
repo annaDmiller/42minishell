@@ -13,19 +13,19 @@
 
 int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 {
-	if (tstrcmp(cmd->name,"env"))
+	if (tstrcmp(cmd->name, "env"))
 		env(msh->env);
-	if (tstrcmp(cmd->name,"pwd"))
+	if (tstrcmp(cmd->name, "pwd"))
 		printf("%s\n", msh->pwd);
-	if (tstrcmp(cmd->name,"echo"))
+	if (tstrcmp(cmd->name, "echo"))
 		echo(msh, cmd);
-	if (tstrcmp(cmd->name,"cd"))
+	if (tstrcmp(cmd->name, "cd"))
 		cd(msh, cmd->argv);
-	if (tstrcmp(cmd->name,"export"))
+	if (tstrcmp(cmd->name, "export"))
 		export(msh, cmd->argv);
-	if (tstrcmp(cmd->name,"unset"))
+	if (tstrcmp(cmd->name, "unset"))
 		unset(msh, cmd->argv);
-	if (tstrcmp(cmd->name,"exit"))
+	if (tstrcmp(cmd->name, "exit"))
 		texit(msh, cmd->argv);
 	return (0);
 }
