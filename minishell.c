@@ -18,8 +18,11 @@ void	minishell(t_msh *msh, int argc, char **argv, char **envp)
 	everyinit(msh, argc, argv, envp);
 	parse_cmd_line(msh, argv);
 	export(msh, msh->l_args);
-	env(msh->env);
+	// env(msh->env);
+	printf("_______________________________________________\n\n");
+	// export_no_opt(msh);
 	// pwd(msh);
+	cd(msh, msh->l_args);
 }
 
 int	main(int argc, char **argv, char **envp)

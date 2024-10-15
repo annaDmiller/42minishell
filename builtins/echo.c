@@ -16,6 +16,58 @@
 // echo -nd talan
 // should printf -nd talan
 
+// static	char	*setup_var(char *str, int i)
+// {
+// 	char	*var;
+// 	int		r;
+
+// 	r = i;
+// 	while (str[i] && str[i] != ' ' && str[i] != '@')
+// 		i++;
+// 	var = malloc(sizeof(char) * (i - r + 1));
+// 	if (!var)
+// 		return (NULL); // handle error
+// 	var[i - r] = '\0';
+// 	while ()
+	
+	
+
+
+// }
+
+
+// void	echo(t_msh *msh, t_args *argv)
+// {
+// 	int	i;
+
+// 	i = -1;
+// 	while (argv)
+// 	{
+// 		if (argv->arg[0] == '\'')
+// 		{
+// 			i = 0;
+// 			while (argv->arg[++i] && argv->arg[i + 1])
+// 				write(1, argv->arg[i], 1);
+// 		}
+// 		else if (argv->arg[0] == '\"')
+// 		{
+// 			i = 0;
+// 			while (argv->arg[++i])
+// 			{
+// 				if (argv->arg[i] == '$')
+// 				{
+// 					setup_var(argv->arg, i + 1);
+// 				}
+// 			}
+// 		}
+// 	}
+
+// }
+
+
+
+
+
 void	echo(t_msh *msh, t_cmd *cmd)
 {
 	// while ()

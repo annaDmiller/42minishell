@@ -97,19 +97,12 @@ void    env(t_env *env)
 	t_env	*tmp;
 
 	tmp = env;
-	printf("\n");
 	while (tmp)
 	{
-		// si la variable n'a pas de valeur on affiche des double quotes sans rien
-		printf("%s=", tmp->name);
 		if (tmp->var)
-			printf("%s", tmp->var);
-		else
-			printf("\"\"");
-		printf("\n");
+			printf("%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
-	printf("\n");
 }
 
 char	*env_var(char *str)

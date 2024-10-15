@@ -19,6 +19,9 @@ gerer les variables env
 
 	[✅]=  $variable est censé etre remplace par le contenu de la variable si elle existe // env+var
 		
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	[ ]=  CHANGER LA variable $_ en fonction de la derniere ligne de commande tapee
 		PBLM with $_ variable
 	printf("%s\n", env_var("_=/usr/bin/env")); // does work the right way \\ var in it isnt good
 
