@@ -17,6 +17,8 @@ void	minishell(t_msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
 	parse_cmd_line(msh, argv);
+	export(msh, msh->l_args);
+	env(msh->env);
 	// pwd(msh);
 }
 

@@ -103,11 +103,10 @@ void    env(t_env *env)
 		// si la variable n'a pas de valeur on affiche des double quotes sans rien
 		printf("%s=", tmp->name);
 		if (tmp->var)
-			printf("%s\n", tmp->var);
+			printf("%s", tmp->var);
 		else
-			printf("qoiwodqindqw\n");
-		// printf("%d\t%s\n", tmp->id, tmp->name);
-		// printf("%s // %s\n", tmp->name, tmp->var);
+			printf("\"\"");
+		printf("\n");
 		tmp = tmp->next;
 	}
 	printf("\n");
