@@ -12,60 +12,70 @@
 
 #include "../includes/minishell.h"
 
-static void    get_user_host(char **prompt);
-static char    *get_host(char *addr);
-static char *shorten_addr(char **path);
+static void    get_user_host(char **prompt, t_all *all);
+static char    *get_host(char *addr, t_all *all);
+static char *shorten_addr(char **path, t_all *all);
 
-char    *print_prompt(void)
+char    *print_prompt(t_all *all)
 {
     char *prompt;
     char path[PATH_MAX];
     char *temp;
     char    *sh_path;
 
-    get_user_host(&prompt);
+    get_user_host(&prompt, all);
     getcwd(path, sizeof(path));
     temp = &(path[0]);
-    sh_path = shorten_addr(&(temp));
+    sh_path = shorten_addr(&(temp), all);
     temp = prompt;
     prompt = ft_strjoin(temp, sh_path);
     free(temp);
     free(sh_path);
+    if (!prompt)
+        error("print_prompt: Malloc error\n", all);
     temp = prompt;
     prompt = ft_strjoin(temp, "$ ");
     free(temp);
+    if (!prompt)
+        error("print_prompt: Malloc error\n", all);
     return (prompt);
 }
 
-static void    get_user_host(char **prompt)
+static void    get_user_host(char **prompt, t_all *all)
 {
     char *username;
     char *host;
     char *temp;
 
     username = getenv("USER");
-    host = get_host("/etc/hostname");
+    host = get_host("/etc/hostname", all);
     if (!username || !host)
         exit(1);
     *prompt = ft_strjoin(username, "@");
+    if (!(*prompt))
+        error("get_user_host: Malloc error\n", all);
     temp = *prompt;
     *prompt = ft_strjoin(temp, host);
     free(temp);
+    free(host);
+    if (!(*prompt))
+        error("get_user_host: Malloc error\n", all);
     temp = *prompt;
     *prompt = ft_strjoin(temp, ":");
     free(temp);
-    free(host);
+    if (!(*prompt))
+        error("get_user_host: Malloc error\n", all);
     return ;    
 }
 
-static char    *get_host(char *addr)
+static char    *get_host(char *addr, t_all *all)
 {
     int fd;
     char    *host;
 
     fd = open(addr, O_RDONLY);
     if (fd == -1)
-        exit(1);
+        error("get_host: impossible to print prompt\n", all);
     host = get_next_line(fd);
     if (!host)
         exit(1);
@@ -73,7 +83,7 @@ static char    *get_host(char *addr)
     return (host);
 }
 
-static char *shorten_addr(char **path)
+static char *shorten_addr(char **path, t_all *all)
 {
     char    *new_path;
     char    *addr_short;
@@ -83,8 +93,12 @@ static char *shorten_addr(char **path)
     if (!addr_short)
         return (*path);
     new_path = ft_strdup(addr_short + ft_strlen(getenv("USER")));
+    if (!new_path)
+        error("shorten_addr: Malloc error\n", all);
     temp = new_path;
     new_path = ft_strjoin("~", temp);
     free(temp);
+    if (!new_path)
+        error("shorten_addr: Malloc error\n", all);
     return (new_path);
 }

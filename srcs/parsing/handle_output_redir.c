@@ -12,6 +12,11 @@
 
 #include "../../includes/minishell.h"
 
+static void clear_and_close(t_cmd *cmd);
+static void reach_end_file(int fd);
+static void output_replace(t_all *all, t_cmd *cmd);
+static void output_append(t_all *all, t_cmd *cmd);
+
 char    *handle_output(t_all *all, t_cmd *cmd)
 {
     all->line++;
@@ -24,13 +29,26 @@ static void output_append(t_all *all, t_cmd *cmd)
 {
     char    *addr;
 
-    cmd->redir->out_type = 'a';
     all->line++;
-    //skip ws
-    //read the file to open (can be included into quotes)
-    //check if fd != -1, then firstly clear the opened file and close it
-    //open the new file and reach its end with get_next_line function
-    //proceed /dev/stdout to leave at the -1 fd
+    addr = read_addr(all, cmd);
+    if (!addr)
+        error("output reditect: syntax error\n", all);
+    if (!ft_strncmp(addr, "/dev/stdout", 11))
+    {
+        if (cmd->redir->fd_outfile != -2)
+            return ;
+        cmd->redir->fd_outfile = 1;
+        cmd->redir->out_type = 'a';
+        return ;
+    }
+    if (cmd->redir->fd_outfile != -2)
+        clear_and_close(cmd);
+    cmd->redir->fd_outfile = open(addr, O_WRONLY);
+    if (cmd->redir->fd_infile == -1)
+        error("input_from_file: impossible to open file\n", all);
+    reach_end_file(cmd->redir->fd_outfile);
+    free(addr);
+    cmd->redir->out_type = 'a';
     return ;
 }
 
@@ -38,11 +56,44 @@ static void output_replace(t_all *all, t_cmd *cmd)
 {
     char    *addr;
 
+    addr = read_addr(all, cmd);
+    if (!addr)
+        error("output reditect: syntax error\n", all);
+    if (!ft_strncmp(addr, "/dev/stdout", 11))
+    {
+        if (cmd->redir->fd_outfile != -2)
+            return ;
+        cmd->redir->fd_outfile = 1;
+        cmd->redir->out_type = 'r';
+        return ;
+    }
+    if (cmd->redir->fd_outfile != -2)
+        clear_and_close(cmd);
+    cmd->redir->fd_outfile = open(addr, O_WRONLY);
+    if (cmd->redir->fd_infile == -1)
+        error("input_from_file: impossible to open file\n", all);
+    free(addr);
     cmd->redir->out_type = 'r';
-    //skip ws
-    //read the file to open (can be included into quotes)
-    //check if fd != -1, then firstly clear the opened file and close it
-    //open the new file
-    //proceed /dev/stdout to leave at the -1 fd
+    return ;
+}
+
+static void clear_and_close(t_cmd *cmd)
+{
+    write(cmd->redir->fd_outfile, "", 1);
+    close(cmd->redir->fd_outfile);
+    cmd->redir->fd_outfile = -1;
+    return ;
+}
+
+static void reach_end_file(int fd)
+{
+    char    *gnl;
+
+    gnl = get_next_line(fd);
+    while (gnl)
+    {
+        free(gnl);
+        gnl = get_next_line(fd);
+    }
     return ;
 }

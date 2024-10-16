@@ -38,12 +38,12 @@ char    *handle_redir(t_all *all, t_cmd *cmd)
 static void init_redir(t_redir *redir)
 {
     redir->is_pipe = 0;
-    redir->fd_infile = -1;
-    redir->fd_outfile = -1;
+    redir->fd_infile = -2;
+    redir->fd_outfile = -2;
     redir->in_type = '0';
     redir->out_type = '0';
-    redir->pipe_fd[0] = -1;
-    redir->pipe_fd[1] = -1;
+    redir->pipe_fd[0] = -2;
+    redir->pipe_fd[1] = -2;
     redir->in_txt = NULL;
     return ;
 }
@@ -52,5 +52,34 @@ static void    handle_pipe(t_all *all, t_cmd *cmd)
 {
     cmd->redir->is_pipe = 'y';
     return ;
+}
+
+char *read_addr(t_all *all, t_cmd *cmd)
+{
+    char    *temp;
+    char    *ret;
+
+    all->temp_for_free = NULL;
+    while (!is_white_space(*(all->line)) && *(all->line))
+        all->line++;
+    if (!is_redir(*(all->line)))
+        return (NULL);
+    while (is_white_space(*(all->line)) && *(all->line))
+    {
+        if (*(all->line) == '$')
+            all->temp_for_free = handle_dollar(all, cmd, 0);
+        else if (!is_quote(*(all->line)))
+            all->temp_for_free = handle_quotes(all, cmd);
+        else
+            all->temp_for_free = handle_word(all, cmd, 0);
+        temp = ret;
+        ret = ft_strjoin(temp, all->temp_for_free);
+        if (!ret)
+            error("read_addr: Malloc error\n", all);
+        free(temp);
+        free(all->temp_for_free);
+    }
+    all->temp_for_free = NULL;
+    return (ret);
 }
 

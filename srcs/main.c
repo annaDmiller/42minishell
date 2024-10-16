@@ -14,6 +14,8 @@
 
 volatile int    g_sig;
 
+static t_all    *init_all_struct(void);
+
 int main(int argc, char **argv, char **env)
 {
     t_all   *all;
@@ -22,21 +24,22 @@ int main(int argc, char **argv, char **env)
     g_sig = 0;
 //    init_signal;
     all = init_all_struct();
-    while (1)
-    {
-        prompt = print_prompt();
+//    while (1)
+//    {
+        prompt = print_prompt(all);
         all->line = readline(prompt);
         free(prompt);
         if (is_empty_line(all->line))
         {
             add_history(all->line);
-        //parse_line(all->line);
-        //free_lst(all->lst_cmd);
+            //validate_line(all);
+            parse_line(all);
+            //execute
         }
         free (all->line);
-        //free_all(all);
-        //rl_on_new_line();
-    }
+        //free_lst_cmd(all);
+        rl_on_new_line();
+//    }
     rl_clear_history();
     free(all);
     return (0);

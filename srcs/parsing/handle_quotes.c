@@ -14,6 +14,8 @@
 
 static char *add_tail_until_finish(t_all *all, t_cmd *cmd, char **head);
 static void check_ending(t_all *all, t_cmd *cmd);
+static char    *handle_double_quotes(t_all *all, t_cmd *cmd);
+static char    *handle_single_quotes(t_all *all, t_cmd *cmd);
 
 char    *handle_quotes(t_all *all, t_cmd *cmd)
 {
@@ -22,7 +24,7 @@ char    *handle_quotes(t_all *all, t_cmd *cmd)
     return (handle_single_quote(all, cmd));
     }
 
-char    *handle_double_quotes(t_all *all, t_cmd *cmd)
+static char    *handle_double_quotes(t_all *all, t_cmd *cmd)
 {
     char    *str;
     int     ind;
@@ -52,7 +54,7 @@ char    *handle_double_quotes(t_all *all, t_cmd *cmd)
     return (str);
 }
 
-char    *handle_single_quotes(t_all *all, t_cmd *cmd)
+static char    *handle_single_quotes(t_all *all, t_cmd *cmd)
 {
     char    *str;
     int     ind;
@@ -98,6 +100,9 @@ static char *add_tail_until_finish(t_all *all, t_cmd *cmd, char **head)
     *head = ft_strjoin(all->temp_for_free, env_val);
     free(all->temp_for_free);
     free(env_val);
+    all->temp_for_free = NULL;
+    if (*head)
+        error("handle_quotes: Malloc error\n", all);
     if (!(*(all->line)))
         return (*head);
     all->temp_for_free = *head;
@@ -106,5 +111,7 @@ static char *add_tail_until_finish(t_all *all, t_cmd *cmd, char **head)
     free(tail);
     free(all->temp_for_free);
     all->temp_for_free = NULL;
+    if (*head)
+        error("handle_quotes: Malloc error\n", all);
     return (*head);
 }

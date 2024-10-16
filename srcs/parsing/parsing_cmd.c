@@ -30,7 +30,7 @@ void    parse_cmd(t_all *all)
             add_arg(all, last, str);
         while (!is_white_space(*(all->line++)) && last->quote == 0)
             str = NULL;
-        if (!str)
+        if (str)
         {
             temp = take_str(all, last);
             temp1 = str;
@@ -38,7 +38,7 @@ void    parse_cmd(t_all *all)
             free(temp);
             free(temp1);
             if (!str)
-                error("parse_cmd: ft_strjoin error\n", all);
+                error("parse_cmd: Malloc error\n", all);
         }
         else
             str = take_str(all, last);
@@ -55,7 +55,7 @@ static char *take_str(t_all *all, t_cmd *cmd)
         if (*(all->line) != '$')
             add_cmd_name(all, cmd);
         else
-            cmd->name = handle_dollar(all, cmd);
+            cmd->name = handle_dollar(all, cmd, 0);
         return (NULL);
     }
     if (*(all->line) == '$' && is_white_space(*(all->line + 1)) && *(all->line + 1))
@@ -64,7 +64,7 @@ static char *take_str(t_all *all, t_cmd *cmd)
         return (handle_quotes(all, cmd));
     if (!is_redir(*(all->line)))
         return (handle_redir(all, cmd));
-    return (handle_word_arg(all, cmd));
+    return (handle_word(all, cmd, 0));
 }
 
 static void add_cmd_name(t_all *all, t_cmd *last)
@@ -80,4 +80,5 @@ static void add_cmd_name(t_all *all, t_cmd *last)
     last->name = cmd_name;
     all->line += len_name;
     return ;
+    //rewrite logic for len_name?
 }
