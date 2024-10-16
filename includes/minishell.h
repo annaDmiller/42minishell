@@ -25,13 +25,29 @@
 # include <sys/stat.h>
 
 extern volatile int g_sig;
-
-char    *print_prompt(void);
-void    parse_line(t_all *all);
-void    free_lst(t_cmd *lst_cmd);
-int is_empty_line(char *cmd_line);
-int  find_end_cmd(char   *cmd_line);
+//list_logic
 t_cmd   *cmd_new(t_all *all);
+t_cmd   *cmd_new(t_all *all);
+t_cmd   *cmd_last_el(t_all *all);
+//main part
+char    *print_prompt(t_all *all);
+//parsing main
+void    parse_line(t_all *all);
+void    parse_cmd(t_all *all);
+//parsing utils
 int  is_white_space(char car);
-void    add_cmd(t_all *all);
+int is_empty_line(char *cmd_line);
+int is_quote(char car);
+int count_len_bfr_ws(char *line);
+int is_redir(char car);
+//parsing main functions
+char    *handle_dollar(t_all *all, t_cmd *cmd, char car);
+char    *handle_redir(t_all *all, t_cmd *cmd);
+char *read_addr(t_all *all, t_cmd *cmd);
+char    *handle_input(t_all *all, t_cmd *cmd);
+char    *handle_output(t_all *all, t_cmd *cmd);
+char    *handle_quotes(t_all *all, t_cmd *cmd);
+char    *handle_word(t_all *all, t_cmd *cmd, int in_dollar);
+//finalization part
+void    error(char *mess, t_all *all);
 #endif
