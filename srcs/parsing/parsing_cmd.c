@@ -27,7 +27,7 @@ void    parse_cmd(t_all *all)
     while (*(all->line))
     {
         if (!is_white_space(*(all->line)) && str && last->quote == 0)
-            add_arg(all, last, str);
+            add_arg(all, last, &str);
         while (!is_white_space(*(all->line++)) && last->quote == 0)
             str = NULL;
         if (str)
@@ -72,7 +72,9 @@ static void add_cmd_name(t_all *all, t_cmd *last)
     int     len_name;
     char    *cmd_name;
 
-    len_name = count_len_bfr_ws(all->line);
+    len_name = 0;
+    while (is_white_space(all->line[len_name]) && all->line[len_name])
+        len_name++;
     cmd_name = (char *) malloc((len_name + 1) * sizeof(char));
     if (!cmd_name)
         error("add_cmd_name: Malloc error\n", all);

@@ -12,9 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-int add_arg(t_all *all, t_cmd *cmd, char *arg, int len)
+void    add_arg(t_all *all, t_cmd *last, char **str)
 {
-    if (!cmd->argv)
-        cmd->argv = init_arg(all);
-    //add logic for adding the arguement value to the cmd
+    t_args  *new_arg;
+
+    all->temp_for_free = *str;
+    new_arg = arg_new(all);
+    new_arg->arg = *str;
+    all->temp_for_free = NULL;
+    arg_add_el_back(last, new_arg);
+    return ;
 }

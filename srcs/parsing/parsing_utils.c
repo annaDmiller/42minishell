@@ -41,20 +41,6 @@ int is_quote(char car)
     return (1);
 }
 
-int count_len_bfr_ws(char *line)
-{
-    int ind;
-
-    ind = 0;
-    while (line[ind])
-    {
-        if (!is_white_space(line[ind]))
-            return (ind);
-        ind++;
-    }
-    return (ind);
-}
-
 int is_redir(char car)
 {
     if (car == '>' || car == '<' || car == '|')

@@ -13,11 +13,11 @@ t_args   *arg_new(t_all *all)
     return (argv);
 }
 
-void    cmd_add_el_back(t_cmd *last_cmd, t_args *new_el)
+void    arg_add_el_back(t_cmd *last_cmd, t_args *new_el)
 {
     t_args   *last;
 
-    last = cmd_last_el(last_cmd);
+    last = arg_last_el(last_cmd);
     last->next = new_el;
     new_el->prev = last;
     return ;
