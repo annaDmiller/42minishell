@@ -12,39 +12,38 @@
 
 #include "../../includes/minishell.h"
 
-t_cmd   *cmd_new(t_all *all)
+t_cmd	*cmd_new(t_all *all)
 {
-    t_cmd   *new;
+	t_cmd	*new;
 
-    new = (t_cmd *) malloc(sizeof(t_cmd));
-    if (!new)
-        error("cmd_new: Malloc error\n", all);
-    new->next = NULL;
-    new->prev = NULL;
-    new->name = NULL;
-    new->argv = NULL;
-    new->redir = NULL;
-    new->quote = 0;
-    return (new);
+	new = (t_cmd *) malloc(sizeof(t_cmd));
+	if (!new)
+		error("cmd_new: Malloc error\n", all);
+	new->next = NULL;
+	new->prev = NULL;
+	new->name = NULL;
+	new->argv = NULL;
+	new->redir = NULL;
+	new->quote = 0;
+	return (new);
 }
 
-void    cmd_add_el_back(t_all *all, t_cmd *new_el)
+void	cmd_add_el_back(t_all *all, t_cmd *new_el)
 {
-    t_cmd   *last;
+	t_cmd	*last;
 
-    last = cmd_last_el(all);
-    last->next = new_el;
-    new_el->prev = last;
-    return ;
+	last = cmd_last_el(all);
+	last->next = new_el;
+	new_el->prev = last;
+	return ;
 }
 
-t_cmd   *cmd_last_el(t_all *all)
+t_cmd	*cmd_last_el(t_all *all)
 {
-    t_cmd   *last;
+	t_cmd	*last;
 
-    last = all->lst_cmd;
-    while (last->next)
-        last = last->next;
-    return (last);
+	last = all->lst_cmd;
+	while (last->next)
+		last = last->next;
+	return (last);
 }
-

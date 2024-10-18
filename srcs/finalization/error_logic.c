@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void    error(char *mess, t_all *all)
+void	error(char *mess, t_all *all)
 {
-    return ;
+	return ;
 }
