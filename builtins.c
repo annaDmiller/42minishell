@@ -29,8 +29,3 @@ int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 		texit(msh, cmd->argv);
 	return (0);
 }
-
-char	*expand(t_msh *msh, char *str)
-{
-	return (env_retrieve_var(msh->env, str)->var);
-}

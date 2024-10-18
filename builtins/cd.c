@@ -20,7 +20,7 @@ void    cd(t_msh *msh, t_args *argv)
 		printf("cd: HOME not set\n");
 	else if (!argv && chdir(env_retrieve_var(msh->env, "HOME")->var) == 0) // chdir($home)
 	{
-		// proteger si OLDPWD n'est pas retrouve
+		// proteger si OLDPWD n'existe pas
 		free(env_retrieve_var(msh->env, "OLDPWD")->var);
 		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
 		free(msh->pwd);
@@ -39,5 +39,4 @@ void    cd(t_msh *msh, t_args *argv)
 	}
 	else
 		printf("cd: %s: No such file or directory\n", argv->arg);
-	// reset OLDPWD
 }

@@ -38,18 +38,14 @@ void    everyinit(t_msh *msh, int argc, char **argv, char **envp);
 void	putstr(char *str);
 ///// processing.c
 
-///// BUILTINS.c
+///// BUILTINS
 void    env(t_env *env);
 void    pwd(t_msh *msh);
-void	echo(t_msh *msh, t_args *argv);
-char	*expand(t_msh *msh, char *str);
-///// BUILTINS.c
-
-///// CD.c
 void    cd(t_msh *msh, t_args *argv);
-void    up_pwd(t_msh *msh, char *dir);
-void    down_pwd(t_msh *msh);
-///// CD.c
+void	echo(t_msh *msh, t_args *argv);
+void	export(t_msh *msh, t_args *argv);
+///// BUILTINS
+
 
 ///// REDIR.c
 void	redirin(char *str, char *file); // will take care of "<"
@@ -114,7 +110,8 @@ int	exec(t_msh *msh, t_args *arg);
 // char	**setup_args(t_args *argv);
 char	**setup_args(char *name, t_args *argv);
 char	**setup_env(t_env *env);
-char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can execve it
+char	*fpath_tt(t_env *env, char *cmd, int i);
+// char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can execve it
 ///// EXEC.c
 
 #endif

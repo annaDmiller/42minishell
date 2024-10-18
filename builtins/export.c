@@ -121,7 +121,6 @@ void	export_no_opt(t_msh *msh)
 		}
 		free(names[i]);
 	}
-	i = -1;
 	free(names);
 	free(order);
 }

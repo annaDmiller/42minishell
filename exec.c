@@ -60,7 +60,7 @@ int	exec(t_msh *msh, t_args *arg)
 
 	// if (!cmd->redir)
 	// {
-		path = fpath_tt("clear", -1);
+		path = fpath_tt(msh->env, "clear", -1);
 		argv = setup_args("clear", arg);
 		envp = setup_env(msh->env);
 		// if (!path || !argv || !envp)
@@ -103,7 +103,7 @@ int	exec(t_msh *msh, t_args *arg)
 
 
 
-char	*fpath_tt(char *cmd, int i)
+char	*fpath_tt(t_env *env, char *cmd, int i)
 {
 	char	**str;
 	char	*path;
@@ -111,7 +111,9 @@ char	*fpath_tt(char *cmd, int i)
 	if (!access(cmd, F_OK | X_OK))	// try to acces the cmd right now, maybe its it absolute path
 		return (cmd);
 	path = NULL;
-	str = split(getenv("PATH"), ':');  // getenv and split it with ":" to try to build every possible path
+	// str = tstrdup(env_retrieve_var(env, "PATH")->var);
+	str = split(env_retrieve_var(env, "PATH")->var, ':');
+	// str = split(getenv("PATH"), ':');  // getenv and split it with ":" to try to build every possible path
 	if (!str)
 		return (0);
 	while (str[++i])
