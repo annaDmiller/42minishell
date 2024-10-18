@@ -12,7 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-static void clear_and_close(t_cmd *cmd);
 static void reach_end_file(int fd);
 static void output_replace(t_all *all, t_cmd *cmd);
 static void output_append(t_all *all, t_cmd *cmd);
@@ -42,8 +41,8 @@ static void output_append(t_all *all, t_cmd *cmd)
         return ;
     }
     if (cmd->redir->fd_outfile != -2)
-        clear_and_close(cmd);
-    cmd->redir->fd_outfile = open(addr, O_WRONLY);
+        close(cmd->redir->fd_outfile);
+    cmd->redir->fd_outfile = open(addr, O_WRONLY | O_CREAT);
     if (cmd->redir->fd_infile == -1)
         error("input_from_file: impossible to open file\n", all);
     reach_end_file(cmd->redir->fd_outfile);
@@ -68,20 +67,12 @@ static void output_replace(t_all *all, t_cmd *cmd)
         return ;
     }
     if (cmd->redir->fd_outfile != -2)
-        clear_and_close(cmd);
-    cmd->redir->fd_outfile = open(addr, O_WRONLY);
+        close(cmd->redir->fd_outfile);
+    cmd->redir->fd_outfile = open(addr, O_WRONLY | O_TRUNC | O_CREAT);
     if (cmd->redir->fd_infile == -1)
         error("input_from_file: impossible to open file\n", all);
     free(addr);
     cmd->redir->out_type = 'r';
-    return ;
-}
-
-static void clear_and_close(t_cmd *cmd)
-{
-    write(cmd->redir->fd_outfile, "", 1);
-    close(cmd->redir->fd_outfile);
-    cmd->redir->fd_outfile = -1;
     return ;
 }
 
