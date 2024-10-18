@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 #include "../include/minishell.h"
 
+// NOT WORKING
+// oldwork =en
+
 void	export(t_msh *msh, t_args *argv)
 {
 	t_env	*var;
@@ -79,7 +82,7 @@ void	export_no_opt(t_msh *msh)
 	int		d;
 	int		r;
 
-	length = lsize(msh->env) - 1; // -1 pour commencer a 0 dans les tab[i]
+	length = l_envsize(msh->env) - 1; // -1 pour commencer a 0 dans les tab[i]
 	names = malloc(sizeof(char *) * (length + 1));
 	order = malloc(sizeof(int) * (length + 1));
 	i = -1;

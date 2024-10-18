@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "include/minishell.h"
 
-int	lsize(t_env *env)
+int	l_envsize(t_env *env)
 {
 	t_env	*tmp;
 	int	l;
@@ -21,4 +21,17 @@ int	lsize(t_env *env)
 	while (tmp && ++l > 0)
 		tmp = tmp->next;
 	return (l);
+}
+
+int	l_argsize(t_args *argv)
+{
+	t_args	*tmp;
+	int	l;
+
+	l = 0;
+	tmp = argv;
+	while (tmp && ++l > 0)
+		tmp = tmp->next;
+	return (l);
+
 }

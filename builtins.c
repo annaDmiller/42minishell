@@ -18,7 +18,7 @@ int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 	if (tstrcmp(cmd->name, "pwd"))
 		printf("%s\n", msh->pwd);
 	if (tstrcmp(cmd->name, "echo"))
-		echo(msh, cmd);
+		echo(msh, cmd->argv);
 	if (tstrcmp(cmd->name, "cd"))
 		cd(msh, cmd->argv);
 	if (tstrcmp(cmd->name, "export"))

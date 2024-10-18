@@ -1,6 +1,36 @@
-				Lire le manuel de bash --posix
+BUILTINS
 
-gerer tous les cas de redirections + tt apprendre sur les here documents
+	[✅]=  echo with option -n
+
+	[✅]=  pwd with no options 
+
+	[✅]=  env with no options or arguments
+
+	[✅]=  export with no options
+		// echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
+		// export 1 \\A
+
+	[✅]=  unset with no options
+			// handles "_" not being able to be unset
+
+	[✅]=  cd with only a relative or absolute path
+
+	[ ]=  exit with no options
+		// when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
+
+ENV
+
+	[✅]=  $variable est censé etre remplace par le contenu de la variable si elle existe // env+var
+_____________________________________________
+
+
+		Lire le manuel de bash --posix
+
+EXEC	convertir l`env en char ** et les arguments en char ** aussi pour execve
+		si pipe est, faire les commandes dans des fork
+
+
+gere les redirections + here doc
 
 	[ ]=  < should redirect input.
 	[ ]=  > should redirect output.
@@ -14,41 +44,8 @@ gerer les pipes |
 		du pipe au côté droit pipe
 
 
-
-gerer les variables env
-
-	[✅]=  $variable est censé etre remplace par le contenu de la variable si elle existe // env+var
-		
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	[ ]=  CHANGER LA variable $_ en fonction de la derniere ligne de commande tapee
 		PBLM with $_ variable
-	printf("%s\n", env_var("_=/usr/bin/env")); // does work the right way \\ var in it isnt good
-
-
-BUILTINS
-
-	[✅]=  echo with option -n
-			// echo -nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn TEST
-			// echo -nnnnno TEST
-			// echo -n -n -n -n -n -n TEST
-
-	[]=  pwd with no options + updating pwd after using cd
-		// PWD Set by the shell to be an absolute pathname of the current working directory. If an application sets
-		// 	or unsets the value of PWD , the behaviors of the cd and pwd utilities are unspecified.
-
-	[✅]=  env with no options or arguments
-
-	[✅]=  export with no options
-			// echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
-			// export 1 \\A
-
-	[✅]=  unset with no options
-			// handles "_" not being able to be unset
-
-	[ ]=  cd with only a relative or absolute path
-
-	[ ]=  exit with no options
-		// when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
-
 	

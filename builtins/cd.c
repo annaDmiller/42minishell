@@ -16,30 +16,26 @@
 ////	si on passe en argument ../../include on verifie petit a petit que c'est possible
 void    cd(t_msh *msh, t_args *argv)
 {
-	// char	*tmp;
-	// char	*path;
-	int	t;
-
-	// tmp = msh->pwd;
-	if (!argv) // chdir($home)
+	if (!argv && !env_retrieve_var(msh->env, "HOME"))
+		printf("cd: HOME not set\n");
+	else if (!argv && chdir(env_retrieve_var(msh->env, "HOME")->var) == 0) // chdir($home)
 	{
-		t = chdir(env_retrieve_var(msh->env, "HOME")->var);
+		// proteger si OLDPWD n'est pas retrouve
+		free(env_retrieve_var(msh->env, "OLDPWD")->var);
+		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
 		free(msh->pwd);
-		msh->pwd = tstrdup(env_retrieve_var(msh->env, "HOME")->var);
-		// printf("no path ngl\t\t//t = %d", t);
+		msh->pwd = NULL;
+		msh->pwd = getcwd(NULL, 0);
 	}
 	else if (argv->next)
 		putstrfd("cd: too many arguments\n", STDOUT_FILENO);
-		// return (putstrfd("cd: too many arguments\n", STDOUT_FILENO));
-
 	else if (chdir(argv->arg) == 0)
 	{
-		// printf("going to //\t %s\n", env_retrieve_var(msh->env, "HOME")->var);
-		// printf("going to //\t %s\n", argv->arg);
+		free(env_retrieve_var(msh->env, "OLDPWD")->var);
+		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
 		free(msh->pwd);
-		msh->pwd = tstrdup(argv->arg);
-		// printf("going to //\t %s\n", env_retrieve_var(msh->env, "HOME")->var);
-
+		msh->pwd = NULL;
+		msh->pwd = getcwd(NULL, 0);
 	}
 	else
 		printf("cd: %s: No such file or directory\n", argv->arg);

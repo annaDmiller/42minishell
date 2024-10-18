@@ -38,9 +38,6 @@ void	envinit(t_msh *msh, char **envp, int i)
 		tmp->next = NULL;
 	}
 }
-// PWD=
-// SHLVL=
-// _=
 
 void	env_build(t_msh *msh, int i)
 {
@@ -62,21 +59,21 @@ void	env_build(t_msh *msh, int i)
 				return ; // error malloc
 			tmp = tmp->next;
 		}
-		if (i == 1)
+		if (i == 0)
 		{
 			tmp->name = env_varname("PWD");
 			tmp->var = tstrdup(msh->pwd);
 			tmp->id = i + 1;
 			tmp->next = NULL;
 		}
-		if (i == 2)
+		if (i == 1)
 		{
 			tmp->name = env_varname("SHLVL");
 			tmp->var = env_var("SHLVL=1");
 			tmp->id = i + 1;
 			tmp->next = NULL;
 		}
-		if (i == 3)
+		if (i == 2)
 		{
 			tmp->name = env_varname("_");
 			tmp->var = env_var("_=/usr/bin/env");
@@ -97,6 +94,8 @@ void    env(t_env *env)
 	t_env	*tmp;
 
 	tmp = env;
+	if (!tmp)
+		printf("PROUTPROUTPROUT\n\n\n");
 	while (tmp)
 	{
 		if (tmp->var)

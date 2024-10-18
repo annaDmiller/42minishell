@@ -12,17 +12,28 @@
 #include "include/minishell.h"
 
 	// show_args(msh);
-	
+static	void	test(int tt)
+{
+	(void)tt;
+}
+
 void	minishell(t_msh *msh, int argc, char **argv, char **envp)
 {
 	everyinit(msh, argc, argv, envp);
 	parse_cmd_line(msh, argv);
-	export(msh, msh->l_args);
+	test(0);
+	exec(msh, msh->l_args);
+	// exec(msh, cmd);
 	// env(msh->env);
-	printf("_______________________________________________\n\n");
+	// export(msh, msh->l_args);
+	// printf("_______________________________________________\n\n");
+	// env(msh->env);
+	// export_no_opt(msh);
+	// unset(msh, msh->l_args);
 	// export_no_opt(msh);
 	// pwd(msh);
-	cd(msh, msh->l_args);
+	// cd(msh, msh->l_args);
+	// echo(msh, msh->l_args);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -32,7 +43,6 @@ int	main(int argc, char **argv, char **envp)
 	minishell(&msh, argc, argv, envp);
 	freecmdline(msh.l_args);
 	free(msh.pwd);
-	if (envp[0])
-		freenv(msh.env);
+	freenv(msh.env);
 	return (0);
 }

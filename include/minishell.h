@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 16:54:17 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/09 08:48:04 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/10/18 20:24:41 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -35,12 +35,13 @@ void	minishell(t_msh *msh, int argc, char **argv, char **env);
 
 ///// processing.c
 void    everyinit(t_msh *msh, int argc, char **argv, char **envp);
+void	putstr(char *str);
 ///// processing.c
 
 ///// BUILTINS.c
 void    env(t_env *env);
 void    pwd(t_msh *msh);
-void	echo(t_msh *msh, t_cmd *cmd);
+void	echo(t_msh *msh, t_args *argv);
 char	*expand(t_msh *msh, char *str);
 ///// BUILTINS.c
 
@@ -55,7 +56,6 @@ void	redirin(char *str, char *file); // will take care of "<"
 void	redirout(char *str, char *file); // will take care of ">"
 void	append(char *str, char *file); // will take care of ">>"
 void	heredoc(char *str); // will take care of "<<"
-char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can execve it
 ///// REDIR.c
 
 ///// ENV.c
@@ -100,11 +100,21 @@ void	fsplit(char **str);
 ///// TLIB.c
 
 ///// TLIST.c
-int	lsize(t_env *env);
+int	l_envsize(t_env *env);
+int	l_argsize(t_args *argv);
 ///// TLIST.c
 
 void	texit(t_msh *msh, t_args *argv);
 
 void	parse_cmd_line(t_msh *msh, char **argv);
+
+///// EXEC.c
+// int	exec(t_msh *msh, t_cmd *cmd);
+int	exec(t_msh *msh, t_args *arg);
+// char	**setup_args(t_args *argv);
+char	**setup_args(char *name, t_args *argv);
+char	**setup_env(t_env *env);
+char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can execve it
+///// EXEC.c
 
 #endif

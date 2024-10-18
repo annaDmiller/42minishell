@@ -3,6 +3,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -O3 -g3 
 
 MINISHELL = redir.c \
+		exec.c \
 		free.c \
 		tlib.c \
 		tlist.c \
