@@ -1,0 +1,48 @@
+echo
+echo Hello
+echo Hello Hi
+
+echo "Hello"
+echo "Hello$"
+echo "Hello$TEST"
+echo "Hello$TEST1"
+echo "Hello$!TEST"
+echo "Hello$12TEST"
+echo "$TEST hi"
+echo "$TEST! hi"
+
+echo 'Hello'
+echo 'Hello$TEST'
+echo 'Hello$'
+
+echo $
+echo $TEST
+echo $TEST1
+echo $12TEST
+echo $!TEST
+echo $TEST!1
+
+echo < a.txt
+echo > a.txt
+echo >> a.txt
+echo << alo
+echo < 'a.txt'
+echo < "a.txt"
+echo < "$TEST"
+echo < '$TEST'
+echo << 'alo'
+echo << "alo"
+echo << $TEST
+echo << "$TEST"
+
+echo a | cat l
+
+echo < a.txt < b.txt
+echo << hi << hi
+echo > a.txt > btxt
+echo >> a.txt >> b.txt
+echo > a.txt >> b.txt
+echo < a.txt << b.txt
+echo > a.txt > /dev/stdout > b.txt
+echo > a.txt > /dev/stdout
+echo < a.txt > b.txt
