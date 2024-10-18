@@ -77,6 +77,7 @@ static char    *get_host(char *addr, t_all *all)
     if (fd == -1)
         error("get_host: impossible to print prompt\n", all);
     host = get_next_line(fd);
+    close(fd);
     if (!host)
         exit(1);
     host[ft_strlen(host) - 1] = '\0';

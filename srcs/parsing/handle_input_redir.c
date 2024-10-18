@@ -17,12 +17,14 @@ static void input_from_stdin(t_all *all, t_cmd *cmd);
 static void input_from_file(t_all *all, t_cmd *cmd);
 static char *read_keyword(t_all *all, t_cmd *cmd);
 
-char    *handle_input(t_all *all, t_cmd *cmd)
+void    handle_input(t_all *all, t_cmd *cmd)
 {
     all->line++;
     if (*(all->line) == '<')
-        return (input_from_stdin(all, cmd), NULL);
-    return (input_from_file(all, cmd), NULL);
+        input_from_stdin(all, cmd);
+    else
+        input_from_file(all, cmd);
+    return ;
 }
 
 static void input_from_stdin(t_all *all, t_cmd *cmd)
@@ -53,12 +55,14 @@ static void input_from_stdin(t_all *all, t_cmd *cmd)
 static void input_from_file(t_all *all, t_cmd *cmd)
 {
     char    *addr;
+    int     check;
     
+    check = cmd->redir->fd_infile;
     addr = read_addr(all, cmd);
     if (!addr)
         error("input_redir: syntax error\n", all);
     if (cmd->redir->fd_infile != -2)
-        close(cmd->redir->fd_infile);
+        check = close(cmd->redir->fd_infile);
     cmd->redir->fd_infile = open(addr, O_RDONLY);
     if (cmd->redir->fd_infile == -1)
         error("input_from_file: impossible to open file\n", all);

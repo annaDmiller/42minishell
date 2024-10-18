@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **env)
         all = init_all_struct();
         prompt = print_prompt(all);
         all->line = readline(prompt);
-        //all->line = ft_strdup("cat << alo");
+        //all->line = ft_strdup("cat < ../a.txt < ../b.txt");
         free(prompt);
         if (is_empty_line(all->line))
         {
@@ -56,6 +56,7 @@ int main(int argc, char **argv, char **env)
                 printf("CMD arg: %s\n", arg->arg);
             }
         }
+        sleep(5);
         free_all_struct(all);
         rl_on_new_line();
     }

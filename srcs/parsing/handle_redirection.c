@@ -18,21 +18,22 @@ static void handle_pipe(t_all *all, t_cmd *cmd);
 char    *handle_redir(t_all *all, t_cmd *cmd)
 {
     t_redir *redir;
-    char    *str;
 
-    redir = (t_redir*) malloc(sizeof(t_redir));
-    if (!redir)
-        error("handle_redir: Malloc error\n", all);
-    init_redir(redir);
-    cmd->redir = redir;
-    str = NULL;
+    if (!cmd->redir)
+    {
+        redir = (t_redir*) malloc(sizeof(t_redir));
+        if (!redir)
+            error("handle_redir: Malloc error\n", all);
+        init_redir(redir);
+        cmd->redir = redir;
+    }
     if (*(all->line) == '>')
         handle_output(all, cmd);
     if (*(all->line) == '<')
-        str = handle_input(all, cmd);
+        handle_input(all, cmd);
     if (*(all->line) == '|')
         handle_pipe(all, cmd);
-    return (str);
+    return (NULL);
 }
 
 static void init_redir(t_redir *redir)
