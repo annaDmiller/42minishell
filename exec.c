@@ -57,13 +57,11 @@ int	exec(t_msh *msh, t_args *arg)
 	char	**argv;
 	char	**envp;
 	char		*path;
-	int			i;
 
-	i = -1;
 	// if (!cmd->redir)
 	// {
-		path = fpath_tt("echo", -1);
-		argv = setup_args("echo", arg);
+		path = fpath_tt("clear", -1);
+		argv = setup_args("clear", arg);
 		envp = setup_env(msh->env);
 		// if (!path || !argv || !envp)
 			// handle error

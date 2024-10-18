@@ -14,6 +14,11 @@
 	// show_args(msh);
 static	void	test(int tt)
 {
+	int	i;
+
+	i = -1;
+
+	(void)i;
 	(void)tt;
 }
 
