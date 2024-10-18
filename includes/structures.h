@@ -31,17 +31,6 @@ typedef struct s_args
     struct s_args   *prev;
 }                   t_args;
 
-typedef struct s_msh
-{
-	t_env		*env;
-	t_args		*l_args;
-	char		*pwd;
-	char		**argv;
-	int			argc;
-	int                     exitstatus;
-
-}		t_msh;
-
 typedef struct s_cmd
 {
     char            *name; //the naming of the command, f.i. "echo" or "ls"
@@ -60,6 +49,17 @@ typedef struct s_env
 	int				id;
 	int				index;
 }               t_env;
+
+typedef struct s_msh
+{
+	t_env		*env;
+	t_args		*l_args;
+	char		*pwd;
+	char		**argv;
+	int			argc;
+	int                     exitstatus;
+
+}		t_msh;
 
 typedef struct  s_all
 {
