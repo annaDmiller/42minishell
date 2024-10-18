@@ -60,6 +60,7 @@ char *read_addr(t_all *all, t_cmd *cmd)
     char    *ret;
 
     all->temp_for_free = NULL;
+    ret = NULL;
     while (!is_white_space(*(all->line)) && *(all->line))
         all->line++;
     if (!is_redir(*(all->line)))

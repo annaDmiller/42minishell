@@ -20,6 +20,9 @@ void    add_arg(t_all *all, t_cmd *last, char **str)
     new_arg = arg_new(all);
     new_arg->arg = *str;
     all->temp_for_free = NULL;
-    arg_add_el_back(last, new_arg);
+    if (!last->argv)
+        last->argv = new_arg;
+    else
+        arg_add_el_back(last, new_arg);
     return ;
 }

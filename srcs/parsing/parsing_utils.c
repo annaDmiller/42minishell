@@ -29,7 +29,7 @@ int is_empty_line(char *cmd_line)
 int  is_white_space(char car)
 {
     if (car == ' ' || car == '\v' || car == '\t' || car == '\r'
-        || car == '\f' || car == '\n')
+        || car == '\f' || car == '\0')
         return (0);
     return (1);
 }

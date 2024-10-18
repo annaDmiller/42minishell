@@ -12,9 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+static void read_from_stdin(t_all *all, t_cmd *cmd);
 static void input_from_stdin(t_all *all, t_cmd *cmd);
 static void input_from_file(t_all *all, t_cmd *cmd);
-static void read_from_stdin(t_all *all, t_cmd *cmd);
 static char *read_keyword(t_all *all, t_cmd *cmd);
 
 char    *handle_input(t_all *all, t_cmd *cmd)
@@ -27,6 +27,8 @@ char    *handle_input(t_all *all, t_cmd *cmd)
 
 static void input_from_stdin(t_all *all, t_cmd *cmd)
 {
+    char    *temp;
+
     all->line++;
     all->temp_for_free = read_keyword(all, cmd);
     if (cmd->redir->fd_infile != -2)
@@ -35,10 +37,16 @@ static void input_from_stdin(t_all *all, t_cmd *cmd)
         if (cmd->redir->in_txt)
             free(cmd->redir->in_txt);
     }
-    read_from_strdin(all, cmd);
+    temp = all->temp_for_free;
+    all->temp_for_free = ft_strjoin(temp, "\n");
+    free(temp);
+    if (!all->temp_for_free)
+        error("input_from_stdin: Malloc error\n", all);
+    read_from_stdin(all, cmd);
     free(all->temp_for_free);
     all->temp_for_free = NULL;
     cmd->redir->in_type = 's';
+    cmd->redir->fd_infile = 0;
     return ;
 }
 
@@ -69,7 +77,7 @@ static void read_from_stdin(t_all *all, t_cmd *cmd)
     gnl = get_next_line(0);
     if (!gnl)
         error("read_from_stdin: Malloc error\n", all);
-    while (ft_strncmp(all->temp_for_free, gnl, ft_strlen(all->temp_for_free + 1)))
+    while (ft_strncmp(all->temp_for_free, gnl, ft_strlen(all->temp_for_free) + 1))
     {
         temp = cmd->redir->in_txt;
         cmd->redir->in_txt = ft_strjoin(temp, gnl);
@@ -86,10 +94,11 @@ static void read_from_stdin(t_all *all, t_cmd *cmd)
 
 static char *read_keyword(t_all *all, t_cmd *cmd)
 {
-        char    *temp;
+    char    *temp;
     char    *ret;
 
     all->temp_for_free = NULL;
+    ret = NULL;
     while (!is_white_space(*(all->line)) && *(all->line))
         all->line++;
     if (!is_redir(*(all->line)))
@@ -109,5 +118,4 @@ static char *read_keyword(t_all *all, t_cmd *cmd)
     }
     all->temp_for_free = NULL;
     return (ret);
-
 }

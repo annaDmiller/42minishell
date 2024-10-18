@@ -21,34 +21,31 @@ char    *handle_quotes(t_all *all, t_cmd *cmd)
 {
     if (*(all->line++) == '"')
         return (handle_double_quotes(all, cmd));
-    return (handle_single_quote(all, cmd));
+    return (handle_single_quotes(all, cmd));
     }
 
 static char    *handle_double_quotes(t_all *all, t_cmd *cmd)
 {
     char    *str;
     int     ind;
-    int     len;
 
     ind =  0;
     cmd->quote = 2;
-    len = 0;
     while (all->line[ind])
     {
         if (all->line[ind] == '"')
             break ;
         if (all->line[ind] == '$')
-            if (is_white_space(all->line[ind + 1]))
+            if (is_white_space(all->line[ind + 1]) && all->line[ind + 1] != '"')
                 break ;
-        len++;
         ind++;
     }
-    str = (char *) malloc(sizeof(char) * (len + 1));
+    str = (char *) malloc(sizeof(char) * (ind + 1));
     if (!str)
         error("handle_doub_quotes: Malloc error\n", all);
-    ft_strlcpy(str, all->line, len + 1);
+    ft_strlcpy(str, all->line, ind + 1);
     all->line += ind;
-    check_of_ending(all, cmd);
+    check_ending(all, cmd);
     if (cmd->quote)
         return (add_tail_until_finish(all, cmd, &str));
     return (str);
@@ -81,7 +78,7 @@ static char    *handle_single_quotes(t_all *all, t_cmd *cmd)
 
 static void check_ending(t_all *all, t_cmd *cmd)
 {
-    if (all->line == '"')
+    if (*(all->line) == '"')
     {
         cmd->quote = 0;
         all->line++;

@@ -20,6 +20,7 @@ void    parse_line(t_all *all)
     while (*(all->line))
         add_cmd(all);
     all->line = all->temp_l;
+    all->temp_l = NULL;
     return ;
 }
 

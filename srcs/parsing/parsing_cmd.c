@@ -21,15 +21,22 @@ void    parse_cmd(t_all *all)
     char    *str;
     char    *temp;
     char    *temp1;
+    char    *test;
 
     last = cmd_last_el(all);
     str = NULL;
-    while (*(all->line))
+    while (*(all->line) || str)
     {
+        test = all->line;
         if (!is_white_space(*(all->line)) && str && last->quote == 0)
             add_arg(all, last, &str);
-        while (!is_white_space(*(all->line++)) && last->quote == 0)
+        if (*all->line == '\0')
+            break ;
+        while (!is_white_space(*(all->line)) && last->quote == 0)
+        {
             str = NULL;
+            all->line++;
+        }
         if (str)
         {
             temp = take_str(all, last);

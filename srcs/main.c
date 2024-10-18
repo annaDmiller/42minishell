@@ -23,11 +23,12 @@ int main(int argc, char **argv, char **env)
 
     g_sig = 0;
 //    init_signal;
-    all = init_all_struct();
-//    while (1)
-//    {
+    while (1)
+    {
+        all = init_all_struct();
         prompt = print_prompt(all);
         all->line = readline(prompt);
+        //all->line = ft_strdup("cat << alo");
         free(prompt);
         if (is_empty_line(all->line))
         {
@@ -36,12 +37,29 @@ int main(int argc, char **argv, char **env)
             parse_line(all);
             //execute
         }
-        free (all->line);
-        //free_lst_cmd(all);
+        printf("%s\n", all->line);
+        for (t_cmd *cmd = all->lst_cmd; cmd; cmd = cmd->next)
+        {
+            printf("CMD name: %s\n", cmd->name);
+            if (cmd->redir)
+            {
+                printf("Redir input: %i\n", cmd->redir->fd_infile);
+                printf("%c\n", cmd->redir->in_type);
+                if (cmd->redir->in_txt)
+                    printf("%s", cmd->redir->in_txt);
+                printf("Redir output: %i\n", cmd->redir->fd_outfile);
+                printf("%c\n", cmd->redir->out_type);
+                printf("Redir pipe: %c\n", cmd->redir->is_pipe);
+            }
+            for (t_args *arg = cmd->argv; arg; arg = arg->next)
+            {
+                printf("CMD arg: %s\n", arg->arg);
+            }
+        }
+        free_all_struct(all);
         rl_on_new_line();
-//    }
+    }
     rl_clear_history();
-    free(all);
     return (0);
 }
 
