@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:28 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static char *add_tail_until_finish(t_all *all, t_cmd *cmd, char **head);

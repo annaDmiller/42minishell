@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:55:44 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	error(char *mess, t_all *all)

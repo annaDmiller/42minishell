@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:22 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static void reach_end_file(int fd);

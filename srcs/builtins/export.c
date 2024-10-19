@@ -17,7 +17,7 @@
 void	export(t_msh *msh, t_args *argv)
 {
 	t_env	*var;
-	char		*n;
+	char	*n;
 
 	if (!argv)
 		export_no_opt(msh);
@@ -53,7 +53,7 @@ void	export_def(t_msh *msh, t_args *argv)
 	t_env	*new;
 	t_env	*head;
 	int		index;
-	
+
 	head = msh->env;
 	index = msh->env->id;
 	while (msh->env->next)
@@ -63,7 +63,8 @@ void	export_def(t_msh *msh, t_args *argv)
 	}
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		return ; // handle error
+		return ;
+		// return ; // handle error
 	msh->env->next = new;
 	new->id = index + 1;
 	new->name = env_varname(argv->arg);
@@ -74,13 +75,13 @@ void	export_def(t_msh *msh, t_args *argv)
 
 void	export_no_opt(t_msh *msh)
 {
-	t_env	*tmp;
-	int		*order;
+	t_env		*tmp;
 	char		**names;
-	int		length;
-	int		i;
-	int		d;
-	int		r;
+	int			*order;
+	int			length;
+	int			i;
+	int			d;
+	int			r;
 
 	length = l_envsize(msh->env) - 1; // -1 pour commencer a 0 dans les tab[i]
 	names = malloc(sizeof(char *) * (length + 1));

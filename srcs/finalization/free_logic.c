@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:55:49 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	free_all_struct(t_all *all)

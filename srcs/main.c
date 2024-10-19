@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/06 20:15:40 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 volatile int    g_sig;
@@ -20,7 +19,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_all   *all;
 	t_msh	msh;
-	// char    *prompt;
 
 	g_sig = 0;
 	everyinit(&msh, envp);
@@ -28,25 +26,24 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		all = init_all_struct();
-		// prompt = print_prompt(all);
 		all->line = readline("miniself > ");
-		// all->line = readline(prompt);
-		// free(prompt);
-		// all->line = ft_strdup("cat Hello | echo Hello");
-		// if (is_empty_line(all->line))
-		// {
-		// 	add_history(all->line);
-			// validate_line(all);
+		if (is_empty_line(all->line))
+		{
+			add_history(all->line);
 			parse_line(all);
-		// 	// execute part
-		// }
-		minishell(all, &msh);
+			// execute part
+			minishell(all, &msh);
+		}
 		free_all_struct(all);
+		if (msh.exit)
+			break ;
 		rl_on_new_line();
 	}
 	rl_clear_history();
 	free(msh.pwd);
 	freenv(msh.env);
+	if (msh.exit)
+		exit(msh.exit);
 	(void)argc;
 	(void)argv;
 	return (0);

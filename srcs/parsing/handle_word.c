@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/19 13:28:56 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 char    *handle_word(t_all *all, int in_dollar)

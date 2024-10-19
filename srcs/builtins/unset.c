@@ -18,7 +18,7 @@ static	int	free_env_var(t_env *var);
 // bash-5.1$
 char	*setup_name(char *str)
 {
-	char    *name;
+	char	*name;
 	int		i;
 
 	i = 0;
@@ -39,11 +39,11 @@ char	*setup_name(char *str)
 /// it'll try to unset every argumenth if it exists // never will display an error message
 /// @retval == 0 // All name operands were successfully unset.
 /// @retval > 0  // At least one name could not be unset.
-void    unset(t_msh *msh, t_args *argv)
+void	unset(t_msh *msh, t_args *argv)
 {
 	t_env	*save;
 	t_env	*tmp;
-	char		*name;
+	char	*name;
 
 	while (argv)
 	{

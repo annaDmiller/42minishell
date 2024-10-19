@@ -56,7 +56,7 @@ int	exec(t_msh *msh, t_args *arg)
 {
 	char	**argv;
 	char	**envp;
-	char		*path;
+	char	*path;
 
 	// if (!cmd->redir)
 	// {
@@ -75,7 +75,6 @@ int	exec(t_msh *msh, t_args *arg)
 	(void)msh;
 	return (0);
 }
-
 // int	exec(t_msh *msh, t_cmd *cmd)
 // {
 // 	char	**argv;
@@ -100,15 +99,12 @@ int	exec(t_msh *msh, t_args *arg)
 // 	return (0);
 // }
 
-
-
-
 char	*fpath_tt(t_env *env, char *cmd, int i)
 {
 	char	**str;
 	char	*path;
 
-	if (!access(cmd, F_OK | X_OK))	// try to acces the cmd right now, maybe its it absolute path
+	if (!access(cmd, F_OK | X_OK))// try to acces the cmd right now, maybe its it absolute path
 		return (cmd);
 	path = NULL;
 	// str = tstrdup(env_retrieve_var(env, "PATH")->var);
@@ -118,7 +114,7 @@ char	*fpath_tt(t_env *env, char *cmd, int i)
 		return (0);
 	while (str[++i])
 	{
-		str[i] = tjoin(tjoin(str[i], "/"), cmd);  // building paths
+		str[i] = tjoin(tjoin(str[i], "/"), cmd);// building paths
 		if (!access(str[i], F_OK | X_OK)) // check if the file of the path exist and if its executable
 			break ;		// if yes we break the loop
 	}
