@@ -13,7 +13,7 @@
 #include "../../includes/minishell.h"
 
 static void init_redir(t_redir *redir);
-static void handle_pipe(t_all *all, t_cmd *cmd);
+static void    handle_pipe(t_cmd *cmd);
 
 char    *handle_redir(t_all *all, t_cmd *cmd)
 {
@@ -32,7 +32,7 @@ char    *handle_redir(t_all *all, t_cmd *cmd)
     if (*(all->line) == '<')
         handle_input(all, cmd);
     if (*(all->line) == '|')
-        handle_pipe(all, cmd);
+        handle_pipe(cmd);
     return (NULL);
 }
 
@@ -49,7 +49,7 @@ static void init_redir(t_redir *redir)
     return ;
 }
 
-static void    handle_pipe(t_all *all, t_cmd *cmd)
+static void    handle_pipe(t_cmd *cmd)
 {
     cmd->redir->is_pipe = 'y';
     return ;
@@ -73,7 +73,7 @@ char *read_addr(t_all *all, t_cmd *cmd)
         else if (!is_quote(*(all->line)))
             all->temp_for_free = handle_quotes(all, cmd);
         else
-            all->temp_for_free = handle_word(all, cmd, 0);
+            all->temp_for_free = handle_word(all, 0);
         temp = ret;
         ret = ft_strjoin(temp, all->temp_for_free);
         if (!ret)

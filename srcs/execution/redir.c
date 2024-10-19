@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/08 20:19:13 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 void	redirin(char *str, char *file);
 

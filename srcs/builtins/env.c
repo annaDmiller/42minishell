@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/14 19:54:25 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/minishell.h"
+#include "../../includes/minishell.h"
 
 void	envinit(t_msh *msh, char **envp, int i)
 {

@@ -90,7 +90,6 @@ static char *add_tail_until_finish(t_all *all, t_cmd *cmd, char **head)
 {
     char    *env_val;
     char    *tail;
-    char    *temp;
 
     all->temp_for_free = *head;
     env_val = handle_dollar(all, cmd, '"');

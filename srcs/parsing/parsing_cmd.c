@@ -55,8 +55,6 @@ void    parse_cmd(t_all *all)
 
 static char *take_str(t_all *all, t_cmd *cmd)
 {
-    char    *str;
-
     if (!cmd->name)
     {
         if (*(all->line) != '$')
@@ -71,7 +69,7 @@ static char *take_str(t_all *all, t_cmd *cmd)
         return (handle_quotes(all, cmd));
     if (!is_redir(*(all->line)))
         return (handle_redir(all, cmd));
-    return (handle_word(all, cmd, 0));
+    return (handle_word(all, 0));
 }
 
 static void add_cmd_name(t_all *all, t_cmd *last)

@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/13 14:04:09 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 {
