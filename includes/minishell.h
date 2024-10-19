@@ -61,8 +61,11 @@ void    free_args(t_args *lst_arg);
 
 ///////////////////	EXEC
 
+void	minishell(t_all *all, t_msh *msh);
+// void	minishell(t_all *all, t_msh *msh, char **envp);
+
 ///// processing.c
-void    everyinit(t_msh *msh, int argc, char **argv, char **envp);
+void	everyinit(t_msh *msh, char **envp);
 void	putstr(char *str);
 ///// processing.c
 
@@ -71,7 +74,7 @@ void    env(t_env *env);
 void    pwd(t_msh *msh);
 void    cd(t_msh *msh, t_args *argv);
 void	echo(t_msh *msh, t_args *argv);
-void	export(t_msh *msh, t_args *argv);
+int	is_a_buitin(t_msh *msh, t_cmd *cmd);
 ///// BUILTINS
 
 

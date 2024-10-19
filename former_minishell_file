@@ -22,13 +22,12 @@ static	void	test(int tt)
 	(void)tt;
 }
 
-void	minishell(t_all *all, t_msh *msh)
+void	minishell(t_msh *msh, int argc, char **argv, char **envp)
 {
-	is_a_buitin(msh, all->lst_cmd);
+	everyinit(msh, argc, argv, envp);
+	parse_cmd_line(msh, argv);
 	test(0);
-	// exec(msh, msh->l_args);
-	// free(msh->pwd);
-	// freenv(msh->env);
+	exec(msh, msh->l_args);
 	// exec(msh, cmd);
 	// env(msh->env);
 	// export(msh, msh->l_args);
@@ -40,17 +39,15 @@ void	minishell(t_all *all, t_msh *msh)
 	// pwd(msh);
 	// cd(msh, msh->l_args);
 	// echo(msh, msh->l_args);
-	// free(msh);
-	(void)all;
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_msh	msh;
+int	main(int argc, char **argv, char **envp)
+{
+	t_msh	msh;
 
-// 	minishell(&msh, argc, argv, envp);
-// 	freecmdline(msh.l_args);
-// 	free(msh.pwd);
-// 	freenv(msh.env);
-// 	return (0);
-// }
+	minishell(&msh, argc, argv, envp);
+	freecmdline(msh.l_args);
+	free(msh.pwd);
+	freenv(msh.env);
+	return (0);
+}

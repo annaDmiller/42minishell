@@ -51,28 +51,26 @@ typedef struct s_cmd
 }               t_cmd;
 
 
+
+typedef struct spt
+{
+	const char      *str;
+	char            **split;
+	char            c;
+	int                     nb_words;
+	int                     indic;
+	int                     len;
+	int                     op;
+	int                     i;
+}                       t_split;
+
 typedef struct s_msh
 {
 	t_env		*env;
 	t_args		*l_args;
 	char		*pwd;
-	char		**argv;
-	int			argc;
-	int                     exitstatus;
-
+	int             exitstatus;
 }		t_msh;
-
-typedef struct spt
-{
-        const char      *str;
-        char            **split;
-        char            c;
-        int                     nb_words;
-        int                     indic;
-        int                     len;
-        int                     op;
-        int                     i;
-}                       t_split;
 
 typedef struct  s_all
 {

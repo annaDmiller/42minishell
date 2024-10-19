@@ -18,7 +18,7 @@ void	putstr(char *str)
 }
 
 
-void	everyinit(t_msh *msh, int argc, char **argv, char **envp)
+void	everyinit(t_msh *msh, char **envp)
 {
 	msh->pwd= NULL;
 	msh->pwd = getcwd(NULL, 0); // stock the pwd at the start, cd(directory);
@@ -26,15 +26,5 @@ void	everyinit(t_msh *msh, int argc, char **argv, char **envp)
 	if (envp && envp[0])
 		envinit(msh, envp, -1);
 	else
-	{
 		env_build(msh, -1);
-		// putstr(msh->pwd);
-		// putstr("\n");
-		// putstr("AHLEMAHLEMAHLEMAHLEMAHLEMAHLEMAHLEMAHLEM\n");
-		// printf("AHLEMAHLEMAHLEMAHLEMAHLEMAHLEMAHLEMAHLEM\n\n\n");
-		// printf("\t\t%s\n", msh->pwd);
-	}
-	msh->argc = argc;
-	msh->argv = argv;
-	// printf("OJIWDWJOIQWDJIOQDWJIOQDWOJIQWD\n");
 }

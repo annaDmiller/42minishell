@@ -16,52 +16,40 @@ volatile int    g_sig;
 
 static t_all    *init_all_struct(void);
 
-int main(void)
+int	main(int argc, char **argv, char **envp)
 {
-    t_all   *all;
-    char    *prompt;
+	t_all   *all;
+	t_msh	msh;
+	// char    *prompt;
 
-    g_sig = 0;
-//    init_signal;
-    while (1)
-    {
-        all = init_all_struct();
-        prompt = print_prompt(all);
-        all->line = readline(prompt);
-        //all->line = ft_strdup("cat Hello | echo Hello");
-        free(prompt);
-        if (is_empty_line(all->line))
-        {
-            add_history(all->line);
-            //validate_line(all);
-            parse_line(all);
-            //execute
-        }
-        // printf("%s\n", all->line);
-        // for (t_cmd *cmd = all->lst_cmd; cmd; cmd = cmd->next)
-        // {
-        //     printf("CMD name: %s\n", cmd->name);
-        //     if (cmd->redir)
-        //     {
-        //         printf("Redir input: %i\n", cmd->redir->fd_infile);
-        //         printf("%c\n", cmd->redir->in_type);
-        //         if (cmd->redir->in_txt)
-        //             printf("%s", cmd->redir->in_txt);
-        //         printf("Redir output: %i\n", cmd->redir->fd_outfile);
-        //         printf("%c\n", cmd->redir->out_type);
-        //         printf("Redir pipe: %c\n", cmd->redir->is_pipe);
-        //     }
-        //     for (t_args *arg = cmd->argv; arg; arg = arg->next)
-        //     {
-        //         printf("CMD arg: %s\n", arg->arg);
-        //     }
-        // }
-        // sleep(5);
-        free_all_struct(all);
-        rl_on_new_line();
-    }
-    rl_clear_history();
-    return (0);
+	g_sig = 0;
+	everyinit(&msh, envp);
+	// init_signal;
+	while (1)
+	{
+		all = init_all_struct();
+		// prompt = print_prompt(all);
+		all->line = readline("miniself > ");
+		// all->line = readline(prompt);
+		// free(prompt);
+		// all->line = ft_strdup("cat Hello | echo Hello");
+		// if (is_empty_line(all->line))
+		// {
+		// 	add_history(all->line);
+			// validate_line(all);
+			parse_line(all);
+		// 	// execute part
+		// }
+		minishell(all, &msh);
+		free_all_struct(all);
+		rl_on_new_line();
+	}
+	rl_clear_history();
+	free(msh.pwd);
+	freenv(msh.env);
+	(void)argc;
+	(void)argv;
+	return (0);
 }
 
 static t_all    *init_all_struct(void)
@@ -70,7 +58,7 @@ static t_all    *init_all_struct(void)
 
     ret = (t_all*) malloc(sizeof(t_all));
     if (!ret)
-        error("init_all_struct: Malloc error\n", NULL);
+	error("init_all_struct: Malloc error\n", NULL);
     ret->exitstatus = 0;
     ret->line = NULL;
     ret->lst_cmd = NULL;
@@ -79,3 +67,24 @@ static t_all    *init_all_struct(void)
     ret->lst_env = NULL;
     return (ret);
 }
+
+	// printf("%s\n", all->line);
+	// for (t_cmd *cmd = all->lst_cmd; cmd; cmd = cmd->next)
+	// {
+	//     printf("CMD name: %s\n", cmd->name);
+	//     if (cmd->redir)
+	//     {
+	//         printf("Redir input: %i\n", cmd->redir->fd_infile);
+	//         printf("%c\n", cmd->redir->in_type);
+	//         if (cmd->redir->in_txt)
+	//             printf("%s", cmd->redir->in_txt);
+	//         printf("Redir output: %i\n", cmd->redir->fd_outfile);
+	//         printf("%c\n", cmd->redir->out_type);
+	//         printf("Redir pipe: %c\n", cmd->redir->is_pipe);
+	//     }
+	//     for (t_args *arg = cmd->argv; arg; arg = arg->next)
+	//     {
+	//         printf("CMD arg: %s\n", arg->arg);
+	//     }
+	// }
+	// sleep(5);

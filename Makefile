@@ -8,10 +8,9 @@ EXEC_PRT = srcs/execution/redir.c \
 		srcs/execution/tlib.c \
 		srcs/execution/split.c \
 		srcs/execution/tlist.c \
-		srcs/execution/builtins.c \
 		srcs/execution/processing.c \
 		srcs/execution/temporary_parsing.c \
-		# srcs/execution/minishell.c \
+		srcs/execution/minishell.c \
 
 
 PARSING_PRT = srcs/parsing/adding_arguement.c \
@@ -33,7 +32,8 @@ TEST = srcs/main.c \
 	srcs/prompt.c \
 	# unit.c \
 
-BUILTINS = srcs/builtins/env.c \
+BUILTINS = srcs/builtins/builtins.c \
+		srcs/builtins/env.c \
 		srcs/builtins/cd.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/echo.c \
