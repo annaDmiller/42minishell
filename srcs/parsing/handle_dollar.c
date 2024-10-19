@@ -49,7 +49,7 @@ static char *add_env_var(t_all *all, t_cmd *cmd, char car)
 
     len_name = 0;
     while (is_white_space(all->line[len_name]) && all->line[len_name]
-        && all->line[len_name] != car)
+        && all->line[len_name] != car && ft_isalnum(all->line[len_name]))
         len_name++;
     env_name = (char *) malloc((len_name + 1) * sizeof(char));
     if (!env_name)

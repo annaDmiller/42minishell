@@ -21,13 +21,14 @@ void    parse_cmd(t_all *all)
     char    *str;
     char    *temp;
     char    *temp1;
-    char    *test;
 
     last = cmd_last_el(all);
     str = NULL;
     while (*(all->line) || str)
     {
-        test = all->line;
+        if (last->redir)
+            if (last->redir->is_pipe == 'y')
+                break;
         if (!is_white_space(*(all->line)) && str && last->quote == 0)
             add_arg(all, last, &str);
         if (*all->line == '\0')
@@ -87,5 +88,4 @@ static void add_cmd_name(t_all *all, t_cmd *last)
     last->name = cmd_name;
     all->line += len_name;
     return ;
-    //rewrite logic for len_name?
 }

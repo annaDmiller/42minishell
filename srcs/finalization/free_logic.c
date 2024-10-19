@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	free_all_struct(t_all *all)
+void	free_all_struct(t_all *all, int is_clear_env)
 {
 	if (all->temp_for_free)
 		free(all->temp_for_free);
@@ -22,9 +22,13 @@ void	free_all_struct(t_all *all)
 		free(all->line);
 	if (all->lst_cmd)
 		free_cmd_struct(all->lst_cmd);
-	if (all->lst_env)
+	if (all->lst_env && is_clear_env)
 		free_env_struct(all->lst_env);
-	free(all);
+	if (is_clear_env)
+	{
+		free(all);
+		all = NULL;
+	}
 	return ;
 }
 
@@ -44,6 +48,7 @@ void	free_cmd_struct(t_cmd *lst_cmd)
 		free(cmd);
 		cmd = temp;
 	}
+	lst_cmd = NULL;
 	return ;
 }
 
@@ -56,6 +61,7 @@ void	free_redir_struct(t_redir *redir)
 	if (redir->fd_outfile > 0)
 		close (redir->fd_outfile);
 	free(redir);
+	redir = NULL;
 	return ;
 }
 
@@ -71,6 +77,7 @@ void	free_env_struct(t_env *lst_env)
 		free(env);
 		env = temp;
 	}
+	lst_env = NULL;
 	return ;
 }
 
@@ -88,5 +95,6 @@ void	free_args(t_args *lst_arg)
 		free(arg);
 		arg = temp;
 	}
+	lst_arg = NULL;
 	return ;
 }

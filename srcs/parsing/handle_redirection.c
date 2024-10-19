@@ -13,7 +13,7 @@
 #include "../../includes/minishell.h"
 
 static void init_redir(t_redir *redir);
-static void    handle_pipe(t_cmd *cmd);
+static void    handle_pipe(t_all *all, t_cmd *cmd);
 
 char    *handle_redir(t_all *all, t_cmd *cmd)
 {
@@ -32,13 +32,13 @@ char    *handle_redir(t_all *all, t_cmd *cmd)
     if (*(all->line) == '<')
         handle_input(all, cmd);
     if (*(all->line) == '|')
-        handle_pipe(cmd);
+        handle_pipe(all, cmd);
     return (NULL);
 }
 
 static void init_redir(t_redir *redir)
 {
-    redir->is_pipe = 0;
+    redir->is_pipe = 'n';
     redir->fd_infile = -2;
     redir->fd_outfile = -2;
     redir->in_type = '0';
@@ -49,8 +49,9 @@ static void init_redir(t_redir *redir)
     return ;
 }
 
-static void    handle_pipe(t_cmd *cmd)
+static void    handle_pipe(t_all *all, t_cmd *cmd)
 {
+    all->line++;
     cmd->redir->is_pipe = 'y';
     return ;
 }
@@ -80,6 +81,7 @@ char *read_addr(t_all *all, t_cmd *cmd)
             error("read_addr: Malloc error\n", all);
         free(temp);
         free(all->temp_for_free);
+        all->temp_for_free = NULL;
     }
     all->temp_for_free = NULL;
     return (ret);

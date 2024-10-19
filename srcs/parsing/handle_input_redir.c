@@ -32,14 +32,15 @@ static void input_from_stdin(t_all *all, t_cmd *cmd)
     char    *temp;
 
     all->line++;
-    all->temp_for_free = read_keyword(all, cmd);
+    temp = read_keyword(all, cmd);
     if (cmd->redir->fd_infile != -2)
     {
-        close(cmd->redir->fd_infile);
+        if (cmd->redir->fd_infile)
+            close(cmd->redir->fd_infile);
         if (cmd->redir->in_txt)
             free(cmd->redir->in_txt);
+        cmd->redir->in_txt = NULL;
     }
-    temp = all->temp_for_free;
     all->temp_for_free = ft_strjoin(temp, "\n");
     free(temp);
     if (!all->temp_for_free)
@@ -55,14 +56,12 @@ static void input_from_stdin(t_all *all, t_cmd *cmd)
 static void input_from_file(t_all *all, t_cmd *cmd)
 {
     char    *addr;
-    int     check;
     
-    check = cmd->redir->fd_infile;
     addr = read_addr(all, cmd);
     if (!addr)
         error("input_redir: syntax error\n", all);
     if (cmd->redir->fd_infile != -2)
-        check = close(cmd->redir->fd_infile);
+        close(cmd->redir->fd_infile);
     cmd->redir->fd_infile = open(addr, O_RDONLY);
     if (cmd->redir->fd_infile == -1)
         error("input_from_file: impossible to open file\n", all);
@@ -119,6 +118,7 @@ static char *read_keyword(t_all *all, t_cmd *cmd)
             error("read_addr: Malloc error\n", all);
         free(temp);
         free(all->temp_for_free);
+        all->temp_for_free = NULL;
     }
     all->temp_for_free = NULL;
     return (ret);
