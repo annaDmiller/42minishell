@@ -16,12 +16,14 @@ static void reach_end_file(int fd);
 static void output_replace(t_all *all, t_cmd *cmd);
 static void output_append(t_all *all, t_cmd *cmd);
 
-char    *handle_output(t_all *all, t_cmd *cmd)
+void    handle_output(t_all *all, t_cmd *cmd)
 {
     all->line++;
     if (*(all->line) == '>')
-        return (output_append(all, cmd), NULL);
-    return (output_replace(all, cmd), NULL);
+        output_append(all, cmd);
+    else
+        output_replace(all, cmd);
+    return ;
 }
 
 static void output_append(t_all *all, t_cmd *cmd)
@@ -42,7 +44,7 @@ static void output_append(t_all *all, t_cmd *cmd)
     }
     if (cmd->redir->fd_outfile != -2)
         close(cmd->redir->fd_outfile);
-    cmd->redir->fd_outfile = open(addr, O_WRONLY | O_CREAT);
+    cmd->redir->fd_outfile = open(addr, O_WRONLY | O_APPEND | O_CREAT);
     if (cmd->redir->fd_infile == -1)
         error("input_from_file: impossible to open file\n", all);
     reach_end_file(cmd->redir->fd_outfile);

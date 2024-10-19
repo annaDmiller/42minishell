@@ -23,12 +23,12 @@ int main(int argc, char **argv, char **env)
 
     g_sig = 0;
 //    init_signal;
-    while (1)
+    while (g_sig++ < 1)
     {
         all = init_all_struct();
         prompt = print_prompt(all);
-        all->line = readline(prompt);
-        //all->line = ft_strdup("cat < ../a.txt < ../b.txt");
+        //all->line = readline(prompt);
+        all->line = ft_strdup("cat Hello | echo Hello");
         free(prompt);
         if (is_empty_line(all->line))
         {
