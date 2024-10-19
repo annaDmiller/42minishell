@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/09 08:22:00 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 void	putstr(char *str)
 {

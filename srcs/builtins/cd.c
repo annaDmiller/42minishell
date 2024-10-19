@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/14 19:54:18 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/minishell.h"
+#include "../../includes/minishell.h"
 
 /// @brief if path given argv->arg is not valid it prints pathname: No such file or directory
 ///	if there is more than one arg it doesnt move and prints cd: too many arguments

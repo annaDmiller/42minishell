@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/18 20:24:12 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 char	**setup_args(char *name, t_args *argv)
 {

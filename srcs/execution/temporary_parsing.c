@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/13 18:02:05 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 /// @brief parse argv given after ./minishell and parse it into a linked list to test before final version of parsing
 void	parse_cmd_line(t_msh *msh, char **argv)

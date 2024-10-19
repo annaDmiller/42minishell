@@ -9,7 +9,7 @@
 /*   Updated: 2024/09/03 13:08:23 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/pipex.h"
+#include "../../includes/minishell.h"
 
 static	int	hw_much_words(struct spt x)
 {

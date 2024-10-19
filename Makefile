@@ -2,26 +2,46 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -O3 -g3 
 
-MINISHELL = redir.c \
-		exec.c \
-		free.c \
-		tlib.c \
-		tlist.c \
-		builtins.c \
-		minishell.c \
-		processing.c \
-		oldwork/split.c \
-		temporary_parsing.c \
+EXEC_PRT = srcs/execution/redir.c \
+		srcs/execution/exec.c \
+		srcs/execution/free.c \
+		srcs/execution/tlib.c \
+		srcs/execution/split.c \
+		srcs/execution/tlist.c \
+		srcs/execution/builtins.c \
+		srcs/execution/processing.c \
+		srcs/execution/temporary_parsing.c \
+		# srcs/execution/minishell.c \
 
-BUILTINS = builtins/env.c \
-		builtins/cd.c \
-		builtins/pwd.c \
-		builtins/echo.c \
-		builtins/exit.c \
-		builtins/unset.c \
-		builtins/export.c \
 
-SRCS = $(MINISHELL) $(BUILTINS)
+PARSING_PRT = srcs/parsing/adding_arguement.c \
+		srcs/parsing/handle_dollar.c \
+		srcs/parsing/handle_input_redir.c \
+		srcs/parsing/handle_output_redir.c \
+		srcs/parsing/handle_quotes.c \
+		srcs/parsing/handle_redirection.c \
+		srcs/parsing/handle_word.c \
+		srcs/parsing/main_parsing.c \
+		srcs/parsing/parsing_cmd.c \
+		srcs/parsing/parsing_utils.c \
+		srcs/finalization/error_logic.c \
+		srcs/finalization/free_logic.c \
+		srcs/list_logic/arg.c \
+		srcs/list_logic/cmd.c \
+
+TEST = srcs/main.c \
+	srcs/prompt.c \
+	# unit.c \
+
+BUILTINS = srcs/builtins/env.c \
+		srcs/builtins/cd.c \
+		srcs/builtins/pwd.c \
+		srcs/builtins/echo.c \
+		srcs/builtins/exit.c \
+		srcs/builtins/unset.c \
+		srcs/builtins/export.c \
+
+SRCS = $(PARSING_PRT) $(EXEC_PRT) $(BUILTINS) $(TEST)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -31,7 +51,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
         
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./libft -lft -lreadline
 	echo "\033[1m	           _       _     _          _ _\n\
 		 _ __ ___ (_)_ __ (_)___| |__   ___| | |\n\
 		| '_ \` _ \| | '_ \| / __| '_ \ / _ \ | |\n\

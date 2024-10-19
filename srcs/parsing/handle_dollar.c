@@ -64,5 +64,6 @@ static char *add_env_var(t_all *all, t_cmd *cmd, char car)
     if (!ret)
         error("hadnle_dollar: Malloc error\n", all);
     ft_strlcpy(ret, env_val, ft_strlen(env_val) + 1);
+    (void)cmd;
     return (ret);
 }

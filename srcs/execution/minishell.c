@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/11 00:53:24 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 	// show_args(msh);
 static	void	test(int tt)

@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/13 19:25:27 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 int	l_envsize(t_env *env)
 {

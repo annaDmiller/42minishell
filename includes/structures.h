@@ -9,9 +9,24 @@
 /*   Updated: 2024/10/06 20:16:19 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
+
+typedef struct s_args
+{
+    char            *arg;
+    struct s_args   *next;
+    struct s_args   *prev;
+}                   t_args;
+
+typedef struct s_env
+{
+	struct s_env	*next;
+	char			*var;
+	char			*name;
+	int				id;
+	int				index;
+}               t_env;
 
 typedef struct s_redir
 {
@@ -24,12 +39,6 @@ typedef struct s_redir
     char    out_type; //if 'a' - write appending; if 'r' - write by replacing; if '0' - no output redirection
 }           t_redir;
 
-typedef struct s_args
-{
-    char            *arg;
-    struct s_args   *next;
-    struct s_args   *prev;
-}                   t_args;
 
 typedef struct s_cmd
 {
@@ -41,14 +50,6 @@ typedef struct s_cmd
     struct s_cmd    *prev;
 }               t_cmd;
 
-typedef struct s_env
-{
-	struct s_env	*next;
-	char			*var;
-	char			*name;
-	int				id;
-	int				index;
-}               t_env;
 
 typedef struct s_msh
 {
@@ -60,6 +61,18 @@ typedef struct s_msh
 	int                     exitstatus;
 
 }		t_msh;
+
+typedef struct spt
+{
+        const char      *str;
+        char            **split;
+        char            c;
+        int                     nb_words;
+        int                     indic;
+        int                     len;
+        int                     op;
+        int                     i;
+}                       t_split;
 
 typedef struct  s_all
 {

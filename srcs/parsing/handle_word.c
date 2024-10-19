@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char    *handle_word(t_all *all, t_cmd *cmd, int in_dollar)
+char    *handle_word(t_all *all, int in_dollar)
 {
     int ind;
     char    *str;

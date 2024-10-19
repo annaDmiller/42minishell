@@ -14,5 +14,7 @@
 
 void	error(char *mess, t_all *all)
 {
+	(void)mess;
+	(void)all;
 	return ;
 }

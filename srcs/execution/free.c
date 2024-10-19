@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/14 22:09:46 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "include/minishell.h"
+#include "../../includes/minishell.h"
 
 void	freecmdline(t_args *arg)
 {
