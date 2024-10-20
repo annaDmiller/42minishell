@@ -22,8 +22,16 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+# include <signal.h>
+
+# define PROMPT "minishell$ "
+# define _GNU_SOURCE
 
 extern volatile int g_sig;
+
+//signals
+void    manage_signals(void);
+void	hdl(int sig);
 //list_logic
 t_cmd   *cmd_new(t_all *all);
 void    cmd_add_el_back(t_all *all, t_cmd *new_el);
@@ -43,12 +51,12 @@ int is_empty_line(char *cmd_line);
 int is_quote(char car);
 int is_redir(char car);
 //parsing main functions
-char    *handle_dollar(t_all *all, t_cmd *cmd, char car);
+char	*handle_dollar(t_all *all, char car);
 char    *handle_redir(t_all *all, t_cmd *cmd);
 char *read_addr(t_all *all, t_cmd *cmd);
 void    handle_input(t_all *all, t_cmd *cmd);
 void    handle_output(t_all *all, t_cmd *cmd);
-char    *handle_quotes(t_all *all, t_cmd *cmd);
+char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar);
 char    *handle_word(t_all *all, int in_dollar);
 //finalization part
 void    error(char *mess, t_all *all);

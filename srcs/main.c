@@ -26,7 +26,7 @@ int main(int argc, char **argv, char **env)
     (void)env;
     g_sig = 0;
     all = NULL;
-//    init_signal;
+    manage_signals();
     while (1)
     {
         all = init_all_struct(all);
