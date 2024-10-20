@@ -111,7 +111,7 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 	while (is_white_space(*(all->line)) && *(all->line))
 	{
 		if (!is_quote(*(all->line)))
-			all->temp_for_free = handle_quotes(all, cmd);
+			all->temp_for_free = handle_quotes(all, cmd, 1);
 		else
 			all->temp_for_free = handle_word(all, 1);
 		temp = ret;

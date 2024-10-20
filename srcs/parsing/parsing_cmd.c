@@ -67,7 +67,7 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 	if (*(all->line) == '$' && is_white_space(*(all->line + 1)))
 		return (handle_dollar(all, 0));
 	if (!is_quote(*(all->line)))
-		return (handle_quotes(all, cmd));
+		return (handle_quotes(all, cmd, 0));
 	if (!is_redir(*(all->line)))
 		return (handle_redir(all, cmd));
 	return (handle_word(all, 0));

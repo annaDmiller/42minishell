@@ -12,19 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-static char	*add_tail_until_finish(t_all *all, t_cmd *cmd, char **head);
+static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar);
 static void	check_ending(t_all *all, t_cmd *cmd);
-static char	*handle_double_quotes(t_all *all, t_cmd *cmd);
+static char	*handle_double_quotes(t_all *all, t_cmd *cmd, int in_dollar);
 static char	*handle_single_quotes(t_all *all, t_cmd *cmd);
 
-char	*handle_quotes(t_all *all, t_cmd *cmd)
+char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar)
 {
 	if (*(all->line++) == '"')
-		return (handle_double_quotes(all, cmd));
+		return (handle_double_quotes(all, cmd, in_dollar));
 	return (handle_single_quotes(all, cmd));
 }
 
-static char	*handle_double_quotes(t_all *all, t_cmd *cmd)
+static char	*handle_double_quotes(t_all *all, t_cmd *cmd, int in_dollar)
 {
 	char	*str;
 	int		ind;
@@ -35,7 +35,7 @@ static char	*handle_double_quotes(t_all *all, t_cmd *cmd)
 	{
 		if (all->line[ind] == '"')
 			break ;
-		if (all->line[ind] == '$')
+		if (all->line[ind] == '$' && !in_dollar)
 			if (is_white_space(all->line[ind + 1]) && all->line[ind + 1] != '"')
 				break ;
 		ind++;
@@ -47,7 +47,7 @@ static char	*handle_double_quotes(t_all *all, t_cmd *cmd)
 	all->line += ind;
 	check_ending(all, cmd);
 	if (cmd->quote)
-		return (add_tail_until_finish(all, cmd, &str));
+		return (add_tail(all, cmd, &str, in_dollar));
 	return (str);
 }
 
@@ -83,7 +83,7 @@ static void	check_ending(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-static char	*add_tail_until_finish(t_all *all, t_cmd *cmd, char **head)
+static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 {
 	char	*env_val;
 	char	*tail;
@@ -99,7 +99,7 @@ static char	*add_tail_until_finish(t_all *all, t_cmd *cmd, char **head)
 	if (!(*(all->line)))
 		return (*head);
 	all->temp_for_free = *head;
-	tail = handle_double_quotes(all, cmd);
+	tail = handle_double_quotes(all, cmd, in_dollar);
 	*head = ft_strjoin(all->temp_for_free, tail);
 	free(tail);
 	free(all->temp_for_free);
