@@ -27,8 +27,7 @@ void	minishell(t_all *all, t_msh *msh)
 	int	i;
 
 	i = 0;
-	if (is_a_buitin(msh, all->lst_cmd))
-		i++;
+	exec(msh, all->lst_cmd);
 	test(0);
 	// exec(msh, msh->l_args);
 	// free(msh->pwd);

@@ -137,8 +137,10 @@ void	texit(t_msh *msh, t_args *argv);
 void	parse_cmd_line(t_msh *msh, char **argv);
 
 ///// EXEC.c
-// int	exec(t_msh *msh, t_cmd *cmd);
-int	exec(t_msh *msh, t_args *arg);
+int	exec(t_msh *msh, t_cmd *cmd);
+int	cute(char *path, char **argv, char **envp);
+// int	exec(t_msh *msh, t_args *arg);
+// int	one_exec(t_msh *msh, t_cmd *cmd);
 // char	**setup_args(t_args *argv);
 char	**setup_args(char *name, t_args *argv);
 char	**setup_env(t_env *env);
