@@ -24,8 +24,11 @@ static	void	test(int tt)
 
 void	minishell(t_all *all, t_msh *msh)
 {
-	is_a_buitin(msh, all->lst_cmd);
-	printf("%s // printf \n", all->lst_cmd->argv->arg);
+	int	i;
+
+	i = 0;
+	if (is_a_buitin(msh, all->lst_cmd))
+		i++;
 	test(0);
 	// exec(msh, msh->l_args);
 	// free(msh->pwd);
@@ -42,6 +45,8 @@ void	minishell(t_all *all, t_msh *msh)
 	// cd(msh, msh->l_args);
 	// echo(msh, msh->l_args);
 	// free(msh);
+	(void)i;
+	(void)msh;
 	(void)all;
 }
 

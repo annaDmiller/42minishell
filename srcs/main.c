@@ -39,7 +39,8 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		rl_on_new_line();
 	}
-	rl_clear_history();
+	// rl_clear_history();
+	clear_history();
 	free(msh.pwd);
 	freenv(msh.env);
 	if (msh.exit)

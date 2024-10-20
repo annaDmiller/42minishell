@@ -20,13 +20,11 @@ void    parse_cmd(t_all *all)
     char    *str;
     char    *temp;
     char    *temp1;
-    char    *test;
 
     last = cmd_last_el(all);
     str = NULL;
     while (*(all->line) || str)
     {
-        test = all->line;
         if (!is_white_space(*(all->line)) && str && last->quote == 0)
             add_arg(all, last, &str);
         if (*all->line == '\0')

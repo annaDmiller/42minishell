@@ -12,6 +12,14 @@ if we launch minishell without env
 
 
 
+bash-3.2$ echo bonjour je suis la > out
+bash-3.2$ cat out
+bonjour je suis la
+bash-3.2$ echo bonjour je suis la > out wc -l
+bash-3.2$ cat out
+bonjour je suis la wc -l
+bash-3.2$
+
 
 miniself > echo "BONJOUR JE SUIS LA $USER"
 BONJOUR JE SUIS LA tespandj
