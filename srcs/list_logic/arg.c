@@ -16,7 +16,7 @@ t_args	*arg_new(t_all *all)
 {
 	t_args	*argv;
 
-	argv = (t_args*) malloc(sizeof(t_args));
+	argv = (t_args *) malloc(sizeof(t_args));
 	if (!argv)
 		error("init_arg: Malloc error\n", all);
 	argv->arg = NULL;
