@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -O3 -g3 
+CFLAGS = -O3 -g3 
 
 EXEC_PRT = srcs/execution/redir.c \
 		srcs/execution/exec.c \
@@ -26,8 +26,10 @@ PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/parsing/parsing_utils.c \
 		srcs/finalization/error_logic.c \
 		srcs/finalization/free_logic.c \
+		srcs/finalization/exit_logic.c \
 		srcs/list_logic/arg.c \
 		srcs/list_logic/cmd.c \
+		srcs/signal/init_signal.c
 
 TEST = srcs/main.c \
 	srcs/prompt.c \
@@ -41,7 +43,7 @@ BUILTINS = srcs/builtins/env.c \
 		srcs/builtins/unset.c \
 		srcs/builtins/export.c \
 
-SRCS = $(PARSING_PRT) $(EXEC_PRT) $(BUILTINS) $(TEST)
+SRCS = $(PARSING_PRT) $(TEST)
 
 OBJS = $(SRCS:.c=.o)
 

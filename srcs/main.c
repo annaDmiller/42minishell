@@ -32,6 +32,8 @@ int main(int argc, char **argv, char **env)
         all = init_all_struct(all);
         //prompt = print_prompt(all);
         all->line = readline(PROMPT);
+        if (!all->line)
+            exit_signal(all);
         //all->line = ft_strdup("cat << $TEST");
         //free(prompt);
         if (is_empty_line(all->line))
