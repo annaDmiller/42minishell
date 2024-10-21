@@ -41,6 +41,7 @@ void    arg_add_el_back(t_cmd *last_cmd, t_args *new_el);
 t_args   *arg_last_el(t_cmd *last_cmd);
 //main part
 char    *print_prompt(t_all *all);
+int validate_line(t_all *all);
 //parsing main
 void    parse_line(t_all *all);
 void    parse_cmd(t_all *all);
