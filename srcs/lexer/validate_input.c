@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int  validate_quotes(t_all *all);
 static int  validate_pipes(t_all *all);
@@ -15,7 +15,13 @@ int validate_line(t_all *all)
     check_r = validate_redir(all);
     check_p = validate_pipes(all);
     if (!check_p || !check_q || !check_r)
-        return (0);
+        ft_putstr_fd("Syntax error: ", 2);
+    if (!check_p)
+        return (ft_putstr_fd("unexpected token '|'\n", 2), 0);
+    if (!check_r)
+        return (ft_putstr_fd("incorrect redirection\n", 2), 0);
+    if (!check_q)
+        return (ft_putstr_fd("quotes not closed\n", 2), 0);
     return (1);
 }
 
