@@ -61,6 +61,7 @@ int	exec(t_msh *msh, t_cmd *cmd)
 	char	**envp;
 	char	*path;
 	DIR	*test;
+	pid_t	pid;
  	int		i;
 
 	i = -1;
@@ -93,8 +94,14 @@ int	exec(t_msh *msh, t_cmd *cmd)
 				fsplit(argv);
 				break ;
 			}
-			if (cute(path, argv, envp) == -1)
-				return (0); // handle error
+			pid = fork();
+			// if (pid == -1)
+				// return (NULL) handle error
+			if (pid == 0)
+				cute(path, argv, envp);
+			// if (cute(path, argv, envp) == -1)
+			// 	return (0); // handle error
+			waitpid(pid, NULL, 0);
 			free(path);
 			fsplit(argv);
 			fsplit(envp);
