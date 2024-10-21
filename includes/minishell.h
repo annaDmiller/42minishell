@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <limits.h>
+# include <dirent.h>
 # include "structures.h"
 # include <readline/readline.h>
 # include <readline/history.h>

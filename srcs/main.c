@@ -15,6 +15,38 @@ volatile int    g_sig;
 
 static t_all    *init_all_struct(void);
 
+// int main(int argc, char **argv, char **envp)
+// {
+//     t_all   *all;
+//     char    *prompt;
+//     t_msh	msh;
+
+//     g_sig = 0;
+// //    init_signal;
+// 	everyinit(&msh, envp);
+//     while (1)
+//     {
+//         all = init_all_struct();
+//         prompt = print_prompt(all);
+//         all->line = readline(prompt);
+//         free(prompt);
+//         if (is_empty_line(all->line))
+//         {
+//             add_history(all->line);
+//             //validate_line(all);
+//             parse_line(all);
+// 	    minishell(all, &msh);
+//             //execute
+//         }
+//         free_all_struct(all);
+//         rl_on_new_line();
+//     }
+//     rl_clear_history();
+//     	(void)argc;
+// 	(void)argv;
+//     return (0);
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_all   *all;
@@ -23,20 +55,27 @@ int	main(int argc, char **argv, char **envp)
 	g_sig = 0;
 	everyinit(&msh, envp);
 	// init_signal;
+		int i = 0;
 	while (1)
 	{
+		i++;
+		// printf(" i = %d\n", i);
+		// if (i > 1)
+			// printf("line before init : %s\n", all->line);
 		all = init_all_struct();
 		all->line = readline("miniself > ");
-		if (is_empty_line(all->line))
-		{
+		// printf("line after redline : %s\n", all->line);
+		// if (is_empty_line(all->line))
+		// {
 			add_history(all->line);
 			parse_line(all);
 			// execute part
 			minishell(all, &msh);
-		}
+		// }
 		free_all_struct(all);
 		if (msh.exit)
 			break ;
+		// printf("\n________\n");
 		rl_on_new_line();
 	}
 	// rl_clear_history();
