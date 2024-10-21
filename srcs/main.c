@@ -84,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 	freenv(msh.env);
 	if (msh.exit)
 		exit(msh.exit);
+	(void)i;
 	(void)argc;
 	(void)argv;
 	return (0);

@@ -31,6 +31,7 @@ char	**setup_args(char *name, t_args *argv)
 		argv = argv->next;
 	}
 	args[i] = NULL;
+	(void)tmp;
 	return (args);
 }
 
@@ -60,11 +61,9 @@ int	exec(t_msh *msh, t_cmd *cmd)
 	char	**envp;
 	char	*path;
 	DIR	*test;
-	t_cmd	*tmp;
-	int		i;
+ 	int		i;
 
 	i = -1;
-	tmp = cmd;
 	// printf("\n_________________________________________\n\n");
 	while (cmd && cmd->name)
 	{
@@ -77,7 +76,8 @@ int	exec(t_msh *msh, t_cmd *cmd)
 			path = fpath_tt(msh->env, cmd->name, -1);
 			if (!path)
 			{
-				printf("JE N'AI PAS TROUVE DE PATHHHHHH\n");
+				// printf("JE N'AI PAS TROUVE DE PATHHHHHH\n");
+				printf("%s: command not found\n", cmd->name);
 				break ;
 			}
 			argv = setup_args(cmd->name, cmd->argv);
@@ -101,6 +101,7 @@ int	exec(t_msh *msh, t_cmd *cmd)
 			cmd = cmd->next;
 		}
 	}
+	(void)i;
 	(void)argv;
 	(void)path;
 	(void)test;
@@ -120,6 +121,7 @@ int	cute(char *path, char **argv, char **envp)
 			return (-1);
 	if (pid)
 		i++;
+	(void)i;
 	return (0);
 }
 
