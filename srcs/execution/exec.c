@@ -65,8 +65,17 @@ int	one_exec(t_msh *msh, t_cmd *cmd)
 
 	i = -1;
 	// printf("\n_________________________________________\n\n");
-	while (cmd && cmd->name)
-	{
+	
+	i = -1;
+	// if (cmd->redir)
+	// {
+	// 	if (cmd->redir->out_type == 'r')
+	// 		redirout(msh,cmd);
+	// 	else if (cmd->redir->out_type == 'a')
+	// 		append(msh,cmd);
+	// }
+	// while (cmd && cmd->name && !cmd->redir)
+	// {
 		if (is_a_buitin(msh, cmd))
 			cmd = cmd->next;
 		else if (!tstrcmp(cmd->name, ".") || !tstrcmp(cmd->name, ".."))
@@ -75,46 +84,33 @@ int	one_exec(t_msh *msh, t_cmd *cmd)
 		{
 			path = fpath(msh->env, cmd->name, -1);
 			if (!path)
-			{
 				printf("%s: command not found\n", cmd->name);
-				break ;
-			}
 			argv = setup_args(cmd->name, cmd->argv);
 			if (!argv)
-			{
 				free(path);
-				break ;
-			}
 			envp = setup_env(msh->env);
 			if (!envp)
 			{
 				free(path);
 				fsplit(argv);
-				break ;
 			}
 			pid = fork();
 			if (pid == -1)
 				return (3);// handle error
 			if (pid == 0)
-				cute(path, argv, envp);
+				if (execve(path, argv, envp) == -1)
+					return (-1);// handle error
 			waitpid(pid, NULL, 0);
 			free(path);
 			fsplit(argv);
 			fsplit(envp);
-			cmd = cmd->next;
+			// cmd = cmd->next;
 		}
-	}
+	// }
 	(void)i;
 	(void)argv;
 	(void)path;
 	(void)msh;
-	return (0);
-}
-
-int	cute(char *path, char **argv, char **envp)
-{
-	if (execve(path, argv, envp) == -1)
-		return (-1);
 	return (0);
 }
 

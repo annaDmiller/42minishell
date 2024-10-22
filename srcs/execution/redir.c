@@ -11,22 +11,30 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	redirin(char *str, char *file);
-
-void	redirout(char *str, char *file)
+void	redirin(t_msh *msh, t_cmd *cmd)
 {
-//	int	tfd;
-	
-	(void)str;
-	(void)file;
-	// check if the file is a directyory by using opendir ? if it success then it is one 
-	// if its not a directory we can create the file or trunc it if it already exists
-//	tfd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-
+	(void)msh;
+	(void)cmd;
 }
 
-void	append(char *str, char *file);
+void	redirout(t_msh *msh, t_cmd *cmd)
+{
 
-void	heredoc(char *str);
+	(void)msh;
+	(void)cmd;
+}
 
+void	append(t_msh *msh, t_cmd *cmd)
+{
+	
+	(void)msh;
+	(void)cmd;
+}
+
+void	heredoc(t_msh *msh, t_cmd *cmd)
+{
+
+	(void)msh;
+	(void)cmd;
+}
 

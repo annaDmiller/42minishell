@@ -23,13 +23,21 @@ static	void	test(int tt)
 
 void	minishell(t_all *all, t_msh *msh)
 {
-	int	i;
+	t_cmd	*cmd;
+	int		i;
 
 	i = 0;
-	if (!all->lst_cmd->next)
-		one_exec(msh, all->lst_cmd);
-	else
-		printf("Double cmd\n");
+	// if (all->lst_cmd->redir)
+	cmd = all->lst_cmd;
+	if (cmd->redir && cmd->redir->is_pipe == 'y')
+	{
+		// printf("JE SUIS UN PIPE");
+		// handle le pipe
+		return ;
+	}
+	if (!cmd->redir)
+		printf("IL N'Y A PAS DE REDIRECTION");
+	one_exec(msh, all->lst_cmd);
 	test(0);
 	(void)i;
 	(void)msh;

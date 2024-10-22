@@ -82,10 +82,10 @@ int	is_a_buitin(t_msh *msh, t_cmd *cmd);
 
 
 ///// REDIR.c
-void	redirin(char *str, char *file); // will take care of "<"
-void	redirout(char *str, char *file); // will take care of ">"
-void	append(char *str, char *file); // will take care of ">>"
-void	heredoc(char *str); // will take care of "<<"
+void	redirin(t_msh *msh, t_cmd *cmd); // take care of "<"
+void	redirout(t_msh *msh, t_cmd *cmd); // take care of ">"
+void	append(t_msh *msh, t_cmd *cmd); // take care of ">>"
+void	heredoc(t_msh *msh, t_cmd *cmd); // take care of "<<"
 ///// REDIR.c
 
 ///// ENV.c
@@ -140,7 +140,7 @@ void	parse_cmd_line(t_msh *msh, char **argv);
 
 ///// EXEC.c
 int	one_exec(t_msh *msh, t_cmd *cmd);
-int	cute(char *path, char **argv, char **envp);
+// int	cute(char *path, char **argv, char **envp);
 // int	exec(t_msh *msh, t_args *arg);
 // int	one_exec(t_msh *msh, t_cmd *cmd);
 // char	**setup_args(t_args *argv);

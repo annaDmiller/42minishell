@@ -24,7 +24,7 @@ void    handle_output(t_all *all, t_cmd *cmd)
         output_replace(all, cmd);
     return ;
 }
-
+/// @brief cmd->redir->out_type = 'a';
 static void output_append(t_all *all, t_cmd *cmd)
 {
     char    *addr;
@@ -51,7 +51,7 @@ static void output_append(t_all *all, t_cmd *cmd)
     cmd->redir->out_type = 'a';
     return ;
 }
-
+/// @brief REPLACE cmd->redir->out_type = 'r';
 static void output_replace(t_all *all, t_cmd *cmd)
 {
     char    *addr;

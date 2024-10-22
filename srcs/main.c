@@ -65,8 +65,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(all->line);
 			parse_line(all);
 		// execute part //
-			if (all && all->lst_cmd)
-				minishell(all, &msh);
+			minishell(all, &msh);
 			_var(all, &msh);
 		}
 		free_all_struct(all);
