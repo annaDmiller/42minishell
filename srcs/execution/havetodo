@@ -26,7 +26,7 @@ _____________________________________________
 
 		Lire le manuel de bash --posix
 
-EXEC	convertir l`env en char ** et les arguments en char ** aussi pour execve
+EXEC	✅ convertir l`env en char ** et les arguments en char ** aussi pour execve
 		si pipe est, faire les commandes dans des fork
 
 

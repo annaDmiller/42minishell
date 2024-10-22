@@ -55,27 +55,23 @@ int	main(int argc, char **argv, char **envp)
 	g_sig = 0;
 	everyinit(&msh, envp);
 	// init_signal;
-		int i = 0;
 	while (1)
 	{
-		i++;
-		// printf(" i = %d\n", i);
-		// if (i > 1)
-			// printf("line before init : %s\n", all->line);
 		all = init_all_struct();
 		all->line = readline("miniself > ");
-		// printf("line after redline : %s\n", all->line);
-		// if (is_empty_line(all->line))
-		// {
+		if (is_empty_line(all->line))
+		{
+			// printf("TESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\n");
 			add_history(all->line);
 			parse_line(all);
-			// execute part
-			minishell(all, &msh);
-		// }
+		// execute part //
+			if (all && all->lst_cmd)
+				minishell(all, &msh);
+			_var(all, &msh);
+		}
 		free_all_struct(all);
 		if (msh.exit)
 			break ;
-		// printf("\n________\n");
 		rl_on_new_line();
 	}
 	// rl_clear_history();
@@ -84,7 +80,6 @@ int	main(int argc, char **argv, char **envp)
 	freenv(msh.env);
 	if (msh.exit)
 		exit(msh.exit);
-	(void)i;
 	(void)argc;
 	(void)argv;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: amelniko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 20:16:13 by amelniko          #+#    #+#             */
-/*   Updated: 2024/10/06 20:16:14 by amelniko         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:15:13 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -23,6 +23,8 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 extern volatile int g_sig;
 //list_logic
@@ -118,7 +120,6 @@ void	wegotasplituation(struct spt x); // free split if there is an error in it
 ///// FREE.c
 
 ///// TLIB.c
-void	show_args(t_msh *msh);
 int	tstrcmp(char *str, char *cmp);
 int	tstrlen(char *str);
 char	*tstrdup(char *src);
@@ -138,15 +139,20 @@ void	texit(t_msh *msh, t_args *argv);
 void	parse_cmd_line(t_msh *msh, char **argv);
 
 ///// EXEC.c
-int	exec(t_msh *msh, t_cmd *cmd);
+int	one_exec(t_msh *msh, t_cmd *cmd);
 int	cute(char *path, char **argv, char **envp);
 // int	exec(t_msh *msh, t_args *arg);
 // int	one_exec(t_msh *msh, t_cmd *cmd);
 // char	**setup_args(t_args *argv);
 char	**setup_args(char *name, t_args *argv);
 char	**setup_env(t_env *env);
-char	*fpath_tt(t_env *env, char *cmd, int i);
-// char	*fpath_tt(char *cmd, int i); // find the absolute path of a cmd so we can execve it
+char	*fpath(t_env *env, char *cmd, int i);
+// char	*fpath(char *cmd, int i); // find the absolute path of a cmd so we can execve it
+
+
+
+void	_var(t_all *all, t_msh *msh);
+
 ///// EXEC.c
 
 #endif

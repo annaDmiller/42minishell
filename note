@@ -1,6 +1,10 @@
 note
 
 
+to disable every readline leaks //
+	v --suppressions=suppress.supp ./minishell
+
+
 if we launch minishell without env
 
 	env -i ./minishell
@@ -8,8 +12,6 @@ if we launch minishell without env
 		while creating the prompt it will exit(1) cause function getenv wont work
 			- have to find another way to retrieve USER name and other stuff  
 			- just print minishell i asked some friends they said its whatever we want
-
-
 
 
 bash-3.2$ echo bonjour je suis la > out
@@ -27,3 +29,17 @@ BONJOUR JE SUIS LA tespandj // printf
 miniself > echo "BONJOUR JE SUIS LA $USER $_"
 
 [1]    521216 segmentation fault (core dumped)  ./minishell
+
+
+exit ne fonctionne pas quand pas d`env
+
+
+pour le multipipe
+
+
+fonction start
+
+fonction mid
+
+fonction end
+

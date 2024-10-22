@@ -54,6 +54,8 @@ void	export_def(t_msh *msh, t_args *argv)
 	t_env	*head;
 	int		index;
 
+	if (!msh || !msh->env)
+		return ;
 	head = msh->env;
 	index = msh->env->id;
 	while (msh->env->next)

@@ -55,12 +55,11 @@ char	**setup_env(t_env *env)
 	return (envp);
 }
 
-int	exec(t_msh *msh, t_cmd *cmd)
+int	one_exec(t_msh *msh, t_cmd *cmd)
 {
 	char	**argv;
 	char	**envp;
 	char	*path;
-	DIR	*test;
 	pid_t	pid;
  	int		i;
 
@@ -74,10 +73,9 @@ int	exec(t_msh *msh, t_cmd *cmd)
 			cmd = cmd->next;
 		else if (cmd && cmd->name)
 		{
-			path = fpath_tt(msh->env, cmd->name, -1);
+			path = fpath(msh->env, cmd->name, -1);
 			if (!path)
 			{
-				// printf("JE N'AI PAS TROUVE DE PATHHHHHH\n");
 				printf("%s: command not found\n", cmd->name);
 				break ;
 			}
@@ -95,12 +93,10 @@ int	exec(t_msh *msh, t_cmd *cmd)
 				break ;
 			}
 			pid = fork();
-			// if (pid == -1)
-				// return (NULL) handle error
+			if (pid == -1)
+				return (3);// handle error
 			if (pid == 0)
 				cute(path, argv, envp);
-			// if (cute(path, argv, envp) == -1)
-			// 	return (0); // handle error
 			waitpid(pid, NULL, 0);
 			free(path);
 			fsplit(argv);
@@ -111,36 +107,26 @@ int	exec(t_msh *msh, t_cmd *cmd)
 	(void)i;
 	(void)argv;
 	(void)path;
-	(void)test;
 	(void)msh;
 	return (0);
 }
 
 int	cute(char *path, char **argv, char **envp)
 {
-	int	pid;
-	int		i;
-
-	i = 0;
-	pid = fork();
-	if (pid == 0)
-		if (execve(path, argv, envp) == -1)
-			return (-1);
-	if (pid)
-		i++;
-	(void)i;
+	if (execve(path, argv, envp) == -1)
+		return (-1);
 	return (0);
 }
 
-char	*fpath_tt(t_env *env, char *cmd, int i)
+char	*fpath(t_env *env, char *cmd, int i)
 {
 	char	**str;
 	char	*path;
 
-	if (!env_retrieve_var(env, "PATH") || !env_retrieve_var(env, "PATH")->var)
-		return (NULL);
 	if (!access(cmd, F_OK | X_OK))// try to acces the cmd right now, maybe its it absolute path
 		return (cmd);
+	if (!env_retrieve_var(env, "PATH") || !env_retrieve_var(env, "PATH")->var)
+		return (NULL);
 	path = NULL;
 	str = split(env_retrieve_var(env, "PATH")->var, ':');
 	if (!str)

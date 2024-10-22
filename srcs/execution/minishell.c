@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-	// show_args(msh);
 static	void	test(int tt)
 {
 	int	i;
@@ -27,20 +26,12 @@ void	minishell(t_all *all, t_msh *msh)
 	int	i;
 
 	i = 0;
-	exec(msh, all->lst_cmd);
+	if (!all->lst_cmd->next)
+		one_exec(msh, all->lst_cmd);
+	else
+		printf("Double cmd\n");
 	test(0);
 	(void)i;
 	(void)msh;
 	(void)all;
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_msh	msh;
-
-// 	minishell(&msh, argc, argv, envp);
-// 	freecmdline(msh.l_args);
-// 	free(msh.pwd);
-// 	freenv(msh.env);
-// 	return (0);
-// }
