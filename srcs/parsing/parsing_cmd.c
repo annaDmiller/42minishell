@@ -31,13 +31,14 @@ void	parse_cmd(t_all *all)
 				break ;
 		if (!is_white_space(*(all->line)) && str && last->quote == 0)
 			add_arg(all, last, &str);
-		if (*all->line == '\0')
-			break ;
-		while (!is_white_space(*(all->line)) && last->quote == 0)
+		while (!is_white_space(*(all->line)) && last->quote == 0
+			&& *(all->line))
 		{
 			str = NULL;
 			all->line++;
 		}
+		if (*all->line == '\0')
+			break ;
 		if (str)
 		{
 			temp = take_str(all, last);
