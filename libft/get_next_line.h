@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft.h"
+# include "../includes/minishell.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024

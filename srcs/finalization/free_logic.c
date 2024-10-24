@@ -40,6 +40,7 @@ void	free_cmd_struct(t_cmd *lst_cmd)
 	cmd = lst_cmd;
 	while (cmd)
 	{
+		free(cmd->name);
 		if (cmd->redir)
 			free_redir_struct(cmd->redir);
 		if (cmd->argv)
