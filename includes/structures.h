@@ -74,6 +74,7 @@ typedef struct s_all
 {
 	struct s_cmd	*lst_cmd;
 	struct s_env	*lst_env;
+	struct s_msh	*msh;
 	char			*line; //line of command; freed after parsing part
 	char			*temp_l; //temporary copy of line; freed after parsing part
 	char			*temp_for_free; //temporary copy of separate char to free in case of error; freed after utilisation

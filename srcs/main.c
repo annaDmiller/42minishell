@@ -13,7 +13,7 @@
 
 volatile int	g_sig;
 
-static t_all	*init_all_struct(t_all *all);
+static t_all	*init_all_struct(t_all *all, t_msh *msh);
 static void process_line(t_all *all, t_msh *msh);
 
 int main(int argc, char **argv, char **envp)
@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 	init_signals(all);
 	while (1)
 	{
-		all = init_all_struct(all);
+		all = init_all_struct(all, &msh);
 		// fprintf(stderr, "\n////////////		NOUVELLLE CMD ->prochaine \n\n");
 		line = readline(PROMPT);
 		if (!line)
@@ -67,7 +67,7 @@ static void process_line(t_all *all, t_msh *msh)
     return ;
 }
 
-static t_all	*init_all_struct(t_all *all)
+static t_all	*init_all_struct(t_all *all, t_msh *msh)
 {
 	if (!all)
 	{
@@ -77,6 +77,7 @@ static t_all	*init_all_struct(t_all *all)
 		all->lst_env = NULL;
         	all->line = NULL;
 	}
+	all->msh = msh;
     	if (all->line)
         	free_all_struct(all, 0);
 	all->exitstatus = 0;

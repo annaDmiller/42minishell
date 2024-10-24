@@ -44,7 +44,7 @@ static char	*add_env_var(t_all *all, char car)
 	char	*env_val;
 	char	*env_name;
 	int		len_name;
-	char	*ret;
+//	char	*ret;
 
 	len_name = 0;
 	while (is_white_space(all->line[len_name])
@@ -54,14 +54,14 @@ static char	*add_env_var(t_all *all, char car)
 	if (!env_name)
 		error("handle_dollar: Malloc error\n", all);
 	ft_strlcpy(env_name, all->line, len_name + 1);
-	env_val = getenv(env_name);
+	env_val = env_retrieve_var(all->msh->env, env_name)->var;
 	free(env_name);
 	all->line += len_name;
 	if (!env_val)
 		return (NULL);
-	ret = (char *) malloc(sizeof(char) * (ft_strlen(env_val) + 1));
-	if (!ret)
-		error("hadnle_dollar: Malloc error\n", all);
-	ft_strlcpy(ret, env_val, ft_strlen(env_val) + 1);
-	return (ret);
+	// ret = (char *) malloc(sizeof(char) * (ft_strlen(env_val) + 1));
+	// if (!ret)
+		// error("hadnle_dollar: Malloc error\n", all);
+	// ft_strlcpy(ret, env_val, ft_strlen(env_val) + 1);
+	return (env_val);
 }
