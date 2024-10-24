@@ -16,9 +16,14 @@ static	void	test(int tt)
 	int	i;
 
 	i = -1;
-
 	(void)i;
 	(void)tt;
+}
+
+void	wgas(char *str, int ext)
+{
+	fprintf(stderr, "%s\n", str);
+	exit(ext);
 }
 
 void	minishell(t_all *all, t_msh *msh)
@@ -27,19 +32,18 @@ void	minishell(t_all *all, t_msh *msh)
 	int		i;
 
 	i = 0;
-	// if (all->lst_cmd->redir)
 	cmd = all->lst_cmd;
-	if (cmd->redir && cmd->redir->is_pipe == 'y')
+	if (!cmd->redir)
 	{
-		// printf("JE SUIS UN PIPE");
-		// handle le pipe
+		// fprintf(stderr, "__________________________SINGLE__________________________\n\n");
+		_execmd(msh, cmd);
+	}
+	else if (cmd->redir && cmd->redir->is_pipe == 'y')
+	{
+		// fprintf(stderr, "__________________________PIPE__________________________\n\n");
+		tpipe(msh, cmd);
 		return ;
 	}
-	if (!cmd->redir)
-		printf("IL N'Y A PAS DE REDIRECTION");
-	one_exec(msh, all->lst_cmd);
 	test(0);
 	(void)i;
-	(void)msh;
-	(void)all;
 }

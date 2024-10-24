@@ -34,12 +34,41 @@ miniself > echo "BONJOUR JE SUIS LA $USER $_"
 exit ne fonctionne pas quand pas d`env
 
 
-pour le multipipe
+pour le pipe
+
+/// ON ECRIT DANS PIPE_FD[1]
+/// ON LIT DANS PIPE_FD[0]
+
+si pas d`outfile on print le resultat de la derniere cmd sur STDOUT
+> cat Makefile | grep clean | grep echo | wc -l 
+
+| fonction start |
+	redirige l`output de cat dans le tube du pipe sur pipe_fd[1]
+	dup2(pipe_fd[1], STDOUT)
 
 
-fonction start
+
+
 
 fonction mid
 
 fonction end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

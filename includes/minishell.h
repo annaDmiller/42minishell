@@ -25,8 +25,16 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
+
+# define PROMPT "minishell> "
+# define _GNU_SOURCE
 
 extern volatile int g_sig;
+
+//signals
+void    manage_signals(void);
+void	hdl(int sig);
 //list_logic
 t_cmd   *cmd_new(t_all *all);
 void    cmd_add_el_back(t_all *all, t_cmd *new_el);
@@ -36,6 +44,7 @@ void    arg_add_el_back(t_cmd *last_cmd, t_args *new_el);
 t_args   *arg_last_el(t_cmd *last_cmd);
 //main part
 char    *print_prompt(t_all *all);
+int validate_line(t_all *all);
 //parsing main
 void    parse_line(t_all *all);
 void    parse_cmd(t_all *all);
@@ -46,16 +55,16 @@ int is_empty_line(char *cmd_line);
 int is_quote(char car);
 int is_redir(char car);
 //parsing main functions
-char    *handle_dollar(t_all *all, t_cmd *cmd, char car);
+char	*handle_dollar(t_all *all, char car);
 char    *handle_redir(t_all *all, t_cmd *cmd);
 char *read_addr(t_all *all, t_cmd *cmd);
 void    handle_input(t_all *all, t_cmd *cmd);
 void    handle_output(t_all *all, t_cmd *cmd);
-char    *handle_quotes(t_all *all, t_cmd *cmd);
+char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar);
 char    *handle_word(t_all *all, int in_dollar);
 //finalization part
 void    error(char *mess, t_all *all);
-void    free_all_struct(t_all *all);
+void	free_all_struct(t_all *all, int is_clear_env);
 void    free_cmd_struct(t_cmd *lst_cmd);
 void    free_redir_struct(t_redir *redir);
 void    free_env_struct(t_env *lst_env);
@@ -139,20 +148,19 @@ void	texit(t_msh *msh, t_args *argv);
 void	parse_cmd_line(t_msh *msh, char **argv);
 
 ///// EXEC.c
-int	one_exec(t_msh *msh, t_cmd *cmd);
-// int	cute(char *path, char **argv, char **envp);
-// int	exec(t_msh *msh, t_args *arg);
-// int	one_exec(t_msh *msh, t_cmd *cmd);
-// char	**setup_args(t_args *argv);
-char	**setup_args(char *name, t_args *argv);
+int	_execmd(t_msh *msh, t_cmd *cmd);
 char	**setup_env(t_env *env);
+char	**setup_args(char *name, t_args *argv);
 char	*fpath(t_env *env, char *cmd, int i);
-// char	*fpath(char *cmd, int i); // find the absolute path of a cmd so we can execve it
 
 
+void	tpipe(t_msh *msh, t_cmd *cmd);
+void	start(t_msh *msh, t_cmd *cmd);
+void	mid(t_msh *msh, t_cmd *cmd);
+void	end(t_msh *msh, t_cmd *cmd);
+
+void	wgas(char *str, int ext);
 
 void	_var(t_all *all, t_msh *msh);
-
-///// EXEC.c
 
 #endif

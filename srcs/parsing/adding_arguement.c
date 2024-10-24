@@ -11,17 +11,17 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void    add_arg(t_all *all, t_cmd *last, char **str)
+void	add_arg(t_all *all, t_cmd *last, char **str)
 {
-    t_args  *new_arg;
+	t_args	*new_arg;
 
-    all->temp_for_free = *str;
-    new_arg = arg_new(all);
-    new_arg->arg = *str;
-    all->temp_for_free = NULL;
-    if (!last->argv)
-        last->argv = new_arg;
-    else
-        arg_add_el_back(last, new_arg);
-    return ;
+	all->temp_for_free = *str;
+	new_arg = arg_new(all);
+	new_arg->arg = *str;
+	all->temp_for_free = NULL;
+	if (!last->argv)
+		last->argv = new_arg;
+	else
+		arg_add_el_back(last, new_arg);
+	return ;
 }

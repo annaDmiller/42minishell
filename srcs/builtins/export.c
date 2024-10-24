@@ -113,7 +113,7 @@ void	export_no_opt(t_msh *msh)
 		tmp = msh->env;
 		while (tmp)
 		{
-			if (tmp->id == order[i])
+			if (tmp->id == order[i] && tstrcmp(tmp->name, "_"))
 			{
 				printf("export %s", tmp->name);
 				if (tmp->var)

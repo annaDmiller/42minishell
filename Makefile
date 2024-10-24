@@ -1,16 +1,18 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -O3 -g3 
+CFLAGS = -Wall -Werror -Wextra -O3 -g3
 
 EXEC_PRT = srcs/execution/redir.c \
-		srcs/execution/exec.c \
-		srcs/execution/free.c \
-		srcs/execution/tlib.c \
-		srcs/execution/split.c \
-		srcs/execution/tlist.c \
-		srcs/execution/processing.c \
-		srcs/execution/temporary_parsing.c \
-		srcs/execution/minishell.c \
+		srcs/execution/pipe.c \
+                srcs/execution/exec.c \
+                srcs/execution/free.c \
+                srcs/execution/tlib.c \
+                srcs/execution/split.c \
+                srcs/execution/tlist.c \
+                srcs/execution/minishell.c \
+                srcs/execution/processing.c \
+                srcs/execution/temporary_parsing.c \
+
 
 
 PARSING_PRT = srcs/parsing/adding_arguement.c \
@@ -25,8 +27,11 @@ PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/parsing/parsing_utils.c \
 		srcs/finalization/error_logic.c \
 		srcs/finalization/free_logic.c \
+		srcs/finalization/exit_logic.c \
 		srcs/list_logic/arg.c \
 		srcs/list_logic/cmd.c \
+		srcs/signal/init_signal.c \
+		srcs/lexer/validate_input.c
 
 TEST = srcs/main.c \
 	srcs/prompt.c \
@@ -71,3 +76,4 @@ re: fclean all
 .PHONY: all, clean, fclean, re
 
 .SILENT:
+

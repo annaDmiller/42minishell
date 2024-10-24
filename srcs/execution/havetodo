@@ -21,6 +21,11 @@ BUILTINS
 ENV
 
 	[✅]=  $variable est censé etre remplace par le contenu de la variable si elle existe // env+var
+
+$_ variable not printable by export function && not assignable
+
+export _=yesssssssssssssssssssssssssssssssssssssssssssssssss
+
 _____________________________________________
 
 

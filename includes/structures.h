@@ -32,11 +32,12 @@ typedef struct s_redir
 {
 	char	is_pipe; //if y, then we need to use pipex logic for the next command; if n, no need for pipex; need to think whether it's required if no semicolon sign can be used
 	char	in_type; //if s - reading from stdin and read lines will be copied as one line into args list; if f - reading from file, the fd_infile must be != -1; if 0 - then no input redirection
-	char	*in_txt; //text which is taken from stdinput (used if in_type == s)
 	char	out_type; //if 'a' - write appending; if 'r' - write by replacing; if '0' - no output redirection
+	char	*in_txt; //text which is taken from stdinput (used if in_type == s)
 	int		pipe_fd[2]; //for pipex
 	int		fd_infile; //file descriptor for input redirection (used if in_type == f)
 	int		fd_outfile; //file descriptor for outpur redirection
+	int		_tfd; // file descriptor to redirect output of cmd inside first and last cmd
 }		t_redir;
 
 typedef struct s_cmd

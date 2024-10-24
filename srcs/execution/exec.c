@@ -55,62 +55,51 @@ char	**setup_env(t_env *env)
 	return (envp);
 }
 
-int	one_exec(t_msh *msh, t_cmd *cmd)
+int	_execmd(t_msh *msh, t_cmd *cmd)
 {
 	char	**argv;
 	char	**envp;
 	char	*path;
-	pid_t	pid;
- 	int		i;
+	pid_t	tpid;
 
-	i = -1;
 	// printf("\n_________________________________________\n\n");
-	
-	i = -1;
-	// if (cmd->redir)
-	// {
-	// 	if (cmd->redir->out_type == 'r')
-	// 		redirout(msh,cmd);
-	// 	else if (cmd->redir->out_type == 'a')
-	// 		append(msh,cmd);
-	// }
-	// while (cmd && cmd->name && !cmd->redir)
-	// {
-		if (is_a_buitin(msh, cmd))
-			cmd = cmd->next;
-		else if (!tstrcmp(cmd->name, ".") || !tstrcmp(cmd->name, ".."))
-			cmd = cmd->next;
-		else if (cmd && cmd->name)
+	tpid = 0;
+	if (is_a_buitin(msh, cmd))
+		return (0);
+	if (!cmd->redir)
+	{
+		tpid = fork();
+		if (tpid == -1)
+			return (3);// handle error
+	}
+	if (cmd && cmd->name && ((!cmd->redir && tpid == 0) || (cmd->redir)))
+	{
+		path = fpath(msh->env, cmd->name, -1);
+		if (!path)
 		{
-			path = fpath(msh->env, cmd->name, -1);
-			if (!path)
-				printf("%s: command not found\n", cmd->name);
-			argv = setup_args(cmd->name, cmd->argv);
-			if (!argv)
-				free(path);
-			envp = setup_env(msh->env);
-			if (!envp)
-			{
-				free(path);
-				fsplit(argv);
-			}
-			pid = fork();
-			if (pid == -1)
-				return (3);// handle error
-			if (pid == 0)
-				if (execve(path, argv, envp) == -1)
-					return (-1);// handle error
-			waitpid(pid, NULL, 0);
+			fprintf(stderr, "%s: command not found\n", cmd->name);
+			return (0);
+		}
+		argv = setup_args(cmd->name, cmd->argv);
+		if (!argv)
+			free(path);
+		envp = setup_env(msh->env);
+		if (!envp)
+		{
+			free(path);
+			fsplit(argv);
+		}
+		if (execve(path, argv, envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
+		{
 			free(path);
 			fsplit(argv);
 			fsplit(envp);
-			// cmd = cmd->next;
-		}
-	// }
-	(void)i;
-	(void)argv;
-	(void)path;
-	(void)msh;
+			exit(1);// handle error
+			return (0);
+		}	
+	}
+	if (!cmd->redir && tpid > 0)
+		waitpid(tpid, NULL, 0);
 	return (0);
 }
 

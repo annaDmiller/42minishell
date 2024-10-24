@@ -11,38 +11,38 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-int is_empty_line(char *cmd_line)
+int	is_empty_line(char *cmd_line)
 {
-    int ind;
+	int	ind;
 
-    ind = 0;
-    while (cmd_line[ind])
-    {
-        if (is_white_space(cmd_line[ind]))
-            return (1);
-        ind++;
-    }
-    return (0);
+	ind = 0;
+	while (cmd_line[ind])
+	{
+		if (is_white_space(cmd_line[ind]))
+			return (1);
+		ind++;
+	}
+	return (0);
 }
 
-int  is_white_space(char car)
+int	is_white_space(char car)
 {
-    if (car == ' ' || car == '\v' || car == '\t' || car == '\r'
-        || car == '\f' || car == '\0')
-        return (0);
-    return (1);
+	if (car == ' ' || car == '\v' || car == '\t' || car == '\r'
+		|| car == '\f' || car == '\0')
+		return (0);
+	return (1);
 }
 
-int is_quote(char car)
+int	is_quote(char car)
 {
-    if (car == '\'' || car == '"')
-        return (0);
-    return (1);
+	if (car == '\'' || car == '"')
+		return (0);
+	return (1);
 }
 
-int is_redir(char car)
+int	is_redir(char car)
 {
-    if (car == '>' || car == '<' || car == '|')
-        return (0);
-    return (1);
+	if (car == '>' || car == '<' || car == '|')
+		return (0);
+	return (1);
 }

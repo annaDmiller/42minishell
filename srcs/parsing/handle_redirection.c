@@ -11,76 +11,77 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static void init_redir(t_redir *redir);
-static void    handle_pipe(t_cmd *cmd);
+static void	init_redir(t_redir *redir);
+static void	handle_pipe(t_all *all, t_cmd *cmd);
 
-char    *handle_redir(t_all *all, t_cmd *cmd)
+char	*handle_redir(t_all *all, t_cmd *cmd)
 {
-    t_redir *redir;
+	t_redir	*redir;
 
-    if (!cmd->redir)
-    {
-        redir = (t_redir*) malloc(sizeof(t_redir));
-        if (!redir)
-            error("handle_redir: Malloc error\n", all);
-        init_redir(redir);
-        cmd->redir = redir;
-    }
-    if (*(all->line) == '>')
-        handle_output(all, cmd);
-    if (*(all->line) == '<')
-        handle_input(all, cmd);
-    if (*(all->line) == '|')
-        handle_pipe(cmd);
-    return (NULL);
+	if (!cmd->redir)
+	{
+		redir = (t_redir *) malloc(sizeof(t_redir));
+		if (!redir)
+			error("handle_redir: Malloc error\n", all);
+		init_redir(redir);
+		cmd->redir = redir;
+	}
+	if (*(all->line) == '>')
+		handle_output(all, cmd);
+	if (*(all->line) == '<')
+		handle_input(all, cmd);
+	if (*(all->line) == '|')
+		handle_pipe(all, cmd);
+	return (NULL);
 }
 
-static void init_redir(t_redir *redir)
+static void	init_redir(t_redir *redir)
 {
-    redir->is_pipe = 0;
-    redir->fd_infile = -2;
-    redir->fd_outfile = -2;
-    redir->in_type = '0';
-    redir->out_type = '0';
-    redir->pipe_fd[0] = -2;
-    redir->pipe_fd[1] = -2;
-    redir->in_txt = NULL;
-    return ;
+	redir->is_pipe = 'n';
+	redir->fd_infile = -2;
+	redir->fd_outfile = -2;
+	redir->in_type = '0';
+	redir->out_type = '0';
+	redir->pipe_fd[0] = -2;
+	redir->pipe_fd[1] = -2;
+	redir->in_txt = NULL;
+	return ;
 }
 
-static void    handle_pipe(t_cmd *cmd)
+static void	handle_pipe(t_all *all, t_cmd *cmd)
 {
-    cmd->redir->is_pipe = 'y';
-    return ;
+	all->line++;
+	cmd->redir->is_pipe = 'y';
+	return ;
 }
 
-char *read_addr(t_all *all, t_cmd *cmd)
+char	*read_addr(t_all *all, t_cmd *cmd)
 {
-    char    *temp;
-    char    *ret;
+	char	*temp;
+	char	*ret;
 
-    all->temp_for_free = NULL;
-    ret = NULL;
-    while (!is_white_space(*(all->line)) && *(all->line))
-        all->line++;
-    if (!is_redir(*(all->line)))
-        return (NULL);
-    while (is_white_space(*(all->line)) && *(all->line))
-    {
-        if (*(all->line) == '$')
-            all->temp_for_free = handle_dollar(all, cmd, 0);
-        else if (!is_quote(*(all->line)))
-            all->temp_for_free = handle_quotes(all, cmd);
-        else
-            all->temp_for_free = handle_word(all, 0);
-        temp = ret;
-        ret = ft_strjoin(temp, all->temp_for_free);
-        if (!ret)
-            error("read_addr: Malloc error\n", all);
-        free(temp);
-        free(all->temp_for_free);
-    }
-    all->temp_for_free = NULL;
-    return (ret);
+	all->temp_for_free = NULL;
+	ret = NULL;
+	while (!is_white_space(*(all->line)) && *(all->line))
+		all->line++;
+	if (!is_redir(*(all->line)))
+		return (NULL);
+	while (is_white_space(*(all->line)) && *(all->line))
+	{
+		if (*(all->line) == '$')
+			all->temp_for_free = handle_dollar(all, 0);
+		else if (!is_quote(*(all->line)))
+			all->temp_for_free = handle_quotes(all, cmd, 0);
+		else
+			all->temp_for_free = handle_word(all, 0);
+		temp = ret;
+		ret = ft_strjoin(temp, all->temp_for_free);
+		if (!ret)
+			error("read_addr: Malloc error\n", all);
+		free(temp);
+		free(all->temp_for_free);
+		all->temp_for_free = NULL;
+	}
+	all->temp_for_free = NULL;
+	return (ret);
 }
-

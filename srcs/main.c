@@ -11,112 +11,99 @@
 /* ************************************************************************** */
 #include "../includes/minishell.h"
 
-volatile int    g_sig;
+volatile int	g_sig;
 
-static t_all    *init_all_struct(void);
+static t_all	*init_all_struct(t_all *all);
+static void	process_line(t_all *all);
 
-// int main(int argc, char **argv, char **envp)
-// {
-//     t_all   *all;
-//     char    *prompt;
-//     t_msh	msh;
-
-//     g_sig = 0;
-// //    init_signal;
-// 	everyinit(&msh, envp);
-//     while (1)
-//     {
-//         all = init_all_struct();
-//         prompt = print_prompt(all);
-//         all->line = readline(prompt);
-//         free(prompt);
-//         if (is_empty_line(all->line))
-//         {
-//             add_history(all->line);
-//             //validate_line(all);
-//             parse_line(all);
-// 	    minishell(all, &msh);
-//             //execute
-//         }
-//         free_all_struct(all);
-//         rl_on_new_line();
-//     }
-//     rl_clear_history();
-//     	(void)argc;
-// 	(void)argv;
-//     return (0);
-// }
-
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
-	t_all   *all;
+	char	*line;
+	t_all	*all;
 	t_msh	msh;
+	//char	*prompt;
 
 	g_sig = 0;
 	everyinit(&msh, envp);
-	// init_signal;
+	(void)argc;
+	(void)argv;
+	(void)env;
+	g_sig = 0;
+	all = NULL;
+	manage_signals();
 	while (1)
 	{
-		all = init_all_struct();
-		all->line = readline("miniself > ");
+		all = init_all_struct(all);
+		// fprintf(stderr, "\n////////////		NOUVELLLE CMD ->prochaine \n\n");
+		line = readline(PROMPT);
+		if (!line)
+			exit(1);
+		if (all->line)
+			all = init_all_struct(all);
+		all->line = line;
 		if (is_empty_line(all->line))
 		{
-			// printf("TESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\n");
-			add_history(all->line);
-			parse_line(all);
-		// execute part //
+			process_line(all);
 			minishell(all, &msh);
 			_var(all, &msh);
 		}
-		free_all_struct(all);
-		if (msh.exit)
-			break ;
+		g_sig = 0;
 		rl_on_new_line();
+		free_all_struct(all, 0);
 	}
-	// rl_clear_history();
-	clear_history();
-	free(msh.pwd);
-	freenv(msh.env);
-	if (msh.exit)
-		exit(msh.exit);
-	(void)argc;
-	(void)argv;
+	rl_clear_history();
+	free_all_struct(all, 1);
 	return (0);
-}
+	}
 
-static t_all    *init_all_struct(void)
+static void process_line(t_all *all)
 {
-    t_all   *ret;
+	int check_line;
 
-    ret = (t_all*) malloc(sizeof(t_all));
-    if (!ret)
-	error("init_all_struct: Malloc error\n", NULL);
-    ret->exitstatus = 0;
-    ret->line = NULL;
-    ret->lst_cmd = NULL;
-    ret->temp_l = NULL;
-    ret->temp_for_free = NULL;
-    ret->lst_env = NULL;
-    return (ret);
+	check_line = 1;
+	add_history(all->line);
+	check_line = validate_line(all);
+	if (!check_line)
+		return ;
+	parse_line(all);
+		return ;
 }
 
-	// printf("%s\n", all->line);
-	// for (t_cmd *cmd = all->lst_cmd; cmd; cmd = cmd->next)
-	// {
-	//     printf("CMD name: %s\n", cmd->name);
-	//     if (cmd->redir)
-	//     {
-	//         printf("Redir input: %i\n", cmd->redir->fd_infile);
-	//         printf("%c\n", cmd->redir->in_type);
-	//         if (cmd->redir->in_txt)
-	//             printf("%s", cmd->redir->in_txt);
-	//         printf("Redir output: %i\n", cmd->redir->fd_outfile);
-	//         printf("%c\n", cmd->redir->out_type);
-	//         printf("Redir pipe: %c\n", cmd->redir->is_pipe);
-	//     }
-	//     for (t_args *arg = cmd->argv; arg; arg = arg->next)
-	//     {
-	//         printf("CMD arg: %s\n", arg->arg);
-	//     }
-	// }
-	// sleep(5);
+static t_all	*init_all_struct(t_all *all)
+{
+	if (!all)
+	{
+		fprintf(stderr, "\n/__________________________________ \n\n");
+		all = (t_all *) malloc(sizeof(t_all));
+		if (!all)
+			error("init_all_struct: Malloc error\n", NULL);
+		all->lst_env = NULL;
+	}
+	all->line = NULL;
+	if (all && all->line)
+		free_all_struct(all, 0);
+	all->exitstatus = 0;
+	// all->line = NULL;
+	all->lst_cmd = NULL;
+	all->temp_l = NULL;
+	all->temp_for_free = NULL;
+	return (all);
+}
+
+
+// for (t_cmd *cmd = all->lst_cmd; cmd; cmd = cmd->next)
+// {
+// 	printf("CMD name: %s\n", cmd->name);
+// 	if (cmd->redir)
+// 	{
+// 		printf("Redir input: %i\n", cmd->redir->fd_infile);
+// 		printf("%c\n", cmd->redir->in_type);
+// 		if (cmd->redir->in_txt)
+// 			printf("%s", cmd->redir->in_txt);
+// 		printf("Redir output: %i\n", cmd->redir->fd_outfile);
+// 		printf("%c\n", cmd->redir->out_type);
+// 		printf("Redir pipe: %c\n", cmd->redir->is_pipe);
+// 	}
+// 	for (t_args *arg = cmd->argv; arg; arg = arg->next)
+// 		printf("CMD arg: %s\n", arg->arg);
+// }
