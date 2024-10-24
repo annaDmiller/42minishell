@@ -46,7 +46,7 @@ BUILTINS = srcs/builtins/builtins.c \
 		srcs/builtins/unset.c \
 		srcs/builtins/export.c \
 
-SRCS = $(PARSING_PRT) $(EXEC_PRT) $(BUILTINS) $(TEST)
+SRCS = $(PARSING_PRT) $(TEST) $(EXEC_PRT) $(BUILTINS)
 
 OBJS = $(SRCS:.c=.o)
 

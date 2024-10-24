@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+# include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -33,8 +34,8 @@
 extern volatile int g_sig;
 
 //signals
-void    manage_signals(void);
-void	hdl(int sig);
+void	init_signals(t_all *all);
+void	sigint_hdl(int sig);
 //list_logic
 t_cmd   *cmd_new(t_all *all);
 void    cmd_add_el_back(t_all *all, t_cmd *new_el);

@@ -14,7 +14,7 @@
 volatile int	g_sig;
 
 static t_all	*init_all_struct(t_all *all);
-static void	process_line(t_all *all);
+static void process_line(t_all *all, t_msh *msh);
 
 int main(int argc, char **argv, char **envp)
 {
@@ -27,10 +27,9 @@ int main(int argc, char **argv, char **envp)
 	everyinit(&msh, envp);
 	(void)argc;
 	(void)argv;
-	(void)env;
 	g_sig = 0;
 	all = NULL;
-	manage_signals();
+	init_signals(all);
 	while (1)
 	{
 		all = init_all_struct(all);
@@ -38,52 +37,50 @@ int main(int argc, char **argv, char **envp)
 		line = readline(PROMPT);
 		if (!line)
 			exit(1);
-		if (all->line)
-			all = init_all_struct(all);
+		//if (all->line)
+		//	all = init_all_struct(all);
 		all->line = line;
 		if (is_empty_line(all->line))
-		{
-			process_line(all);
-			minishell(all, &msh);
-			_var(all, &msh);
-		}
+			process_line(all, &msh);
 		g_sig = 0;
 		rl_on_new_line();
-		free_all_struct(all, 0);
 	}
 	rl_clear_history();
 	free_all_struct(all, 1);
 	return (0);
 	}
 
-static void process_line(t_all *all)
+static void process_line(t_all *all, t_msh *msh)
 {
-	int check_line;
+    int check_line;
 
-	check_line = 1;
-	add_history(all->line);
-	check_line = validate_line(all);
-	if (!check_line)
-		return ;
-	parse_line(all);
-		return ;
+    check_line = 1;
+    add_history(all->line);
+    check_line = validate_line(all);
+    if (!check_line || g_sig)
+        return ;
+    parse_line(all);
+    if (g_sig)
+        return ;
+    minishell(all, msh);
+    _var(all, msh);
+    return ;
 }
 
 static t_all	*init_all_struct(t_all *all)
 {
 	if (!all)
 	{
-		fprintf(stderr, "\n/__________________________________ \n\n");
 		all = (t_all *) malloc(sizeof(t_all));
 		if (!all)
 			error("init_all_struct: Malloc error\n", NULL);
 		all->lst_env = NULL;
+        	all->line = NULL;
 	}
-	all->line = NULL;
-	if (all && all->line)
-		free_all_struct(all, 0);
+    	if (all->line)
+        	free_all_struct(all, 0);
 	all->exitstatus = 0;
-	// all->line = NULL;
+	all->line = NULL;
 	all->lst_cmd = NULL;
 	all->temp_l = NULL;
 	all->temp_for_free = NULL;
