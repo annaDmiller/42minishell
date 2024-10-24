@@ -29,7 +29,8 @@ PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/finalization/exit_logic.c \
 		srcs/list_logic/arg.c \
 		srcs/list_logic/cmd.c \
-		srcs/signal/init_signal.c
+		srcs/signal/init_signal.c \
+		srcs/lexer/validate_input.c
 
 TEST = srcs/main.c \
 	srcs/prompt.c \
