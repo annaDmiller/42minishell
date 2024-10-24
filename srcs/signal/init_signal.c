@@ -3,7 +3,7 @@
 static struct sigaction	init_sig_bs_logic(void);
 static struct sigaction	init_sig_c_logic(void);
 
-void	init_signals(char prog, t_all *all)
+void	init_signals(t_all *all)
 {
 	struct sigaction	act_bs;
 	struct sigaction	act_c;
@@ -12,11 +12,8 @@ void	init_signals(char prog, t_all *all)
 	act_c = init_sig_c_logic();
 	if (sigaction(SIGQUIT, &act_bs, NULL) == -1)
 		error("init_signals: sigaction error\n", all);
-	if (prog == 'c')
-		signal(SIGINT, SIG_DFL);
-	else
-		if (sigaction(SIGINT, &act_c, NULL) == -1)
-			error("init_signals: sigaction error\n", all);
+	if (sigaction(SIGINT, &act_c, NULL) == -1)
+		error("init_signals: sigaction error\n", all);
 	return ;
 }
 

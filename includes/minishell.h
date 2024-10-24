@@ -30,7 +30,7 @@
 extern volatile int g_sig;
 
 //signals
-void	init_signals(char prog, t_all *all);
+void	init_signals(t_all *all);
 void	sigint_hdl(int sig);
 //list_logic
 t_cmd   *cmd_new(t_all *all);
