@@ -39,11 +39,11 @@ static	int	val_exit(int n)
 
 void	texit(t_msh *msh, t_args *argv)
 {
-	printf("exit\n");
+	fprintf(stderr, "exit\n");
 	if (!argv)
 		msh->exit = 1;
 	else if (argv->next)
-		printf("exit: too many arguments\n");
+		fprintf(stderr, "exit: too many arguments\n");
 	else
 	{
 		if (check_chr(argv->arg) == 2)

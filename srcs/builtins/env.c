@@ -22,7 +22,7 @@ void	env(t_env *env)
 	while (tmp)
 	{
 		if (tmp->var)
-			printf("%s=%s\n", tmp->name, tmp->var);
+			fprintf(stderr, "%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
 }

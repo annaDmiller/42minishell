@@ -62,7 +62,7 @@ int	_execmd(t_msh *msh, t_cmd *cmd)
 	char	*path;
 	pid_t	tpid;
 
-	// printf("\n_________________________________________\n\n");
+	// fprintf(stderr, "\n_________________________________________\n\n");
 	tpid = 0;
 	if (is_a_buitin(msh, cmd))
 		return (0);

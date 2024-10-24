@@ -14,7 +14,7 @@
 void	pwd(t_msh *msh)
 {
 	if (msh)
-		printf("%s\n", msh->pwd);
+		fprintf(stderr, "%s\n", msh->pwd);
 }
 
 // void    up_pwd(t_msh *msh, char *dir)

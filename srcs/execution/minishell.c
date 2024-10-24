@@ -25,6 +25,24 @@ void	wgas(char *str, int ext)
 	fprintf(stderr, "%s\n", str);
 	exit(ext);
 }
+static	void	print_redir_param(t_redir *redir)
+{
+	t_redir	*tmp;
+
+	tmp = redir;
+	fprintf(stderr, "\n");
+	if (!tmp)
+		fprintf(stderr, "!REDIR\n");
+	else
+	{
+		fprintf(stderr, "is_pipe // %c\n", tmp->is_pipe);
+		fprintf(stderr, "in_type // %c\n", tmp->in_type);
+		fprintf(stderr, "out_type // %c\n", tmp->out_type);
+		fprintf(stderr, "in_txt // %s\n", tmp->in_txt);
+		fprintf(stderr, "fd_infile // %d\n", tmp->fd_infile);
+		fprintf(stderr, "fd_outfile // %d\n", tmp->fd_outfile);
+	}
+}
 
 void	minishell(t_all *all, t_msh *msh)
 {
@@ -33,6 +51,13 @@ void	minishell(t_all *all, t_msh *msh)
 
 	i = 0;
 	cmd = all->lst_cmd;
+	print_redir_param(cmd->redir);
+	if (cmd->next)
+	{
+		fprintf(stderr, "_________________________________\n\n");
+		print_redir_param(cmd->next->redir);
+		fprintf(stderr, "\n\n");
+	}
 	if (!cmd->redir)
 	{
 		// fprintf(stderr, "__________________________SINGLE__________________________\n\n");

@@ -27,10 +27,10 @@ void	everyinit(t_msh *msh, char **envp)
 //		handle if !getcwd
 	if (envp && envp[0])
 		envinit(msh, envp, -1);
-		// printf("JE RECUP l'ENV\n");
+		// fprintf(stderr, "JE RECUP l'ENV\n");
 	else
 		env_build(msh, -1);
-		// printf("JE CONSTRUIS MOI MEME\n");
+		// fprintf(stderr, "JE CONSTRUIS MOI MEME\n");
 }
 
 void	envinit(t_msh *msh, char **envp, int i)

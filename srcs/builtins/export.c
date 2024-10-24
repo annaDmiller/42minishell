@@ -25,7 +25,7 @@ void	export(t_msh *msh, t_args *argv)
 	{
 		n = setup_name(argv->arg);
 		if (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 && n[0] <= 122)) && n[0] != '_')
-			printf("export: `%s': not a valid indentifier\n", argv->arg);
+			fprintf(stderr, "export: `%s': not a valid indentifier\n", argv->arg);
 		else
 		{
 			var = env_retrieve_var(msh->env, n);
@@ -115,10 +115,10 @@ void	export_no_opt(t_msh *msh)
 		{
 			if (tmp->id == order[i] && tstrcmp(tmp->name, "_"))
 			{
-				printf("export %s", tmp->name);
+				fprintf(stderr, "export %s", tmp->name);
 				if (tmp->var)
-					printf("=\"%s\"", tmp->var);
-				printf("\n");
+					fprintf(stderr, "=\"%s\"", tmp->var);
+				fprintf(stderr, "\n");
 			}
 			tmp = tmp->next;
 		}
