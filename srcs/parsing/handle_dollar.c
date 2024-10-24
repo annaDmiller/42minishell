@@ -44,7 +44,6 @@ static char	*add_env_var(t_all *all, char car)
 	char	*env_val;
 	char	*env_name;
 	int		len_name;
-//	char	*ret;
 
 	len_name = 0;
 	while (is_white_space(all->line[len_name])
@@ -59,9 +58,5 @@ static char	*add_env_var(t_all *all, char car)
 	all->line += len_name;
 	if (!env_val)
 		return (NULL);
-	// ret = (char *) malloc(sizeof(char) * (ft_strlen(env_val) + 1));
-	// if (!ret)
-		// error("hadnle_dollar: Malloc error\n", all);
-	// ft_strlcpy(ret, env_val, ft_strlen(env_val) + 1);
 	return (env_val);
 }
