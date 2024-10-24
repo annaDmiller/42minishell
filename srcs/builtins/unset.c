@@ -18,7 +18,7 @@ static	int	free_env_var(t_env *var);
 // bash-5.1$
 char	*setup_name(char *str)
 {
-	char    *name;
+	char	*name;
 	int		i;
 
 	i = 0;
@@ -36,14 +36,14 @@ char	*setup_name(char *str)
 }
 
 /// @brief unset can take multiple arguments, and unset them one by one
-/// it'll try to unset every argumenth if it exists // never will display an error message
+/// it'll try to unset every argumenth if it exists // will never display an error message
 /// @retval == 0 // All name operands were successfully unset.
 /// @retval > 0  // At least one name could not be unset.
-void    unset(t_msh *msh, t_args *argv)
+void	unset(t_msh *msh, t_args *argv)
 {
 	t_env	*save;
 	t_env	*tmp;
-	char		*name;
+	char	*name;
 
 	while (argv)
 	{
@@ -65,6 +65,28 @@ void    unset(t_msh *msh, t_args *argv)
 		if (name)
 			free(name);
 		argv = argv->next;
+	}
+}
+/// @brief reset '$_' variable with the last command line entered
+void	_var(t_all *all, t_msh *msh)
+{
+	t_env	*var;
+	char	*str;
+	char	*_prefix;
+
+	var = env_retrieve_var(msh->env, "_");
+	if (var && all && all->line) // si la variable existe deja on modifie seulement son contenu
+	{
+		free(var->var);
+		_prefix = malloc(sizeof(char) * 3);
+		if (!_prefix)
+			return ;// handle error
+		_prefix[0] = '_';
+		_prefix[1] = '=';
+		_prefix[2] = '\0';
+		str = tjoin(_prefix, all->line);
+		var->var = env_var(str);
+		free(str);
 	}
 }
 

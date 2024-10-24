@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:55:49 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	free_all_struct(t_all *all, int is_clear_env)
@@ -19,7 +18,10 @@ void	free_all_struct(t_all *all, int is_clear_env)
 	if (all->temp_l)
 		free(all->temp_l);
 	if (!all->temp_l && all->line)
+	{
 		free(all->line);
+		all->line = NULL;
+	}
 	if (all->lst_cmd)
 		free_cmd_struct(all->lst_cmd);
 	if (all->lst_env && is_clear_env)

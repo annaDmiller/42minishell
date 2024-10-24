@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:10 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static char	*add_env_var(t_all *all, char car);

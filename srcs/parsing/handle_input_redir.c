@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:16 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static void	read_from_stdin(t_all *all, t_cmd *cmd);

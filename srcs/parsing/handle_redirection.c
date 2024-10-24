@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:35 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static void	init_redir(t_redir *redir);

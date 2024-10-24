@@ -14,7 +14,7 @@
 /// @brief if path given argv->arg is not valid it prints pathname: No such file or directory
 ///	if there is more than one arg it doesnt move and prints cd: too many arguments
 ////	si on passe en argument ../../include on verifie petit a petit que c'est possible
-void    cd(t_msh *msh, t_args *argv)
+void	cd(t_msh *msh, t_args *argv)
 {
 	if (!argv && !env_retrieve_var(msh->env, "HOME"))
 		printf("cd: HOME not set\n");

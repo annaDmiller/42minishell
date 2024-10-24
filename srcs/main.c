@@ -9,69 +9,48 @@
 /*   Updated: 2024/10/06 20:15:40 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 volatile int	g_sig;
 
 static t_all	*init_all_struct(t_all *all);
-static void process_line(t_all *all);
+static void process_line(t_all *all, t_msh *msh);
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **envp)
 {
-    t_all   *all;
-    //char    *prompt;
-    int     check_line;
-    char    *line;
+	char	*line;
+	t_all	*all;
+	t_msh	msh;
+	//char	*prompt;
 
-    (void)argc;
-    (void)argv;
-    (void)env;
-    g_sig = 0;
-    all = NULL;
-    init_signals(all);
-    while (1)
-    {
-        all = init_all_struct(all);
-        //prompt = print_prompt(all);
-        line = readline(PROMPT);
-        //line = ft_strdup("cat << hi");
-        if (!line)
-            exit(1);
-        if (all->line)
-            all = init_all_struct(all);
-        all->line = line;
-        //free(prompt);
-        if (is_empty_line(all->line))
-            process_line(all);
-        printf("%s\n", all->line);
-        for (t_cmd *cmd = all->lst_cmd; cmd; cmd = cmd->next)
-        {
-            printf("CMD name: %s\n", cmd->name);
-            if (cmd->redir)
-            {
-                printf("Redir input: %i\n", cmd->redir->fd_infile);
-                printf("%c\n", cmd->redir->in_type);
-                if (cmd->redir->in_txt)
-                    printf("%s", cmd->redir->in_txt);
-                printf("Redir output: %i\n", cmd->redir->fd_outfile);
-                printf("%c\n", cmd->redir->out_type);
-                printf("Redir pipe: %c\n", cmd->redir->is_pipe);
-            }
-            for (t_args *arg = cmd->argv; arg; arg = arg->next)
-            {
-                printf("CMD arg: %s\n", arg->arg);
-            }
-        }
-        g_sig = 0;
-        rl_on_new_line();
-    }
-    rl_clear_history();
-    free_all_struct(all, 1);
-    return (0);
-}
+	g_sig = 0;
+	everyinit(&msh, envp);
+	(void)argc;
+	(void)argv;
+	g_sig = 0;
+	all = NULL;
+	manage_signals();
+	while (1)
+	{
+		all = init_all_struct(all);
+		// fprintf(stderr, "\n////////////		NOUVELLLE CMD ->prochaine \n\n");
+		line = readline(PROMPT);
+		if (!line)
+			exit(1);
+		if (all->line)
+			all = init_all_struct(all);
+		all->line = line;
+		if (is_empty_line(all->line))
+			process_line(all, &msh);
+		g_sig = 0;
+		rl_on_new_line();
+	}
+	rl_clear_history();
+	free_all_struct(all, 1);
+	return (0);
+	}
 
-static void process_line(t_all *all)
+static void process_line(t_all *all, t_msh *msh)
 {
     int check_line;
 
@@ -83,7 +62,8 @@ static void process_line(t_all *all)
     parse_line(all);
     if (g_sig)
         return ;
-    //execute
+    minishell(all, msh);
+    _var(all, &msh);
     return ;
 }
 
@@ -106,3 +86,24 @@ static t_all	*init_all_struct(t_all *all)
 	all->temp_for_free = NULL;
 	return (all);
 }
+
+	// printf("%s\n", all->line);
+	// for (t_cmd *cmd = all->lst_cmd; cmd; cmd = cmd->next)
+	// {
+	//     printf("CMD name: %s\n", cmd->name);
+	//     if (cmd->redir)
+	//     {
+	//         printf("Redir input: %i\n", cmd->redir->fd_infile);
+	//         printf("%c\n", cmd->redir->in_type);
+	//         if (cmd->redir->in_txt)
+	//             printf("%s", cmd->redir->in_txt);
+	//         printf("Redir output: %i\n", cmd->redir->fd_outfile);
+	//         printf("%c\n", cmd->redir->out_type);
+	//         printf("Redir pipe: %c\n", cmd->redir->is_pipe);
+	//     }
+	//     for (t_args *arg = cmd->argv; arg; arg = arg->next)
+	//     {
+	//         printf("CMD arg: %s\n", arg->arg);
+	//     }
+	// }
+	// sleep(5);

@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:03 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	add_arg(t_all *all, t_cmd *last, char **str)

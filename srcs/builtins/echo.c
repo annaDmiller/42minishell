@@ -11,13 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-// echo -nnnnnnnnnnn talan
-// should work
-// echo -nd talan
-// should printf -nd talan
-
-// void	echo(t_msh *msh, t_args *argv)
-
 static int	valid(char *str)
 {
 	int	i;
@@ -30,10 +23,8 @@ static int	valid(char *str)
 		if (str[i] != 'n')
 			return (0);
 	}
-	// printf("valid check\t%s\n", str);
 	return (22);
 }
-
 
 void	echo(t_msh *msh, t_args *argv)
 {

@@ -17,7 +17,6 @@ void	pwd(t_msh *msh)
 		printf("%s\n", msh->pwd);
 }
 
-
 // void    up_pwd(t_msh *msh, char *dir)
 // {
 // 	char	*nvx_pwd;

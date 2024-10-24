@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:43 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static char	*take_str(t_all *all, t_cmd *cmd);

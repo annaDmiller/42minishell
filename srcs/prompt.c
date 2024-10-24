@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/06 20:15:46 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 static void    get_user_host(char **prompt, t_all *all);

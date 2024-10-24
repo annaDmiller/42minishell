@@ -11,18 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	show_args(t_msh *msh)
-{
-	t_args	*tmp;
-
-	tmp = msh->l_args;
-	while (tmp)
-	{
-		printf("%s\n", tmp->arg);
-		tmp = tmp->next;
-	}
-}
-
 int	tstrcmp(char *str, char *cmp)
 {
 	int	i;

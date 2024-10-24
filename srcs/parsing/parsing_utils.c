@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:55:03 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 int	is_empty_line(char *cmd_line)

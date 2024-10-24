@@ -9,7 +9,6 @@
 /*   Updated: 2024/10/13 17:54:22 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static void	output_replace(t_all *all, t_cmd *cmd);
@@ -50,8 +49,13 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	cmd->redir->out_type = 'a';
 	return ;
 }
+<<<<<<< HEAD
 
 static void	output_replace(t_all *all, t_cmd *cmd)
+=======
+/// @brief REPLACE cmd->redir->out_type = 'r';
+static void output_replace(t_all *all, t_cmd *cmd)
+>>>>>>> origin/execution
 {
 	char	*addr;
 
