@@ -35,7 +35,7 @@ EXEC	✅ convertir l`env en char ** et les arguments en char ** aussi pour execv
 		si pipe est, faire les commandes dans des fork
 
 
-gere les redirections + here doc
+gere les redirections + here doc ✅ ✅ ✅ // 
 
 	[ ]=  < should redirect input.
 	[ ]=  > should redirect output.

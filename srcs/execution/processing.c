@@ -23,6 +23,8 @@ void	everyinit(t_msh *msh, char **envp)
 
 	msh->pwd= NULL;
 	msh->exit = 0;
+	msh->_stdin_save = 0;
+	msh->_stdout_save = 0;
 	msh->pwd = getcwd(NULL, 0); // stock the pwd at the start, cd(directory);
 //		handle if !getcwd
 	if (envp && envp[0])

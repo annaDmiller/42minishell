@@ -45,6 +45,12 @@ void	start(t_msh *msh, t_cmd *cmd)
 {
 	pid_t	tpid;
 
+	msh->_stdin_save = dup(STDIN_FILENO);
+	msh->_stdout_save = dup(STDOUT_FILENO);
+	if (dup2(msh->_stdin_save, STDIN_FILENO) == -1)
+		return ;//handle error
+	if (dup2(msh->_stdout_save, STDOUT_FILENO) == -1)
+		return ;//handle error
 	if (cmd->redir->in_type == 'f')
 	{
 		if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
@@ -67,14 +73,10 @@ void	mid(t_msh *msh, t_cmd *cmd)
 {
 	pid_t	tpid;
 
-	fprintf(stderr, "debug\n");
 	if (dup2(cmd->redir->pipe_fd[0], STDIN_FILENO) == -1)
 		return ;// handle error
 	if (dup2(cmd->redir->pipe_fd[1], STDOUT_FILENO) == -1)
-	{
-		fprintf(stderr, "debug2\n");
 		return ;// handle error
-	}
 	close(cmd->redir->pipe_fd[1]);
 	close(cmd->redir->pipe_fd[0]);
 	tpid = fork();
@@ -110,5 +112,14 @@ void	end(t_msh *msh, t_cmd *cmd)
 	if (tpid == 0)
 		_execmd(msh, cmd);
 	waitpid(tpid, NULL, 0);
+	close(cmd->redir->pipe_fd[1]);
+	close(cmd->redir->pipe_fd[0]);
+	// if (dup2(msh->_stdin_save, STDIN_FILENO) == -1)
+	// 	return ;//handle error
+	// if (dup2(msh->_stdout_save, STDOUT_FILENO) == -1)
+	// 	return ;//handle error
+	// close(msh->_stdin_save);
+	// close(msh->_stdout_save);
+
 }
 	// if (cmd && cmd->redir && cmd->redir->out_type && cmd->redir->out_type == '0')

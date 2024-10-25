@@ -72,6 +72,9 @@ void    free_env_struct(t_env *lst_env);
 void    free_args(t_args *lst_arg);
 
 
+void	init_redir(t_redir *redir);
+
+
 ///////////////////	EXEC
 
 void	minishell(t_all *all, t_msh *msh);

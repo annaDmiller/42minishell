@@ -68,6 +68,8 @@ typedef struct s_msh
 	t_args		*l_args;
 	char		*pwd;
 	int			exit;
+	int			_stdin_save;
+	int			_stdout_save;
 }		t_msh;
 
 typedef struct s_all

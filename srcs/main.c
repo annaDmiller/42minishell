@@ -21,7 +21,6 @@ int main(int argc, char **argv, char **envp)
 	char	*line;
 	t_all	*all;
 	t_msh	msh;
-	//char	*prompt;
 
 	g_sig = 0;
 	everyinit(&msh, envp);
@@ -33,12 +32,15 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		all = init_all_struct(all, &msh);
+		// fprintf(stderr, "readline // \n");
 		// fprintf(stderr, "\n////////////		NOUVELLLE CMD ->prochaine \n\n");
 		line = readline(PROMPT);
 		if (!line)
 			exit(1);
 		//if (all->line)
 		//	all = init_all_struct(all);
+		if (!line)
+			exit(1);
 		all->line = line;
 		if (is_empty_line(all->line))
 			process_line(all, &msh);
@@ -48,23 +50,24 @@ int main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	free_all_struct(all, 1);
 	return (0);
-	}
+}
 
-static void process_line(t_all *all, t_msh *msh)
+static	void	process_line(t_all *all, t_msh *msh)
 {
-    int check_line;
+	int	check_line;
 
-    check_line = 1;
-    add_history(all->line);
-    check_line = validate_line(all);
-    if (!check_line || g_sig)
-        return ;
-    parse_line(all);
-    if (g_sig)
-        return ;
-    minishell(all, msh);
-    _var(all, msh);
-    return ;
+	check_line = 1;
+	add_history(all->line);
+	fprintf(stderr, "%s\n", all->line);
+	check_line = validate_line(all);
+	if (!check_line || g_sig)
+		return ;
+	parse_line(all);
+	if (g_sig)
+		return ;
+	minishell(all, msh);
+	_var(all, msh);
+	return ;
 }
 
 static t_all	*init_all_struct(t_all *all, t_msh *msh)
