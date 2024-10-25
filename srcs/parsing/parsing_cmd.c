@@ -12,30 +12,24 @@
 #include "../../includes/minishell.h"
 
 static char	*take_str(t_all *all, t_cmd *cmd);
-static void	add_cmd_name(t_all *all, t_cmd *last);
+static void	process_str(t_all *all, t_cmd *cmd, char **str);
 
-void	parse_cmd(t_all *all)
+void	parse_cmd(t_all *all, t_cmd *last)
 {
-	t_cmd	*last;
 	char	*str;
 	char	*temp;
 	char	*temp1;
 
-	last = cmd_last_el(all);
 	str = NULL;
 	while (*(all->line) || str)
 	{
 		if (last->redir)
 			if (last->redir->is_pipe == 'y')
 				break ;
-		if (!is_white_space(*(all->line)) && str && last->quote == 0)
-			add_arg(all, last, &str);
-		while (!is_white_space(*(all->line)) && last->quote == 0
+		process_str(all, last, &str);
+		while (!is_white_space(*(all->line)) /*&& last->quote == 0*/
 			&& *(all->line))
-		{
-			str = NULL;
 			all->line++;
-		}
 		if (*all->line == '\0')
 			break ;
 		if (str)
@@ -56,14 +50,6 @@ void	parse_cmd(t_all *all)
 
 static char	*take_str(t_all *all, t_cmd *cmd)
 {
-	if (!cmd->name)
-	{
-		if (*(all->line) != '$')
-			add_cmd_name(all, cmd);
-		else
-			cmd->name = handle_dollar(all, 0);
-		return (NULL);
-	}
 	if (!cmd->redir && cmd->prev)
 	{
 		cmd->redir = (t_redir *) malloc(sizeof(t_redir));
@@ -82,19 +68,14 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 	return (handle_word(all, 0));
 }
 
-static void	add_cmd_name(t_all *all, t_cmd *last)
+static void	process_str(t_all *all, t_cmd *cmd, char **str)
 {
-	int		len_name;
-	char	*cmd_name;
-
-	len_name = 0;
-	while (is_white_space(all->line[len_name]) && all->line[len_name])
-		len_name++;
-	cmd_name = (char *) malloc((len_name + 1) * sizeof(char));
-	if (!cmd_name)
-		error("add_cmd_name: Malloc error\n", all);
-	ft_strlcpy(cmd_name, all->line, len_name + 1);
-	last->name = cmd_name;
-	all->line += len_name;
+	if (cmd->quote || !(*str) || is_white_space(*(all->line)))
+		return ;
+	if (!cmd->name)
+		cmd->name = *str;
+	else
+		add_arg(all, cmd, str);
+	*str = NULL;
 	return ;
 }

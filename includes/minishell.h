@@ -47,7 +47,7 @@ t_args   *arg_last_el(t_cmd *last_cmd);
 int validate_line(t_all *all);
 //parsing main
 void    parse_line(t_all *all);
-void    parse_cmd(t_all *all);
+void	parse_cmd(t_all *all, t_cmd *last);
 void    add_arg(t_all *all, t_cmd *last, char **str);
 void	init_redir(t_redir *redir);
 //parsing utils

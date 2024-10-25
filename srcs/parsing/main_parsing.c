@@ -26,12 +26,14 @@ void	parse_line(t_all *all)
 static void	add_cmd(t_all *all)
 {
 	t_cmd	*new_el;
+	t_cmd	*last_el;
 
 	new_el = cmd_new(all);
 	if (!all->lst_cmd)
 		all->lst_cmd = new_el;
 	else
 		cmd_add_el_back(all, new_el);
-	parse_cmd(all);
+	last_el = cmd_last_el(all);
+	parse_cmd(all, last_el);
 	return ;
 }
