@@ -18,8 +18,8 @@ static void	process_str(t_all *all, t_cmd *cmd, char **str);
 void	parse_cmd(t_all *all, t_cmd *last)
 {
 	char	*str;
-	char	*temp;
-	char	*temp1;
+	// char	*temp;
+	// char	*temp1;
 
 	str = NULL;
 	while (*(all->line) || str)
