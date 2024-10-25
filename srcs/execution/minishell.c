@@ -32,18 +32,18 @@ static	void	print_redir_param(t_cmd *cmd)
 	tmp = cmd;
 	while (tmp)
 	{	
-		// if (!tmp->redir)
-		// 	fprintf(stderr, "!REDIR\n");
-		// else
-		// {
-		// 	fprintf(stderr, "is_pipe // %c\n", tmp->redir->is_pipe);
-		// 	fprintf(stderr, "in_type // %c\n", tmp->redir->in_type);
-		// 	fprintf(stderr, "out_type // %c\n", tmp->redir->out_type);
-		// 	fprintf(stderr, "in_txt // %s\n", tmp->redir->in_txt);
-		// 	fprintf(stderr, "fd_infile // %d\n", tmp->redir->fd_infile);
-		// 	fprintf(stderr, "fd_outfile // %d\n", tmp->redir->fd_outfile);
-		// 	fprintf(stderr, "\n\n");
-		// }
+		if (!tmp->redir)
+			fprintf(stderr, "!REDIR\n");
+		else
+		{
+			fprintf(stderr, "is_pipe // %c\n", tmp->redir->is_pipe);
+			fprintf(stderr, "in_type // %c\n", tmp->redir->in_type);
+			fprintf(stderr, "out_type // %c\n", tmp->redir->out_type);
+			fprintf(stderr, "in_txt // %s\n", tmp->redir->in_txt);
+			fprintf(stderr, "fd_infile // %d\n", tmp->redir->fd_infile);
+			fprintf(stderr, "fd_outfile // %d\n", tmp->redir->fd_outfile);
+			fprintf(stderr, "\n\n");
+		}
 		fprintf(stderr, "\t%s\n\n", tmp->name);
 		tmp = tmp->next;
 	}
@@ -98,3 +98,4 @@ void	minishell(t_all *all, t_msh *msh)
 	// 		}
 	// 	}
 	// }
+	

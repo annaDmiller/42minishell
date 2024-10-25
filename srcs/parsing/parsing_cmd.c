@@ -18,8 +18,6 @@ static void	process_str(t_all *all, t_cmd *cmd, char **str);
 void	parse_cmd(t_all *all, t_cmd *last)
 {
 	char	*str;
-	// char	*temp;
-	// char	*temp1;
 
 	str = NULL;
 	while (*(all->line) || str)
@@ -32,7 +30,11 @@ void	parse_cmd(t_all *all, t_cmd *last)
 			&& *(all->line))
 			all->line++;
 		if (*all->line == '\0')
+		{
+			if (last->prev)
+				last->redir->is_pipe = 'y';
 			break ;
+		}
 		process_str(all, last, &str);
 	}
 	return ;
@@ -69,8 +71,6 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 			error("take_str: Malloc error\n", all);
 		init_redir(cmd->redir);
 	}
-	if (cmd->prev)
-		cmd->redir->is_pipe = 'y';
 	if (*(all->line) == '$' && is_white_space(*(all->line + 1)))
 		return (handle_dollar(all, 0));
 	if (!is_quote(*(all->line)))
