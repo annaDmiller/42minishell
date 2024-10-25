@@ -45,7 +45,6 @@ static char	*add_env_var(t_all *all, char car)
 	char	*env_name;
 	t_env	*tmp;
 	int		len_name;
-//	char	*ret;
 
 	len_name = 0;
 	env_val = NULL;

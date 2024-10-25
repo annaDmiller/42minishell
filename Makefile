@@ -34,7 +34,6 @@ PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/lexer/validate_input.c
 
 TEST = srcs/main.c \
-	srcs/prompt.c \
 	# unit.c \
 
 BUILTINS = srcs/builtins/builtins.c \

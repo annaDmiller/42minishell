@@ -24,13 +24,13 @@ void	free_all_struct(t_all *all, int is_clear_env)
 	}
 	if (all->lst_cmd)
 		free_cmd_struct(all->lst_cmd);
-	if (all->lst_env && is_clear_env)
+	if (!is_clear_env)
+		return ;
+	if (all->lst_env)
 		free_env_struct(all->lst_env);
-	if (is_clear_env)
-	{
-		free(all);
-		all = NULL;
-	}
+	//logic to clear msh
+	free(all);
+	all = NULL;
 	return ;
 }
 
@@ -61,7 +61,7 @@ void	free_redir_struct(t_redir *redir)
 		free(redir->in_txt);
 	if (redir->fd_infile > 0)
 		close(redir->fd_infile);
-	if (redir->fd_outfile > 0)
+	if (redir->fd_outfile > 1)
 		close (redir->fd_outfile);
 	free(redir);
 	redir = NULL;

@@ -44,12 +44,12 @@ t_args   *arg_new(t_all *all);
 void    arg_add_el_back(t_cmd *last_cmd, t_args *new_el);
 t_args   *arg_last_el(t_cmd *last_cmd);
 //main part
-char    *print_prompt(t_all *all);
 int validate_line(t_all *all);
 //parsing main
 void    parse_line(t_all *all);
-void    parse_cmd(t_all *all);
+void	parse_cmd(t_all *all, t_cmd *last);
 void    add_arg(t_all *all, t_cmd *last, char **str);
+void	init_redir(t_redir *redir);
 //parsing utils
 int  is_white_space(char car);
 int is_empty_line(char *cmd_line);
