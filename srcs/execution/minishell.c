@@ -58,22 +58,21 @@ void	minishell(t_all *all, t_msh *msh)
 	cmd = all->lst_cmd;
 	fprintf(stderr, "_________________________________\n\n");
 	print_redir_param(cmd);
-	if (!cmd)
-	{
+	if (!cmd || !cmd->name)
 		return ;
-	}
 	if (!cmd->next)
 	{
-		// fprintf(stderr, "__________________________SINGLE__________________________\n\n");
+		fprintf(stderr, "__________________________SINGLE__________________________\n\n");
 		_execmd(msh, cmd);
 	}
 	else if (cmd->redir && cmd->redir->is_pipe == 'y')
 	{
-		// fprintf(stderr, "__________________________PIPE__________________________\n\n");
+		fprintf(stderr, "__________________________PIPE__________________________\n\n");
 		tpipe(msh, cmd);
 	}
 	test(0);
 	(void)i;
+	(void)msh;
 }
 
 	// if (cmd)

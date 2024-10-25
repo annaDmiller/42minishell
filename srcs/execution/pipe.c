@@ -45,8 +45,8 @@ void	start(t_msh *msh, t_cmd *cmd)
 {
 	pid_t	tpid;
 
-	msh->_stdin_save = dup(STDIN_FILENO);
-	msh->_stdout_save = dup(STDOUT_FILENO);
+	// msh->_stdin_save = dup(STDIN_FILENO);
+	// msh->_stdout_save = dup(STDOUT_FILENO);
 	if (dup2(msh->_stdin_save, STDIN_FILENO) == -1)
 		return ;//handle error
 	if (dup2(msh->_stdout_save, STDOUT_FILENO) == -1)
