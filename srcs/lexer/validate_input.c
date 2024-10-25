@@ -39,7 +39,7 @@ static int  validate_quotes(t_all *all)
         {
             if (all->line[ind] == car)
                 car = 0;
-            if (!is_quote(all->line[ind]) && !car)
+            else if (!is_quote(all->line[ind]) && !car)
                 car = all->line[ind];
             ind++;
         }
@@ -79,6 +79,7 @@ static int validate_redir(t_all *all)
     int     check;
 
     ind = 0;
+    check = 1;
     while (all->line[ind])
     {
         if (all->line[ind] == '>')

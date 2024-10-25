@@ -29,11 +29,11 @@ int main(int argc, char **argv, char **envp)
     everyinit(&msh, envp);
     all = NULL;
     init_signals(all);
-//    while (1)
-//    {
+    while (1)
+    {
         all = init_all_struct(all, &msh);
-        //line = readline(PROMPT);
-        line = ft_strdup("echo $a");
+        line = readline(PROMPT);
+        //line = ft_strdup("ls | wc -l");
         if (!line)
             exit(1);
         //if (all->line)
@@ -43,7 +43,7 @@ int main(int argc, char **argv, char **envp)
             process_line(all);
         g_sig = 0;
         rl_on_new_line();
-//    }
+    }
     rl_clear_history();
     free_all_struct(all, 1);
     return (0);

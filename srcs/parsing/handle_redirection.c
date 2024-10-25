@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static void	init_redir(t_redir *redir);
 static void	handle_pipe(t_all *all, t_cmd *cmd);
 
 char	*handle_redir(t_all *all, t_cmd *cmd)
@@ -35,7 +34,7 @@ char	*handle_redir(t_all *all, t_cmd *cmd)
 	return (NULL);
 }
 
-static void	init_redir(t_redir *redir)
+void	init_redir(t_redir *redir)
 {
 	redir->is_pipe = 'n';
 	redir->fd_infile = -2;

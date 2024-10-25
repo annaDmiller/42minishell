@@ -64,6 +64,15 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 			cmd->name = handle_dollar(all, 0);
 		return (NULL);
 	}
+	if (!cmd->redir && cmd->prev)
+	{
+		cmd->redir = (t_redir *) malloc(sizeof(t_redir));
+		if (!cmd->redir)
+			error("take_str: Malloc error\n", all);
+		init_redir(cmd->redir);
+	}
+	if (cmd->prev)
+		cmd->redir->is_pipe = 'y';
 	if (*(all->line) == '$' && is_white_space(*(all->line + 1)))
 		return (handle_dollar(all, 0));
 	if (!is_quote(*(all->line)))
