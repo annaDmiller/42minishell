@@ -12,6 +12,7 @@
 #include "../../includes/minishell.h"
 
 static char	*take_str(t_all *all, t_cmd *cmd);
+static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str);
 static void	process_str(t_all *all, t_cmd *cmd, char **str);
 
 void	parse_cmd(t_all *all, t_cmd *last)
@@ -26,25 +27,36 @@ void	parse_cmd(t_all *all, t_cmd *last)
 		if (last->redir)
 			if (last->redir->is_pipe == 'y')
 				break ;
-		process_str(all, last, &str);
+		add_str_to_cmd(all, last, &str);
 		while (!is_white_space(*(all->line)) /*&& last->quote == 0*/
 			&& *(all->line))
 			all->line++;
 		if (*all->line == '\0')
 			break ;
-		if (str)
-		{
-			temp = take_str(all, last);
-			temp1 = str;
-			str = ft_strjoin(temp1, temp);
-			free(temp);
-			free(temp1);
-			if (!str)
-				error("parse_cmd: Malloc error\n", all);
-		}
-		else
-			str = take_str(all, last);
+		process_str(all, last, &str);
 	}
+	return ;
+}
+
+static void	process_str(t_all *all, t_cmd *cmd, char **str)
+{
+	char	*temp;
+	char	*add_temp;
+
+	temp = NULL;
+	add_temp = NULL;
+	if (*str)
+	{
+		temp = take_str(all, cmd);
+		add_temp = *str;
+		*str = ft_strjoin(add_temp, temp);
+		free(temp);
+		free(add_temp);
+		if (!(*str))
+			error("process_str: Malloc error\n", all);
+	}
+	else
+		*str = take_str(all, cmd);
 	return ;
 }
 
@@ -68,7 +80,7 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 	return (handle_word(all, 0));
 }
 
-static void	process_str(t_all *all, t_cmd *cmd, char **str)
+static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str)
 {
 	if (cmd->quote || !(*str) || is_white_space(*(all->line)))
 		return ;
