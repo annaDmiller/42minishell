@@ -76,8 +76,16 @@ void	minishell(t_all *all, t_msh *msh)
 		waitpid(tpid, NULL, 0);
 		dup2(msh->_stdout_save, STDOUT_FILENO); // restore STDOUT
 		close(msh->_stdout_save);
+		// fprintf(stderr, "_________________                    ________________\n\n");
+		// t_env	*tmp;
+		// tmp = msh->env;
+		// while (tmp)
+		// {
+		// 	fprintf(stderr, "%s\n", tmp->name);
+		// 	tmp = tmp->next;
+		// }
 	}
-	else if (cmd->redir && cmd->redir->is_pipe == 'y')
+	else
 	{
 		// fprintf(stderr, "__________________________PIPE__________________________\n\n");
 		tpipe(msh, cmd);
@@ -85,28 +93,7 @@ void	minishell(t_all *all, t_msh *msh)
 	test(0);
 	(void)i;
 	(void)msh;
+	(void)tpid;
 }
 
-	// if (cmd)
-	// {
-	// 	// print_redir_param(cmd->next->redir);
-	// 	fprintf(stderr, "\n\n");
-	// 	if (cmd->next)
-	// 	{
-	// 		if (!cmd->next->redir) // init_redir(cmd->next->redir);
-	// 		{
-	// 			cmd->next->redir = malloc(sizeof(t_redir));
-	// 			if (!cmd->next->redir)
-	// 				fprintf(stderr, "MALLOC ERROR\n");
-	// 			cmd->next->redir->is_pipe = 'n';
-	// 			cmd->next->redir->fd_infile = -2;
-	// 			cmd->next->redir->fd_outfile = -2;
-	// 			cmd->next->redir->in_type = '0';
-	// 			cmd->next->redir->out_type = '0';
-	// 			cmd->next->redir->pipe_fd[0] = -2;
-	// 			cmd->next->redir->pipe_fd[1] = -2;
-	// 			cmd->next->redir->in_txt = NULL;
-	// 		}
-	// 	}
-	// }
 	

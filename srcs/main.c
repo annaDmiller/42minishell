@@ -29,12 +29,12 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		all = init_all_struct(all, &msh);
+		// if (!msh._stdin_save && !msh._stdout_save)
+		// fprintf(stderr, "____________________________________________________\n\n");
+		fprintf(stderr, "____________________________________________________\n\n");
 		line = readline(PROMPT);
-		//line = ft_strdup("ls | wc -l");
 		if (!line)
 			exit(1);
-		//if (all->line)
-		//    all = init_all_struct(all, &msh);
 		all->line = line;
 		if (is_empty_line(all->line))
 			process_line(all);
@@ -52,17 +52,17 @@ static void process_line(t_all *all)
 {
 	int	check_line;
 
-    check_line = 1;
-    add_history(all->line);
-    check_line = validate_line(all);
-    if (!check_line || g_sig)
+	check_line = 1;
+	add_history(all->line);
+	check_line = validate_line(all);
+	if (!check_line || g_sig)
+		return ;
+	parse_line(all);
+	if (g_sig)
+		return ;
+	minishell(all, all->msh);
+	//     _var(all, all->msh);
 	return ;
-    parse_line(all);
-    if (g_sig)
-	return ;
-    minishell(all, all->msh);
-//     _var(all, all->msh);
-    return ;
 }
 
 static t_all	*init_all_struct(t_all *all, t_msh *msh)
