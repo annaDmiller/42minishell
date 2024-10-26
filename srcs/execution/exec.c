@@ -65,20 +65,11 @@ int	_execmd(t_msh *msh, t_cmd *cmd)
 	// fprintf(stderr, "\n_________________________________________\n\n");
 	tpid = 0;
 	if (is_a_buitin(msh, cmd))
-		return (0);
-	if (cmd->redir->is_pipe == 'n')
 	{
-		tpid = fork();
-		if (tpid == -1)
-			return (3);// handle error
-		if (cmd->redir->out_type != '0')
-		{
-			if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1) {
-				fprintf(stderr, "dup2 GATE DANS _EXECMD\n");
-				return (0);
-			}
-			fprintf(stderr, "ON REDIRIGE BIEN\n");
-		}
+
+		if(!cmd->next && !cmd->prev)
+			exit(0);
+		return (0);
 	}
 	if (cmd && cmd->name && ((!cmd->redir && tpid == 0) || (cmd->redir)))
 	{

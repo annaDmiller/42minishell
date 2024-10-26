@@ -114,10 +114,10 @@ void	end(t_msh *msh, t_cmd *cmd)
 	waitpid(tpid, NULL, 0);
 	close(cmd->redir->pipe_fd[1]);
 	close(cmd->redir->pipe_fd[0]);
-	// if (dup2(msh->_stdin_save, STDIN_FILENO) == -1)
-	// 	return ;//handle error
-	// if (dup2(msh->_stdout_save, STDOUT_FILENO) == -1)
-	// 	return ;//handle error
+	if (dup2(msh->_stdin_save, STDIN_FILENO) == -1)
+		return ;//handle error
+	if (dup2(msh->_stdout_save, STDOUT_FILENO) == -1)
+		return ;//handle error
 	// close(msh->_stdin_save);
 	// close(msh->_stdout_save);
 
