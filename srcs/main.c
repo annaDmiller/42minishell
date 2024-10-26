@@ -18,35 +18,34 @@ static void process_line(t_all *all);
 
 int main(int argc, char **argv, char **envp)
 {
-    t_all   *all;
-    char    *line;
-    t_msh   msh;
+	t_all   *all;
+	char    *line;
+	t_msh   msh;
 
-    (void)argc;
-    (void)argv;
-    (void)env;
-    g_sig = 0;
-    everyinit(&msh, envp);
-    all = NULL;
-    init_signals(all);
-    while (1)
-    {
-        all = init_all_struct(all, &msh);
-        line = readline(PROMPT);
-        //line = ft_strdup("ls | wc -l");
-        if (!line)
-            exit(1);
-        //if (all->line)
-        //    all = init_all_struct(all, &msh);
-        all->line = line;
-        if (is_empty_line(all->line))
-            process_line(all);
-        g_sig = 0;
-        rl_on_new_line();
-    }
-    rl_clear_history();
-    free_all_struct(all, 1);
-    return (0);
+	g_sig = 0;
+	everyinit(&msh, envp);
+	all = NULL;
+	init_signals(all);
+	while (1)
+	{
+		all = init_all_struct(all, &msh);
+		line = readline(PROMPT);
+		//line = ft_strdup("ls | wc -l");
+		if (!line)
+			exit(1);
+		//if (all->line)
+		//    all = init_all_struct(all, &msh);
+		all->line = line;
+		if (is_empty_line(all->line))
+			process_line(all);
+		g_sig = 0;
+		rl_on_new_line();
+	}
+	rl_clear_history();
+	free_all_struct(all, 1);
+	(void)argc;
+	(void)argv;
+	return (0);
 }
 
 static void process_line(t_all *all)
@@ -57,12 +56,12 @@ static void process_line(t_all *all)
     add_history(all->line);
     check_line = validate_line(all);
     if (!check_line || g_sig)
-        return ;
+	return ;
     parse_line(all);
     if (g_sig)
-        return ;
+	return ;
     minishell(all, all->msh);
-    _var(all, all->msh);
+//     _var(all, all->msh);
     return ;
 }
 
@@ -74,12 +73,12 @@ static t_all	*init_all_struct(t_all *all, t_msh *msh)
 		if (!all)
 			error("init_all_struct: Malloc error\n", NULL);
 		all->lst_env = NULL;
-        all->line = NULL;
+	all->line = NULL;
 	}
     all->msh = msh;
     if (all->line)
     {
-        free_all_struct(all, 0);
+	free_all_struct(all, 0);
     }
 	all->exitstatus = 0;
 	all->line = NULL;

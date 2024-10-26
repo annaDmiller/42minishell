@@ -10,9 +10,6 @@ BUILTINS
 		// echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
 		// export 1 \\A
 
-	[✅]=  unset with no options
-			// handles "_" not being able to be unset
-
 	[✅]=  cd with only a relative or absolute path
 
 	[ ]=  exit with no options
@@ -54,3 +51,9 @@ gerer les pipes |
 	[ ]=  CHANGER LA variable $_ en fonction de la derniere ligne de commande tapee
 		PBLM with $_ variable
 	
+
+
+	[]=  unset with no options est cassé
+			// handles "_" not being able to be unset
+			
+	[]=  export_def est cassé

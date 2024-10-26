@@ -75,6 +75,7 @@ void	minishell(t_all *all, t_msh *msh)
 			_execmd(msh, cmd);
 		waitpid(tpid, NULL, 0);
 		dup2(msh->_stdout_save, STDOUT_FILENO); // restore STDOUT
+		close(msh->_stdout_save);
 	}
 	else if (cmd->redir && cmd->redir->is_pipe == 'y')
 	{

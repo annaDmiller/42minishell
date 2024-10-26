@@ -73,3 +73,5 @@ fonction end
 
 
 
+alias mrlibft="cd libft && mr && cd .."
+alias mflibft="cd libft && mf && cd .."
