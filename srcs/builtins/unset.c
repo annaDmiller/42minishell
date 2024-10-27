@@ -39,7 +39,7 @@ char	*setup_name(char *str)
 /// it'll try to unset every argumenth if it exists // will never display an error message
 /// @retval == 0 // All name operands were successfully unset.
 /// @retval > 0  // At least one name could not be unset.
-void	unset(t_msh *msh, t_args *argv)
+int	unset(t_msh *msh, t_args *argv)
 {
 	t_env	*save;
 	t_env	*tmp;
@@ -66,6 +66,7 @@ void	unset(t_msh *msh, t_args *argv)
 			free(name);
 		argv = argv->next;
 	}
+	return (1);
 }
 /// @brief reset '$_' variable with the last command line entered
 void	_var(t_all *all, t_msh *msh)

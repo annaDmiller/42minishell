@@ -76,7 +76,6 @@ void	init_redir(t_redir *redir);
 
 
 ///////////////////	EXEC
-
 void	minishell(t_all *all, t_msh *msh);
 // void	minishell(t_all *all, t_msh *msh, char **envp);
 
@@ -86,10 +85,10 @@ void	putstr(char *str);
 ///// processing.c
 
 ///// BUILTINS
-void    env(t_env *env);
-void    pwd(t_msh *msh);
-void    cd(t_msh *msh, t_args *argv);
-void	echo(t_msh *msh, t_args *argv);
+int	env(t_env *env);
+int	pwd(t_msh *msh, t_cmd *cmd);
+int	cd(t_msh *msh, t_args *argv);
+int	echo(t_msh *msh, t_args *argv);
 int	is_a_buitin(t_msh *msh, t_cmd *cmd);
 ///// BUILTINS
 
@@ -116,14 +115,14 @@ char	*org(char *str);
 ///// GNL
 
 ///// EXPORT.c
-void	export(t_msh *msh, t_args *argv);
+int	export(t_msh *msh, t_args *argv);
 void	export_no_opt(t_msh *msh);
 void	export_def(t_msh *msh, t_args *argv);
 ///// EXPORT.c
 
 ///// UNSET.c
 char	*setup_name(char *str);
-void    unset(t_msh *msh, t_args *argv);
+int	unset(t_msh *msh, t_args *argv);
 ///// UNSET.c
 
 ///// FREE.c
@@ -147,12 +146,12 @@ int	l_envsize(t_env *env);
 int	l_argsize(t_args *argv);
 ///// TLIST.c
 
-void	texit(t_msh *msh, t_args *argv);
+int	texit(t_msh *msh, t_args *argv);
 
 void	parse_cmd_line(t_msh *msh, char **argv);
 
 ///// EXEC.c
-int	_execmd(t_msh *msh, t_cmd *cmd);
+int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd);
 char	**setup_env(t_env *env);
 char	**setup_args(char *name, t_args *argv);
 char	*fpath(t_env *env, char *cmd, int i);

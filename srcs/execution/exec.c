@@ -11,6 +11,67 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+static	void	set_execve(t_msh *msh, t_cmd *cmd);
+
+int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
+{
+	pid_t	tpid;
+	int		i;
+
+	// fprintf(stderr, "\n_________________________________________\n\n");
+	tpid = fork();
+	if (tpid == -1)
+		return (1); //handle error
+	if (tpid == 0) //// DANS LE PROCESS CHILD
+	{
+		if (is_a_buitin(msh, cmd))
+			exit(0);
+		else if (cmd && cmd->name)
+		{
+			set_execve(msh, cmd);
+			if (!msh->data)
+				exit(0);
+			else if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
+			{
+				free(msh->data->path);
+				fsplit(msh->data->argv);
+				fsplit(msh->data->envp);
+				exit(1);// handle error
+			}	
+		}
+	} //// DANS LE PROCESS CHILD
+	// fprintf(stderr, "111111111111111111111111111111111\n");
+	waitpid(tpid, NULL, 0);
+	(void)i;
+	(void)all;
+	return (0);
+}
+
+static	void	set_execve(t_msh *msh, t_cmd *cmd)
+{
+	msh->data->path = fpath(msh->env, cmd->name, -1);
+	if (!msh->data->path)
+	{
+		fprintf(stderr, "%s: command not found\n", cmd->name);
+		msh->data = NULL;
+		return ;
+	}
+	msh->data->argv = setup_args(cmd->name, cmd->argv);
+	if (!msh->data->argv)
+	{
+		free(msh->data->path);
+		msh->data = NULL;
+		return ;
+	}
+	msh->data->envp = setup_env(msh->env);
+	if (!msh->data->envp)
+	{
+		free(msh->data->path);
+		fsplit(msh->data->argv);
+		msh->data = NULL;
+	}
+}
+
 char	**setup_args(char *name, t_args *argv)
 {
 	t_args	*tmp;
@@ -55,52 +116,6 @@ char	**setup_env(t_env *env)
 	return (envp);
 }
 
-int	_execmd(t_msh *msh, t_cmd *cmd)
-{
-	char	**argv;
-	char	**envp;
-	char	*path;
-	pid_t	tpid;
-
-	// fprintf(stderr, "\n_________________________________________\n\n");
-	tpid = 0;
-	if (is_a_buitin(msh, cmd))
-	{
-
-		if(!cmd->next && !cmd->prev)
-			exit(0);
-		return (0);
-	}
-	if (cmd && cmd->name && ((!cmd->redir && tpid == 0) || (cmd->redir)))
-	{
-		path = fpath(msh->env, cmd->name, -1);
-		if (!path)
-		{
-			fprintf(stderr, "%s: command not found\n", cmd->name);
-			return (0);
-		}
-		argv = setup_args(cmd->name, cmd->argv);
-		if (!argv)
-			free(path);
-		envp = setup_env(msh->env);
-		if (!envp)
-		{
-			free(path);
-			fsplit(argv);
-		}
-		if (execve(path, argv, envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
-		{
-			free(path);
-			fsplit(argv);
-			fsplit(envp);
-			exit(1);// handle error
-			return (0);
-		}	
-	}
-	if (!cmd->redir && tpid > 0)
-		waitpid(tpid, NULL, 0);
-	return (0);
-}
 
 char	*fpath(t_env *env, char *cmd, int i)
 {
@@ -126,67 +141,3 @@ char	*fpath(t_env *env, char *cmd, int i)
 	fsplit(str);
 	return (path);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////// 	AVANT DE FORK INSTANT SI C'EST PAS UN BUILTIN
-
-// int	_execmd(t_msh *msh, t_cmd *cmd)
-// {
-// 	char	**argv;
-// 	char	**envp;
-// 	char	*path;
-// 	pid_t	tpid;
-
-// 	// fprintf(stderr, "\n_________________________________________\n\n");
-// 	tpid = 0;
-// 	if (is_a_buitin(msh, cmd))
-// 		return (0);
-// 	if (!cmd->redir)
-// 	{
-// 		tpid = fork();
-// 		if (tpid == -1)
-// 			return (3);// handle error
-// 	}
-// 	if (cmd && cmd->name && ((!cmd->redir && tpid == 0) || (cmd->redir)))
-// 	{
-// 		path = fpath(msh->env, cmd->name, -1);
-// 		if (!path)
-// 		{
-// 			fprintf(stderr, "%s: command not found\n", cmd->name);
-// 			return (0);
-// 		}
-// 		argv = setup_args(cmd->name, cmd->argv);
-// 		if (!argv)
-// 			free(path);
-// 		envp = setup_env(msh->env);
-// 		if (!envp)
-// 		{
-// 			free(path);
-// 			fsplit(argv);
-// 		}
-// 		if (execve(path, argv, envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
-// 		{
-// 			free(path);
-// 			fsplit(argv);
-// 			fsplit(envp);
-// 			exit(1);// handle error
-// 			return (0);
-// 		}	
-// 	}
-// 	if (!cmd->redir && tpid > 0)
-// 		waitpid(tpid, NULL, 0);
-// 	return (0);
-// }

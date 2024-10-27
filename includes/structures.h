@@ -28,6 +28,13 @@ typedef struct s_env
 	int				index;
 }		t_env;
 
+typedef	struct s_execve
+{
+	char	*path;
+	char		**argv;
+	char		**envp;
+}		t_execve;
+
 typedef struct s_redir
 {
 	char	is_pipe; //if y, then we need to use pipex logic for the next command; if n, no need for pipex; need to think whether it's required if no semicolon sign can be used
@@ -66,6 +73,7 @@ typedef struct s_msh
 {
 	t_env		*env;
 	t_args		*l_args;
+	t_execve	*data;
 	char		*pwd;
 	int			exit;
 	int			_stdin_save;

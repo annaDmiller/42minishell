@@ -64,18 +64,18 @@ void	minishell(t_all *all, t_msh *msh)
 	if (!cmd->next)
 	{
 		// fprintf(stderr, "__________________________SINGLE__________________________\n\n");
-		msh->_stdout_save = dup(STDOUT_FILENO); // save STDOUT
-		if (cmd->redir && cmd->redir->out_type != '0')
-			if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
-				return ;// handle error
-		tpid = fork();
-		if (tpid == -1)
-			return ;// handle error
-		if (tpid == 0)
-			_execmd(msh, cmd);
-		waitpid(tpid, NULL, 0);
-		dup2(msh->_stdout_save, STDOUT_FILENO); // restore STDOUT
-		close(msh->_stdout_save);
+		// msh->_stdout_save = dup(STDOUT_FILENO); // save STDOUT
+		// if (cmd->redir && cmd->redir->out_type != '0')
+		// 	if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
+		// 		return ;// handle error
+		// tpid = fork();
+		// if (tpid == -1)
+		// 	return ;// handle error
+		// if (tpid == 0)
+		_execmd(all, all->msh, cmd);
+		// waitpid(tpid, NULL, 0);
+		// dup2(msh->_stdout_save, STDOUT_FILENO); // restore STDOUT
+		// close(msh->_stdout_save);
 		// fprintf(stderr, "_________________                    ________________\n\n");
 		// t_env	*tmp;
 		// tmp = msh->env;

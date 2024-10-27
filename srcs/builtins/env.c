@@ -14,7 +14,7 @@
 /// @brief Display the environnement		variable=value
 /// // //   if there is no value, it just print variable=""
 /// @param t_env *env 
-void	env(t_env *env)
+int	env(t_env *env)
 {
 	t_env	*tmp;
 
@@ -25,6 +25,7 @@ void	env(t_env *env)
 			fprintf(stderr, "%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
+	return (1);
 }
 
 char	*env_var(char *str)

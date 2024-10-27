@@ -25,14 +25,20 @@ void	everyinit(t_msh *msh, char **envp)
 	msh->exit = 0;
 	msh->_stdin_save = 0;
 	msh->_stdout_save = 0;
-	msh->pwd = getcwd(NULL, 0); // stock the pwd at the start, cd(directory);
-//		handle if !getcwd
+	msh->pwd = getcwd(NULL, 0); // stock the pwd at the start, cd(directory);  // handle if !getcwd
 	if (envp && envp[0])
 		envinit(msh, envp, -1);
-		// fprintf(stderr, "JE RECUP l'ENV\n");
 	else
 		env_build(msh, -1);
-		// fprintf(stderr, "JE CONSTRUIS MOI MEME\n");
+	msh->data = malloc(sizeof(t_execve));
+	if (!msh->data)
+	{
+		freenv(msh->env);
+		exit(33);
+	}
+	msh->data->path = NULL;
+	msh->data->argv = NULL;
+	msh->data->envp = NULL;
 }
 
 void	envinit(t_msh *msh, char **envp, int i)

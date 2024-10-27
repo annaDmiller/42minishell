@@ -37,7 +37,7 @@ static	int	val_exit(int n)
 	return (n);
 }
 
-void	texit(t_msh *msh, t_args *argv)
+int	texit(t_msh *msh, t_args *argv)
 {
 	fprintf(stderr, "exit\n");
 	if (!argv)
@@ -50,4 +50,5 @@ void	texit(t_msh *msh, t_args *argv)
 			exit(2);
 		msh->exit = val_exit(ft_atoi(argv->arg));
 	}
+	return (1);
 }

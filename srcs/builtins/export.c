@@ -14,7 +14,7 @@
 // NOT WORKING
 // oldwork =en
 
-void	export(t_msh *msh, t_args *argv)
+int	export(t_msh *msh, t_args *argv)
 {
 	t_env	*var;
 	char	*n;
@@ -40,6 +40,7 @@ void	export(t_msh *msh, t_args *argv)
 		argv = argv->next;
 		free(n);
 	}
+	return (1);
 }
 
 //	leaks sur env_varname(str) && env_var(str) ! le noeud cree n'est pas relie correctement a la list ?

@@ -23,14 +23,14 @@ int main(int argc, char **argv, char **envp)
 	t_msh   msh;
 
 	g_sig = 0;
-	everyinit(&msh, envp);
 	all = NULL;
+	everyinit(&msh, envp);
 	init_signals(all);
 	while (1)
 	{
+		// fprintf(stderr, "stdin // %d\t stdout // %d\n", STDIN_FILENO, STDOUT_FILENO);
 		all = init_all_struct(all, &msh);
 		// if (!msh._stdin_save && !msh._stdout_save)
-		// fprintf(stderr, "____________________________________________________\n\n");
 		fprintf(stderr, "____________________________________________________\n\n");
 		line = readline(PROMPT);
 		if (!line)
