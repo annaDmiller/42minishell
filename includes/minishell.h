@@ -157,13 +157,12 @@ char	**setup_args(char *name, t_args *argv);
 char	*fpath(t_env *env, char *cmd, int i);
 
 
-void	tpipe(t_msh *msh, t_cmd *cmd);
-void	start(t_msh *msh, t_cmd *cmd);
-void	mid(t_msh *msh, t_cmd *cmd);
-void	end(t_msh *msh, t_cmd *cmd);
+void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
+void	chromakopia(t_cmd *cmd);
 
 void	wgas(char *str, int ext);
 
 void	_var(t_all *all, t_msh *msh);
+
 
 #endif

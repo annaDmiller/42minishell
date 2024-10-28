@@ -12,6 +12,14 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
+typedef	enum	pos
+{
+	START,
+	MID,
+	END,
+	SOLO,
+}		t_pos;
+
 typedef struct s_args
 {
 	char			*arg;
@@ -45,6 +53,7 @@ typedef struct s_redir
 	int		fd_infile; //file descriptor for input redirection (used if in_type == f)
 	int		fd_outfile; //file descriptor for outpur redirection
 	int		_tfd; // file descriptor to redirect output of cmd inside first and last cmd
+	t_pos		pos;
 }		t_redir;
 
 typedef struct s_cmd

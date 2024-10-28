@@ -24,13 +24,14 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 		return (1); //handle error
 	if (tpid == 0) //// DANS LE PROCESS CHILD
 	{
+		chromakopia(cmd);
 		if (is_a_buitin(msh, cmd))
 			exit(0);
 		else if (cmd && cmd->name)
 		{
 			set_execve(msh, cmd);
 			if (!msh->data)
-				exit(0);
+				wgas("!set_execve // _execmd", 33);
 			else if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
 			{
 				free(msh->data->path);
@@ -40,7 +41,6 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 			}	
 		}
 	} //// DANS LE PROCESS CHILD
-	// fprintf(stderr, "111111111111111111111111111111111\n");
 	waitpid(tpid, NULL, 0);
 	(void)i;
 	(void)all;

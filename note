@@ -22,16 +22,9 @@ bash-3.2$ cat out
 bonjour je suis la wc -l
 bash-3.2$
 
-
-miniself > echo "BONJOUR JE SUIS LA $USER"
-BONJOUR JE SUIS LA tespandj
-BONJOUR JE SUIS LA tespandj // printf 
-miniself > echo "BONJOUR JE SUIS LA $USER $_"
-
-[1]    521216 segmentation fault (core dumped)  ./minishell
-
-
 exit ne fonctionne pas quand pas d`env
+
+msh est mal link avec la structure all
 
 
 pour le pipe
@@ -62,13 +55,6 @@ fonction end
 
 	inbennou
 		\\ ne pas open avant de fork sinon les enfants heritent de bcp de choses qu`il faudra close / free
-
-
-
-
-
-
-
 
 
 
