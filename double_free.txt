@@ -1,0 +1,174 @@
+minishell> echo $USER
+tespandj
+==64433== 
+==64433== HEAP SUMMARY:
+==64433==     in use at exit: 199,443 bytes in 248 blocks
+==64433==   total heap usage: 438 allocs, 190 frees, 216,347 bytes allocated
+==64433== 
+==64433== LEAK SUMMARY:
+==64433==    definitely lost: 0 bytes in 0 blocks
+==64433==    indirectly lost: 0 bytes in 0 blocks
+==64433==      possibly lost: 0 bytes in 0 blocks
+==64433==    still reachable: 199,443 bytes in 248 blocks
+==64433==         suppressed: 0 bytes in 0 blocks
+==64433== Rerun with --leak-check=full to see details of leaked memory
+==64433== 
+==64433== For lists of detected and suppressed errors, rerun with: -s
+==64433== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+minishell> echo $USER
+==64459== Invalid read of size 1
+==64459==    at 0x40459B: valid (echo.c:19)
+==64459==    by 0x40459B: echo (echo.c:36)
+==64459==    by 0x402E8A: _execmd (exec.c:30)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459==  Address 0x4b60c90 is 0 bytes inside a block of size 9 free'd
+==64459==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x402410: free_args (free_logic.c:96)
+==64459==    by 0x402410: free_cmd_struct (free_logic.c:49)
+==64459==    by 0x40232D: free_all_struct (free_logic.c:26)
+==64459==    by 0x402AC0: init_all_struct (main.c:79)
+==64459==    by 0x402AC0: main (main.c:32)
+==64459==  Block was alloc'd at
+==64459==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x40415A: env_var (env.c:44)
+==64459==    by 0x404A7E: export_def (export.c:74)
+==64459==    by 0x404A7E: export (export.c:38)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459== 
+==64459== Invalid read of size 1
+==64459==    at 0x4045E4: valid (echo.c:19)
+==64459==    by 0x4045E4: echo (echo.c:44)
+==64459==    by 0x402E8A: _execmd (exec.c:30)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459==  Address 0x4b60c90 is 0 bytes inside a block of size 9 free'd
+==64459==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x402410: free_args (free_logic.c:96)
+==64459==    by 0x402410: free_cmd_struct (free_logic.c:49)
+==64459==    by 0x40232D: free_all_struct (free_logic.c:26)
+==64459==    by 0x402AC0: init_all_struct (main.c:79)
+==64459==    by 0x402AC0: main (main.c:32)
+==64459==  Block was alloc'd at
+==64459==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x40415A: env_var (env.c:44)
+==64459==    by 0x404A7E: export_def (export.c:74)
+==64459==    by 0x404A7E: export (export.c:38)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459== 
+==64459== Invalid read of size 1
+==64459==    at 0x403C04: putstr (processing.c:16)
+==64459==    by 0x40460E: echo (echo.c:47)
+==64459==    by 0x402E8A: _execmd (exec.c:30)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459==  Address 0x4b60c90 is 0 bytes inside a block of size 9 free'd
+==64459==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x402410: free_args (free_logic.c:96)
+==64459==    by 0x402410: free_cmd_struct (free_logic.c:49)
+==64459==    by 0x40232D: free_all_struct (free_logic.c:26)
+==64459==    by 0x402AC0: init_all_struct (main.c:79)
+==64459==    by 0x402AC0: main (main.c:32)
+==64459==  Block was alloc'd at
+==64459==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x40415A: env_var (env.c:44)
+==64459==    by 0x404A7E: export_def (export.c:74)
+==64459==    by 0x404A7E: export (export.c:38)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459== 
+==64459== Syscall param write(buf) points to unaddressable byte(s)
+==64459==    at 0x49DC887: write (write.c:26)
+==64459==    by 0x403C25: putstr (processing.c:17)
+==64459==    by 0x40460E: echo (echo.c:47)
+==64459==    by 0x402E8A: _execmd (exec.c:30)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459==  Address 0x4b60c90 is 0 bytes inside a block of size 9 free'd
+==64459==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x402410: free_args (free_logic.c:96)
+==64459==    by 0x402410: free_cmd_struct (free_logic.c:49)
+==64459==    by 0x40232D: free_all_struct (free_logic.c:26)
+==64459==    by 0x402AC0: init_all_struct (main.c:79)
+==64459==    by 0x402AC0: main (main.c:32)
+==64459==  Block was alloc'd at
+==64459==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x40415A: env_var (env.c:44)
+==64459==    by 0x404A7E: export_def (export.c:74)
+==64459==    by 0x404A7E: export (export.c:38)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459== 
+t==64459== Invalid read of size 1
+==64459==    at 0x403C26: putstr (processing.c:16)
+==64459==    by 0x40460E: echo (echo.c:47)
+==64459==    by 0x402E8A: _execmd (exec.c:30)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459==  Address 0x4b60c91 is 1 bytes inside a block of size 9 free'd
+==64459==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x402410: free_args (free_logic.c:96)
+==64459==    by 0x402410: free_cmd_struct (free_logic.c:49)
+==64459==    by 0x40232D: free_all_struct (free_logic.c:26)
+==64459==    by 0x402AC0: init_all_struct (main.c:79)
+==64459==    by 0x402AC0: main (main.c:32)
+==64459==  Block was alloc'd at
+==64459==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64459==    by 0x40415A: env_var (env.c:44)
+==64459==    by 0x404A7E: export_def (export.c:74)
+==64459==    by 0x404A7E: export (export.c:38)
+==64459==    by 0x403BED: minishell (minishell.c:70)
+==64459==    by 0x402B35: process_line (main.c:61)
+==64459==    by 0x402B35: main (main.c:38)
+==64459== 
+espandj
+==64459== 
+==64459== HEAP SUMMARY:
+==64459==     in use at exit: 199,481 bytes in 250 blocks
+==64459==   total heap usage: 450 allocs, 200 frees, 216,551 bytes allocated
+==64459== 
+==64459== LEAK SUMMARY:
+==64459==    definitely lost: 0 bytes in 0 blocks
+==64459==    indirectly lost: 0 bytes in 0 blocks
+==64459==      possibly lost: 0 bytes in 0 blocks
+==64459==    still reachable: 199,481 bytes in 250 blocks
+==64459==         suppressed: 0 bytes in 0 blocks
+==64459== Rerun with --leak-check=full to see details of leaked memory
+==64459== 
+==64459== For lists of detected and suppressed errors, rerun with: -s
+==64459== ERROR SUMMARY: 19 errors from 5 contexts (suppressed: 0 from 0)
+==64385== Invalid free() / delete / delete[] / realloc()
+==64385==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64385==    by 0x402410: free_args (free_logic.c:96)
+==64385==    by 0x402410: free_cmd_struct (free_logic.c:49)
+==64385==    by 0x40232D: free_all_struct (free_logic.c:26)
+==64385==    by 0x402AC0: init_all_struct (main.c:79)
+==64385==    by 0x402AC0: main (main.c:32)
+==64385==  Address 0x4b60c90 is 0 bytes inside a block of size 9 free'd
+==64385==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64385==    by 0x402410: free_args (free_logic.c:96)
+==64385==    by 0x402410: free_cmd_struct (free_logic.c:49)
+==64385==    by 0x40232D: free_all_struct (free_logic.c:26)
+==64385==    by 0x402AC0: init_all_struct (main.c:79)
+==64385==    by 0x402AC0: main (main.c:32)
+==64385==  Block was alloc'd at
+==64385==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==64385==    by 0x40415A: env_var (env.c:44)
+==64385==    by 0x404A7E: export_def (export.c:74)
+==64385==    by 0x404A7E: export (export.c:38)
+==64385==    by 0x403BED: minishell (minishell.c:70)
+==64385==    by 0x402B35: process_line (main.c:61)
+==64385==    by 0x402B35: main (main.c:38)
+==64385== 
+

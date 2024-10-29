@@ -30,7 +30,6 @@ int main(int argc, char **argv, char **envp)
 	{
 		// fprintf(stderr, "stdin // %d\t stdout // %d\n", STDIN_FILENO, STDOUT_FILENO);
 		all = init_all_struct(all, &msh);
-		// if (!msh._stdin_save && !msh._stdout_save)
 		line = readline(PROMPT);
 		if (!line)
 			exit(1);

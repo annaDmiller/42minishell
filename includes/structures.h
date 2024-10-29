@@ -87,7 +87,6 @@ typedef struct s_msh
 	int			pipe_fd[2];
 	int			exit;
 	int			_stdin_save;
-	int			_stdout_save;
 }		t_msh;
 
 typedef struct s_all

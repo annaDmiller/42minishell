@@ -18,8 +18,9 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 	pid_t	tpid;
 
 	// fprintf(stderr, "\n_________________________________________\n\n");
-	if ((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "cd")))
-		return (is_a_buitin(msh, cmd));
+	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "cd"))))
+		if (!cmd->redir || cmd->redir->pos == SOLO)
+			return (is_a_buitin(msh, cmd));
 	tpid = fork();
 	if (tpid == -1)
 		return (1); //handle error

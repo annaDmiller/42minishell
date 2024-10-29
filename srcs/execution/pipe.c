@@ -55,11 +55,8 @@ void	chromakopia(t_msh *msh, t_cmd *cmd)
 	else if (cmd->redir->pos == START)
 	{
 		close(msh->_stdin_save);
-		fprintf(stderr, "%d\n", cmd->redir->pipe_fd[0]);
-		fprintf(stderr, "%d\n", cmd->redir->pipe_fd[1]);
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
 			wgas("!chromakopia // 90\n", 22);
-		fprintf(stderr, "JDOQIOJIWDIDJQWIOJQDWQDOIWJQWDOJIWDQIOJ\n");
 	}
 	else if (cmd->redir->pos == MID)
 	{
@@ -80,6 +77,4 @@ void	chromakopia(t_msh *msh, t_cmd *cmd)
 		return ;
 	close(msh->pipe_fd[0]);
 	close(msh->pipe_fd[1]);
-	// fprintf(stderr, "JDOQIOJIWDIDJQWIOJQDWQDOIWJQWDOJIWDQIOJ\n");
-	fprintf(stderr, "%d\n", STDOUT_FILENO);
 }
