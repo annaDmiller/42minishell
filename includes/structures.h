@@ -84,6 +84,7 @@ typedef struct s_msh
 	t_args		*l_args;
 	t_execve	*data;
 	char		*pwd;
+	int			pipe_fd[2];
 	int			exit;
 	int			_stdin_save;
 	int			_stdout_save;

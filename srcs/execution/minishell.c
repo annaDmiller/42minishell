@@ -64,7 +64,7 @@ void	minishell(t_all *all, t_msh *msh)
 		return ;
 	if (!cmd->prev && !cmd->next)
 	{
-		if (cmd->redir)
+		if (cmd->redir) //
 			cmd->redir->pos = SOLO;
 		_execmd(all, all->msh, cmd);
 	}
