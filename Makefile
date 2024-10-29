@@ -55,6 +55,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
         
 $(NAME): $(OBJS)
+	make -C libft
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./libft -lft -lreadline
 	echo "\033[1m	           _       _     _          _ _\n\
 		 _ __ ___ (_)_ __ (_)___| |__   ___| | |\n\
@@ -63,10 +64,12 @@ $(NAME): $(OBJS)
 		|_| |_| |_|_|_| |_|_|___/_| |_|\___|_|_|\n\n\033[0m"
 
 clean:
+	make clean -C libft
 	rm -rf $(OBJS)
 	echo "c'est clean"
 
 fclean: clean
+	make fclean -C libft
 	rm -rf $(NAME)
 	echo "c'est fclean"
 
