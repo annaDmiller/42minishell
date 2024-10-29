@@ -66,6 +66,7 @@ void	minishell(t_all *all, t_msh *msh)
 	{
 		if (cmd->redir) //
 			cmd->redir->pos = SOLO;
+		printf("%s\n", cmd->name);
 		_execmd(all, all->msh, cmd);
 	}
 	else
@@ -73,6 +74,8 @@ void	minishell(t_all *all, t_msh *msh)
 		// fprintf(stderr, "__________________________PIPE__________________________\n\n");
 		tpipe(all, msh, cmd);
 	}
+	while (wait(NULL) != -1)
+		continue;;
 	test(0);
 	(void)i;
 	(void)msh;

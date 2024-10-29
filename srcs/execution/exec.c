@@ -42,7 +42,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 		}
 	} //// DANS LE PROCESS CHILD
 	// if (!cmd->redir)
-	waitpid(tpid, NULL, 0);
+	// waitpid(tpid, NULL, 0);
 	(void)i;
 	(void)all;
 	return (0);
