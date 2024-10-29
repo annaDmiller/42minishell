@@ -30,7 +30,7 @@ static	void	print_redir_param(t_cmd *cmd)
 	t_cmd	*tmp;
 
 	tmp = cmd;
-	while (tmp)
+	while (!tmp)
 	{	
 		if (!tmp->redir)
 			fprintf(stderr, "!REDIR\n");
@@ -64,10 +64,10 @@ void	minishell(t_all *all, t_msh *msh)
 		return ;
 	if (!cmd->prev && !cmd->next)
 	{
+		// fprintf(stderr, "__________________________SOLO__________________________\n\n");
 		if (cmd->redir) //
 			cmd->redir->pos = SOLO;
-		printf("%s\n", cmd->name);
-		_execmd(all, all->msh, cmd);
+		_execmd(all, msh, cmd);
 	}
 	else
 	{
@@ -81,5 +81,3 @@ void	minishell(t_all *all, t_msh *msh)
 	(void)msh;
 	(void)tpid;
 }
-
-	

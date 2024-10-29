@@ -13,16 +13,11 @@
 
 void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 {
-	int	tfd;
-
 	msh->_stdin_save = dup(STDIN_FILENO);
-	tfd = 0;
 	msh->pipe_fd[0] = -2;
 	msh->pipe_fd[1] = -2;
 	if (pipe(msh->pipe_fd) == -1)
 		return ;// handle error
-	// fprintf(stderr, "B : %d\n", msh->pipe_fd[0]);
-	// fprintf(stderr, "B : %d\n", msh->pipe_fd[1]);
 	cmd->redir->pos = START;
 	_execmd(all, msh, cmd);
 	dup2(msh->pipe_fd[0], STDIN_FILENO);
@@ -48,7 +43,6 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	dup2(msh->_stdin_save, STDIN_FILENO);
 	close(msh->_stdin_save);
 	// fprintf(stderr, "____________________________________________________\n\n");
-	(void)tfd;
 }
 
 /// ON ECRIT DANS PIPE_FD[1]
@@ -58,50 +52,34 @@ void	chromakopia(t_msh *msh, t_cmd *cmd)
 {
 	if (!cmd->redir)
 		return ;
-	else if (cmd->redir->pos == SOLO)
-	{
-		fprintf(stderr, "SOLO\n");
-		if (cmd->redir->in_type != '0')
-			if (cmd->redir->in_type == 'f')
-				if(dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
-					wgas("!chromakopia // 23\n", 22);;// handle error
-		if (cmd->redir->out_type != '0')
-		{
-			if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
-				wgas("!chromakopia // 26\n", 22);// handle error
-			close(msh->pipe_fd[1]);
-		}
-	}
 	else if (cmd->redir->pos == START)
 	{
-		fprintf(stderr, "START\n");
 		close(msh->_stdin_save);
+		fprintf(stderr, "%d\n", cmd->redir->pipe_fd[0]);
+		fprintf(stderr, "%d\n", cmd->redir->pipe_fd[1]);
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
 			wgas("!chromakopia // 90\n", 22);
+		fprintf(stderr, "JDOQIOJIWDIDJQWIOJQDWQDOIWJQWDOJIWDQIOJ\n");
 	}
 	else if (cmd->redir->pos == MID)
 	{
-		fprintf(stderr, "MID\n");
 		close(msh->_stdin_save);
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
 			wgas("!chromakopia // 97\n", 22);
 	}
 	else if (cmd->redir->pos == END)
-	{
 		close(msh->_stdin_save);
-		fprintf(stderr, "END\n");
-	}
 	if (cmd->redir && cmd->redir->in_type != '0')
-	{
 		if (cmd->redir->in_type == 'f')
-			if(dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
+			if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
 				wgas("!chromakopia // 108\n", 22);// handle error
-	}
 	if (cmd->redir && cmd->redir->out_type != '0')
-	{
 		if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
 			wgas("!chromakopia // 113\n", 22);// handle error
-	}
+	if (cmd->redir && cmd->redir->pos == SOLO)
+		return ;
 	close(msh->pipe_fd[0]);
 	close(msh->pipe_fd[1]);
+	// fprintf(stderr, "JDOQIOJIWDIDJQWIOJQDWQDOIWJQWDOJIWDQIOJ\n");
+	fprintf(stderr, "%d\n", STDOUT_FILENO);
 }

@@ -16,9 +16,10 @@ static	void	set_execve(t_msh *msh, t_cmd *cmd);
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 {
 	pid_t	tpid;
-	int		i;
 
 	// fprintf(stderr, "\n_________________________________________\n\n");
+	if ((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "cd")))
+		return (is_a_buitin(msh, cmd));
 	tpid = fork();
 	if (tpid == -1)
 		return (1); //handle error
@@ -32,7 +33,9 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 			set_execve(msh, cmd);
 			if (!msh->data)
 				wgas("!set_execve // _execmd", 33);
-			else if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
+			// if (cmd->redir)
+			// 	fprintf(stderr, "\t\t%d\n", cmd->redir->fd_infile);
+			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
 			{
 				free(msh->data->path);
 				fsplit(msh->data->argv);
@@ -41,9 +44,6 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 			}	
 		}
 	} //// DANS LE PROCESS CHILD
-	// if (!cmd->redir)
-	// waitpid(tpid, NULL, 0);
-	(void)i;
 	(void)all;
 	return (0);
 }

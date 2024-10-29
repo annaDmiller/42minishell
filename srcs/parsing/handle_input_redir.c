@@ -65,6 +65,7 @@ static void	input_from_file(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_infile == -1)
 		error("input_from_file: impossible to open file\n", all);
 	cmd->redir->in_type = 'f';
+	fprintf(stderr, "fFFFFFFFFFFFFFFFFFFFFFFFFFFFFF%s\n", addr);
 	free(addr);
 	return ;
 }
