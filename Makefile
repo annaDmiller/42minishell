@@ -12,8 +12,6 @@ EXEC_PRT = srcs/execution/redir.c \
                 srcs/execution/minishell.c \
                 srcs/execution/processing.c \
 
-
-
 PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/parsing/handle_dollar.c \
 		srcs/parsing/handle_input_redir.c \
@@ -49,13 +47,13 @@ SRCS = $(PARSING_PRT) $(TEST) $(EXEC_PRT) $(BUILTINS)
 OBJS = $(SRCS:.c=.o)
 
 .c.o:
-	$(CC) $(CFLAGS) -c -o $@ $< 
+	@$(CC) $(CFLAGS) -c -o $@ $< 
 
 all: $(NAME)
         
 $(NAME): $(OBJS)
-	make -C libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./libft -lft -lreadline
+	@make -C libft
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./libft -lft -lreadline
 	@echo "\033[1m	           _       _     _          _ _\n\
 		 _ __ ___ (_)_ __ (_)___| |__   ___| | |\n\
 		| '_ \` _ \| | '_ \| / __| '_ \ / _ \ | |\n\
@@ -63,13 +61,13 @@ $(NAME): $(OBJS)
 		|_| |_| |_|_|_| |_|_|___/_| |_|\___|_|_|\n\n\033[0m"
 
 clean:
-	make clean -C libft
-	rm -rf $(OBJS)
+	@make clean -C libft
+	@rm -rf $(OBJS)
 	@echo "c'est clean"
 
 fclean: clean
-	make fclean -C libft
-	rm -rf $(NAME)
+	@make fclean -C libft
+	@rm -rf $(NAME)
 	@echo "c'est fclean"
 
 re: fclean all
