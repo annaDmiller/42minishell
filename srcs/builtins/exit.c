@@ -37,9 +37,10 @@ static	int	val_exit(int n)
 	return (n);
 }
 
-int	texit(t_msh *msh, t_args *argv)
+int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 {
-	fprintf(stderr, "exit\n");
+	if (!cmd->prev && !cmd->next)
+		fprintf(stderr, "exit\n");
 	if (!argv)
 		msh->exit = 1;
 	else if (argv->next)

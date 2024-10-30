@@ -26,6 +26,6 @@ int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 	else if (!tstrcmp(cmd->name, "unset"))
 		return (unset(msh, cmd->argv));
 	else if (!tstrcmp(cmd->name, "exit"))
-		return (texit(msh, cmd->argv));
+		return (texit(msh, cmd, cmd->argv));
 	return (0);
 }

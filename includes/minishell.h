@@ -146,7 +146,8 @@ int	l_envsize(t_env *env);
 int	l_argsize(t_args *argv);
 ///// TLIST.c
 
-int	texit(t_msh *msh, t_args *argv);
+// int	texit(t_msh *msh, t_args *argv);
+int	texit(t_msh *msh, t_cmd *cmd, t_args *argv);
 
 void	parse_cmd_line(t_msh *msh, char **argv);
 
