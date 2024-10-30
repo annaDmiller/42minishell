@@ -18,54 +18,39 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	msh->pipe_fd[1] = -2;
 	if (pipe(msh->pipe_fd) == -1)
 		return ;// handle error
-	cmd->redir->pos = START;
-	_execmd(all, msh, cmd);
+	_execmd(all, msh, cmd, START);
 	dup2(msh->pipe_fd[0], STDIN_FILENO);
 	close(msh->pipe_fd[1]);
 	close(msh->pipe_fd[0]);
 	cmd = cmd->next;
-	while (cmd && cmd->next)
+	while (cmd && cmd->name && cmd->next)
 	{
 		if (pipe(msh->pipe_fd) == -1)
 			return ;// handle error
-		cmd->redir->pos = MID;
-		_execmd(all, msh, cmd);
+		_execmd(all, msh, cmd, MID);
 		dup2(msh->pipe_fd[0], STDIN_FILENO);
 		close(msh->pipe_fd[1]);
 		close(msh->pipe_fd[0]);
 		cmd = cmd->next;
 	}
-	if (cmd)
-	{
-		cmd->redir->pos = END;
-		_execmd(all, msh, cmd);
-	}
+	if (cmd && cmd->name)
+		_execmd(all, msh, cmd, END);
 	dup2(msh->_stdin_save, STDIN_FILENO);
 	close(msh->_stdin_save);
-	// fprintf(stderr, "____________________________________________________\n\n");
 }
 
 /// ON ECRIT DANS PIPE_FD[1]
 /// ON LIT DANS PIPE_FD[0]
 
-void	chromakopia(t_msh *msh, t_cmd *cmd)
+void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	if (!cmd->redir)
 		return ;
-	else if (cmd->redir->pos == START)
-	{
+	if (pos != SOLO)
 		close(msh->_stdin_save);
+	if (pos == START || pos == MID)
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
-			wgas("!chromakopia // 90\n", 22);
-	}
-	else if (cmd->redir->pos == MID)
-	{
-		close(msh->_stdin_save);
-		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
-			wgas("!chromakopia // 97\n", 22);
-	}
-	else if (cmd->redir->pos == END)
-		close(msh->_stdin_save);
+			wgas("!chromakopia // 53\n", 22);
 	if (cmd->redir && cmd->redir->in_type != '0')
 		if (cmd->redir->in_type == 'f')
 			if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
@@ -73,7 +58,7 @@ void	chromakopia(t_msh *msh, t_cmd *cmd)
 	if (cmd->redir && cmd->redir->out_type != '0')
 		if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
 			wgas("!chromakopia // 113\n", 22);// handle error
-	if (cmd->redir && cmd->redir->pos == SOLO)
+	if (cmd->redir && pos == SOLO)
 		return ;
 	close(msh->pipe_fd[0]);
 	close(msh->pipe_fd[1]);

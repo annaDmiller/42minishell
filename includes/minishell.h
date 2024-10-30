@@ -151,14 +151,14 @@ int	texit(t_msh *msh, t_args *argv);
 void	parse_cmd_line(t_msh *msh, char **argv);
 
 ///// EXEC.c
-int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd);
+int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 char	**setup_env(t_env *env);
 char	**setup_args(char *name, t_args *argv);
 char	*fpath(t_env *env, char *cmd, int i);
 
 
 void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
-void	chromakopia(t_msh *msh, t_cmd *cmd);
+void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos);
 
 void	wgas(char *str, int ext);
 

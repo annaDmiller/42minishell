@@ -13,7 +13,7 @@
 
 static	void	set_execve(t_msh *msh, t_cmd *cmd);
 
-int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
+int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
 
@@ -26,12 +26,14 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd)
 		return (1); //handle error
 	if (tpid == 0) //// DANS LE PROCESS CHILD
 	{
-		chromakopia(msh, cmd);
+		chromakopia(msh, cmd, pos);
 		if (is_a_buitin(msh, cmd))
 			exit(0);
 		else if (cmd && cmd->name)
 		{
 			set_execve(msh, cmd);
+			// if (msh->data && msh->data->path && cmd->name)
+			// 	fprintf(stderr, "path : %s\t cmd->name : %s\n", msh->data->path, cmd->name);
 			if (!msh->data)
 				wgas("!set_execve // _execmd", 33);
 			// if (cmd->redir)
@@ -54,6 +56,7 @@ static	void	set_execve(t_msh *msh, t_cmd *cmd)
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
 	{
+		fprintf(stderr, "cmd->name : [%s]\n", cmd->name);
 		fprintf(stderr, "%s: command not found\n", cmd->name);
 		msh->data = NULL;
 		return ;

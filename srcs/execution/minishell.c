@@ -11,20 +11,31 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static	void	test(int tt)
-{
-	int	i;
-
-	i = -1;
-	(void)i;
-	(void)tt;
-}
+static	void	print_redir_param(t_cmd *cmd);
 
 void	wgas(char *str, int ext)
 {
 	fprintf(stderr, "%s\n", str);
 	exit(ext);
 }
+
+void	minishell(t_all *all, t_msh *msh)
+{
+	t_cmd	*cmd;
+
+	cmd = all->lst_cmd;
+	// fprintf(stderr, "_________________________________\n\n");
+	print_redir_param(cmd); // while (!tmp) to change if you want it to work
+	if (!cmd || !cmd->name)
+		return ;
+	if (!cmd->prev && !cmd->next)
+		_execmd(all, msh, cmd, SOLO);
+	else
+		tpipe(all, msh, cmd);
+	while (wait(NULL) != -1)
+		continue;
+}
+
 static	void	print_redir_param(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -48,36 +59,4 @@ static	void	print_redir_param(t_cmd *cmd)
 		}
 		tmp = tmp->next;
 	}
-}
-
-void	minishell(t_all *all, t_msh *msh)
-{
-	t_cmd	*cmd;
-	pid_t		tpid;
-	int		i;
-
-	i = 0;
-	cmd = all->lst_cmd;
-	// fprintf(stderr, "_________________________________\n\n");
-	print_redir_param(cmd); // while (!tmp) to change if you want it to work
-	if (!cmd || !cmd->name)
-		return ;
-	if (!cmd->prev && !cmd->next)
-	{
-		// fprintf(stderr, "__________________________SOLO__________________________\n\n");
-		if (cmd->redir) //
-			cmd->redir->pos = SOLO;
-		_execmd(all, msh, cmd);
-	}
-	else
-	{
-		// fprintf(stderr, "__________________________PIPE__________________________\n\n");
-		tpipe(all, msh, cmd);
-	}
-	while (wait(NULL) != -1)
-		continue;;
-	test(0);
-	(void)i;
-	(void)msh;
-	(void)tpid;
 }

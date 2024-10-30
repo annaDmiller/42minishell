@@ -1,19 +1,14 @@
 note
 
-
 to disable every readline leaks //
 	v --suppressions=suppress.supp ./minishell
 
 
 if we launch minishell without env
-
 	env -i ./minishell
+		exit ne fonctionne pas quand pas d`env
 
-		while creating the prompt it will exit(1) cause function getenv wont work
-			- have to find another way to retrieve USER name and other stuff  
-			- just print minishell i asked some friends they said its whatever we want
-
-
+✅✅✅✅✅✅✅✅✅✅
 bash-3.2$ echo bonjour je suis la > out
 bash-3.2$ cat out
 bonjour je suis la
@@ -21,10 +16,10 @@ bash-3.2$ echo bonjour je suis la > out wc -l
 bash-3.2$ cat out
 bonjour je suis la wc -l
 bash-3.2$
+✅✅✅✅✅✅✅✅✅✅
 
-exit ne fonctionne pas quand pas d`env
 
-msh est mal link avec la structure all
+✅✅✅ msh est mal link avec la structure all
 
 
 pour le pipe
@@ -32,33 +27,7 @@ pour le pipe
 /// ON ECRIT DANS PIPE_FD[1]
 /// ON LIT DANS PIPE_FD[0]
 
-si pas d`outfile on print le resultat de la derniere cmd sur STDOUT
-> cat Makefile | grep clean | grep echo | wc -l 
-
-| fonction start |
-	redirige l`output de cat dans le tube du pipe sur pipe_fd[1]
-	dup2(pipe_fd[1], STDOUT)
-
-
-
-
-
-fonction mid
-
-fonction end
-
-
-
-
-
-
 
 	inbennou
 		\\ ne pas open avant de fork sinon les enfants heritent de bcp de choses qu`il faudra close / free
-		// si un des infiles n'existe pas: msg d'erreur et pas d'exec
-
-
-
-
-alias mrlibft="cd libft && mr && cd .."
-alias mflibft="cd libft && mf && cd .."
+		// si un des infiles n`existe pas: msg d`erreur et pas d`exec
