@@ -17,7 +17,7 @@ typedef	enum	pos
 	START,
 	MID,
 	END,
-	SOLO,
+	SOLO
 }		t_pos;
 
 typedef struct s_args

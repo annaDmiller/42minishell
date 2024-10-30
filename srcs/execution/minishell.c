@@ -29,9 +29,9 @@ void	minishell(t_all *all, t_msh *msh)
 	if (!cmd || !cmd->name)
 		return ;
 	if (!cmd->prev && !cmd->next)
-		_execmd(all, msh, cmd, SOLO);
+	_execmd(msh, cmd, SOLO);
 	else
-		tpipe(all, msh, cmd);
+		tpipe(msh, cmd);
 	while (wait(NULL) != -1)
 		continue;
 }

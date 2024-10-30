@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **envp)
 	g_sig = 0;
 	all = NULL;
 	everyinit(&msh, envp);
-	// init_signals(all);
+	init_signals(all);
 	while (1)
 	{
 		// fprintf(stderr, "stdin // %d\t stdout // %d\n", STDIN_FILENO, STDOUT_FILENO);
@@ -39,7 +39,7 @@ int main(int argc, char **argv, char **envp)
 		g_sig = 0;
 		rl_on_new_line();
 	}
-	// rl_clear_history();
+	rl_clear_history();
 	free_all_struct(all, 1);
 	(void)argc;
 	(void)argv;

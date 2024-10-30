@@ -77,7 +77,6 @@ void	init_redir(t_redir *redir);
 
 ///////////////////	EXEC
 void	minishell(t_all *all, t_msh *msh);
-// void	minishell(t_all *all, t_msh *msh, char **envp);
 
 ///// processing.c
 void	everyinit(t_msh *msh, char **envp);
@@ -92,14 +91,6 @@ int	echo(t_msh *msh, t_args *argv);
 int	is_a_buitin(t_msh *msh, t_cmd *cmd);
 ///// BUILTINS
 
-
-///// REDIR.c
-void	redirin(t_msh *msh, t_cmd *cmd); // take care of "<"
-void	redirout(t_msh *msh, t_cmd *cmd); // take care of ">"
-void	append(t_msh *msh, t_cmd *cmd); // take care of ">>"
-void	heredoc(t_msh *msh, t_cmd *cmd); // take care of "<<"
-///// REDIR.c
-
 ///// ENV.c
 void	envinit(t_msh *msh, char **env, int i); // init the linked list that will stock our env pointer
 void	env_build(t_msh *msh, int i); // build env if there is no env available
@@ -108,11 +99,6 @@ char	*env_varname(char *str); // function to stock the name of the variable
 t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name
 ///// ENV.c
 
-///// GNL
-char	*gnl(int fd); // get_next_line
-char	*save_static(char *str, int rv);
-char	*org(char *str);
-///// GNL
 
 ///// EXPORT.c
 int	export(t_msh *msh, t_args *argv);
@@ -146,20 +132,18 @@ int	l_envsize(t_env *env);
 int	l_argsize(t_args *argv);
 ///// TLIST.c
 
-// int	texit(t_msh *msh, t_args *argv);
 int	texit(t_msh *msh, t_cmd *cmd, t_args *argv);
 
-void	parse_cmd_line(t_msh *msh, char **argv);
-
 ///// EXEC.c
-int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+int	_execmd(t_msh *msh, t_cmd *cmd, t_pos pos);
 char	**setup_env(t_env *env);
 char	**setup_args(char *name, t_args *argv);
 char	*fpath(t_env *env, char *cmd, int i);
 
-
-void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
+///// PIPE.c
+void	tpipe(t_msh *msh, t_cmd *cmd);
 void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos);
+///// PIPE.c
 
 void	wgas(char *str, int ext);
 
