@@ -11,19 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	freecmdline(t_args *arg)
-{
-	t_args	*tmp;
-
-	tmp = arg;
-	while (arg)
-	{
-		tmp = arg;
-		arg = arg->next;
-		free(tmp);
-	}
-}
-
 void	freenv(t_env *env)
 {
 	t_env	*tmp;

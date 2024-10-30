@@ -31,6 +31,7 @@
 # define PROMPT "minishell> "
 # define _GNU_SOURCE
 
+
 extern volatile int g_sig;
 
 //signals
@@ -112,7 +113,6 @@ int	unset(t_msh *msh, t_args *argv);
 ///// UNSET.c
 
 ///// FREE.c
-void	freecmdline(t_args *arg);
 void	freenv(t_env *env); // free env linked list 
 void	wegotasplituation(struct spt x); // free split if there is an error in it
 ///// FREE.c
@@ -135,13 +135,15 @@ int	l_argsize(t_args *argv);
 int	texit(t_msh *msh, t_cmd *cmd, t_args *argv);
 
 ///// EXEC.c
-int	_execmd(t_msh *msh, t_cmd *cmd, t_pos pos);
+// int	_execmd(t_msh *msh, t_cmd *cmd, t_pos pos);
+int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 char	**setup_env(t_env *env);
 char	**setup_args(char *name, t_args *argv);
 char	*fpath(t_env *env, char *cmd, int i);
 
 ///// PIPE.c
-void	tpipe(t_msh *msh, t_cmd *cmd);
+// void	tpipe(t_msh *msh, t_cmd *cmd);
+void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
 void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos);
 ///// PIPE.c
 

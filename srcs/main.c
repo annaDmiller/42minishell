@@ -26,9 +26,8 @@ int main(int argc, char **argv, char **envp)
 	all = NULL;
 	everyinit(&msh, envp);
 	init_signals(all);
-	while (1)
+	while (!msh.have_to_exit) //if msh.exit != 0 it mean
 	{
-		// fprintf(stderr, "stdin // %d\t stdout // %d\n", STDIN_FILENO, STDOUT_FILENO);
 		all = init_all_struct(all, &msh);
 		line = readline(PROMPT);
 		if (!line)
@@ -41,6 +40,9 @@ int main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	free_all_struct(all, 1);
+	free(msh.pwd);
+	free(msh.data);
+	freenv(msh.env);
 	(void)argc;
 	(void)argv;
 	return (0);

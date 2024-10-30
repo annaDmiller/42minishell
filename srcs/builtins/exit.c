@@ -11,21 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static int	check_chr(char *str)
-{
-	int	i;
-
-	i = 0;
-	while(str[i])
-	{
-		if (!ft_isdigit(str[i]))
-		{
-			ft_putstr_fd("error: numeric argument required", 2);
-			return (2); 
-		}
-	}
-	return (1);
-}
 static	int	val_exit(int n)
 {
 	if (!n)
@@ -39,17 +24,29 @@ static	int	val_exit(int n)
 
 int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 {
+	int	i;
+
+	i = 0;
 	if (!cmd->prev && !cmd->next)
 		fprintf(stderr, "exit\n");
 	if (!argv)
+	{
 		msh->exit = 1;
+		msh->have_to_exit = 1;
+	}
 	else if (argv->next)
 		fprintf(stderr, "exit: too many arguments\n");
 	else
 	{
-		if (check_chr(argv->arg) == 2)
+		while (argv->arg[i] && ft_isdigit(argv->arg[i]))
+			i++;
+		if (argv->arg[i])
+		{
+			fprintf(stderr, "error: numeric argument required\n");
 			exit(2);
+		}
 		msh->exit = val_exit(ft_atoi(argv->arg));
+		msh->have_to_exit = 1;
 	}
 	return (1);
 }

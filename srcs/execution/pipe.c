@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	tpipe(t_msh *msh, t_cmd *cmd)
+void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 {
 	msh->_stdin_save = dup(STDIN_FILENO);
 	msh->pipe_fd[0] = -2;
 	msh->pipe_fd[1] = -2;
 	if (pipe(msh->pipe_fd) == -1)
 		return ;// handle error
-	_execmd(msh, cmd, START);
+	_execmd(all, msh, cmd, START);
 	dup2(msh->pipe_fd[0], STDIN_FILENO);
 	close(msh->pipe_fd[1]);
 	close(msh->pipe_fd[0]);
@@ -27,14 +27,14 @@ void	tpipe(t_msh *msh, t_cmd *cmd)
 	{
 		if (pipe(msh->pipe_fd) == -1)
 			return ;// handle error
-		_execmd(msh, cmd, MID);
+		_execmd(all, msh, cmd, MID);
 		dup2(msh->pipe_fd[0], STDIN_FILENO);
 		close(msh->pipe_fd[1]);
 		close(msh->pipe_fd[0]);
 		cmd = cmd->next;
 	}
 	if (cmd && cmd->name)
-		_execmd(msh, cmd, END);
+		_execmd(all, msh, cmd, END);
 	dup2(msh->_stdin_save, STDIN_FILENO);
 	close(msh->_stdin_save);
 }

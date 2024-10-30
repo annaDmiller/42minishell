@@ -86,6 +86,7 @@ typedef struct s_msh
 	char		*pwd;
 	int			pipe_fd[2];
 	int			exit;
+	int			have_to_exit;
 	int			_stdin_save;
 }		t_msh;
 

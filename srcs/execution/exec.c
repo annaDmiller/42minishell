@@ -13,13 +13,13 @@
 
 static	void	set_execve(t_msh *msh, t_cmd *cmd);
 
-int	_execmd(t_msh *msh, t_cmd *cmd, t_pos pos)
+int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
 
 	// fprintf(stderr, "\n_________________________________________\n\n");
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
-		|| (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "cd"))))
+		|| (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "exit"))))
 		if (!cmd->redir || cmd->redir->pos == SOLO)
 			return (is_a_buitin(msh, cmd));
 	tpid = fork();
@@ -29,21 +29,31 @@ int	_execmd(t_msh *msh, t_cmd *cmd, t_pos pos)
 	{
 		chromakopia(msh, cmd, pos);
 		if (is_a_buitin(msh, cmd))
+		{
+			free(msh->pwd);
+			free(msh->data);
+			freenv(msh->env);
+			free_all_struct(all, 1);
 			exit(0);
+		}
 		else if (cmd && cmd->name)
 		{
 			set_execve(msh, cmd);
 			if (!msh->data)
 				wgas("!set_execve // _execmd", 33);
+			free(msh->pwd);
+			freenv(msh->env);
+			free_all_struct(all, 1);
 			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
 			{
 				fprintf(stderr, "%s: command not found\n", cmd->name); //pas toujours le cas
 				free(msh->data->path);
 				fsplit(msh->data->argv);
 				fsplit(msh->data->envp);
+				free_all_struct(all, 1);
 				wgas("!_execve // 43", 33);
 				exit(1);// handle error
-			}	
+			}
 		}
 	} //// DANS LE PROCESS CHILD
 	return (0);
