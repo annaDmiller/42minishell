@@ -82,7 +82,9 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 
 static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str)
 {
-	if (cmd->quote || !(*str) || is_white_space(*(all->line)))
+	if (cmd->quote || !(*str))
+		return ;
+	if (is_white_space(*(all->line)) && is_redir(*(all->line)))
 		return ;
 	if (!cmd->name)
 		cmd->name = *str;
