@@ -21,20 +21,32 @@ int	cd(t_msh *msh, t_args *argv)
 	else if (!argv && chdir(env_retrieve_var(msh->env, "HOME")->var) == 0) // chdir($home)
 	{
 		// proteger si OLDPWD n'existe pas
-		free(env_retrieve_var(msh->env, "OLDPWD")->var);
-		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
-		free(msh->pwd);
-		msh->pwd = NULL;
+		if (env_retrieve_var(msh->env, "OLDPWD"))
+		{
+			free(env_retrieve_var(msh->env, "OLDPWD")->var);
+			env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
+		}
+		if (msh->pwd)
+		{
+			free(msh->pwd);
+			msh->pwd = NULL;
+		}
 		msh->pwd = getcwd(NULL, 0);
 	}
 	else if (argv->next)
 		putstrfd("cd: too many arguments\n", STDOUT_FILENO);
 	else if (chdir(argv->arg) == 0)
 	{
-		free(env_retrieve_var(msh->env, "OLDPWD")->var);
-		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
-		free(msh->pwd);
-		msh->pwd = NULL;
+		if (env_retrieve_var(msh->env, "OLDPWD"))
+		{
+			free(env_retrieve_var(msh->env, "OLDPWD")->var);
+			env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
+		}
+		if (msh->pwd)
+		{
+			free(msh->pwd);
+			msh->pwd = NULL;
+		}
 		msh->pwd = getcwd(NULL, 0);
 	}
 	else

@@ -31,3 +31,6 @@ pour le pipe
 	inbennou
 		\\ ne pas open avant de fork sinon les enfants heritent de bcp de choses qu`il faudra close / free
 		// si un des infiles n`existe pas: msg d`erreur et pas d`exec
+	
+	tajavon
+		ls <                     c <c | <c>e | cat

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
 # include "../libft/ft_printf.h"
@@ -67,9 +67,8 @@ char    *handle_word(t_all *all, int in_dollar);
 //finalization part
 void    error(char *mess, t_all *all);
 void	free_all_struct(t_all *all, int is_clear_env);
-void    free_cmd_struct(t_cmd *lst_cmd);
+void	free_cmd_struct(t_cmd *lst_cmd);
 void    free_redir_struct(t_redir *redir);
-void    free_env_struct(t_env *lst_env);
 void    free_args(t_args *lst_arg);
 
 
@@ -144,7 +143,8 @@ char	*fpath(t_env *env, char *cmd, int i);
 ///// PIPE.c
 // void	tpipe(t_msh *msh, t_cmd *cmd);
 void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
-void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos);
+// void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos);
+void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 ///// PIPE.c
 
 void	wgas(char *str, int ext);

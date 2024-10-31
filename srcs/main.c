@@ -31,7 +31,7 @@ int main(int argc, char **argv, char **envp)
 		all = init_all_struct(all, &msh);
 		line = readline(PROMPT);
 		if (!line)
-			exit(1);
+			break;// ctrl + d everything is freeed outside the loop
 		all->line = line;
 		if (is_empty_line(all->line))
 			process_line(all, &msh);
@@ -72,7 +72,6 @@ static t_all	*init_all_struct(t_all *all, t_msh *msh)
 		all = (t_all *) malloc(sizeof(t_all));
 		if (!all)
 			error("init_all_struct: Malloc error\n", NULL);
-		all->lst_env = NULL;
 		all->line = NULL;
 	}
 	all->msh = msh;

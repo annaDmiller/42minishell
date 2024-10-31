@@ -13,8 +13,10 @@
 
 int	pwd(t_msh *msh, t_cmd *cmd)
 {
-	if (msh)
+	if (msh->pwd)
 		fprintf(stderr, "%s\n", msh->pwd);
+	else
+		fprintf(stderr, "error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 	(void)cmd;
 	return (1);
 }

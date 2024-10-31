@@ -42,7 +42,19 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 /// ON ECRIT DANS PIPE_FD[1]
 /// ON LIT DANS PIPE_FD[0]
 
-void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos)
+static	void	wgas_pipe(t_all *all, t_msh *msh, char *str)
+{
+	free(msh->pwd);
+	free(msh->data);
+	freenv(msh->env);
+	close(msh->pipe_fd[0]);
+	close(msh->pipe_fd[1]);
+	free_all_struct(all, 1);
+	fprintf(stderr, "%s", str);
+	exit(22);
+}
+
+void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	if (!cmd->redir)
 		return ;
@@ -50,14 +62,14 @@ void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos)
 		close(msh->_stdin_save);
 	if (pos == START || pos == MID)
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
-			wgas("!chromakopia // 53\n", 22);
+			wgas_pipe(all, msh, "!chromakopia // 66\n");
 	if (cmd->redir && cmd->redir->in_type != '0')
 		if (cmd->redir->in_type == 'f')
 			if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
-				wgas("!chromakopia // 108\n", 22);// handle error
+				wgas_pipe(all, msh, "!chromakopia // 70\n");
 	if (cmd->redir && cmd->redir->out_type != '0')
 		if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
-			wgas("!chromakopia // 113\n", 22);// handle error
+			wgas_pipe(all, msh, "!chromakopia // 73\n");// handle error
 	if (cmd->redir && pos == SOLO)
 		return ;
 	close(msh->pipe_fd[0]);

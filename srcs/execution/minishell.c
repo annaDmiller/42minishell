@@ -28,7 +28,8 @@ void	minishell(t_all *all, t_msh *msh)
 	print_redir_param(cmd); // while (!tmp) to change if you want it to work
 	if (!cmd || !cmd->name)
 		return ;
-	if (!cmd->prev && !cmd->next)
+	
+	else if (!cmd->prev && !cmd->next)
 	{
 		_execmd(all, msh, cmd, SOLO);
 		if (!tstrcmp(cmd->name, "exit") && msh->exit)

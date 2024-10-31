@@ -26,8 +26,6 @@ void	free_all_struct(t_all *all, int is_clear_env)
 		free_cmd_struct(all->lst_cmd);
 	if (!is_clear_env)
 		return ;
-	if (all->lst_env)
-		free_env_struct(all->lst_env);
 	//logic to clear msh
 	free(all);
 	all = NULL;
@@ -65,22 +63,6 @@ void	free_redir_struct(t_redir *redir)
 		close (redir->fd_outfile);
 	free(redir);
 	redir = NULL;
-	return ;
-}
-
-void	free_env_struct(t_env *lst_env)
-{
-	t_env	*env;
-	t_env	*temp;
-
-	env = lst_env;
-	while (env)
-	{
-		temp = env->next;
-		free(env);
-		env = temp;
-	}
-	lst_env = NULL;
 	return ;
 }
 

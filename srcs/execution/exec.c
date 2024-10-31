@@ -11,13 +11,18 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static	void	set_execve(t_msh *msh, t_cmd *cmd);
+static	int	set_execve(t_msh *msh, t_cmd *cmd);
 
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
 
 	// fprintf(stderr, "\n_________________________________________\n\n");
+	if (!tstrcmp(cmd->name, "/"))
+	{
+		fprintf(stderr, "/: Is a directory\n");
+		return (1);
+	}
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
 		|| (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "exit"))))
 		if (!cmd->redir || cmd->redir->pos == SOLO)
@@ -27,30 +32,34 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		return (1); //handle error
 	if (tpid == 0) //// DANS LE PROCESS CHILD
 	{
-		chromakopia(msh, cmd, pos);
+		chromakopia(all, msh, cmd, pos);
 		if (is_a_buitin(msh, cmd))
 		{
 			free(msh->pwd);
 			free(msh->data);
 			freenv(msh->env);
-			free_all_struct(all, 1);
 			exit(0);
 		}
 		else if (cmd && cmd->name)
 		{
-			set_execve(msh, cmd);
-			if (!msh->data)
-				wgas("!set_execve // _execmd", 33);
-			free(msh->pwd);
-			freenv(msh->env);
-			free_all_struct(all, 1);
+			if (set_execve(msh, cmd))
+			{
+				free(msh->data);
+				free(msh->pwd);
+				freenv(msh->env);
+				free_all_struct(all, 1);// not sure about this
+				exit(33);
+			}
 			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
 			{
-				fprintf(stderr, "%s: command not found\n", cmd->name); //pas toujours le cas
+				fprintf(stderr, "%s: is a directory\n", cmd->name); //pas toujours le cas
 				free(msh->data->path);
 				fsplit(msh->data->argv);
 				fsplit(msh->data->envp);
-				free_all_struct(all, 1);
+				free(msh->data);
+				free(msh->pwd);
+				freenv(msh->env);
+				free_all_struct(all, 1);//not sure about this
 				wgas("!_execve // 43", 33);
 				exit(1);// handle error
 			}
@@ -59,30 +68,29 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	return (0);
 }
 
-static	void	set_execve(t_msh *msh, t_cmd *cmd)
+static	int	set_execve(t_msh *msh, t_cmd *cmd)
 {
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
 	{
 		fprintf(stderr, "cmd->name : [%s]\n", cmd->name);
 		fprintf(stderr, "%s: command not found\n", cmd->name);
-		msh->data = NULL;
-		return ;
+		return (1);
 	}
 	msh->data->argv = setup_args(cmd->name, cmd->argv);
 	if (!msh->data->argv)
 	{
 		free(msh->data->path);
-		msh->data = NULL;
-		return ;
+		return (1);
 	}
 	msh->data->envp = setup_env(msh->env);
 	if (!msh->data->envp)
 	{
 		free(msh->data->path);
 		fsplit(msh->data->argv);
-		msh->data = NULL;
+		return (1);
 	}
+	return (0);
 }
 
 char	**setup_args(char *name, t_args *argv)
