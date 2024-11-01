@@ -13,16 +13,12 @@
 
 static	int	set_execve(t_msh *msh, t_cmd *cmd);
 
+static	void	msh_free(t_msh *msh);
+
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
 
-	// fprintf(stderr, "\n_________________________________________\n\n");
-	if (!tstrcmp(cmd->name, "/"))
-	{
-		fprintf(stderr, "/: Is a directory\n");
-		return (1);
-	}
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
 		|| (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "exit"))))
 		if (!cmd->redir || cmd->redir->pos == SOLO)
@@ -35,19 +31,18 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		chromakopia(all, msh, cmd, pos);
 		if (is_a_buitin(msh, cmd))
 		{
-			free(msh->pwd);
-			free(msh->data);
-			freenv(msh->env);
+			msh_free(msh);
+			if (msh->_stdin_save > 0)
+				close(msh->_stdin_save);
+			free_all_struct(all, 1);
 			exit(0);
 		}
 		else if (cmd && cmd->name)
 		{
-			if (set_execve(msh, cmd))
+			if (!set_execve(msh, cmd))
 			{
-				free(msh->data);
-				free(msh->pwd);
-				freenv(msh->env);
-				free_all_struct(all, 1);// not sure about this
+				msh_free(msh);
+				free_all_struct(all, 1);
 				exit(33);
 			}
 			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
@@ -56,16 +51,21 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 				free(msh->data->path);
 				fsplit(msh->data->argv);
 				fsplit(msh->data->envp);
-				free(msh->data);
-				free(msh->pwd);
-				freenv(msh->env);
-				free_all_struct(all, 1);//not sure about this
+				msh_free(msh);
+				free_all_struct(all, 1);
 				wgas("!_execve // 43", 33);
-				exit(1);// handle error
+				exit(1);
 			}
 		}
 	} //// DANS LE PROCESS CHILD
 	return (0);
+}
+
+static	void	msh_free(t_msh *msh)
+{
+	free(msh->pwd);
+	free(msh->data);
+	freenv(msh->env);
 }
 
 static	int	set_execve(t_msh *msh, t_cmd *cmd)
@@ -73,24 +73,23 @@ static	int	set_execve(t_msh *msh, t_cmd *cmd)
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
 	{
-		fprintf(stderr, "cmd->name : [%s]\n", cmd->name);
-		fprintf(stderr, "%s: command not found\n", cmd->name);
-		return (1);
+		fprintf(stderr, "cmd->name : [%s]\t\t%s: command not found\n", cmd->name, cmd->name);
+		return (0);
 	}
 	msh->data->argv = setup_args(cmd->name, cmd->argv);
 	if (!msh->data->argv)
 	{
 		free(msh->data->path);
-		return (1);
+		return (0);
 	}
 	msh->data->envp = setup_env(msh->env);
 	if (!msh->data->envp)
 	{
 		free(msh->data->path);
 		fsplit(msh->data->argv);
-		return (1);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 char	**setup_args(char *name, t_args *argv)
@@ -127,7 +126,7 @@ char	**setup_env(t_env *env)
 	l = l_envsize(env);
 	envp = (char **)malloc(sizeof(char *) * (l + 1));
 	if (!envp)
-		return (NULL); // handle error
+		return (NULL);
 	while (++i < l)
 	{
 		envp[i] = tjoin(tjoin(tstrdup(env->name), "="), env->var);
@@ -136,7 +135,6 @@ char	**setup_env(t_env *env)
 	envp[i] = NULL;
 	return (envp);
 }
-
 
 char	*fpath(t_env *env, char *cmd, int i)
 {

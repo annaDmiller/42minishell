@@ -58,7 +58,8 @@ static char	*add_env_var(t_all *all, char car)
 	tmp = env_retrieve_var(all->msh->env, env_name);
 	if (tmp)	
 		env_val = env_retrieve_var(all->msh->env, env_name)->var;
-	free(env_name);
+	if (env_name)
+		free(env_name);
 	all->line += len_name;
 	if (!env_val)
 		return (NULL);

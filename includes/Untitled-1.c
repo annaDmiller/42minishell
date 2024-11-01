@@ -66,6 +66,22 @@ void	free_redir_struct(t_redir *redir)
 	return ;
 }
 
+void	free_env_struct(t_env *lst_env)
+{
+	t_env	*env;
+	t_env	*temp;
+
+	env = lst_env;
+	while (env)
+	{
+		temp = env->next;
+		free(env);
+		env = temp;
+	}
+	lst_env = NULL;
+	return ;
+}
+
 void	free_args(t_args *lst_arg)
 {
 	t_args	*arg;
@@ -74,7 +90,8 @@ void	free_args(t_args *lst_arg)
 	arg = lst_arg;
 	while (arg)
 	{
-		free(arg->arg);
+		if (arg->arg)
+			free(arg->arg);
 		temp = arg->next;
 		free(arg);
 		arg = temp;
