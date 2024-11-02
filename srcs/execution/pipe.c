@@ -50,7 +50,7 @@ static	void	wgas_pipe(t_all *all, t_msh *msh, char *str)
 	close(msh->pipe_fd[0]);
 	close(msh->pipe_fd[1]);
 	free_all_struct(all, 1);
-	fprintf(stderr, "%s", str);
+	printf("%s\n", str);
 	exit(22);
 }
 

@@ -95,6 +95,5 @@ typedef struct s_all
 	char			*line; //line of command; freed after parsing part
 	char			*temp_l; //temporary copy of line; freed after parsing part
 	char			*temp_for_free; //temporary copy of separate char to free in case of error; freed after utilisation
-	int				exitstatus; //exit status of the most recently executed foreground pipeline (needed for $? processing)
 }		t_all;
 #endif

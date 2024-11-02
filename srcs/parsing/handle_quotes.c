@@ -91,7 +91,8 @@ static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 	env_val = handle_dollar(all, '"');
 	*head = ft_strjoin(all->temp_for_free, env_val);
 	free(all->temp_for_free);
-	free(env_val);
+	if (env_val)
+		free(env_val);
 	all->temp_for_free = NULL;
 	if (*head)
 		error("handle_quotes: Malloc error\n", all);

@@ -47,7 +47,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			}
 			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
 			{
-				fprintf(stderr, "%s: is a directory\n", cmd->name); //pas toujours le cas
+				printf("%s: is a directory\n", cmd->name); //pas toujours le cas
 				free(msh->data->path);
 				fsplit(msh->data->argv);
 				fsplit(msh->data->envp);
@@ -58,6 +58,11 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			}
 		}
 	} //// DANS LE PROCESS CHILD
+	if (pos == END)
+	{
+		waitpid(tpid, &msh->exit, 1);
+		printf("exit code // %d\n", msh->exit);
+	}
 	return (0);
 }
 
@@ -73,7 +78,7 @@ static	int	set_execve(t_msh *msh, t_cmd *cmd)
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
 	{
-		fprintf(stderr, "cmd->name : [%s]\t\t%s: command not found\n", cmd->name, cmd->name);
+		printf("cmd->name : [%s]\t\t%s: command not found\n", cmd->name, cmd->name);
 		return (0);
 	}
 	msh->data->argv = setup_args(cmd->name, cmd->argv);

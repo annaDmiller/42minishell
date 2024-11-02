@@ -26,7 +26,7 @@ char	*handle_dollar(t_all *all, char car)
 			return (NULL);
 		}
 		all->line++;
-		exitstatus = ft_itoa(all->exitstatus);
+		exitstatus = ft_itoa(all->msh->exit);
 		if (!exitstatus)
 			error("handle_dollar: ft_itoa error\n", all);
 		return (exitstatus);

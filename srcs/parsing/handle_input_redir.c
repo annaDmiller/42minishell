@@ -77,7 +77,7 @@ static void	read_from_stdin(t_all *all, t_cmd *cmd)
 
 	temp = NULL;
 	len_key = ft_strlen(all->temp_for_free);
-	fprintf(stderr, "> ");
+	putstr("> ");
 	gnl = get_next_line(0);
 	if (!gnl)
 		error("read_from_stdin: Malloc error\n", all);
@@ -89,7 +89,7 @@ static void	read_from_stdin(t_all *all, t_cmd *cmd)
 		free(gnl);
 		if (!cmd->redir->in_txt)
 			error("read_from_stdin: Malloc error\n", all);
-		fprintf(stderr, "> ");
+		putstr("> ");
 		gnl = get_next_line(0);
 	}
 	free(gnl);
