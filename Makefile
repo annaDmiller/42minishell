@@ -2,8 +2,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -O3 -g3
 
-EXEC_PRT = srcs/execution/redir.c \
-		srcs/execution/pipe.c \
+EXEC_PRT = srcs/execution/pipe.c \
                 srcs/execution/exec.c \
                 srcs/execution/free.c \
                 srcs/execution/tlib.c \

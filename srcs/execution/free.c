@@ -20,9 +20,12 @@ void	freenv(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		free(tmp->name);
-		free(tmp->var);
-		free(tmp);
+		if (tmp->name)
+			free(tmp->name);
+		if (tmp->var)
+			free(tmp->var);
+		if (tmp)
+			free(tmp);
 	}
 }
 

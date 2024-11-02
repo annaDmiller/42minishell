@@ -23,7 +23,7 @@ void	everyinit(t_msh *msh, char **envp)
 	msh->exit = 0;
 	msh->_stdin_save = -2;
 	msh->have_to_exit = 0;
-	msh->pwd = getcwd(NULL, 0); // stock the pwd at the start, cd(directory);  // handle if !getcwd
+	msh->pwd = getcwd(NULL, 0);
 	if (envp && envp[0])
 		envinit(msh, envp, -1);
 	else
@@ -50,19 +50,19 @@ void	envinit(t_msh *msh, char **envp, int i)
 		{
 			msh->env = (t_env *)malloc(sizeof(t_env));
 			if (msh->env == NULL)
-				return ; // error malloc
+				return ;
 			tmp = msh->env;
 		}
 		else
 		{
 			tmp->next = (t_env *)malloc(sizeof(t_env));
 			if (tmp->next == NULL)
-				return ; // error malloc
+				return ;
 			tmp = tmp->next;
 		}
 		tmp->name = env_varname(envp[i]);
- 		tmp->var = env_var(envp[i]);
- 		tmp->id = i + 1;
+		tmp->var = env_var(envp[i]);
+		tmp->id = i + 1;
 		tmp->next = NULL;
 	}
 }
@@ -109,8 +109,6 @@ void	envinit(t_msh *msh, char **envp, int i)
 // 	(void)msh;
 // 	(void)tmp;
 // }
-
-
 // void	env_build(t_msh *msh, int i)
 // {
 // 	t_env	*tmp;
@@ -149,9 +147,7 @@ void	envinit(t_msh *msh, char **envp, int i)
 // 	(void)msh;
 // 	(void)tmp;
 // }
-
-
-/// @brief code par theo on revient dessus plus tard pour comprendre tout ca et pq l'ancienne facon fonctionne pas
+/// @brief need to understand that
 static void	add_to_env(t_env **env, int i, char *env_name, char *env_var)
 {
 	t_env	*tmp;
@@ -172,6 +168,7 @@ static void	add_to_env(t_env **env, int i, char *env_name, char *env_var)
 	else
 		*env = new;
 }
+
 void	env_build(t_msh *msh, int i)
 {
 	msh->env = NULL;

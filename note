@@ -8,26 +8,6 @@ if we launch minishell without env
 	env -i ./minishell
 		exit ne fonctionne pas quand pas d`env
 
-✅✅✅✅✅✅✅✅✅✅
-bash-3.2$ echo bonjour je suis la > out
-bash-3.2$ cat out
-bonjour je suis la
-bash-3.2$ echo bonjour je suis la > out wc -l
-bash-3.2$ cat out
-bonjour je suis la wc -l
-bash-3.2$
-✅✅✅✅✅✅✅✅✅✅
-
-
-✅✅✅ msh est mal link avec la structure all
-
-
-pour le pipe
-
-/// ON ECRIT DANS PIPE_FD[1]
-/// ON LIT DANS PIPE_FD[0]
-
-
 	inbennou
 		\\ ne pas open avant de fork sinon les enfants heritent de bcp de choses qu`il faudra close / free
 		// si un des infiles n`existe pas: msg d`erreur et pas d`exec

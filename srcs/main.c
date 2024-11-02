@@ -14,24 +14,24 @@
 volatile int	g_sig;
 
 static t_all	*init_all_struct(t_all *all, t_msh *msh);
-static void process_line(t_all *all, t_msh *msh);
+static void		process_line(t_all *all, t_msh *msh);
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_all   *all;
-	char    *line;
-	t_msh   msh;
+	t_all	*all;
+	char	*line;
+	t_msh	msh;
 
 	g_sig = 0;
 	all = NULL;
 	everyinit(&msh, envp);
 	init_signals(all);
-	while (!msh.have_to_exit) //if msh.exit != 0 it mean exit builtin has been called
+	while (!msh.have_to_exit)
 	{
 		all = init_all_struct(all, &msh);
 		line = readline(PROMPT);
 		if (!line)
-			break;// ctrl + d everything is freeed outside the loop
+			break ;
 		all->line = line;
 		if (is_empty_line(all->line))
 			process_line(all, &msh);
@@ -48,7 +48,7 @@ int main(int argc, char **argv, char **envp)
 	return (msh.exit);
 }
 
-static void process_line(t_all *all, t_msh *msh)
+static	void	process_line(t_all *all, t_msh *msh)
 {
 	int	check_line;
 
@@ -61,7 +61,6 @@ static void process_line(t_all *all, t_msh *msh)
 	if (g_sig)
 		return ;
 	minishell(all, msh);
-	//     _var(all, all->msh);
 	return ;
 }
 

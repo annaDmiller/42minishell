@@ -11,16 +11,12 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-/// @brief if path given argv->arg is not valid it prints pathname: No such file or directory
-///	if there is more than one arg it doesnt move and prints cd: too many arguments
-////	si on passe en argument ../../include on verifie petit a petit que c'est possible
 int	cd(t_msh *msh, t_args *argv)
 {
 	if (!argv && !env_retrieve_var(msh->env, "HOME"))
 		printf("cd: HOME not set\n");
-	else if (!argv && chdir(env_retrieve_var(msh->env, "HOME")->var) == 0) // chdir($home)
+	else if (!argv && chdir(env_retrieve_var(msh->env, "HOME")->var) == 0)
 	{
-		// proteger si OLDPWD n'existe pas
 		if (env_retrieve_var(msh->env, "OLDPWD"))
 		{
 			free(env_retrieve_var(msh->env, "OLDPWD")->var);
@@ -34,7 +30,7 @@ int	cd(t_msh *msh, t_args *argv)
 		msh->pwd = getcwd(NULL, 0);
 	}
 	else if (argv->next)
-		putstrfd("cd: too many arguments\n", STDOUT_FILENO);
+		printf("cd: too many arguments\n");
 	else if (chdir(argv->arg) == 0)
 	{
 		if (env_retrieve_var(msh->env, "OLDPWD"))

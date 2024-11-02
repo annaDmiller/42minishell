@@ -10,7 +10,9 @@ BUILTINS
 		// echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
 		// export 1 \\A
 
-	[✅]=  cd with only a relative or absolute path
+	[]=  cd with only a relative or absolute path
+		add cd -
+		addcd ~/path
 
 	[ ]=  exit with no options
 		// when exiting our ./minishell, exit value should have the value of the last exit value if its not 0

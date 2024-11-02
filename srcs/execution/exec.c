@@ -18,7 +18,7 @@ static	void	msh_free(t_msh *msh);
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
-	int	status;
+	int		rtval;
 
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
 		|| ((!tstrcmp(cmd->name, "export") && cmd->argv)) || (!tstrcmp(cmd->name, "exit"))))
@@ -26,8 +26,8 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			return (is_a_buitin(msh, cmd));
 	tpid = fork();
 	if (tpid == -1)
-		return (1); //handle error
-	if (tpid == 0) //// DANS LE PROCESS CHILD
+		return (1);
+	if (tpid == 0)
 	{
 		chromakopia(all, msh, cmd, pos);
 		if (is_a_buitin(msh, cmd))
@@ -44,25 +44,23 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			{
 				msh_free(msh);
 				free_all_struct(all, 1);
-				exit(33);
+				exit(35);
 			}
-			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)// if cmd == '.' || '..' it will fail, so need to free everything
+			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 			{
-				printf("%s: is a directory\n", cmd->name); //pas toujours le cas
 				free(msh->data->path);
 				fsplit(msh->data->argv);
 				fsplit(msh->data->envp);
 				msh_free(msh);
 				free_all_struct(all, 1);
-				wgas("!_execve // 43", 33);
+				wgas("!_execve // 43", 43);
 				exit(1);
 			}
 		}
-	} //// DANS LE PROCESS CHILD
-	// waitpid(tpid, &msh->exit, 0);
-	waitpid(tpid, &status, 0);
-	if (WIFEXITED(status))
-		msh->exit = WEXITSTATUS(status);
+	}
+	waitpid(tpid, &rtval, 0);
+	if (WIFEXITED(rtval))
+		msh->exit = WEXITSTATUS(rtval);
 	if (pos == SOLO || pos == END)
 		printf("exit code // %d\n", msh->exit);
 	return (0);
@@ -111,7 +109,7 @@ char	**setup_args(char *name, t_args *argv)
 	l = l_argsize(argv) + 1;
 	args = (char **)malloc(sizeof(char *) * (l + 1));
 	if (!args)
-		return (NULL); // handle error
+		return (NULL);
 	args[0] = tstrdup(name);
 	while (++i < l)
 	{
@@ -148,7 +146,7 @@ char	*fpath(t_env *env, char *cmd, int i)
 	char	**str;
 	char	*path;
 
-	if (!access(cmd, F_OK | X_OK))// try to acces the cmd right now, maybe its it absolute path
+	if (!access(cmd, F_OK | X_OK))
 		return (cmd);
 	if (!env_retrieve_var(env, "PATH") || !env_retrieve_var(env, "PATH")->var)
 		return (NULL);
@@ -158,11 +156,11 @@ char	*fpath(t_env *env, char *cmd, int i)
 		return (NULL);
 	while (str[++i])
 	{
-		str[i] = tjoin(tjoin(str[i], "/"), cmd);// building paths
-		if (!access(str[i], F_OK | X_OK))// check if the file of the path exist and if its executable
-			break ;// if yes we break the loop
+		str[i] = tjoin(tjoin(str[i], "/"), cmd);
+		if (!access(str[i], F_OK | X_OK))
+			break ;
 	}
-	if (str[i])// if we didnt find any path str[i] == NULL it wont check the condition
+	if (str[i])
 		path = tstrdup(str[i]);
 	fsplit(str);
 	return (path);

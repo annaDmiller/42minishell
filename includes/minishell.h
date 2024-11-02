@@ -121,7 +121,6 @@ int	tstrcmp(char *str, char *cmp);
 int	tstrlen(char *str);
 char	*tstrdup(char *src);
 char	*tjoin(char *str, char *add);
-void	putstrfd(char *str, int fd);
 char	**split(char const *str, char c);
 void	fsplit(char **str);
 ///// TLIB.c

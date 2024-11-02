@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-/// @brief Display the environnement		variable=value
-/// // //   if there is no value, it just print variable=""
-/// @param t_env *env 
 int	env(t_env *env)
 {
 	t_env	*tmp;
@@ -43,7 +40,7 @@ char	*env_var(char *str)
 		return (NULL);
 	var = (char *)malloc(sizeof(char) * d + 1);
 	if (!var)
-		return (NULL); // error handling
+		return (NULL);
 	var[d] = '\0';
 	while (--d >= 0)
 		var[d] = str[d + i];
@@ -56,11 +53,11 @@ char	*env_varname(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i] && str[i] != '=') // i will equal length of the name variable without its content
+	while (str[i] && str[i] != '=')
 		i++;
 	name = malloc(sizeof(char) * i + 1);
 	if (!name)
-		return (NULL); // error handling
+		return (NULL);
 	name[i] = '\0';
 	while (--i >= 0)
 		name[i] = str[i];
@@ -81,7 +78,7 @@ t_env	*env_retrieve_var(t_env *env, char *str)
 		while (tmp->name[++i] && str[i])
 			if (tmp->name[i] != str[i])
 				break ;
-		if (!tmp->name[i] && !str[i]) // if we arrived at the end without breaking before, words are the same
+		if (!tmp->name[i] && !str[i])
 			return (tmp);
 		tmp = tmp->next;
 	}

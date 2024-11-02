@@ -17,7 +17,7 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	msh->pipe_fd[0] = -2;
 	msh->pipe_fd[1] = -2;
 	if (pipe(msh->pipe_fd) == -1)
-		return ;// handle error
+		return ;
 	_execmd(all, msh, cmd, START);
 	dup2(msh->pipe_fd[0], STDIN_FILENO);
 	close(msh->pipe_fd[1]);
@@ -26,7 +26,7 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	while (cmd && cmd->name && cmd->next)
 	{
 		if (pipe(msh->pipe_fd) == -1)
-			return ;// handle error
+			return ;// handle
 		_execmd(all, msh, cmd, MID);
 		dup2(msh->pipe_fd[0], STDIN_FILENO);
 		close(msh->pipe_fd[1]);
@@ -38,9 +38,6 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	dup2(msh->_stdin_save, STDIN_FILENO);
 	close(msh->_stdin_save);
 }
-
-/// ON ECRIT DANS PIPE_FD[1]
-/// ON LIT DANS PIPE_FD[0]
 
 static	void	wgas_pipe(t_all *all, t_msh *msh, char *str)
 {
@@ -69,7 +66,7 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 				wgas_pipe(all, msh, "!chromakopia // 70\n");
 	if (cmd->redir && cmd->redir->out_type != '0')
 		if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
-			wgas_pipe(all, msh, "!chromakopia // 73\n");// handle error
+			wgas_pipe(all, msh, "!chromakopia // 73\n");
 	if (cmd->redir && pos == SOLO)
 		return ;
 	close(msh->pipe_fd[0]);

@@ -14,7 +14,7 @@
 int	l_envsize(t_env *env)
 {
 	t_env	*tmp;
-	int	l;
+	int		l;
 
 	l = 0;
 	tmp = env;
@@ -26,7 +26,7 @@ int	l_envsize(t_env *env)
 int	l_argsize(t_args *argv)
 {
 	t_args	*tmp;
-	int	l;
+	int		l;
 
 	l = 0;
 	tmp = argv;

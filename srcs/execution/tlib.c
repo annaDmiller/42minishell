@@ -22,7 +22,6 @@ int	tstrcmp(char *str, char *cmp)
 	return (0);
 }
 
-
 int	tstrlen(char *str)
 {
 	int	i;
@@ -69,10 +68,4 @@ char	*tjoin(char *str, char *add)
 	tzy[i + t] = '\0';
 	free(str);
 	return (tzy);
-}
-
-void	putstrfd(char *str, int fd)
-{
-	while (*str)
-		write(fd, str++, 1);
 }

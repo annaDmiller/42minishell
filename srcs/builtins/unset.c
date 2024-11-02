@@ -49,25 +49,39 @@ int	unset(t_msh *msh, t_args *argv)
 	{
 		tmp = msh->env;
 		name = setup_name(argv->arg);
-		if (env_retrieve_var(msh->env, name))
+		if (name && env_retrieve_var(msh->env, name))
 		{
-			while (tmp->next != env_retrieve_var(msh->env, name))
+			while (tmp)
+			{
+				if (tmp->next)
+					if (!tstrcmp(name, tmp->next->name))
+						break;
 				tmp = tmp->next;
-			if (tmp->next->next)
+			}
+			if (tmp && tmp->next && !tmp->next->next)
+			{
+				free_env_var(tmp->next);
+				tmp->next = NULL;
+			}
+			else if (tmp && tmp->next && tmp->next->next)
 			{
 				save = tmp->next->next;
-				free_env_var(tmp);
+				free_env_var(tmp->next);
 				tmp->next = save;
 			}
-			else if (free_env_var(tmp))
-				tmp->next = NULL;
-		}
-		if (name)
+			if (!tmp && msh->env && msh->env->next && !tstrcmp(msh->env->name, name))
+			{
+				save = msh->env->next;
+				free_env_var(msh->env);
+				msh->env = save;
+			}
 			free(name);
+		}
 		argv = argv->next;
 	}
 	return (1);
 }
+
 /// @brief reset '$_' variable with the last command line entered
 void	_var(t_all *all, t_msh *msh)
 {
@@ -93,8 +107,14 @@ void	_var(t_all *all, t_msh *msh)
 
 static	int	free_env_var(t_env *var)
 {
-	free(var->next->name);
-	free(var->next->var);
-	free(var->next);
+	if (var)
+	{
+		if (var->var)
+			free(var->var);
+		if (var->name)
+			free(var->name);
+		if (var)
+			free(var);
+	}
 	return (1);
 }

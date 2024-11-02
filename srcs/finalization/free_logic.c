@@ -26,7 +26,6 @@ void	free_all_struct(t_all *all, int is_clear_env)
 		free_cmd_struct(all->lst_cmd);
 	if (!is_clear_env)
 		return ;
-	//logic to clear msh
 	free(all);
 	all = NULL;
 	return ;
