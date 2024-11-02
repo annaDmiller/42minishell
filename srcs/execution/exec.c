@@ -18,9 +18,10 @@ static	void	msh_free(t_msh *msh);
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
+	int	status;
 
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
-		|| (!tstrcmp(cmd->name, "export")) || (!tstrcmp(cmd->name, "exit"))))
+		|| ((!tstrcmp(cmd->name, "export") && cmd->argv)) || (!tstrcmp(cmd->name, "exit"))))
 		if (!cmd->redir || cmd->redir->pos == SOLO)
 			return (is_a_buitin(msh, cmd));
 	tpid = fork();
@@ -58,11 +59,12 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			}
 		}
 	} //// DANS LE PROCESS CHILD
-	if (pos == END)
-	{
-		waitpid(tpid, &msh->exit, 1);
+	// waitpid(tpid, &msh->exit, 0);
+	waitpid(tpid, &status, 0);
+	if (WIFEXITED(status))
+		msh->exit = WEXITSTATUS(status);
+	if (pos == SOLO || pos == END)
 		printf("exit code // %d\n", msh->exit);
-	}
 	return (0);
 }
 

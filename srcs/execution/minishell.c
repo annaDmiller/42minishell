@@ -36,8 +36,8 @@ void	minishell(t_all *all, t_msh *msh)
 	else
 		tpipe(all, msh, cmd);
 	while (wait(NULL) != -1)
-	// waitpid(pid, msh->exit, )
 		continue;
+	// waitpid(pid, msh->exit, )
 }
 
 static	void	print_redir_param(t_cmd *cmd)
