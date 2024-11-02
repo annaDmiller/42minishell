@@ -21,6 +21,7 @@ int main(int argc, char **argv, char **envp)
 	t_all   *all;
 	char    *line;
 	t_msh   msh;
+	int		exit;
 
 	g_sig = 0;
 	all = NULL;
@@ -38,6 +39,7 @@ int main(int argc, char **argv, char **envp)
 		g_sig = 0;
 		rl_on_new_line();
 	}
+	exit = msh.exit;
 	rl_clear_history();
 	free_all_struct(all, 1);
 	free(msh.pwd);
@@ -45,7 +47,7 @@ int main(int argc, char **argv, char **envp)
 	freenv(msh.env);
 	(void)argc;
 	(void)argv;
-	return (0);
+	return (exit);
 }
 
 static void process_line(t_all *all, t_msh *msh)
