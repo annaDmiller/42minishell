@@ -12,12 +12,12 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
-typedef	enum	pos
+typedef	enum	pos // used to know whats the position of the current command
 {
-	START,
-	MID,
-	END,
-	SOLO
+	START, //PIPE// 
+	MID, //PIPE//
+	END, //PIPE//
+	SOLO // a cmd alone so no call to tpipe function
 }		t_pos;
 
 typedef struct s_args
@@ -36,7 +36,7 @@ typedef struct s_env
 	int				index;
 }		t_env;
 
-typedef	struct s_execve
+typedef	struct s_execve // used in function set_execve
 {
 	char	*path;
 	char		**argv;
@@ -49,7 +49,6 @@ typedef struct s_redir
 	char	in_type; //if s - reading from stdin and read lines will be copied as one line into args list; if f - reading from file, the fd_infile must be != -1; if 0 - then no input redirection
 	char	out_type; //if 'a' - write appending; if 'r' - write by replacing; if '0' - no output redirection
 	char	*in_txt; //text which is taken from stdinput (used if in_type == s)
-	int		pipe_fd[2]; //for pipex
 	int		fd_infile; //file descriptor for input redirection (used if in_type == f)
 	int		fd_outfile; //file descriptor for outpur redirection
 	int		_tfd; // file descriptor to redirect output of cmd inside first and last cmd
@@ -66,7 +65,7 @@ typedef struct s_cmd
 	int				quote; //whether we are in quoted sentence while processing the line
 }		t_cmd;
 
-typedef struct spt
+typedef struct spt ///for my split
 {
 	const char	*str;
 	char		**split;
@@ -76,18 +75,17 @@ typedef struct spt
 	int			len;
 	int			op;
 	int			i;
-}		t_split;
+}		t_split; ///for my split
 
-typedef struct s_msh
+typedef struct s_msh // the structure I worked with while doing builtins without your parsing part
 {
-	t_env		*env;
-	t_args		*l_args;
-	t_execve	*data;
-	char		*pwd;
-	int			pipe_fd[2];
-	int			exit;
-	int			have_to_exit;
-	int			_stdin_save;
+	t_env		*env; // linked list that stock the environnement // must not be freed except if we quit our minishell or if we exit a child process
+	t_execve	*data; // little structure that contains *path; **argv; **envp; for execve(path, argv, envp)
+	char		*pwd; // updated in every cd call 
+	int			pipe_fd[2]; // when multiple cmd i use pipe_fd to redirect output inside pipe // pipe(msh->pipe_fd)
+	int			exit; // perpetually updated with last exit value of the last cmd executed
+	int			have_to_exit; // if the cmd is exit then i put it to 1 and i exit with msh->exit
+	int			_stdin_save; // with multiple cmd i dup2(STDIN_FILENO) inside msh->_stdin_save and restore STDIN_FILENO at the end 
 }		t_msh;
 
 typedef struct s_all
