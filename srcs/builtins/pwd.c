@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-int	pwd(t_msh *msh, t_cmd *cmd)
+int	pwd(t_msh *msh)
 {
 	if (msh->pwd)
 		printf("%s\n", msh->pwd);
 	else
 		printf("error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
-	(void)cmd;
 	return (1);
 }

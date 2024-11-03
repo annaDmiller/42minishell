@@ -85,7 +85,7 @@ void	putstr(char *str);
 
 ///// BUILTINS
 int	env(t_env *env);
-int	pwd(t_msh *msh, t_cmd *cmd);
+int	pwd(t_msh *msh);
 int	cd(t_msh *msh, t_args *argv);
 int	echo(t_msh *msh, t_args *argv);
 int	is_a_buitin(t_msh *msh, t_cmd *cmd);
