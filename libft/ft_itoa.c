@@ -33,9 +33,9 @@ char	*ft_itoa(int n)
 	if (ret == NULL)
 		return (NULL);
 	ret[num_char + sign] = '\0';
-	while (num_char >= sign)
+	while (--num_char >= 0)
 	{
-		ret[--num_char + sign] = (num % 10) + '0';
+		ret[num_char + sign] = (num % 10) + '0';
 		num /= 10;
 	}
 	if (sign == 1)
