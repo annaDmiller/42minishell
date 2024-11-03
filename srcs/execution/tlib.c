@@ -27,7 +27,7 @@ int	tstrlen(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }
@@ -37,6 +37,8 @@ char	*tstrdup(char *src)
 	int		i;
 	char	*dest;
 
+	if (!src)
+		return (NULL);
 	dest = malloc(sizeof(char) * (tstrlen(src) + 1));
 	if (!dest)
 		return (NULL);

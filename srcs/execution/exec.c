@@ -59,10 +59,8 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		}
 	}
 	waitpid(tpid, &rtval, 0);
-	if (WIFEXITED(rtval))
-		msh->exit = WEXITSTATUS(rtval);
-	if (pos == SOLO || pos == END)
-		printf("exit code // %d\n", msh->exit);
+		if (WIFEXITED(rtval))
+			msh->exit = WEXITSTATUS(rtval);
 	return (0);
 }
 

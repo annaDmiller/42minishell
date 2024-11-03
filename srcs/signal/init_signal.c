@@ -32,7 +32,7 @@ void	sigint_hdl(int sig)
 {
 	g_sig = sig;
 	ft_printf("\n");
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);P
 	rl_on_new_line();
 	rl_redisplay();
 	return ;

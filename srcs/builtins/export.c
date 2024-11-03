@@ -38,7 +38,8 @@ int	export(t_msh *msh, t_args *argv)
 				export_def(msh, argv);
 		}
 		argv = argv->next;
-		free(n);
+		if (n)
+			free(n);
 	}
 	return (1);
 }

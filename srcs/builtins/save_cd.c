@@ -1,3 +1,6 @@
+save_cd.c
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -13,22 +16,25 @@
 
 int	cd(t_msh *msh, t_args *argv)
 {
-	t_args	export;
+	t_args	oldpwd;
 
 	if (argv && argv->next)
 		printf("cd: too many arguments\n");
 	else if (!argv && !env_retrieve_var(msh->env, "HOME"))
 		printf("cd: HOME not set\n");
-	// else if (argv && !tstrcmp(argv->arg, "-"))
-		// if (env_retrieve_var(msh->env, "OLDPWD") && (chdir(env_retrieve_var(msh->env, "OLDPWD")->var)))
-			// export
+	else if (argv && !tstrcmp(argv->arg, "-"))
+		if (env_retrieve_var(msh->env, "OLDPWD") && (chdir(env_retrieve_var(msh->env, "OLDPWD")->var)))
+			export
+
 	else if ((!argv && chdir(env_retrieve_var(msh->env, "HOME")->var) == 0)
 			|| (argv->arg && chdir(argv->arg) == 0))
 	{
-		export.arg = tjoin(tjoin(tstrdup("OLDPWD"), "="), msh->pwd);
 		if (!env_retrieve_var(msh->env, "OLDPWD"))
-			export_def(msh, &export.arg = );
-		if (env_retrieve_var(msh->env, "OLDPWD"))
+		{
+			oldpwd.arg = tjoin(tjoin(tstrdup("OLDPWD"), "="), msh->pwd);
+			export_def(msh, &oldpwd);
+		}
+		else if (env_retrieve_var(msh->env, "OLDPWD"))
 		{
 			free(env_retrieve_var(msh->env, "OLDPWD")->var);
 			env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
