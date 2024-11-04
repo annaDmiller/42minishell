@@ -35,7 +35,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			msh_free(msh);
 			if (msh->_stdin_save > 0)
 				close(msh->_stdin_save);
-			free_all_struct(all, 1);
+			// free_all_struct(all, 1);
 			exit(0);
 		}
 		else if (cmd && cmd->name)
@@ -62,10 +62,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	{
 		waitpid(tpid, &rtval, 0);
 		if (WIFEXITED(rtval))
-		{
 			msh->exit = WEXITSTATUS(rtval);
-			printf("ON CHANGE POUR %d\n", msh->exit);
-		}
 	}
 	return (0);
 }
