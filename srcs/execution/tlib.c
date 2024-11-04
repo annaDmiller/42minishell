@@ -37,17 +37,14 @@ char	*tstrdup(char *src)
 	int		i;
 	char	*dest;
 
+	i = -1;
 	if (!src)
 		return (NULL);
 	dest = malloc(sizeof(char) * (tstrlen(src) + 1));
 	if (!dest)
 		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
-	{
+	while (src[++i] != '\0')
 		dest[i] = src[i];
-		i++;
-	}
 	dest[i] = '\0';
 	return (dest);
 }
@@ -63,12 +60,10 @@ char	*tjoin(char *str, char *add)
 	tzy = malloc(sizeof(char) * (tstrlen(add) + tstrlen(str) + 1));
 	if (!tzy)
 		return (NULL);
-	if (str)
-		while (str[++i] != '\0')
-			tzy[i] = str[i];
-	if (add)
-		while (add[++t] != '\0')
-			tzy[i + t] = add[t];
+	while (str && str[++i] != '\0')
+		tzy[i] = str[i];
+	while (add && add[++t] != '\0')
+		tzy[i + t] = add[t];
 	tzy[i + t] = '\0';
 	free(str);
 	return (tzy);

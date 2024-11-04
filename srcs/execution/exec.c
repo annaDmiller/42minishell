@@ -44,7 +44,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			{
 				msh_free(msh);
 				free_all_struct(all, 1);
-				exit(35);
+				exit(127);
 			}
 			if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 			{
@@ -73,6 +73,7 @@ static	void	msh_free(t_msh *msh)
 
 static	int	set_execve(t_msh *msh, t_cmd *cmd)
 {
+	//// how to handle '.' or '..'
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
 	{
