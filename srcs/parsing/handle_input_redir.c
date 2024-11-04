@@ -61,6 +61,7 @@ static void	input_from_file(t_all *all, t_cmd *cmd)
 		error("input_redir: syntax error\n", all);
 	if (cmd->redir->fd_infile > 0)
 		close(cmd->redir->fd_infile);
+	// fprintf(stderr, "");
 	cmd->redir->fd_infile = open(addr, O_RDONLY);
 	if (cmd->redir->fd_infile == -1)
 		error("input_from_file: impossible to open file\n", all);

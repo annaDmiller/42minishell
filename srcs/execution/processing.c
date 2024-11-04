@@ -20,7 +20,7 @@ void	putstr(char *str)
 void	everyinit(t_msh *msh, char **envp)
 {
 	msh->pwd = NULL;
-	msh->exit = 0;
+	// msh->exit = 0;
 	msh->_stdin_save = -2;
 	msh->have_to_exit = 0;
 	msh->pwd = getcwd(NULL, 0);

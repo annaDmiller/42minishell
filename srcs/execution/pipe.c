@@ -34,7 +34,11 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 		cmd = cmd->next;
 	}
 	if (cmd && cmd->name)
+	{
 		_execmd(all, msh, cmd, END);
+		close(msh->pipe_fd[1]);
+		close(msh->pipe_fd[0]);
+	}
 	dup2(msh->_stdin_save, STDIN_FILENO);
 	close(msh->_stdin_save);
 }

@@ -27,7 +27,7 @@ void	minishell(t_all *all, t_msh *msh)
 	else if (!cmd->prev && !cmd->next)
 	{
 		_execmd(all, msh, cmd, SOLO);
-		if (!tstrcmp(cmd->name, "exit") && msh->exit)
+		if (!tstrcmp(cmd->name, "exit") && g_sig)
 			return ;
 	}
 	else

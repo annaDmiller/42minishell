@@ -26,11 +26,9 @@
 # include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <signal.h>
 
 # define PROMPT "minishell> "
 # define _GNU_SOURCE
-
 
 extern volatile int g_sig;
 

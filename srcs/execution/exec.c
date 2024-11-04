@@ -18,7 +18,7 @@ static	void	msh_free(t_msh *msh);
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
-	int		rtval;
+	int	rtval;
 
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
 		|| ((!tstrcmp(cmd->name, "export") && cmd->argv)) || (!tstrcmp(cmd->name, "exit"))))
@@ -58,9 +58,15 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			}
 		}
 	}
-	waitpid(tpid, &rtval, 0);
+	if (pos == SOLO || pos == END)
+	{
+		waitpid(tpid, &rtval, 0);
 		if (WIFEXITED(rtval))
+		{
 			msh->exit = WEXITSTATUS(rtval);
+			printf("ON CHANGE POUR %d\n", msh->exit);
+		}
+	}
 	return (0);
 }
 
