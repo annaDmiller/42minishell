@@ -13,8 +13,8 @@
 
 volatile int	g_sig;
 
-static t_all	*init_all_struct(t_all *all, t_msh *msh);
 static void		process_line(t_all *all, t_msh *msh);
+static t_all	*init_all_struct(t_all *all, t_msh *msh);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -55,11 +55,9 @@ static	void	process_line(t_all *all, t_msh *msh)
 	check_line = 1;
 	add_history(all->line);
 	check_line = validate_line(all);
-	if (!check_line || g_sig)
+	if (!check_line)
 		return ;
 	parse_line(all);
-	if (g_sig)
-		return ;
 	minishell(all, msh);
 	return ;
 }
