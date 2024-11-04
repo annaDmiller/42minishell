@@ -56,12 +56,18 @@ static int  validate_quotes(t_all *all)
 static int  validate_pipes(t_all *all)
 {
     int ind;
+    int al_num;
 
     ind = 0;
+    al_num = 0;
     while (all->line[ind])
     {
+        if (is_white_space(all->line[ind]) && all->line[ind] != '|')
+            al_num++;
         if (all->line[ind] == '|')
         {
+            if (al_num == 0)
+                return (0);
             ind++;
             while (!is_white_space(all->line[ind]) && all->line[ind])
                 ind++;

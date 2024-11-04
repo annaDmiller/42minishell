@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static void	read_from_stdin(t_all *all, t_cmd *cmd);
-static void	input_from_stdin(t_all *all, t_cmd *cmd);
-static void	input_from_file(t_all *all, t_cmd *cmd);
+static int	read_from_stdin(t_all *all, t_cmd *cmd);
+static int	input_from_stdin(t_all *all, t_cmd *cmd);
+static int	input_from_file(t_all *all, t_cmd *cmd);
 static char	*read_keyword(t_all *all, t_cmd *cmd);
 
 void	handle_input(t_all *all, t_cmd *cmd)
@@ -26,7 +26,7 @@ void	handle_input(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-static void	input_from_stdin(t_all *all, t_cmd *cmd)
+static int	input_from_stdin(t_all *all, t_cmd *cmd)
 {
 	char	*temp;
 
@@ -43,34 +43,33 @@ static void	input_from_stdin(t_all *all, t_cmd *cmd)
 	all->temp_for_free = ft_strjoin(temp, "\n");
 	free(temp);
 	if (!all->temp_for_free)
-		error("input_from_stdin: Malloc error\n", all);
+		return (error("input_from_stdin: Malloc error\n", all), 1);
 	read_from_stdin(all, cmd);
 	free(all->temp_for_free);
 	all->temp_for_free = NULL;
 	cmd->redir->in_type = 's';
 	cmd->redir->fd_infile = 0;
-	return ;
+	return (0);
 }
 
-static void	input_from_file(t_all *all, t_cmd *cmd)
+static int	input_from_file(t_all *all, t_cmd *cmd)
 {
 	char	*addr;
 
 	addr = read_addr(all, cmd);
 	if (!addr)
-		error("input_redir: syntax error\n", all);
+		return (error("input_redir: syntax error\n", all), 1);
 	if (cmd->redir->fd_infile > 0)
 		close(cmd->redir->fd_infile);
-	// fprintf(stderr, "");
 	cmd->redir->fd_infile = open(addr, O_RDONLY);
 	if (cmd->redir->fd_infile == -1)
-		error("input_from_file: impossible to open file\n", all);
+		return (error("input_from_file: impossible to open file\n", all), 1);
 	cmd->redir->in_type = 'f';
 	free(addr);
-	return ;
+	return (0);
 }
 
-static void	read_from_stdin(t_all *all, t_cmd *cmd)
+static int	read_from_stdin(t_all *all, t_cmd *cmd)
 {
 	char	*gnl;
 	char	*temp;
@@ -81,20 +80,25 @@ static void	read_from_stdin(t_all *all, t_cmd *cmd)
 	putstr("> ");
 	gnl = get_next_line(0);
 	if (!gnl)
-		error("read_from_stdin: Malloc error\n", all);
-	while (ft_strncmp(all->temp_for_free, gnl, len_key + 1))
+	{
+		if (g_sig)
+			return (1);
+		else
+			return (error("read_from_stdin: Malloc error\n", all), 1);
+	}
+	while (ft_strncmp(all->temp_for_free, gnl, len_key + 1) && !g_sig)
 	{
 		temp = cmd->redir->in_txt;
 		cmd->redir->in_txt = ft_strjoin(temp, gnl);
 		free(temp);
 		free(gnl);
 		if (!cmd->redir->in_txt)
-			error("read_from_stdin: Malloc error\n", all);
+			return (error("read_from_stdin: Malloc error\n", all), 1);
 		putstr("> ");
 		gnl = get_next_line(0);
 	}
 	free(gnl);
-	return ;
+	return (0);
 }
 
 static char	*read_keyword(t_all *all, t_cmd *cmd)
@@ -117,7 +121,7 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 		temp = ret;
 		ret = ft_strjoin(temp, all->temp_for_free);
 		if (!ret)
-			error("read_addr: Malloc error\n", all);
+			return (error("read_addr: Malloc error\n", all), NULL);
 		free(temp);
 		free(all->temp_for_free);
 		all->temp_for_free = NULL;
