@@ -88,7 +88,7 @@ static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 	char	*tail;
 
 	all->temp_for_free = *head;
-	env_val = handle_dollar(all, '"');
+	env_val = handle_dollar(all, cmd, '"');
 	*head = ft_strjoin(all->temp_for_free, env_val);
 	free(all->temp_for_free);
 	if (env_val)

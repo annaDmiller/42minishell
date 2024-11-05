@@ -13,30 +13,26 @@
 
 static char	*add_env_var(t_all *all, char car);
 
-char	*handle_dollar(t_all *all, char car)
+char	*handle_dollar(t_all *all, t_cmd *cmd, char car)
 {
 	char	*exitstatus;
 
 	all->line++;
-	if (!ft_isalnum(*(all->line)) && *(all->line))
+	if (ft_isalpha(*(all->line)))
+		return (add_env_var(all, car));
+	if (*all->line == '?')
 	{
-		if (*(all->line) != '?')
-		{
-			all->line++;
-			return (NULL);
-		}
 		all->line++;
 		exitstatus = ft_itoa(all->msh->exit);
 		if (!exitstatus)
 			error("handle_dollar: ft_itoa error\n", all);
 		return (exitstatus);
+
 	}
-	else if (!ft_isalpha(*(all->line)) && *(all->line))
-	{
-		all->line++;
-		return (NULL);
-	}
-	return (add_env_var(all, car));
+	if (!is_quote(*(all->line)))
+		return (handle_quotes(all, cmd, 1));
+	all->line--;
+	return (handle_word(all, 1));
 }
 
 static char	*add_env_var(t_all *all, char car)
