@@ -2,6 +2,7 @@
 
 static int	read_from_stdin(t_all *all, t_cmd *cmd);
 static char	*read_keyword(t_all *all, t_cmd *cmd);
+static int	temp_input(t_all *all, t_cmd *cmd);
 
 int	input_from_stdin(t_all *all, t_cmd *cmd)
 {
@@ -21,7 +22,9 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 	free(temp);
 	if (!all->temp_for_free)
 		return (error("input_from_stdin: Malloc error\n", all), 1);
-	read_from_stdin(all, cmd);
+	if (read_from_stdin(all, cmd) == 1)
+		if (!g_sig)
+			error("read_from_stdin: Malloc error\n", all);
 	free(all->temp_for_free);
 	all->temp_for_free = NULL;
 	cmd->redir->in_type = 's';
@@ -35,17 +38,11 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 	size_t	len_key;
 
 	temp = NULL;
-	cmd->redir->tfile = 0;
 	len_key = ft_strlen(all->temp_for_free);
 	ft_printf("> ");
 	gnl = get_next_line(0);
 	if (!gnl)
-	{
-		if (g_sig)
-			return (1);
-		else
-			return (error("read_from_stdin: Malloc error\n", all), 1);
-	}
+		return (1);
 	while (ft_strncmp(all->temp_for_free, gnl, len_key + 1) && !g_sig)
 	{
 		temp = cmd->redir->in_txt;
@@ -58,12 +55,7 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 		gnl = get_next_line(0);
 	}
 	free(gnl);
-    if (cmd->redir->in_txt)
-	{
-		cmd->redir->tfile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
-		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->tfile);
-		close(cmd->redir->tfile);
-	}
+	temp_input(all, cmd);
 	return (0);
 }
 
@@ -76,8 +68,6 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 	ret = NULL;
 	while (!is_white_space(*(all->line)) && *(all->line))
 		all->line++;
-	if (!is_redir(*(all->line)))
-		return (NULL);
 	while (is_white_space(*(all->line)) && *(all->line))
 	{
 		if (!is_quote(*(all->line)))
@@ -94,4 +84,17 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 	}
 	all->temp_for_free = NULL;
 	return (ret);
+}
+
+static int	temp_input(t_all *all, t_cmd *cmd)
+{
+	if (cmd->redir->in_txt)
+	{
+		cmd->redir->tfile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		if (cmd->redir->tfile == -1)
+			return (error("temp_input: open error\n", all), 1);
+		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->tfile);
+		close(cmd->redir->tfile);
+	}
+	return (0);
 }

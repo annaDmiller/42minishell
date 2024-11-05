@@ -34,7 +34,6 @@ char	*handle_redir(t_all *all, t_cmd *cmd)
 	return (NULL);
 }
 
-// static void	init_redir(t_redir *redir)
 void	init_redir(t_redir *redir)
 {
 	redir->is_pipe = 'n';
@@ -43,6 +42,7 @@ void	init_redir(t_redir *redir)
 	redir->in_type = '0';
 	redir->out_type = '0';
 	redir->in_txt = NULL;
+	redir->tfile = -2;
 	return ;
 }
 
@@ -62,8 +62,6 @@ char	*read_addr(t_all *all, t_cmd *cmd)
 	ret = NULL;
 	while (!is_white_space(*(all->line)) && *(all->line))
 		all->line++;
-	if (!is_redir(*(all->line)))
-		return (NULL);
 	while (is_white_space(*(all->line)) && *(all->line))
 	{
 		if (*(all->line) == '$')
