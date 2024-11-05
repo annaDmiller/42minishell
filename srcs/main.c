@@ -13,7 +13,7 @@
 
 volatile int	g_sig;
 
-static	void	process_line(t_all *all, t_msh *msh, int argc, char **argv);
+static	void	process_line(t_all *all, t_msh *msh, int argc, char **argv);	
 static	t_all	*init_all_struct(t_all *all, t_msh *msh);
 
 int	main(int argc, char **argv, char **envp)

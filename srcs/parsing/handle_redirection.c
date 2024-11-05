@@ -17,7 +17,6 @@ char	*handle_redir(t_all *all, t_cmd *cmd)
 {
 	t_redir	*redir;
 
-
 	if (!cmd->redir)
 	{
 		redir = (t_redir *) malloc(sizeof(t_redir));

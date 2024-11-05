@@ -15,8 +15,8 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
-	pid_t	tpid;
-	int		rtval;
+	pid_t				tpid;
+	int					rtval;
 	struct sigaction	*old;
 
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))

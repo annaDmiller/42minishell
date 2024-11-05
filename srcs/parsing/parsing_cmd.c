@@ -26,8 +26,7 @@ void	parse_cmd(t_all *all, t_cmd *last)
 			if (last->redir->is_pipe == 'y')
 				break ;
 		add_str_to_cmd(all, last, &str);
-		while (!is_white_space(*(all->line)) /*&& last->quote == 0*/
-			&& *(all->line))
+		while (!is_white_space(*(all->line)) && *(all->line))
 			all->line++;
 		if (*all->line == '\0')
 		{
