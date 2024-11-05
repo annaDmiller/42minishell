@@ -1,0 +1,115 @@
+➜  miniself git:(execution) ✗ valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=suppress.supp  ./minishell
+==236767== Memcheck, a memory error detector
+==236767== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==236767== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==236767== Command: ./minishell
+==236767== 
+minishell> < ines < srcs/execution/minishell.c cat
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 16:51:07 by tespandj          #+#    #+#             */
+/*   Updated: 2024/10/11 00:53:24 by tespandj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../../includes/minishell.h"
+
+static	void	print_param(t_cmd *cmd);
+
+void	minishell(t_all *all, t_msh *msh)
+{
+	t_cmd	*cmd;
+
+	cmd = all->lst_cmd;
+	print_param(cmd);
+	if (!cmd || !cmd->name)
+		return ;
+	else if (!cmd->prev && !cmd->next)
+	{
+		_execmd(all, msh, cmd, SOLO);
+		if (!tstrcmp(cmd->name, "exit") && g_sig)
+			return ;
+	}
+	else
+	{
+		msh->_stdin_save = dup(STDIN_FILENO);
+		tpipe(all, msh, cmd);
+		dup2(msh->_stdin_save, STDIN_FILENO);
+		close(msh->_stdin_save);
+	}
+	while (wait(NULL) != -1)
+		continue ;
+}
+
+static	void	print_param(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	while (!tmp)
+	{
+		if (!tmp->redir)
+			fprintf(stderr, "!REDIR\n");
+		else
+		{
+			if (tmp->name)
+				fprintf(stderr, "\n\t%s\n\n", tmp->name);
+			fprintf(stderr, "is_pipe // %c\n", tmp->redir->is_pipe);
+			fprintf(stderr, "in_type // %c\n", tmp->redir->in_type);
+			fprintf(stderr, "out_type // %c\n", tmp->redir->out_type);
+			fprintf(stderr, "in_txt :\n\n%s\n\n", tmp->redir->in_txt);
+			fprintf(stderr, "fd_infile // %d\n", tmp->redir->fd_infile);
+			fprintf(stderr, "fd_outfile // %d\n\n", tmp->redir->fd_outfile);
+		}
+		tmp = tmp->next;
+		fprintf(stderr, "\n____________________________\n\n");
+	}
+}
+
+			// t_args	*argv;
+			// int		i;
+			// i = -1;
+
+			// argv = cmd->argv;
+			// while (argv && argv->arg && ++i < 22)
+			// {
+			// 	fprintf(stderr, "argv[%d] // %s\n", i, argv->arg);
+			// 	argv = argv->next;
+			// }minishell> 
+exit
+==236767== 
+==236767== FILE DESCRIPTORS: 3 open (3 std) at exit.
+==236767== 
+==236767== HEAP SUMMARY:
+==236767==     in use at exit: 208,644 bytes in 229 blocks
+==236767==   total heap usage: 634 allocs, 405 frees, 238,991 bytes allocated
+==236767== 
+==236767== 5 bytes in 1 blocks are definitely lost in loss record 1 of 70
+==236767==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==236767==    by 0x4068F2: ft_calloc (ft_calloc.c:23)
+==236767==    by 0x40527F: ft_strjoin (ft_strjoin.c:23)
+==236767==    by 0x401E5E: read_addr (handle_redirection.c:77)
+==236767==    by 0x401634: input_from_file (handle_input_redir.c:59)
+==236767==    by 0x401634: handle_input (handle_input_redir.c:25)
+==236767==    by 0x401D0C: handle_redir (handle_redirection.c:32)
+==236767==    by 0x40214A: process_str (parsing_cmd.c:0)
+==236767==    by 0x40214A: parse_cmd (parsing_cmd.c:38)
+==236767==    by 0x40201D: add_cmd (main_parsing.c:37)
+==236767==    by 0x40201D: parse_line (main_parsing.c:20)
+==236767==    by 0x402BF5: process_line (main.c:58)
+==236767==    by 0x402BF5: main (main.c:37)
+==236767== 
+==236767== LEAK SUMMARY:
+==236767==    definitely lost: 5 bytes in 1 blocks
+==236767==    indirectly lost: 0 bytes in 0 blocks
+==236767==      possibly lost: 0 bytes in 0 blocks
+==236767==    still reachable: 0 bytes in 0 blocks
+==236767==         suppressed: 208,639 bytes in 228 blocks
+==236767== 
+==236767== For lists of detected and suppressed errors, rerun with: -s
+==236767== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
