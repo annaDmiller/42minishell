@@ -42,7 +42,6 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	}
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
-	// fprintf(stderr, "");
 	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_APPEND | O_CREAT, 0666);
 	if (cmd->redir->fd_infile == -1)
 		error("input_from_file: impossible to open file\n", all);
@@ -68,7 +67,6 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	}
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
-	// fprintf(stderr, "");
 	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	if (cmd->redir->fd_infile == -1)
 		error("input_from_file: impossible to open file\n", all);
@@ -76,4 +74,3 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	cmd->redir->out_type = 'r';
 	return ;
 }
-
