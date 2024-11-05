@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+//file contains 3 functions for cmd list: initializing new cmd; adding new element
+//to the end of the list; retrieving pointer to the last element of the list
+
 t_cmd	*cmd_new(t_all *all)
 {
 	t_cmd	*new;

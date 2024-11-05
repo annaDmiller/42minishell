@@ -5,6 +5,7 @@ static	int	validate_pipes(t_all *all);
 static	int	validate_redir(t_all *all);
 static	int	check_redir_addr(t_all *all, int *ind);
 
+//function checks 3 main validations: quotes, redirections and pipes
 int	validate_line(t_all *all)
 {
 	int	check_q;
@@ -25,6 +26,7 @@ int	validate_line(t_all *all)
 	return (1);
 }
 
+//functions checkes t
 static	int	validate_quotes(t_all *all)
 {
 	char	car;

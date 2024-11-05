@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+//function returns 0 if the line is empty; 
+//1 if there is at least any other char besides white spaces 
 int	is_empty_line(char *cmd_line)
 {
 	int	ind;
@@ -25,6 +27,7 @@ int	is_empty_line(char *cmd_line)
 	return (0);
 }
 
+//function returns 0 if car is white space or end of string
 int	is_white_space(char car)
 {
 	if (car == ' ' || car == '\v' || car == '\t' || car == '\r'
@@ -33,6 +36,7 @@ int	is_white_space(char car)
 	return (1);
 }
 
+//function returns 0 if car is a quote symbol
 int	is_quote(char car)
 {
 	if (car == '\'' || car == '"')
@@ -40,6 +44,7 @@ int	is_quote(char car)
 	return (1);
 }
 
+//function returns 0 if car is a redirection symbol
 int	is_redir(char car)
 {
 	if (car == '>' || car == '<' || car == '|')
