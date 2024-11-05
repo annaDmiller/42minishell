@@ -48,7 +48,7 @@ static int	input_from_stdin(t_all *all, t_cmd *cmd)
 	free(all->temp_for_free);
 	all->temp_for_free = NULL;
 	cmd->redir->in_type = 's';
-	cmd->redir->fd_infile = 0;
+	// cmd->redir->fd_infile = 0;
 	return (0);
 }
 
@@ -76,6 +76,7 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 	size_t	len_key;
 
 	temp = NULL;
+	cmd->redir->tfile = 0;
 	len_key = ft_strlen(all->temp_for_free);
 	putstr("> ");
 	gnl = get_next_line(0);
@@ -96,6 +97,13 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 			return (error("read_from_stdin: Malloc error\n", all), 1);
 		putstr("> ");
 		gnl = get_next_line(0);
+	}
+	if (cmd->redir->in_txt)
+	{
+		// str = 
+		cmd->redir->tfile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->tfile);
+		close(cmd->redir->tfile);
 	}
 	free(gnl);
 	return (0);

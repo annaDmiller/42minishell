@@ -83,12 +83,15 @@ static	int	set_execve(t_msh *msh, t_cmd *cmd)
 		printf("cmd->name : [%s]\t\t%s: command not found\n", cmd->name, cmd->name);
 		return (0);
 	}
-	msh->data->argv = setup_args(cmd->name, cmd->argv);
+	// msh->data->argv = setup_args(cmd->name, cmd->argv);
+	msh->data->argv = malloc(sizeof(char *) * 2);
 	if (!msh->data->argv)
 	{
 		free(msh->data->path);
 		return (0);
 	}
+	msh->data->argv[0] = tstrdup(".eof");
+	msh->data->argv[1] = NULL;
 	msh->data->envp = setup_env(msh->env);
 	if (!msh->data->envp)
 	{

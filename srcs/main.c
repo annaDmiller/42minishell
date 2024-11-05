@@ -13,8 +13,9 @@
 
 volatile int	g_sig;
 
-static void		process_line(t_all *all, t_msh *msh);
-static t_all	*init_all_struct(t_all *all, t_msh *msh);
+static	void		process_line(t_all *all, t_msh *msh);
+static	t_all	*init_all_struct(t_all *all, t_msh *msh);
+static	void	end_exit(t_all *all, t_msh *msh, int argc, char **argv);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -39,13 +40,19 @@ int	main(int argc, char **argv, char **envp)
 		rl_on_new_line();
 	}
 	// rl_clear_history();
-	free_all_struct(all, 1);
-	free(msh.pwd);
-	free(msh.data);
-	freenv(msh.env);
+	printf("exit\n");
+	end_exit(all, &msh, argc, argv);
+	return (msh.exit);
+}
+
+static	void	end_exit(t_all *all, t_msh *msh, int argc, char **argv)
+{
 	(void)argc;
 	(void)argv;
-	return (msh.exit);
+	free(msh->pwd);
+	free(msh->data);
+	freenv(msh->env);
+	free_all_struct(all, 1);
 }
 
 static	void	process_line(t_all *all, t_msh *msh)

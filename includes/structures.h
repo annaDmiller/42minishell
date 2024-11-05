@@ -51,7 +51,7 @@ typedef struct s_redir
 	char	*in_txt; //text which is taken from stdinput (used if in_type == s)
 	int		fd_infile; //file descriptor for input redirection (used if in_type == f)
 	int		fd_outfile; //file descriptor for outpur redirection
-	int		_tfd; // file descriptor to redirect output of cmd inside first and last cmd
+	int		tfile; //temporary file to stock heredoc in it, unlink it after finished the cmd
 	t_pos		pos;
 }		t_redir;
 
