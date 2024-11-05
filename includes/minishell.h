@@ -30,129 +30,115 @@
 # define PROMPT "minishell> "
 # define _GNU_SOURCE
 
-extern volatile int g_sig;
+extern volatile int	g_sig;
 
 //signals
 void	init_signals(t_all *all);
 void	sigint_hdl(int sig);
 //list_logic
-t_cmd   *cmd_new(t_all *all);
-void    cmd_add_el_back(t_all *all, t_cmd *new_el);
-t_cmd   *cmd_last_el(t_all *all);
-t_args   *arg_new(t_all *all);
-void    arg_add_el_back(t_cmd *last_cmd, t_args *new_el);
-t_args   *arg_last_el(t_cmd *last_cmd);
+t_cmd	*cmd_new(t_all *all);
+void	cmd_add_el_back(t_all *all, t_cmd *new_el);
+t_cmd	*cmd_last_el(t_all *all);
+t_args	*arg_new(t_all *all);
+void	arg_add_el_back(t_cmd *last_cmd, t_args *new_el);
+t_args	*arg_last_el(t_cmd *last_cmd);
 //main part
-int validate_line(t_all *all);
+int		validate_line(t_all *all);
 //parsing main
-void    parse_line(t_all *all);
+void	parse_line(t_all *all);
 void	parse_cmd(t_all *all, t_cmd *last);
-void    add_arg(t_all *all, t_cmd *last, char **str);
+void	add_arg(t_all *all, t_cmd *last, char **str);
 void	init_redir(t_redir *redir);
 //parsing utils
-int  is_white_space(char car);
-int is_empty_line(char *cmd_line);
-int is_quote(char car);
-int is_redir(char car);
+int		is_white_space(char car);
+int		is_empty_line(char *cmd_line);
+int		is_quote(char car);
+int		is_redir(char car);
 //parsing main functions
 char	*handle_dollar(t_all *all, char car);
-char    *handle_redir(t_all *all, t_cmd *cmd);
-char *read_addr(t_all *all, t_cmd *cmd);
-void    handle_input(t_all *all, t_cmd *cmd);
-void    handle_output(t_all *all, t_cmd *cmd);
+char	*handle_redir(t_all *all, t_cmd *cmd);
+char	*read_addr(t_all *all, t_cmd *cmd);
+void	handle_input(t_all *all, t_cmd *cmd);
+void	handle_output(t_all *all, t_cmd *cmd);
 char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar);
-char    *handle_word(t_all *all, int in_dollar);
+char	*handle_word(t_all *all, int in_dollar);
 //finalization part
-void    error(char *mess, t_all *all);
+void	error(char *mess, t_all *all);
 void	free_all_struct(t_all *all, int is_clear_env);
 void	free_cmd_struct(t_cmd *lst_cmd);
-void    free_redir_struct(t_redir *redir);
-void    free_args(t_args *lst_arg);
-
+void	free_redir_struct(t_redir *redir);
+void	free_args(t_args *lst_arg);
 
 void	init_redir(t_redir *redir);
-
-
 
 ///////////////////	EXEC
 void	minishell(t_all *all, t_msh *msh);
 
-///// processing.c
+///// PROCESSING.c
 void	everyinit(t_msh *msh, char **envp);
+void	envinit(t_msh *msh, char **env, int i);
+void	env_build(t_msh *msh, int i);
+///// PROCESSING.c
+
+///// EXECUTION
+int		_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+
+int		set_execve(t_msh *msh, t_cmd *cmd);
+char	**setup_env(t_env *env);
+char	**setup_args(char *name, t_args *argv);
+char	*fpath(t_env *env, char *cmd, int i);
+
+void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
+void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+///// EXECUTION
+
+///// BUILTINS
+int		is_a_buitin(t_msh *msh, t_cmd *cmd);
+
+int		cd(t_msh *msh, t_args *argv);
+int		valid_cd(t_msh *msh, t_args *argv);
+int		expand_wave(t_msh *msh, char *str);
+
+int		echo(t_args *argv);
 void	putstr(char *str);
-///// processing.c
 
-///// BUILTINS
-int	env(t_env *env);
-int	pwd(t_msh *msh);
-int	cd(t_msh *msh, t_args *argv);
-int	echo(t_args *argv);
-int	is_a_buitin(t_msh *msh, t_cmd *cmd);
-///// BUILTINS
+int		env(t_env *env);
+char	*env_var(char *str);
+char	*env_varname(char *str);
+t_env	*env_retrieve_var(t_env *env, char *str);
 
-///// ENV.c
-void	envinit(t_msh *msh, char **env, int i); // init the linked list that will stock our env pointer
-void	env_build(t_msh *msh, int i); // build env if there is no env available
-char	*env_var(char *str); // function to stock the content of the env variable
-char	*env_varname(char *str); // function to stock the name of the variable
-t_env	*env_retrieve_var(t_env *env, char *str); // funtion that retrieve the content of a variable base on it name
-///// ENV.c
+int		texit(t_msh *msh, t_cmd *cmd, t_args *argv);
 
-
-///// EXPORT.c
-int	export(t_msh *msh, t_args *argv);
+int		export(t_msh *msh, t_args *argv);
 void	export_no_opt(t_msh *msh);
 void	export_def(t_msh *msh, t_args *argv);
-///// EXPORT.c
 
-///// UNSET.c
-char	*setup_name(char *str);
-int	unset(t_msh *msh, t_args *argv);
+int		pwd(t_msh *msh);
+
+int		unset(t_msh *msh, t_args *argv);
 void	unset_and_link(t_msh *msh, t_env *tmp, t_env *save, char *name);
-///// UNSET.c
+char	*setup_name(char *str);
+///// BUILTINS
 
 ///// FREE.c
-void	free_exit(t_all *all, t_msh *msh, int t); // freeeing whats needed to be freed in child process
+void	free_exit(t_all *all, t_msh *msh, int t); // free in child process
 void	freenv(t_env *env); // free env linked list 
 void	freenvar(t_env *var); // free only one environment variable
 void	fsplit(char **str); // free a char **
 ///// FREE.c
 
 ///// TLIB.c
-int	tstrcmp(char *str, char *cmp);
-int	tstrlen(char *str);
 char	*tstrdup(char *src);
 char	*tjoin(char *str, char *add);
-char	**split(char const *str, char c);
-void	fsplit(char **str);
+int		tstrlen(char *str);
+int		tstrcmp(char *str, char *cmp);
 ///// TLIB.c
 
 ///// TLIST.c
-int	l_envsize(t_env *env);
-int	l_argsize(t_args *argv);
+int		l_envsize(t_env *env);
+int		l_argsize(t_args *argv);
 ///// TLIST.c
 
-int	texit(t_msh *msh, t_cmd *cmd, t_args *argv);
-
-///// EXEC.c
-int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
-///// EXEC.c
-
-///// SET_EXECVE.c
-int	set_execve(t_msh *msh, t_cmd *cmd);
-char	**setup_env(t_env *env);
-char	**setup_args(char *name, t_args *argv);
-char	*fpath(t_env *env, char *cmd, int i);
-///// SET_EXECVE.c
-
-///// PIPE.c
-// void	tpipe(t_msh *msh, t_cmd *cmd);
-void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
-// void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos);
-void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
-///// PIPE.c
-
 void	_var(t_all *all, t_msh *msh);
-
 
 #endif

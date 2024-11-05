@@ -14,9 +14,11 @@
 // NOT WORKING
 // oldwork =en
 
+static	int	*set_order(t_msh *msh, int length, int i);
+static	char	**fill_names(t_msh *msh, int *order);
+
 int	export(t_msh *msh, t_args *argv)
 {
-	t_env	*var;
 	char	*n;
 
 	if (!argv)
@@ -24,15 +26,15 @@ int	export(t_msh *msh, t_args *argv)
 	while (argv)
 	{
 		n = setup_name(argv->arg);
-		if (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 && n[0] <= 122)) && n[0] != '_')
+		if (!n || (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97
+						&& n[0] <= 122)) && n[0] != '_'))
 			printf("export: `%s': not a valid indentifier\n", argv->arg);
 		else
 		{
-			var = env_retrieve_var(msh->env, n);
-			if (var) // si la variable existe deja on modifie seulement son contenu
+			if (env_retrieve_var(msh->env, n))
 			{
-				free(var->var);
-				var->var = env_var(argv->arg);
+				free(env_retrieve_var(msh->env, n)->var);
+				env_retrieve_var(msh->env, n)->var = env_var(argv->arg);
 			}
 			else
 				export_def(msh, argv);
@@ -44,11 +46,8 @@ int	export(t_msh *msh, t_args *argv)
 	return (1);
 }
 
-//	leaks sur env_varname(str) && env_var(str) ! le noeud cree n'est pas relie correctement a la list ?
-
 /// @brief leaks sur env_varname(str) && env_var(str)
 /// le noeud cree n'est pas relie correctement a la list ?
-/// Reamenager avec t_args *argv en argument
 /// if not a valid indentifier we still need to create the node 
 void	export_def(t_msh *msh, t_args *argv)
 {
@@ -68,7 +67,6 @@ void	export_def(t_msh *msh, t_args *argv)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return ;
-		// return ; // handle error
 	msh->env->next = new;
 	new->id = index + 1;
 	new->name = env_varname(argv->arg);
@@ -80,25 +78,46 @@ void	export_def(t_msh *msh, t_args *argv)
 void	export_no_opt(t_msh *msh)
 {
 	t_env		*tmp;
-	char		**names;
 	int			*order;
 	int			length;
 	int			i;
+
+	i = -1;
+	length = l_envsize(msh->env) - 1;
+	order = set_order(msh, length, -1);
+	while (order && ++i <= length)
+	{
+		tmp = msh->env;
+		while (tmp)
+		{
+			if (tmp->id == order[i] && tmp->name && tstrcmp(tmp->name, "_"))
+			{
+				if (!tmp->var)
+					printf("export %s\n", tmp->name);
+				else
+					printf("export %s=\"%s\"\n", tmp->name, tmp->var);
+			}
+			tmp = tmp->next;
+		}
+	}
+	if (order)
+		free(order);
+}
+
+static	int	*set_order(t_msh *msh, int length, int i)
+{
+	t_env		*tmp;
+	char		**names;
+	int			*order;
 	int			d;
 	int			r;
 
-	length = l_envsize(msh->env) - 1; // -1 pour commencer a 0 dans les tab[i]
-	names = malloc(sizeof(char *) * (length + 1));
+	i = -1;
+	tmp = msh->env;
 	order = malloc(sizeof(int) * (length + 1));
-	i = -1;
-	tmp = msh->env;
-	while (tmp)
-	{
-		names[++i] = tstrdup(tmp->name);
-		tmp = tmp->next;
-	}
-	i = -1;
-	tmp = msh->env;
+	names = fill_names(msh, order);
+	if (!names)
+		return (NULL);
 	while (++i <= length)
 	{
 		d = 0;
@@ -109,23 +128,30 @@ void	export_no_opt(t_msh *msh)
 		order[d] = tmp->id;
 		tmp = tmp->next;
 	}
+	fsplit(names);
+	return (order);
+}
+
+static	char	**fill_names(t_msh *msh, int *order)
+{
+	t_env	*tmp;
+	char	**names;
+	int		i;
+
 	i = -1;
-	while (++i <= length)
+	if (!order)
+		return (NULL);
+	names = malloc(sizeof(char *) * (l_envsize(msh->env)));
+	if (!names)
 	{
-		tmp = msh->env;
-		while (tmp)
-		{
-			if (tmp->id == order[i] && tstrcmp(tmp->name, "_"))
-			{
-				printf("export %s", tmp->name); // printf samns \n attention
-				if (tmp->var)
-					printf("=\"%s\"", tmp->var); // printf samns \n attention
-				printf("\n");
-			}
-			tmp = tmp->next;
-		}
-		free(names[i]);
+		free(order);
+		return (NULL);
 	}
-	free(names);
-	free(order);
+	tmp = msh->env;
+	while (tmp)
+	{
+		names[++i] = tstrdup(tmp->name);
+		tmp = tmp->next;
+	}
+	return (names);
 }

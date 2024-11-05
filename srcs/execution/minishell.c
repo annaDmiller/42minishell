@@ -41,13 +41,10 @@ void	minishell(t_all *all, t_msh *msh)
 static	void	print_param(t_cmd *cmd)
 {
 	t_cmd	*tmp;
-	t_args	*argv;
-	int		i;
 
 	tmp = cmd;
-	while (tmp)
+	while (!tmp)
 	{
-		argv = cmd->argv;
 		if (!tmp->redir)
 			fprintf(stderr, "!REDIR\n");
 		else
@@ -62,13 +59,15 @@ static	void	print_param(t_cmd *cmd)
 			fprintf(stderr, "fd_outfile // %d\n\n", tmp->redir->fd_outfile);
 		}
 		tmp = tmp->next;
+		fprintf(stderr, "\n____________________________\n\n");
 	}
-	(void)argv;
-	(void)i;
-	fprintf(stderr, "\n____________________________\n\n");
 }
 
+			// t_args	*argv;
+			// int		i;
 			// i = -1;
+
+			// argv = cmd->argv;
 			// while (argv && argv->arg && ++i < 22)
 			// {
 			// 	fprintf(stderr, "argv[%d] // %s\n", i, argv->arg);

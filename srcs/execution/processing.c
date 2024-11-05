@@ -11,12 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	putstr(char *str)
-{
-	while (*str)
-		write(1, str++, 1);
-}
-
 void	everyinit(t_msh *msh, char **envp)
 {
 	msh->pwd = NULL;

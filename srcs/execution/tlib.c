@@ -11,27 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-int	tstrcmp(char *str, char *cmp)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i] || cmp[i])
-		if (str[i] != cmp[i])
-			return (str[i] - cmp[i]);
-	return (0);
-}
-
-int	tstrlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
-
 char	*tstrdup(char *src)
 {
 	int		i;
@@ -67,4 +46,25 @@ char	*tjoin(char *str, char *add)
 	tzy[i + t] = '\0';
 	free(str);
 	return (tzy);
+}
+
+int	tstrlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
+
+int	tstrcmp(char *str, char *cmp)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i] || cmp[i])
+		if (str[i] != cmp[i])
+			return (str[i] - cmp[i]);
+	return (0);
 }

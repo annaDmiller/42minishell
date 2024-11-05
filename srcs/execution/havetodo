@@ -1,21 +1,23 @@
+note
+
 BUILTINS
 
-	[✅]=  echo with option -n
+	[🟧]=  echo with option -n
+		// echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
 
 	[✅]=  pwd with no options 
 
 	[✅]=  env with no options or arguments
 
 	[✅]=  export with no options
-		// echo "$ $ $ $ $SHELL----------$LOL.......$123TEST"
 		// export 1 \\A
 
-	[]=  cd with only a relative or absolute path
+	[✅]=  cd with only a relative or absolute path
 		add cd -
-		addcd ~/path
+		add cd ~/path
 
-	[ ]=  exit with no options
-		// when exiting our ./minishell, exit value should have the value of the last exit value if its not 0
+	[✅]=  exit with no options
+		// when exiting our ./minishell, exit should be the exit code of the last cmd executed
 
 ENV
 
@@ -34,28 +36,38 @@ EXEC	✅ convertir l`env en char ** et les arguments en char ** aussi pour execv
 		si pipe est, faire les commandes dans des fork
 
 
-gere les redirections + here doc ✅ ✅ ✅ // 
+gere les redirections + here doc ✅ ✅ ✅
 
-	[ ]=  < should redirect input.
-	[ ]=  > should redirect output.
+	[✅]=  < should redirect input.
+	[✅]=  > should redirect output.
 
 	[ ]=  << should be given a delimiter, then read the input until a line containing the delimiter is seen. However, it doesnt have to update the history!
-	[ ]=  >> should redirect output in append mode.
+	[✅]=  >> should redirect output in append mode.
 
 gerer les pipes | 
 
-	[ ]=  appeler une fonction lorsque un pipe est signalé qui permet de prendre en input la partie gauche
-		du pipe au côté droit pipe
+	[✅]=  reproduire le comportement du pipe et gere peu importe le nombre de cmd
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+extra
 
 	[ ]=  CHANGER LA variable $_ en fonction de la derniere ligne de commande tapee
 		PBLM with $_ variable
 	
 
+note
 
-	[]=  unset with no options est cassé
-			// handles "_" not being able to be unset
-			
-	[]=  export_def est cassé
+to disable every readline leaks //
+	v --suppressions=suppress.supp ./minishell
+
+
+if we launch minishell without env
+	env -i ./minishell
+		exit ne fonctionne pas quand pas d`env
+
+	inbennou
+		\\ ne pas open avant de fork sinon les enfants heritent de bcp de choses qu`il faudra close / free
+		// si un des infiles n`existe pas: msg d`erreur et pas d`exec
+	
+	tajavon
+		ls <                     c <c | <c>e | cat

@@ -56,7 +56,7 @@ static char	*add_env_var(t_all *all, char car)
 		error("handle_dollar: Malloc error\n", all);
 	ft_strlcpy(env_name, all->line, len_name + 1);
 	tmp = env_retrieve_var(all->msh->env, env_name);
-	if (tmp)	
+	if (tmp && tmp->var)	
 		env_val = ft_strdup(tstrdup(env_retrieve_var(all->msh->env, env_name)->var));
 	if (env_name)
 		free(env_name);

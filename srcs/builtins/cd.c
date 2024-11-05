@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static	int	expand_wave(t_msh *msh, char *str);
-static	int	valid_cd(t_msh *msh, t_args *argv);
-
 int	cd(t_msh *msh, t_args *argv)
 {
 	t_args	export;
@@ -42,7 +39,7 @@ int	cd(t_msh *msh, t_args *argv)
 	return (1);
 }
 
-static	int	valid_cd(t_msh *msh, t_args *argv)
+int	valid_cd(t_msh *msh, t_args *argv)
 {
 	if (argv && argv->next)
 	{
@@ -69,7 +66,7 @@ static	int	valid_cd(t_msh *msh, t_args *argv)
 	return (1);
 }
 
-static	int	expand_wave(t_msh *msh, char *str)
+int	expand_wave(t_msh *msh, char *str)
 {
 	char	*path;
 
