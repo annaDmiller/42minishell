@@ -11,6 +11,15 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+void	free_exit(t_all *all, t_msh *msh, int t)
+{
+	(void)t;
+	free(msh->pwd);
+	free(msh->data);
+	freenv(msh->env);
+	free_all_struct(all, 1);
+}
+
 void	freenv(t_env *env)
 {
 	t_env	*tmp;
@@ -29,14 +38,17 @@ void	freenv(t_env *env)
 	}
 }
 
-void	wegotasplituation(struct spt x)
+void	freenvar(t_env *var)
 {
-	int	i;
-
-	i = -1;
-	while (x.split[++i] && i <= x.op)
-		free(x.split[i]);
-	free(x.split);
+	if (var)
+	{
+		if (var->var)
+			free(var->var);
+		if (var->name)
+			free(var->name);
+		if (var)
+			free(var);
+	}
 }
 
 void	fsplit(char **str)

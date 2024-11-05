@@ -37,7 +37,10 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		while (argv->arg[i] && ft_isdigit(argv->arg[i]))
 			i++;
 		if (argv->arg[i])
-			wgas("error: numeric argument required\n", 2);
+		{
+			printf("error: numeric argument required\n");
+			exit(2);
+		}
 		msh->exit = val_exit(ft_atoi(argv->arg));
 		msh->have_to_exit = 1;
 	}

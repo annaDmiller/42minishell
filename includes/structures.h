@@ -84,6 +84,7 @@ typedef struct s_msh // the structure I worked with while doing builtins without
 	char		*pwd; // updated in every cd call 
 	int			pipe_fd[2]; // when multiple cmd i use pipe_fd to redirect output inside pipe // pipe(msh->pipe_fd)
 	int			exit; // perpetually updated with last exit value of the last cmd executed
+	int			builtin_exit; // depends on what happened inside the builtin
 	int			have_to_exit; // if the cmd is exit then i put it to 1 and i exit with msh->exit
 	int			_stdin_save; // with multiple cmd i dup2(STDIN_FILENO) inside msh->_stdin_save and restore STDIN_FILENO at the end 
 }		t_msh;

@@ -73,6 +73,7 @@ void    free_args(t_args *lst_arg);
 void	init_redir(t_redir *redir);
 
 
+
 ///////////////////	EXEC
 void	minishell(t_all *all, t_msh *msh);
 
@@ -85,7 +86,7 @@ void	putstr(char *str);
 int	env(t_env *env);
 int	pwd(t_msh *msh);
 int	cd(t_msh *msh, t_args *argv);
-int	echo(t_msh *msh, t_args *argv);
+int	echo(t_args *argv);
 int	is_a_buitin(t_msh *msh, t_cmd *cmd);
 ///// BUILTINS
 
@@ -107,11 +108,14 @@ void	export_def(t_msh *msh, t_args *argv);
 ///// UNSET.c
 char	*setup_name(char *str);
 int	unset(t_msh *msh, t_args *argv);
+void	unset_and_link(t_msh *msh, t_env *tmp, t_env *save, char *name);
 ///// UNSET.c
 
 ///// FREE.c
+void	free_exit(t_all *all, t_msh *msh, int t); // freeeing whats needed to be freed in child process
 void	freenv(t_env *env); // free env linked list 
-void	wegotasplituation(struct spt x); // free split if there is an error in it
+void	freenvar(t_env *var); // free only one environment variable
+void	fsplit(char **str); // free a char **
 ///// FREE.c
 
 ///// TLIB.c
@@ -131,11 +135,15 @@ int	l_argsize(t_args *argv);
 int	texit(t_msh *msh, t_cmd *cmd, t_args *argv);
 
 ///// EXEC.c
-// int	_execmd(t_msh *msh, t_cmd *cmd, t_pos pos);
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+///// EXEC.c
+
+///// SET_EXECVE.c
+int	set_execve(t_msh *msh, t_cmd *cmd);
 char	**setup_env(t_env *env);
 char	**setup_args(char *name, t_args *argv);
 char	*fpath(t_env *env, char *cmd, int i);
+///// SET_EXECVE.c
 
 ///// PIPE.c
 // void	tpipe(t_msh *msh, t_cmd *cmd);
@@ -143,8 +151,6 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd);
 // void	chromakopia(t_msh *msh, t_cmd *cmd, t_pos pos);
 void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 ///// PIPE.c
-
-void	wgas(char *str, int ext);
 
 void	_var(t_all *all, t_msh *msh);
 

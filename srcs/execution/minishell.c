@@ -11,12 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	wgas(char *str, int ext)
-{
-	printf("%s\n", str);
-	exit(ext);
-}
-
 static	void	print_param(t_cmd *cmd);
 
 void	minishell(t_all *all, t_msh *msh)
@@ -29,19 +23,17 @@ void	minishell(t_all *all, t_msh *msh)
 		return ;
 	else if (!cmd->prev && !cmd->next)
 	{
-		// if (cmd->redir && cmd->redir->in_type == 's' && cmd->redir->in_txt)
-		// 	msh->_stdin_save = dup(STDIN_FILENO);
 		_execmd(all, msh, cmd, SOLO);
-		// if (cmd->redir && cmd->redir->in_type == 's' && cmd->redir->in_txt)
-		// {
-		// 	dup2(msh->_stdin_save, STDIN_FILENO);
-		// 	close(msh->_stdin_save);
-		// }
 		if (!tstrcmp(cmd->name, "exit") && g_sig)
 			return ;
 	}
 	else
+	{
+		msh->_stdin_save = dup(STDIN_FILENO);
 		tpipe(all, msh, cmd);
+		dup2(msh->_stdin_save, STDIN_FILENO);
+		close(msh->_stdin_save);
+	}
 	while (wait(NULL) != -1)
 		continue ;
 }
@@ -67,16 +59,18 @@ static	void	print_param(t_cmd *cmd)
 			fprintf(stderr, "out_type // %c\n", tmp->redir->out_type);
 			fprintf(stderr, "in_txt :\n\n%s\n\n", tmp->redir->in_txt);
 			fprintf(stderr, "fd_infile // %d\n", tmp->redir->fd_infile);
-			fprintf(stderr, "fd_outfile // %d\n", tmp->redir->fd_outfile);
-			fprintf(stderr, "\n");
-		}
-		i = -1;
-		while (argv && ++i < 22)
-		{
-			fprintf(stderr, "argv[%d] // %s\n", i, argv->arg);
-			argv = argv->next;
+			fprintf(stderr, "fd_outfile // %d\n\n", tmp->redir->fd_outfile);
 		}
 		tmp = tmp->next;
 	}
+	(void)argv;
+	(void)i;
 	fprintf(stderr, "\n____________________________\n\n");
 }
+
+			// i = -1;
+			// while (argv && argv->arg && ++i < 22)
+			// {
+			// 	fprintf(stderr, "argv[%d] // %s\n", i, argv->arg);
+			// 	argv = argv->next;
+			// }

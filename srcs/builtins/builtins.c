@@ -18,7 +18,7 @@ int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 	else if (!tstrcmp(cmd->name, "pwd"))
 		return (pwd(msh));
 	else if (!tstrcmp(cmd->name, "echo"))
-		return (echo(msh, cmd->argv));
+		return (echo(cmd->argv));
 	else if (!tstrcmp(cmd->name, "cd"))
 		return (cd(msh, cmd->argv));
 	else if (!tstrcmp(cmd->name, "env"))

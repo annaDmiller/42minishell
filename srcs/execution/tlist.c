@@ -33,5 +33,4 @@ int	l_argsize(t_args *argv)
 	while (tmp && ++l > 0)
 		tmp = tmp->next;
 	return (l);
-
 }
