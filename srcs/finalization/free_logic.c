@@ -14,9 +14,15 @@
 void	free_all_struct(t_all *all, int is_clear_env)
 {
 	if (all->temp_for_free)
+	{
 		free(all->temp_for_free);
+		all->temp_for_free = NULL;
+	}
 	if (all->temp_l)
+	{
 		free(all->temp_l);
+		all->temp_l = NULL;
+	}
 	if (!all->temp_l && all->line)
 	{
 		free(all->line);

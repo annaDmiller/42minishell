@@ -35,6 +35,8 @@ extern volatile int	g_sig;
 //signals
 void	init_signals(t_all *all);
 void	sigint_hdl(int sig);
+struct sigaction    *sigint_ign_wait(t_all *all);
+void    restore_sigint_hdl(t_all *all, struct sigaction *old_act);
 //list_logic
 t_cmd	*cmd_new(t_all *all);
 void	cmd_add_el_back(t_all *all, t_cmd *new_el);

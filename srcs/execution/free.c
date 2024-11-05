@@ -13,10 +13,11 @@
 
 void	free_exit(t_all *all, t_msh *msh, int t)
 {
-	(void)t;
 	free(msh->pwd);
 	free(msh->data);
 	freenv(msh->env);
+	if (!t)
+		return ;
 	free_all_struct(all, 1);
 }
 

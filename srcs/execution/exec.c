@@ -17,6 +17,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	pid_t	tpid;
 	int		rtval;
+	struct sigaction	*old;
 
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
 			|| ((!tstrcmp(cmd->name, "export") && cmd->argv))
@@ -30,7 +31,9 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		_exec_child(all, msh, cmd, pos);
 	if (pos == SOLO || pos == END)
 	{
+		old = sigint_ign_wait(all);
 		waitpid(tpid, &rtval, 0);
+		restore_sigint_hdl(all, old);
 		if (WIFEXITED(rtval))
 			msh->exit = WEXITSTATUS(rtval);
 	}
@@ -39,6 +42,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
+	signal (SIGINT, SIG_DFL);
 	chromakopia(all, msh, cmd, pos);
 	if (is_a_buitin(msh, cmd))
 	{
@@ -58,7 +62,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			fsplit(msh->data->argv);
 			fsplit(msh->data->envp);
 			free_exit(all, msh, 0);
-			printf("execve failed\n");
+			printf("execution failed\n");
 			exit(243);
 		}
 	}

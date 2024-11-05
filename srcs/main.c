@@ -28,8 +28,8 @@ int	main(int argc, char **argv, char **envp)
 	init_signals(all);
 	while (!msh.have_to_exit)
 	{
-		all = init_all_struct(all, &msh);
 		line = readline(PROMPT);
+		all = init_all_struct(all, &msh);
 		if (!line)
 			break ;
 		all->line = line;
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	printf("exit\n");
-	free_exit(all, &msh, 0);
+	free_exit(all, &msh, 1);
 	return (msh.exit);
 }
 
