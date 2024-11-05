@@ -31,7 +31,6 @@ void	init_signals(t_all *all)
 void	sigint_hdl(int sig)
 {
 	g_sig = sig;
-	// msh->exit = sig;
 	ft_printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
