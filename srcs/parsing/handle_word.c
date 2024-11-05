@@ -13,7 +13,7 @@
 
 char	*handle_word(t_all *all, int in_dollar)
 {
-		int		ind;
+	int		ind;
 	char	*str;
 
 	ind = 0;

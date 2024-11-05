@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -O3 -g3
+CFLAGS = -Wall -Werror -Wextra -g3
 
 EXEC_PRT = srcs/execution/pipe.c \
                 srcs/execution/exec.c \

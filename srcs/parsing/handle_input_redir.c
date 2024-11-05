@@ -32,7 +32,7 @@ static int	input_from_stdin(t_all *all, t_cmd *cmd)
 
 	all->line++;
 	temp = read_keyword(all, cmd);
-	if (cmd->redir->fd_infile > 0)
+	if (cmd->redir->fd_infile >= 0)
 	{
 		if (cmd->redir->fd_infile)
 			close(cmd->redir->fd_infile);
