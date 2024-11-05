@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 
 	g_sig = 0;
 	all = NULL;
-	everyinit(&msh, envp);
+	everyinit(&msh, envp, argc, argv);
 	init_signals(all);
 	while (!msh.have_to_exit)
 	{
@@ -39,8 +39,6 @@ int	main(int argc, char **argv, char **envp)
 		rl_on_new_line();
 	}
 	rl_clear_history();
-	(void)argc;
-	(void)argv;
 	printf("exit\n");
 	free_exit(all, &msh, 1);
 	return (msh.exit);

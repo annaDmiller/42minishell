@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	everyinit(t_msh *msh, char **envp)
+void	everyinit(t_msh *msh, char **envp, int argc, char **argv)
 {
 	msh->pwd = NULL;
 	msh->exit = 0;
@@ -33,6 +33,8 @@ void	everyinit(t_msh *msh, char **envp)
 	msh->data->path = NULL;
 	msh->data->argv = NULL;
 	msh->data->envp = NULL;
+	(void)argc;
+	(void)argv;
 }
 
 void	envinit(t_msh *msh, char **envp, int i)

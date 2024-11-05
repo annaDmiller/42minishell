@@ -77,7 +77,7 @@ void	init_redir(t_redir *redir);
 void	minishell(t_all *all, t_msh *msh);
 
 ///// PROCESSING.c
-void	everyinit(t_msh *msh, char **envp);
+void	everyinit(t_msh *msh, char **envp, int argc, char **argv);
 void	envinit(t_msh *msh, char **env, int i);
 void	env_build(t_msh *msh, int i);
 ///// PROCESSING.c
