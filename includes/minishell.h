@@ -19,6 +19,7 @@
 # include <limits.h>
 # include <dirent.h>
 # include "structures.h"
+# include "signal.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
@@ -32,11 +33,6 @@
 
 extern volatile int	g_sig;
 
-//signals
-void	init_signals(t_all *all);
-void	sigint_hdl(int sig);
-struct sigaction    *sigint_ign_wait(t_all *all);
-void    restore_sigint_hdl(t_all *all, struct sigaction *old_act);
 //list_logic
 t_cmd	*cmd_new(t_all *all);
 void	cmd_add_el_back(t_all *all, t_cmd *new_el);
@@ -58,10 +54,10 @@ int		is_quote(char car);
 int		is_redir(char car);
 //parsing main functions
 char	*handle_dollar(t_all *all, t_cmd *cmd, char car);
-char    *handle_redir(t_all *all, t_cmd *cmd);
+char	*handle_redir(t_all *all, t_cmd *cmd);
 char	*read_addr(t_all *all, t_cmd *cmd);
-void    handle_input(t_all *all, t_cmd *cmd);
-void    handle_output(t_all *all, t_cmd *cmd);
+void	handle_input(t_all *all, t_cmd *cmd);
+void	handle_output(t_all *all, t_cmd *cmd);
 char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar);
 char	*handle_word(t_all *all, int in_dollar);
 //finalization part
