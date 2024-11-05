@@ -14,6 +14,7 @@ EXEC_PRT = srcs/execution/pipe.c \
 PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/parsing/handle_dollar.c \
 		srcs/parsing/handle_input_redir.c \
+		srcs/parsing/input_from_stdin.c \
 		srcs/parsing/handle_output_redir.c \
 		srcs/parsing/handle_quotes.c \
 		srcs/parsing/handle_redirection.c \
