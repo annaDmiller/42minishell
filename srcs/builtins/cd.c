@@ -30,11 +30,12 @@ int	cd(t_msh *msh, t_args *argv)
 			free(msh->pwd);
 			msh->pwd = NULL;
 		}
+		free(export.arg);
 		msh->pwd = getcwd(NULL, 0);
 		free(env_retrieve_var(msh->env, "PWD")->var);
 		env_retrieve_var(msh->env, "PWD")->var = tstrdup(msh->pwd);
 	}
-	else
+	else if (argv && argv->arg)
 		printf("cd: %s: No such file or directory\n", argv->arg);
 	return (1);
 }
@@ -44,26 +45,26 @@ int	valid_cd(t_msh *msh, t_args *argv)
 	if (argv && argv->next)
 	{
 		printf("cd: too many arguments\n");
-		return (0);
+		return (1);
 	}
 	else if (!argv && !env_retrieve_var(msh->env, "HOME"))
 	{
 		printf("cd: HOME not set\n");
-		return (0);
+		return (1);
 	}
 	if (argv && argv->arg && argv->arg[0] == '~'
 		&& !expand_wave(msh, argv->arg))
-		return (0);
+		return (1);
 	else if ((argv && !tstrcmp(argv->arg, "-"))
 		&& (env_retrieve_var(msh->env, "OLDPWD")
 			&& (!chdir(env_retrieve_var(msh->env, "OLDPWD")->var))))
-		return (0);
+		return (1);
 	else if (!argv && env_retrieve_var(msh->env, "HOME")
 		&& (!chdir(env_retrieve_var(msh->env, "HOME")->var)))
-		return (0);
+		return (1);
 	else if (argv->arg && chdir(argv->arg) == 0)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int	expand_wave(t_msh *msh, char *str)

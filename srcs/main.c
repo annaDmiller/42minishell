@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		g_sig = 0;
 		rl_on_new_line();
 	}
-	// rl_clear_history();
+	rl_clear_history();
 	(void)argc;
 	(void)argv;
 	printf("exit\n");

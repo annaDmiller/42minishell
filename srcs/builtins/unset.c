@@ -26,10 +26,9 @@ int	unset(t_msh *msh, t_args *argv)
 		save = NULL;
 		name = setup_name(argv->arg);
 		if (name && env_retrieve_var(msh->env, name))
-		{
 			unset_and_link(msh, tmp, save, name);
+		if (name)
 			free(name);
-		}
 		argv = argv->next;
 	}
 	return (1);
