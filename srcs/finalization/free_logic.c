@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-//file contains logic for freeing the allocated variables saved in all structure
-
 void	free_all_struct(t_all *all, int is_clear_env)
 {
 	if (all->temp_for_free)

@@ -44,7 +44,6 @@ int	main(int argc, char **argv, char **envp)
 	return (msh.exit);
 }
 
-//main function for minishell work: lexer, parser and executor
 static	void	process_line(t_all *all, t_msh *msh, int argc, char **argv)
 {
 	int	check_line;
@@ -61,8 +60,6 @@ static	void	process_line(t_all *all, t_msh *msh, int argc, char **argv)
 	return ;
 }
 
-//function initializes the all variable with t_all type;
-//it also cleans itself if there is anything in line left
 static t_all	*init_all_struct(t_all *all, t_msh *msh)
 {
 	if (!all)

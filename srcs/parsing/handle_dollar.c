@@ -13,11 +13,6 @@
 
 static char	*add_env_var(t_all *all);
 
-//function handles cases depending on the symbol following the $ sign
-//if the $ is followed by alpha symbol, then it will be processed as env variable
-//if the $ is followed by '?', then we transforms exit status to string and returns it
-//if the $ is followed by quote symbol, then the part inside quotes will be returned
-//in any other cases, $ will be considered as a part of word (f.e., for case of $!)
 char	*handle_dollar(t_all *all, t_cmd *cmd)
 {
 	char	*exitstatus;
@@ -39,8 +34,6 @@ char	*handle_dollar(t_all *all, t_cmd *cmd)
 	return (handle_word(all, 1));
 }
 
-//function takes the name of env var after $ sign (can contain only letters and digits)
-//after that it searches for env var and returns its value
 static char	*add_env_var(t_all *all)
 {
 	char	*env_val;

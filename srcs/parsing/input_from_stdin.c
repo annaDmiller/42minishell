@@ -4,11 +4,6 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd);
 static char	*read_keyword(t_all *all, t_cmd *cmd);
 static int	temp_input(t_all *all, t_cmd *cmd);
 
-//function handles here doc
-//it reads the keyword by a separate function
-//if there is any opened file (fd_infile), it closes it and cleans in_text if it's not NULL
-//it adds \n to the keyword so that it can be compared in with the lines taken by gnl
-//then it reads from stdin
 int	input_from_stdin(t_all *all, t_cmd *cmd)
 {
 	char	*temp;
@@ -37,9 +32,6 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 	return (0);
 }
 
-//function reads from stdin with help of get_next_line
-//it compares the taken by gnl value to the keyword. If they are equal, then it finishes reading
-//otherwise, it adds new line to the string to return
 static int	read_from_stdin(t_all *all, t_cmd *cmd)
 {
 	char	*gnl;
@@ -68,8 +60,6 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 	return (0);
 }
 
-//function reads the keyword which will indicate the finalization of reading from stdin
-//contraty to function reading address, it doesn't handle dollar as a special sign
 static char	*read_keyword(t_all *all, t_cmd *cmd)
 {
 	char	*temp;
@@ -97,7 +87,6 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 	return (ret);
 }
 
-//function creates a temporary file where it adds the in_text line for further reading from it
 static int	temp_input(t_all *all, t_cmd *cmd)
 {
 	if (cmd->redir->in_txt)

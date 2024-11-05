@@ -13,9 +13,6 @@
 
 static void	add_cmd(t_all *all);
 
-//function handles line until it reaches the end. To avoid indexes, I move the
-//pointer. 
-//Therefore, I need temporary var for storing initial pointer - all->temp_l
 void	parse_line(t_all *all)
 {
 	all->temp_l = all->line;
@@ -26,7 +23,6 @@ void	parse_line(t_all *all)
 	return ;
 }
 
-//function creates cmd list elements and processes lines cmd by cmd
 static void	add_cmd(t_all *all)
 {
 	t_cmd	*new_el;

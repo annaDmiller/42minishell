@@ -15,10 +15,6 @@ static char	*take_str(t_all *all, t_cmd *cmd);
 static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str);
 static void	process_str(t_all *all, t_cmd *cmd, char **str);
 
-//function works with 1 cmd until line reaches the end or '|' symbol
-//white spaces are skipped
-//if the line reaches the end, function checks whether there a pipe logic
-//then it adds 'y' value to is_pipe for last cmd as well
 void	parse_cmd(t_all *all, t_cmd *last)
 {
 	char	*str;
@@ -43,8 +39,6 @@ void	parse_cmd(t_all *all, t_cmd *last)
 	return ;
 }
 
-//function contains logic to collect a string which then will be
-//transferred to cmd.name or arguements of cmd
 static void	process_str(t_all *all, t_cmd *cmd, char **str)
 {
 	char	*temp;
@@ -67,9 +61,6 @@ static void	process_str(t_all *all, t_cmd *cmd, char **str)
 	return ;
 }
 
-//function handles different cases and return str part by part
-//cases: redirection, $ sign, quotes and ordinary word
-//it also creates redir structure for the parts of pipe if there is no one
 static char	*take_str(t_all *all, t_cmd *cmd)
 {
 	if (!cmd->redir && cmd->prev)
@@ -88,10 +79,6 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 	return (handle_word(all, 0));
 }
 
-//function processes a passed string as adding it to cmd.name or cmd arguements
-//if there are whitespaces or on the pointer, then we need to continue collecting string
-//if string is empty or quote doesn't equal to 0, it continues collecting string
-//if it's '|' symbol, then we add string to the arguement/name and move on
 static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str)
 {
 	if (cmd->quote || !(*str))

@@ -13,7 +13,6 @@
 
 static int	input_from_file(t_all *all, t_cmd *cmd);
 
-//functions devides cases into different functions for < and << redirections
 void	handle_input(t_all *all, t_cmd *cmd)
 {
 	all->line++;
@@ -24,9 +23,6 @@ void	handle_input(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-//function reads the address of the file to open and opens it for reading
-//if there is already opened file for input, it closes the file descriptor (if only it's not 0)
-//if there is already existing line taken from stdin, it frees it
 static int	input_from_file(t_all *all, t_cmd *cmd)
 {
 	char	*addr;

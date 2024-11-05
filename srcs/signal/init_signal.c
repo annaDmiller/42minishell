@@ -11,11 +11,9 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-//file contains functions for primary initialization of signals
 static struct sigaction	init_sig_bs_logic(void);
 static struct sigaction	init_sig_c_logic(void);
 
-//main function for primary initialization of signals
 void	init_signals(t_all *all)
 {
 	struct sigaction	act_bs;
@@ -30,10 +28,6 @@ void	init_signals(t_all *all)
 	return ;
 }
 
-//handler for SIGINT which allows to move to another prompt of readline
-//rl_replace_line cleans the buffer of readline
-//rl_on_new_line moves to new line
-//rl_redisplay displays the prompt once more
 void	sigint_hdl(int sig)
 {
 	g_sig = sig;
@@ -44,8 +38,6 @@ void	sigint_hdl(int sig)
 	return ;
 }
 
-//function which defines the actions for Ctrl+\ signal -> IGNORE
-//sa_flags = 0 means that signal abrupts current process
 static struct sigaction	init_sig_bs_logic(void)
 {
 	struct sigaction	act;
@@ -60,8 +52,6 @@ static struct sigaction	init_sig_bs_logic(void)
 	return (act);
 }
 
-//function which defines the actions for Ctrl+C signal -> sigint_hdl
-//sa_flags = 0 means that signal abrupts current process
 static struct sigaction	init_sig_c_logic(void)
 {
 	struct sigaction	act;

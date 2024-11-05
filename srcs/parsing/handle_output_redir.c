@@ -14,7 +14,6 @@
 static void	output_replace(t_all *all, t_cmd *cmd);
 static void	output_append(t_all *all, t_cmd *cmd);
 
-//function devides cases for > and >> redirection of output
 void	handle_output(t_all *all, t_cmd *cmd)
 {
 	all->line++;
@@ -25,10 +24,6 @@ void	handle_output(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-//function reads the address of the file to open and opens it in appending way
-//if there is already opened file for output, it closes it
-//if the /dev/stdout is indicated as address, then it checks whether there is another opened file
-//if any file is opened, then it doesn't redirect anywhere else; otherwise, it assign ft_outfile to stdout
 static void	output_append(t_all *all, t_cmd *cmd)
 {
 	char	*addr;
@@ -55,10 +50,6 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-//function reads the address of the file to open and opens it in truncating way
-//if there is already opened file for output, it closes it
-//if the /dev/stdout is indicated as address, then it checks whether there is another opened file
-//if any file is opened, then it doesn't redirect anywhere else; otherwise, it assign ft_outfile to stdout
 static void	output_replace(t_all *all, t_cmd *cmd)
 {
 	char	*addr;

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-//function adds the str to the arguement list
 void	add_arg(t_all *all, t_cmd *last, char **str)
 {
 	t_args	*new_arg;

@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-//file contains 3 functions for arg list: initializing new arg; adding new element
-//to the end of the list; retrieving pointer to the last element of the list
-
 t_args	*arg_new(t_all *all)
 {
 	t_args	*argv;

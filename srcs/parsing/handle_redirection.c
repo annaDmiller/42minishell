@@ -13,8 +13,6 @@
 
 static void	handle_pipe(t_all *all, t_cmd *cmd);
 
-//function devides cases for different redirection symbols
-//it also initializes the cmd->redir if it's not initialized yet
 char	*handle_redir(t_all *all, t_cmd *cmd)
 {
 	t_redir	*redir;
@@ -36,7 +34,6 @@ char	*handle_redir(t_all *all, t_cmd *cmd)
 	return (NULL);
 }
 
-//function defines default values for all variables of redir structure
 void	init_redir(t_redir *redir)
 {
 	redir->is_pipe = 'n';
@@ -49,7 +46,6 @@ void	init_redir(t_redir *redir)
 	return ;
 }
 
-//function handles pipes by just adding is_pipe = 'y' as indicator for pipes
 static void	handle_pipe(t_all *all, t_cmd *cmd)
 {
 	all->line++;
@@ -57,8 +53,6 @@ static void	handle_pipe(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-//function is used by >, >> and < redirections to read the following address
-//it handles the $ sign, quotes and a word
 char	*read_addr(t_all *all, t_cmd *cmd)
 {
 	char	*temp;
