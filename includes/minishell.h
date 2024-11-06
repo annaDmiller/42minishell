@@ -100,7 +100,7 @@ int		cd(t_msh *msh, t_args *argv);
 int		valid_cd(t_msh *msh, t_args *argv);
 int		expand_wave(t_msh *msh, char *str);
 
-int		echo(t_args *argv);
+int		echo(t_msh *msh, t_args *argv);
 void	putstr(char *str);
 
 int		env(t_env *env);

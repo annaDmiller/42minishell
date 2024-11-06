@@ -38,13 +38,16 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	}
 }
 
-static	void	wgas_pipe(t_all *all, t_msh *msh, char *str)
+static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos, char *str)
 {
 	free(msh->pwd);
 	free(msh->data);
 	freenv(msh->env);
-	close(msh->pipe_fd[0]);
-	close(msh->pipe_fd[1]);
+	if (pos != SOLO)
+	{
+		close(msh->pipe_fd[0]);
+		close(msh->pipe_fd[1]);
+	}
 	free_all_struct(all, 1);
 	printf("pipe // %s\n", str);
 	exit(22);
@@ -58,16 +61,21 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		close(msh->_stdin_save);
 	if (pos == START || pos == MID)
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
-			wgas_pipe(all, msh, "!chromakopia // 66\n");
+			wgas_pipe(all, msh, pos, "!chromakopia // 66\n");
 	if (cmd->redir->in_type == 'f')
 		if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
-			wgas_pipe(all, msh, "!chromakopia // 70\n");
+			wgas_pipe(all, msh, pos, "!chromakopia // 70\n");
 	if (cmd->redir->in_type == 's' && cmd->redir->in_txt)
+	{
+		cmd->redir->tfile = open(".eof", O_WRONLY, 0666);
+		if (cmd->redir->tfile != -1)
+			fprintf(stderr, "\t.eof fd // %d\n", cmd->redir->tfile);
 		if (dup2(cmd->redir->tfile, STDIN_FILENO) == -1)
-			wgas_pipe(all, msh, "!chromakopia // 78\n");
+			wgas_pipe(all, msh, pos, "!chromakopia // 78\n");
+	}
 	if (cmd->redir->out_type != '0')
 		if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
-			wgas_pipe(all, msh, "!chromakopia // 73\n");
+			wgas_pipe(all, msh, pos, "!chromakopia // 73\n");
 	if (pos == SOLO)
 		return ;
 	close(msh->pipe_fd[0]);
