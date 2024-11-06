@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static	void	wgas_pipe(t_all *all, t_msh *msh, char *str)
+static	void	wgas_pipe(t_all *all, t_msh *msh, char *str);
 
 void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 {
