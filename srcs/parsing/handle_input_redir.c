@@ -34,8 +34,12 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 		close(cmd->redir->fd_infile);
 	cmd->redir->fd_infile = open(addr, O_RDONLY);
 	if (cmd->redir->fd_infile == -1)
-		return (error("input_from_file: impossible to open file\n", all), 1);
-	cmd->redir->in_type = 'f';
+	{
+		cmd->has_to_be_executed = 0;
+		fprintf(stderr, "%s: No such file or directory\n", addr);
+	}
+	else
+		cmd->redir->in_type = 'f';
 	free(addr);
 	return (0);
 }

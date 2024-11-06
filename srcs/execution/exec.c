@@ -19,6 +19,8 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	int					rtval;
 	struct sigaction	*old;
 
+	if (!cmd->has_to_be_executed)
+		return (0);
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
 			|| ((!tstrcmp(cmd->name, "export") && cmd->argv))
 			|| (!tstrcmp(cmd->name, "exit"))))
@@ -56,6 +58,8 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			free_exit(all, msh, 1);
 			exit(127);
 		}
+		// if (cmd->redir)
+			// printf("%d\n", cmd->redir->fd_infile);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 		{
 			free(msh->data->path);

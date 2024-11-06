@@ -24,6 +24,7 @@ t_cmd	*cmd_new(t_all *all)
 	new->argv = NULL;
 	new->redir = NULL;
 	new->quote = 0;
+	new->has_to_be_executed = 1;
 	return (new);
 }
 

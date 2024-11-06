@@ -62,6 +62,7 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	char			*name;
 	int				quote; //whether we are in quoted sentence while processing the line
+	int				has_to_be_executed;
 }		t_cmd;
 
 typedef struct s_msh // the structure I worked with while doing builtins without your parsing part
