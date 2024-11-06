@@ -54,6 +54,13 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 		ft_printf("> ");
 		gnl = get_next_line(0);
 	}
+	if (cmd->redir->in_txt)
+	{
+		cmd->redir->tfile = open(".tfile.txt", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		if (cmd->redir->tfile == -1)
+			return (error("read_from_stdin: failed to open temporary file\n", all), 1);
+		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->tfile);
+	}
 	free(gnl);
 	temp_input(all, cmd);
 	return (0);
