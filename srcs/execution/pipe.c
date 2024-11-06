@@ -62,17 +62,6 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	if (pos == START || pos == MID)
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
 			wgas_pipe(all, msh, pos, "!chromakopia // 66\n");
-	// if (cmd->redir->in_type == 'f')
-	// 	if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
-	// 		wgas_pipe(all, msh, pos, "!chromakopia // 70\n");
-	// if (cmd->redir->in_type == 's' && cmd->redir->in_txt)
-	// {
-	// 	cmd->redir->tfile = open(".eof", O_WRONLY, 0666);
-	// 	if (cmd->redir->tfile != -1)
-	// 		fprintf(stderr, "\t.eof fd // %d\n", cmd->redir->tfile);
-	// 	if (dup2(cmd->redir->tfile, STDIN_FILENO) == -1)
-	// 		wgas_pipe(all, msh, pos, "!chromakopia // 78\n");
-	// }
 	if (cmd->redir->in_type != '0')
 	{
 		if (cmd->redir->in_type == 's')
@@ -90,8 +79,14 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 
 }
 
-// cmd->redir->tfile = open(".tfile.txt", O_WRONLY | O_TRUNC | O_CREAT, 0666);
-// ft_putstr_fd(cmd->redir->in_txt, cmd->redir->tfile);
-// if (dup2(cmd->redir->tfile, STDIN_FILENO) == -1)
-// 	wgas_pipe(all, msh, "!chromakopia // 78\n");
-// close(cmd->redir->tfile);
+	// if (cmd->redir->in_type == 'f')
+	// 	if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
+	// 		wgas_pipe(all, msh, pos, "!chromakopia // 70\n");
+	// if (cmd->redir->in_type == 's' && cmd->redir->in_txt)
+	// {
+	// 	cmd->redir->tfile = open(".eof", O_WRONLY, 0666);
+	// 	if (cmd->redir->tfile != -1)
+	// 		fprintf(stderr, "\t.eof fd // %d\n", cmd->redir->tfile);
+	// 	if (dup2(cmd->redir->tfile, STDIN_FILENO) == -1)
+	// 		wgas_pipe(all, msh, pos, "!chromakopia // 78\n");
+	// }
