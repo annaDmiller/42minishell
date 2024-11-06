@@ -70,11 +70,13 @@ void	free_args(t_args *lst_arg);
 
 void	init_redir(t_redir *redir);
 
+int	input_from_stdin(t_all *all, t_cmd *cmd);
+
 ///////////////////	EXEC
 void	minishell(t_all *all, t_msh *msh);
 
 ///// PROCESSING.c
-void	everyinit(t_msh *msh, char **envp);
+void	everyinit(t_msh *msh, char **envp, int argc, char **argv);
 void	envinit(t_msh *msh, char **env, int i);
 void	env_build(t_msh *msh, int i);
 ///// PROCESSING.c
