@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-/// @brief cd builtin
 int	cd(t_msh *msh, t_args *argv)
 {
 	t_args	export;
@@ -60,7 +59,7 @@ int	valid_cd(t_msh *msh, t_args *argv)
 			printf("cd: HOME not set\n");
 		else if (argv && !tstrcmp(argv->arg, "-") && !env_retrieve_var(msh->env, "OLDPWD"))
 			printf("cd: OLDPWD not set\n");
-		msh->exit = 1;  // set exit code of the builtin
+		msh->exit = 1; 
 		return (0);
 	}
 	if (argv && argv->arg && argv->arg[0] == '~'

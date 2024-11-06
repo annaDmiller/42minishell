@@ -91,9 +91,10 @@ static int	temp_input(t_all *all, t_cmd *cmd)
 {
 	if (cmd->redir->in_txt)
 	{
-		if (cmd->redir->fd_infile > 0) // ne va pas marcher pour cat << eof < Makefile
+		if (cmd->redir->fd_infile > 0)
 			close(cmd->redir->fd_infile);
-		cmd->redir->fd_infile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		cmd->redir->fd_infile = open(".eof", O_WRONLY
+				| O_TRUNC | O_CREAT, 0666);
 		if (cmd->redir->fd_infile == -1)
 			return (error("temp_input: open error\n", all), 1);
 		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->fd_infile);

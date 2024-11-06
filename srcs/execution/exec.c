@@ -56,8 +56,6 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			free_exit(all, msh, 1);
 			exit(127);
 		}
-		// if (cmd->redir && cmd->redir->fd_infile != -1)
-			// fprintf(stderr, "\tinfile = %d fd\n", cmd->redir->fd_infile);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 		{
 			free(msh->data->path);
