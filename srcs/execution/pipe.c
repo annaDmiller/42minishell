@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 16:33:18 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/23 16:33:20 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/06 22:13:08 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
@@ -76,17 +76,4 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		return ;
 	close(msh->pipe_fd[0]);
 	close(msh->pipe_fd[1]);
-
 }
-
-	// if (cmd->redir->in_type == 'f')
-	// 	if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
-	// 		wgas_pipe(all, msh, pos, "!chromakopia // 70\n");
-	// if (cmd->redir->in_type == 's' && cmd->redir->in_txt)
-	// {
-	// 	cmd->redir->tfile = open(".eof", O_WRONLY, 0666);
-	// 	if (cmd->redir->tfile != -1)
-	// 		fprintf(stderr, "\t.eof fd // %d\n", cmd->redir->tfile);
-	// 	if (dup2(cmd->redir->tfile, STDIN_FILENO) == -1)
-	// 		wgas_pipe(all, msh, pos, "!chromakopia // 78\n");
-	// }

@@ -98,14 +98,15 @@ int		is_a_buitin(t_msh *msh, t_cmd *cmd);
 
 int		cd(t_msh *msh, t_args *argv);
 int		valid_cd(t_msh *msh, t_args *argv);
-int		expand_wave(t_msh *msh, char *str);
+int		wave(t_msh *msh, char *str);
 
-int		echo(t_msh *msh, t_args *argv);
+int		echo(t_args *argv);
 void	putstr(char *str);
 
 int		env(t_env *env);
 char	*env_var(char *str);
 char	*env_varname(char *str);
+t_env	*env_retrieve_var(t_env *env, char *str);
 t_env	*env_retrieve_var(t_env *env, char *str);
 
 int		texit(t_msh *msh, t_cmd *cmd, t_args *argv);
