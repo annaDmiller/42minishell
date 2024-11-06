@@ -97,6 +97,7 @@ static int	temp_input(t_all *all, t_cmd *cmd)
 			return (error("temp_input: open error\n", all), 1);
 		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->fd_infile);
 		close(cmd->redir->fd_infile);
+		all->hdc_situation = 1;
 	}
 	return (0);
 }

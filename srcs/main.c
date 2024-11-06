@@ -75,5 +75,6 @@ static t_all	*init_all_struct(t_all *all, t_msh *msh)
 	all->lst_cmd = NULL;
 	all->temp_l = NULL;
 	all->temp_for_free = NULL;
+	all->hdc_situation = 0;
 	return (all);
 }

@@ -65,7 +65,7 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	if (cmd->redir->in_type != '0')
 	{
 		if (cmd->redir->in_type == 's')
-			cmd->redir->fd_infile = open(".eof", O_WRONLY, 0644);
+			cmd->redir->fd_infile = open(".eof", O_RDONLY, 0644);
 		if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
 			wgas_pipe(all, msh, pos, "!chromakopia // 70\n");
 	}

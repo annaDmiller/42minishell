@@ -30,6 +30,8 @@ void	free_all_struct(t_all *all, int is_clear_env)
 	}
 	if (all->lst_cmd)
 		free_cmd_struct(all->lst_cmd);
+	if (all->hdc_situation)
+		unlink(".eof");
 	if (!is_clear_env)
 		return ;
 	free(all);
