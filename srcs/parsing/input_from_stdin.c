@@ -90,7 +90,7 @@ static int	temp_input(t_all *all, t_cmd *cmd)
 {
 	if (cmd->redir->in_txt)
 	{
-		if (cmd->redir->fd_infile > 0)
+		if (cmd->redir->fd_infile > 0) // ne va pas marcher pour cat << eof < Makefile
 			close(cmd->redir->fd_infile);
 		cmd->redir->fd_infile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		if (cmd->redir->fd_infile == -1)

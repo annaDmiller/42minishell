@@ -21,22 +21,27 @@ int	cd(t_msh *msh, t_args *argv)
 		export.arg = tjoin(tjoin(tstrdup("OLDPWD"), "="), msh->pwd);
 		if (!env_retrieve_var(msh->env, "OLDPWD") && export.arg)
 			export_def(msh, &export);
-		if (export.arg)
-			free(export.arg);
-		if (env_retrieve_var(msh->env, "OLDPWD"))
+		else if (env_retrieve_var(msh->env, "OLDPWD"))
 		{
 			free(env_retrieve_var(msh->env, "OLDPWD")->var);
 			env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
 		}
+		if (export.arg)
+			free(export.arg);
 		if (msh->pwd)
 			free(msh->pwd);
 		msh->pwd = NULL;
 		msh->pwd = getcwd(NULL, 0);
-		if (env_retrieve_var(msh->env, "PWD"))
+		export.arg = tjoin(tjoin(tstrdup("PWD"), "="), msh->pwd);
+		if (!env_retrieve_var(msh->env, "PWD") && export.arg)
+			export_def(msh, &export);
+		else if (env_retrieve_var(msh->env, "OLDPWD"))
 		{
 			free(env_retrieve_var(msh->env, "PWD")->var);
 			env_retrieve_var(msh->env, "PWD")->var = tstrdup(msh->pwd);
 		}
+		if (export.arg)
+			free(export.arg);
 		msh->exit = 0;
 	}
 	else if (argv && argv->arg)
