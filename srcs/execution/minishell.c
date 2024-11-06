@@ -13,28 +13,25 @@
 
 static	void	print_param(t_cmd *cmd);
 
+/// @brief main execution function 
 void	minishell(t_all *all, t_msh *msh)
 {
 	t_cmd	*cmd;
 
-	cmd = all->lst_cmd;
-	print_param(cmd);
+	cmd = all->lst_cmd; // making the name shorter for lisibility
+	print_param(cmd); // debug purpose
 	if (!cmd || !cmd->name)
 		return ;
-	else if (!cmd->prev && !cmd->next)
+	else if (!cmd->prev && !cmd->next) // if there is only one cmd
+		_execmd(all, msh, cmd, SOLO); // _execmd with pos = SOLO 
+	else // 2 cmd or more
 	{
-		_execmd(all, msh, cmd, SOLO);
-		if (!tstrcmp(cmd->name, "exit") && g_sig)
-			return ;
-	}
-	else
-	{
-		msh->_stdin_save = dup(STDIN_FILENO);
-		tpipe(all, msh, cmd);
-		dup2(msh->_stdin_save, STDIN_FILENO);
+		msh->_stdin_save = dup(STDIN_FILENO); // saving the stdin cause we have to redirect STDIN inside pipe_fd[1]
+		tpipe(all, msh, cmd); // handling pipe activity
+		dup2(msh->_stdin_save, STDIN_FILENO); // restoring it
 		close(msh->_stdin_save);
 	}
-	while (wait(NULL) != -1)
+	while (wait(NULL) != -1) // waiting that every child process finished
 		continue ;
 }
 

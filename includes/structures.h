@@ -15,7 +15,7 @@
 typedef enum pos // used to know whats the position of the current command
 {
 	START,
-	MID,
+	MIDDLE,
 	END,
 	SOLO,
 }		t_pos;
@@ -32,7 +32,7 @@ typedef struct s_env
 	struct s_env	*next;
 	char			*var;
 	char			*name;
-	int				id;
+	int				id; // for export_no_opt purpose
 	int				index;
 }		t_env;
 

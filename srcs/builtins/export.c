@@ -21,22 +21,22 @@ int	export(t_msh *msh, t_args *argv)
 {
 	char	*n;
 
-	if (!argv)
+	if (!argv) // if no arguments it prints the env in ascii order with export before each variables
 		export_no_opt(msh);
-	while (argv)
+	while (argv) // proceed to export every argv->arg
 	{
 		n = setup_name(argv->arg);
-		if (!n || (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97
+		if (!n || (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97 // check if the export name is valid
 						&& n[0] <= 122)) && n[0] != '_'))
 			printf("export: `%s': not a valid indentifier\n", argv->arg);
 		else
 		{
-			if (env_retrieve_var(msh->env, n))
+			if (env_retrieve_var(msh->env, n)) // if the what we want to export already exist we just change it content
 			{
 				free(env_retrieve_var(msh->env, n)->var);
 				env_retrieve_var(msh->env, n)->var = env_var(argv->arg);
 			}
-			else
+			else // else we def it
 				export_def(msh, argv);
 		}
 		argv = argv->next;
@@ -46,8 +46,7 @@ int	export(t_msh *msh, t_args *argv)
 	return (1);
 }
 
-/// @brief leaks sur env_varname(str) && env_var(str)
-/// le noeud cree n'est pas relie correctement a la list ?
+/// @brief export argv->arg by linking it to msh->env
 /// if not a valid indentifier we still need to create the node 
 void	export_def(t_msh *msh, t_args *argv)
 {
@@ -57,9 +56,9 @@ void	export_def(t_msh *msh, t_args *argv)
 
 	if (!msh || !msh->env)
 		return ;
-	head = msh->env;
+	head = msh->env; // save the top of the linked list
 	index = msh->env->id;
-	while (msh->env->next)
+	while (msh->env->next) // retrieve the last env variable in msh->env 
 	{
 		msh->env = msh->env->next;
 		index = msh->env->id;
@@ -67,11 +66,11 @@ void	export_def(t_msh *msh, t_args *argv)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return ;
-	msh->env->next = new;
+	msh->env->next = new; // set msh->env->next of the last element in env to the new node we create
 	new->id = index + 1;
 	new->name = env_varname(argv->arg);
 	new->var = env_var(argv->arg);
-	new->next = NULL;
+	new->next = NULL; // set next to NULL so we know its the end of the linked list
 	msh->env = head;
 }
 
@@ -103,7 +102,7 @@ void	export_no_opt(t_msh *msh)
 	if (order)
 		free(order);
 }
-
+/// @brief set an int * with id of env variable in ascii order and return it
 static	int	*set_order(t_msh *msh, int length, int i)
 {
 	t_env		*tmp;
@@ -131,7 +130,7 @@ static	int	*set_order(t_msh *msh, int length, int i)
 	fsplit(names);
 	return (order);
 }
-
+/// @brief filling a char ** with every env variables names
 static	char	**fill_names(t_msh *msh, int *order)
 {
 	t_env	*tmp;

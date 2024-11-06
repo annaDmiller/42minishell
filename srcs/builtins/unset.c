@@ -25,12 +25,13 @@ int	unset(t_msh *msh, t_args *argv)
 		tmp = msh->env;
 		save = NULL;
 		name = setup_name(argv->arg);
-		if (name && env_retrieve_var(msh->env, name))
+		if (name && env_retrieve_var(msh->env, name)) // if the argv exist in the env 
 			unset_and_link(msh, tmp, save, name);
 		if (name)
 			free(name);
 		argv = argv->next;
 	}
+	msh->exit = 0; // no matter what the exit code will be 0
 	return (1);
 }
 
@@ -39,26 +40,26 @@ void	unset_and_link(t_msh *msh, t_env *tmp, t_env *save, char *name)
 	while (tmp)
 	{
 		if (tmp->next)
-			if (!tstrcmp(name, tmp->next->name))
+			if (!tstrcmp(name, tmp->next->name)) // if we found the previous env variable of the variable we want to unset we break
 				break ;
 		tmp = tmp->next;
 	}
-	if (tmp && tmp->next && !tmp->next->next)
+	if (tmp && tmp->next && !tmp->next->next) // if its the last variable in the env linked list
 	{
-		freenvar(tmp->next);
-		tmp->next = NULL;
+		freenvar(tmp->next); // unset the one we want to unset
+		tmp->next = NULL; // and set the onebeforeit->next to NULL
 	}
-	else if (tmp && tmp->next && tmp->next->next)
+	else if (tmp && tmp->next && tmp->next->next) // if we wanna unset in the middle of the linked list
 	{
-		save = tmp->next->next;
-		freenvar(tmp->next);
-		tmp->next = save;
+		save = tmp->next->next; // we save the one after it 
+		freenvar(tmp->next); // unset the one we want to unset
+		tmp->next = save; // link the one before it with the one after it
 	}
-	if (!tmp && msh->env && msh->env->next && !tstrcmp(msh->env->name, name))
-	{
-		save = msh->env->next;
-		freenvar(msh->env);
-		msh->env = save;
+	if (!tmp && msh->env && msh->env->next && !tstrcmp(msh->env->name, name)) // if we havent find any name as the one we wanna unset in the first while loop
+	{								// it means we wanna unset the first variable in msh->env
+		save = msh->env->next; // we save the one after it 
+		freenvar(msh->env); // unset the first env variable
+		msh->env = save; // set msh->env to save
 	}
 }
 

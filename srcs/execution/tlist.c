@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+/// @brief for execve purpose // execve(path, argv, char **env) env = malloc(sizeof(char *) * l_envsize(msh->env))
+/// @return return the size of the environment
 int	l_envsize(t_env *env)
 {
 	t_env	*tmp;
@@ -23,6 +25,8 @@ int	l_envsize(t_env *env)
 	return (l);
 }
 
+/// @brief for execve purpose // execve(path, char ** argv,env) argv = malloc(sizeof(char *) * l_argsize(cmd->argv))
+/// @return return how much arguments the cmd has
 int	l_argsize(t_args *argv)
 {
 	t_args	*tmp;

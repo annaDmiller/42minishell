@@ -11,20 +11,23 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+
+/// @brief init everything in msh at the really begining of the program
+/// @param msh contains the env we use to expand $variable or for builtins
 void	everyinit(t_msh *msh, char **envp, int argc, char **argv)
 {
-	msh->pwd = NULL;
 	msh->exit = 0;
+	msh->pwd = NULL;
 	msh->pipe_fd[0] = -2;
 	msh->pipe_fd[1] = -2;
 	msh->_stdin_save = -2;
 	msh->have_to_exit = 0;
-	msh->pwd = getcwd(NULL, 0);
-	if (envp && envp[0])
+	msh->pwd = getcwd(NULL, 0); // filling msh->pwd up
+	if (envp && envp[0]) // if we have the environment
 		envinit(msh, envp, -1);
-	else
-		env_build(msh, -1);
-	msh->data = malloc(sizeof(t_execve));
+	else // if we dont have it 
+		env_build(msh, -1); // env -i ./minishell so we build the env from scratch
+	msh->data = malloc(sizeof(t_execve)); // malloc data struct in msh for execve purpose
 	if (!msh->data)
 	{
 		freenv(msh->env);
@@ -33,10 +36,11 @@ void	everyinit(t_msh *msh, char **envp, int argc, char **argv)
 	msh->data->path = NULL;
 	msh->data->argv = NULL;
 	msh->data->envp = NULL;
-	(void)argc;
-	(void)argv;
+	(void)argc; // norminette purpose
+	(void)argv; // norminette purpose
 }
 
+/// @brief filling our msh->env with what we have in int main(ac, av, char **envp)
 void	envinit(t_msh *msh, char **envp, int i)
 {
 	t_env	*tmp;
@@ -145,7 +149,8 @@ void	envinit(t_msh *msh, char **envp, int i)
 // 	(void)msh;
 // 	(void)tmp;
 // }
-/// @brief need to understand that
+
+/// @brief need to understand that cause the way i did it wasnt working (code commented above)
 static void	add_to_env(t_env **env, int i, char *env_name, char *env_var)
 {
 	t_env	*tmp;
@@ -167,6 +172,7 @@ static void	add_to_env(t_env **env, int i, char *env_name, char *env_var)
 		*env = new;
 }
 
+/// @brief building the env with PWD SHLVL _ only, as env -i bash --posix does it
 void	env_build(t_msh *msh, int i)
 {
 	msh->env = NULL;

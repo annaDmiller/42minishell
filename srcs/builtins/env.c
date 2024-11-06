@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+/// @brief env builting
 int	env(t_env *env)
 {
 	t_env	*tmp;
@@ -24,14 +25,15 @@ int	env(t_env *env)
 			write(1, "=", 1);
 			if (tmp->var)
 				printf("%s\n", tmp->var);
-			else
+			else // if there is no content for that variable just go next while \n
 				write(1, "\n", 1);
 		}
 		tmp = tmp->next;
 	}
 	return (1);
 }
-
+/// @brief return the content of a env variable in a char *
+/// @param str // as USER=tespandj
 char	*env_var(char *str)
 {
 	char	*var;
@@ -54,6 +56,8 @@ char	*env_var(char *str)
 	return (var);
 }
 
+/// @brief return the name of a env variable in a char *
+/// @param str // as USER=tespandj
 char	*env_varname(char *str)
 {
 	char	*name;
@@ -71,6 +75,9 @@ char	*env_varname(char *str)
 	return (name);
 }
 
+
+/// @brief return the node of the str specified
+/// @return NULL if the env variable specified doesnt exist
 t_env	*env_retrieve_var(t_env *env, char *str)
 {
 	t_env	*tmp;

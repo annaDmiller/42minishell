@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+/// @brief freeing whats needed to be freed in child process
 void	free_exit(t_all *all, t_msh *msh, int t)
 {
 	free(msh->pwd);
@@ -21,6 +22,7 @@ void	free_exit(t_all *all, t_msh *msh, int t)
 	free_all_struct(all, 1);
 }
 
+/// @brief free the whole env linked list
 void	freenv(t_env *env)
 {
 	t_env	*tmp;
@@ -39,6 +41,7 @@ void	freenv(t_env *env)
 	}
 }
 
+/// @brief free only one env variable
 void	freenvar(t_env *var)
 {
 	if (var)
@@ -52,6 +55,7 @@ void	freenvar(t_env *var)
 	}
 }
 
+/// @brief free a char **
 void	fsplit(char **str)
 {
 	int	i;

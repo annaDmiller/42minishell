@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+/// @brief checking if str only contains one '-' and some 'n'
 static int	valid(char *str)
 {
 	int	i;
@@ -33,9 +34,9 @@ int	echo(t_args *argv)
 
 	n = 1;
 	state = 0;
-	if (argv && argv->arg && valid(argv->arg))
+	if (argv && argv->arg && valid(argv->arg)) // check the first argument if its a valid -n option
 	{
-		n = 0;
+		n = 0; // set n to 0 to dont print a \n at the end
 		state = 1;
 		argv = argv->next;
 	}
@@ -45,7 +46,7 @@ int	echo(t_args *argv)
 		{
 			state = 0;
 			putstr(argv->arg);
-			if (argv->next)
+			if (argv->next) // if there is an argument next printf a space
 				write(1, " ", 1);
 		}
 		argv = argv->next;
@@ -54,7 +55,7 @@ int	echo(t_args *argv)
 		write(1, "\n", 1);
 	return (1);
 }
-
+/// @brief simple putstr
 void	putstr(char *str)
 {
 	while (*str)

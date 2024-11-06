@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+/// @brief strdup update 
 char	*tstrdup(char *src)
 {
 	int		i;
@@ -28,6 +29,7 @@ char	*tstrdup(char *src)
 	return (dest);
 }
 
+/// @brief strjoin updated
 char	*tjoin(char *str, char *add)
 {
 	char	*tzy;
@@ -48,6 +50,7 @@ char	*tjoin(char *str, char *add)
 	return (tzy);
 }
 
+/// @brief strlen update 
 int	tstrlen(char *str)
 {
 	int	i;
@@ -58,6 +61,7 @@ int	tstrlen(char *str)
 	return (i);
 }
 
+/// @brief strcmp update
 int	tstrcmp(char *str, char *cmp)
 {
 	int	i;

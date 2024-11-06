@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+/// @brief printf the current pwd
 int	pwd(t_msh *msh)
 {
 	if (msh->pwd)
 		printf("%s\n", msh->pwd);
-	else
+	else if (!msh->pwd) // it means we are in a deleted directory
 		printf("error retrieving current directory: getcwd:\
 cannot access parent directories: No such file or directory\n");
 	return (1);
