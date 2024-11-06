@@ -91,12 +91,13 @@ static int	temp_input(t_all *all, t_cmd *cmd)
 {
 	if (cmd->redir->in_txt)
 	{
-		cmd->redir->tfile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
-		if (cmd->redir->tfile == -1)
+		if (cmd->redir->fd_infile > 0) // ne va pas marcher pour cat << eof < Makefile
+			close(cmd->redir->fd_infile);
+		cmd->redir->fd_infile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		if (cmd->redir->fd_infile == -1)
 			return (error("temp_input: open error\n", all), 1);
-		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->tfile);
-		close(cmd->redir->tfile);
-		cmd->redir->tfile = -2;
+		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->fd_infile);
+		close(cmd->redir->fd_infile);
 	}
 	return (0);
 }

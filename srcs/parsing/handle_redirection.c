@@ -42,7 +42,6 @@ void	init_redir(t_redir *redir)
 	redir->in_type = '0';
 	redir->out_type = '0';
 	redir->in_txt = NULL;
-	redir->tfile = -2;
 	return ;
 }
 
