@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+//file handles all cases of quotes '' and ""
 static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar);
 static void	check_ending(t_all *all, t_cmd *cmd);
 static char	*handle_double_quotes(t_all *all, t_cmd *cmd, int in_dollar);
 static char	*handle_single_quotes(t_all *all, t_cmd *cmd);
 
+//function devides logic into 2 cases: for '' quotes and "" quotes
 char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar)
 {
 	if (*(all->line++) == '"')
@@ -23,6 +25,11 @@ char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar)
 	return (handle_single_quotes(all, cmd));
 }
 
+//function handles case of double quotes
+//if we faces $ sign, it adds to the string the line before dollar
+//after thet it checks, whether it reached another double quote. If it's not that it adds value on env var and the "tail"
+//it finishes when another double quote is reached
+//done by recursion
 static char	*handle_double_quotes(t_all *all, t_cmd *cmd, int in_dollar)
 {
 	char	*str;
@@ -50,6 +57,8 @@ static char	*handle_double_quotes(t_all *all, t_cmd *cmd, int in_dollar)
 	return (str);
 }
 
+//function handles single quotes
+//it takes the whole line after next single quote and returns it
 static char	*handle_single_quotes(t_all *all, t_cmd *cmd)
 {
 	char	*str;
@@ -72,6 +81,8 @@ static char	*handle_single_quotes(t_all *all, t_cmd *cmd)
 	return (str);
 }
 
+//function checks whether it reached the end of quoting part
+//if so, then we restore 0 for quote var
 static void	check_ending(t_all *all, t_cmd *cmd)
 {
 	if (*(all->line) == '"')
@@ -82,13 +93,17 @@ static void	check_ending(t_all *all, t_cmd *cmd)
 	return ;
 }
 
+//function is triggered when it's required to get the env var value
+//it handles the dollar; the env var value is added to the existing string of quoting
+//if it didn't reach the end of line, then it triggers another double_quote handler
+//result of double_quote handler is added to the existing line and all together is returned
 static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 {
 	char	*env_val;
 	char	*tail;
 
 	all->temp_for_free = *head;
-	env_val = handle_dollar(all, cmd, '"');
+	env_val = handle_dollar(all, cmd);
 	*head = ft_strjoin(all->temp_for_free, env_val);
 	free(all->temp_for_free);
 	if (env_val)

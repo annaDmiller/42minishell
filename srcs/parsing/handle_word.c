@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+//function takes a word from all and returns it as an allocated string
+//in_dollar is an indicator to check whether $ sign must be handled as special car
+//if in_dollar is 0, then $ is handled as a special car
+//if we faces the quote or redir symbol, it will not go further
 char	*handle_word(t_all *all, int in_dollar)
 {
 	int		ind;

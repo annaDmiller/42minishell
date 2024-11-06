@@ -53,10 +53,11 @@ int		is_empty_line(char *cmd_line);
 int		is_quote(char car);
 int		is_redir(char car);
 //parsing main functions
-char	*handle_dollar(t_all *all, t_cmd *cmd, char car);
+char	*handle_dollar(t_all *all, t_cmd *cmd);
 char	*handle_redir(t_all *all, t_cmd *cmd);
 char	*read_addr(t_all *all, t_cmd *cmd);
 void	handle_input(t_all *all, t_cmd *cmd);
+int		input_from_stdin(t_all *all, t_cmd *cmd);
 void	handle_output(t_all *all, t_cmd *cmd);
 char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar);
 char	*handle_word(t_all *all, int in_dollar);
