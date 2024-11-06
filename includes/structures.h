@@ -51,7 +51,6 @@ typedef struct s_redir
 	char	*in_txt;
 	int		fd_infile;
 	int		fd_outfile;
-	int		tfile; //temporary file to stock heredoc in it, unlink it after finished the cmd
 	t_pos	pos;
 }		t_redir;
 

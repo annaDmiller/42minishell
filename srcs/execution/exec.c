@@ -46,8 +46,6 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	chromakopia(all, msh, cmd, pos);
 	if (is_a_buitin(msh, cmd))
 	{
-		if (cmd->redir && cmd->redir->tfile > 0)
-			close(cmd->redir->tfile > 0);
 		free_exit(all, msh, 1);
 		exit(0);
 	}
@@ -55,22 +53,16 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	{
 		if (!set_execve(msh, cmd))
 		{
-			if (cmd->redir && cmd->redir->tfile > 0)
-				close(cmd->redir->tfile > 0);
 			free_exit(all, msh, 1);
 			exit(127);
 		}
-		if (cmd->redir && cmd->redir->tfile != -1) {
-			fprintf(stderr, "\t.eof fd // %d\n", cmd->redir->tfile);
-			fprintf(stderr, "\tSTDIN fd // %d\n", STDIN_FILENO);
-		}
+		if (cmd->redir && cmd->redir->fd_infile != -1)
+			fprintf(stderr, "\tinfile = %d fd\n", cmd->redir->fd_infile);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 		{
 			free(msh->data->path);
 			fsplit(msh->data->argv);
 			fsplit(msh->data->envp);
-			if (cmd->redir && cmd->redir->tfile > 0)
-				close(cmd->redir->tfile > 0);
 			free_exit(all, msh, 0);
 			printf("execution failed\n");
 			exit(243);

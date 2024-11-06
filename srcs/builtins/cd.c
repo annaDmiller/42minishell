@@ -32,8 +32,11 @@ int	cd(t_msh *msh, t_args *argv)
 			free(msh->pwd);
 		msh->pwd = NULL;
 		msh->pwd = getcwd(NULL, 0);
-		free(env_retrieve_var(msh->env, "PWD")->var);
-		env_retrieve_var(msh->env, "PWD")->var = tstrdup(msh->pwd);
+		if (env_retrieve_var(msh->env, "PWD"))
+		{
+			free(env_retrieve_var(msh->env, "PWD")->var);
+			env_retrieve_var(msh->env, "PWD")->var = tstrdup(msh->pwd);
+		}
 		msh->exit = 0;
 	}
 	else if (argv && argv->arg)
@@ -44,7 +47,7 @@ int	cd(t_msh *msh, t_args *argv)
 int	valid_cd(t_msh *msh, t_args *argv)
 {
 	if ((argv && argv->next) || (!argv && !env_retrieve_var(msh->env, "HOME"))
-		|| (argv && !tstrcmp(argv->arg, "-") && !env_retrieve_var(msh->env, "OLDPWD")))
+		|| (argv && argv->arg && !tstrcmp(argv->arg, "-") && !env_retrieve_var(msh->env, "OLDPWD")))
 	{
 		if (argv && argv->next)
 			printf("cd: too many arguments\n");
@@ -58,14 +61,14 @@ int	valid_cd(t_msh *msh, t_args *argv)
 	if (argv && argv->arg && argv->arg[0] == '~'
 		&& expand_wave(msh, argv->arg))
 		return (1);
-	else if ((argv && !tstrcmp(argv->arg, "-"))
+	else if ((argv && argv->arg && !tstrcmp(argv->arg, "-"))
 		&& (env_retrieve_var(msh->env, "OLDPWD")
 			&& (!chdir(env_retrieve_var(msh->env, "OLDPWD")->var))))
 		return (1);
 	else if (!argv && env_retrieve_var(msh->env, "HOME")
 		&& (!chdir(env_retrieve_var(msh->env, "HOME")->var))) 
 		return (1);
-	else if (argv->arg && chdir(argv->arg) == 0)
+	else if (argv && argv->arg && chdir(argv->arg) == 0)
 		return (1);
 	return (0);
 }
