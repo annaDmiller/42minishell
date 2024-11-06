@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:54:16 by tespandj          #+#    #+#             */
-/*   Updated: 2024/11/06 22:14:57 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/06 22:40:57 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
@@ -16,8 +16,6 @@ static	void	reset_oldpwd(t_msh *msh);
 
 int	cd(t_msh *msh, t_args *argv)
 {
-	t_args	export;
-
 	if (valid_cd(msh, argv))
 	{
 		reset_pwd(msh);
