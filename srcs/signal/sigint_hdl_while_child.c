@@ -7,6 +7,7 @@ struct sigaction	*sigint_ign_wait(t_all *all)
 
 	new_act.sa_handler = ign_handler;
 	new_act.sa_flags = 0;
+	sigemptyset(&new_act.sa_mask);
 	old_act = (struct sigaction *) malloc(sizeof(struct sigaction));
 	if (!old_act)
 		error("ign_signal: malloc error", all, SIGTERM);
