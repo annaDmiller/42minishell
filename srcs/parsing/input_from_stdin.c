@@ -28,6 +28,7 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 	free(all->temp_for_free);
 	all->temp_for_free = NULL;
 	cmd->redir->in_type = 's';
+	cmd->redir->fd_infile = '0';
 	return (0);
 }
 

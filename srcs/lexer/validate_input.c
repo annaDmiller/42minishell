@@ -34,19 +34,11 @@ static	int	validate_quotes(t_all *all)
 	car = 0;
 	while (all->line[ind])
 	{
-		car = 0;
-		while (all->line[ind] != '|' && all->line[ind])
-		{
-			if (all->line[ind] == car)
-				car = 0;
-			else if (!is_quote(all->line[ind]) && !car)
-				car = all->line[ind];
-			ind++;
-		}
-		if (car)
-			return (0);
-		if (all->line[ind])
-			ind++;
+		if (all->line[ind] == car)
+			car = 0;
+		else if (!is_quote(all->line[ind]) && !car)
+			car = all->line[ind];
+		ind++;
 	}
 	if (car)
 		return (0);
@@ -55,24 +47,26 @@ static	int	validate_quotes(t_all *all)
 
 static	int	validate_pipes(t_all *all)
 {
-	int	ind;
-	int	al_num;
+	int		ind;
+	int		al_num;
+	char	car;
 
 	ind = 0;
 	al_num = 0;
+	car = 0;
 	while (all->line[ind])
 	{
+		if (all->line[ind] == car)
+			car = 0;
+		if (!is_quote(all->line[ind]) && !car)
+			car = all->line[ind];
 		if (is_white_space(all->line[ind]) && all->line[ind] != '|')
 			al_num++;
-		if (all->line[ind] == '|')
+		if (all->line[ind] == '|' && !car)
 		{
 			if (al_num == 0)
 				return (0);
-			ind++;
-			while (!is_white_space(all->line[ind]) && all->line[ind])
-				ind++;
-			if (all->line[ind] == '|' || all->line[ind] == 0)
-				return (0);
+			al_num = 0;
 		}
 		ind++;
 	}

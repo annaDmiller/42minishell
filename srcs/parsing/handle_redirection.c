@@ -64,7 +64,7 @@ char	*read_addr(t_all *all, t_cmd *cmd)
 	while (is_white_space(*(all->line)) && *(all->line))
 	{
 		if (*(all->line) == '$')
-			all->temp_for_free = handle_dollar(all, cmd, 0);
+			all->temp_for_free = handle_dollar(all, cmd);
 		else if (!is_quote(*(all->line)))
 			all->temp_for_free = handle_quotes(all, cmd, 0);
 		else

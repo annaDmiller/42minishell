@@ -11,15 +11,15 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static char	*add_env_var(t_all *all, char car);
+static char	*add_env_var(t_all *all);
 
-char	*handle_dollar(t_all *all, t_cmd *cmd, char car)
+char	*handle_dollar(t_all *all, t_cmd *cmd)
 {
 	char	*exitstatus;
 
 	all->line++;
 	if (ft_isalpha(*(all->line)))
-		return (add_env_var(all, car));
+		return (add_env_var(all));
 	if (*all->line == '?')
 	{
 		all->line++;
@@ -34,7 +34,7 @@ char	*handle_dollar(t_all *all, t_cmd *cmd, char car)
 	return (handle_word(all, 1));
 }
 
-static char	*add_env_var(t_all *all, char car)
+static char	*add_env_var(t_all *all)
 {
 	char	*env_val;
 	char	*env_name;
@@ -44,7 +44,7 @@ static char	*add_env_var(t_all *all, char car)
 	len_name = 0;
 	env_val = NULL;
 	while (is_white_space(all->line[len_name])
-		&& all->line[len_name] != car && ft_isalnum(all->line[len_name]))
+		&& *all->line && ft_isalnum(all->line[len_name]))
 		len_name++;
 	env_name = (char *) malloc((len_name + 1) * sizeof(char));
 	if (!env_name)

@@ -32,6 +32,11 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 		return (error("input_redir: syntax error\n", all), 1);
 	if (cmd->redir->fd_infile > 0)
 		close(cmd->redir->fd_infile);
+	if (cmd->redir->in_txt)
+	{
+		free(cmd->redir->in_txt);
+		cmd->redir->in_txt = NULL;
+	}
 	cmd->redir->fd_infile = open(addr, O_RDONLY);
 	if (cmd->redir->fd_infile == -1)
 	{
