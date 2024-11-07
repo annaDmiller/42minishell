@@ -11,14 +11,11 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static	void	print_param(t_cmd *cmd);
-
 void	minishell(t_all *all, t_msh *msh)
 {
 	t_cmd	*cmd;
 
 	cmd = all->lst_cmd;
-	print_param(cmd);
 	if (!cmd || !cmd->name)
 		return ;
 	else if (!cmd->prev && !cmd->next)
@@ -37,39 +34,3 @@ void	minishell(t_all *all, t_msh *msh)
 	while (wait(NULL) != -1)
 		continue ;
 }
-
-static	void	print_param(t_cmd *cmd)
-{
-	t_cmd	*tmp;
-
-	tmp = cmd;
-	while (!tmp)
-	{
-		if (!tmp->redir)
-			fprintf(stderr, "!REDIR\n");
-		else
-		{
-			if (tmp->name)
-				fprintf(stderr, "\n\t%s\n\n", tmp->name);
-			fprintf(stderr, "is_pipe // %c\n", tmp->redir->is_pipe);
-			fprintf(stderr, "in_type // %c\n", tmp->redir->in_type);
-			fprintf(stderr, "out_type // %c\n", tmp->redir->out_type);
-			fprintf(stderr, "in_txt :\n\n%s\n\n", tmp->redir->in_txt);
-			fprintf(stderr, "fd_infile // %d\n", tmp->redir->fd_infile);
-			fprintf(stderr, "fd_outfile // %d\n\n", tmp->redir->fd_outfile);
-		}
-		tmp = tmp->next;
-		fprintf(stderr, "\n____________________________\n\n");
-	}
-}
-
-			// t_args	*argv;
-			// int		i;
-			// i = -1;
-
-			// argv = cmd->argv;
-			// while (argv && argv->arg && ++i < 22)
-			// {
-			// 	fprintf(stderr, "argv[%d] // %s\n", i, argv->arg);
-			// 	argv = argv->next;
-			// }

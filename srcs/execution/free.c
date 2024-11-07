@@ -13,7 +13,10 @@
 
 void	free_exit(t_all *all, t_msh *msh, int t)
 {
-	free(msh->pwd);
+	if (msh->pwd)
+		free(msh->pwd);
+	if (msh->home)
+		free(msh->home);
 	free(msh->data);
 	freenv(msh->env);
 	if (!t)
@@ -57,7 +60,10 @@ void	fsplit(char **str)
 	int	i;
 
 	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
+	if (str)
+	{
+		while (str[++i])
+			free(str[i]);
+		free(str);
+	}
 }

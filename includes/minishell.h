@@ -70,7 +70,7 @@ void	free_args(t_args *lst_arg);
 
 void	init_redir(t_redir *redir);
 
-int	input_from_stdin(t_all *all, t_cmd *cmd);
+int		input_from_stdin(t_all *all, t_cmd *cmd);
 
 ///////////////////	EXEC
 void	minishell(t_all *all, t_msh *msh);
@@ -83,6 +83,7 @@ void	env_build(t_msh *msh, int i);
 
 ///// EXECUTION
 int		_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+int		cmd_check(t_msh *msh, t_cmd *cmd);
 
 int		set_execve(t_msh *msh, t_cmd *cmd);
 char	**setup_env(t_env *env);
@@ -98,14 +99,15 @@ int		is_a_buitin(t_msh *msh, t_cmd *cmd);
 
 int		cd(t_msh *msh, t_args *argv);
 int		valid_cd(t_msh *msh, t_args *argv);
-int		expand_wave(t_msh *msh, char *str);
+int		wave(t_msh *msh, char *str);
 
-int		echo(t_msh *msh, t_args *argv);
+int		echo(t_args *argv);
 void	putstr(char *str);
 
 int		env(t_env *env);
 char	*env_var(char *str);
 char	*env_varname(char *str);
+t_env	*env_retrieve_var(t_env *env, char *str);
 t_env	*env_retrieve_var(t_env *env, char *str);
 
 int		texit(t_msh *msh, t_cmd *cmd, t_args *argv);

@@ -14,6 +14,7 @@
 void	everyinit(t_msh *msh, char **envp, int argc, char **argv)
 {
 	msh->pwd = NULL;
+	msh->home = NULL;
 	msh->exit = 0;
 	msh->pipe_fd[0] = -2;
 	msh->pipe_fd[1] = -2;
@@ -24,6 +25,8 @@ void	everyinit(t_msh *msh, char **envp, int argc, char **argv)
 		envinit(msh, envp, -1);
 	else
 		env_build(msh, -1);
+	if (env_retrieve_var(msh->env, "HOME"))
+		msh->home = tstrdup(env_retrieve_var(msh->env, "HOME")->var);
 	msh->data = malloc(sizeof(t_execve));
 	if (!msh->data)
 	{

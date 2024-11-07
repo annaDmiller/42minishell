@@ -26,7 +26,7 @@ static int	valid(char *str)
 	return (22);
 }
 
-int	echo(t_msh *msh, t_args *argv)
+int	echo(t_args *argv)
 {
 	int	state;
 	int	n;
@@ -52,7 +52,6 @@ int	echo(t_msh *msh, t_args *argv)
 	}
 	if (n)
 		write(1, "\n", 1);
-	msh->exit = 0;
 	return (1);
 }
 
