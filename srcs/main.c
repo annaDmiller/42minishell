@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	while (!msh.have_to_exit)
 	{
 		line = readline(PROMPT);
+		g_sig = 0;
 		all = init_all_struct(all, &msh);
 		if (!line)
 			break ;
@@ -53,7 +54,7 @@ static	void	process_line(t_all *all, t_msh *msh)
 	if (!check_line)
 		return ;
 	parse_line(all);
-	if (!all->line)
+	if (!all->line || g_sig)
 		return ;
 	minishell(all, msh);
 }
