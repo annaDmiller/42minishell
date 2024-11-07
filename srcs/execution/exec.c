@@ -21,11 +21,11 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 
 	if (!cmd || (cmd && !cmd->name) || (!cmd->has_to_be_executed))
 		return (0);
-	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
-			|| ((!tstrcmp(cmd->name, "export") && cmd->argv))
-			|| (!tstrcmp(cmd->name, "exit"))))
-		if (!cmd->redir || cmd->redir->pos == SOLO)
-			return (is_a_buitin(msh, cmd));
+	if (pos == SOLO && ((!tstrcmp(cmd->name, "unset"))
+			|| (!tstrcmp(cmd->name, "cd"))
+			|| (!tstrcmp(cmd->name, "exit"))
+			|| ((!tstrcmp(cmd->name, "export") && cmd->argv))))
+		return (is_a_buitin(msh, cmd));
 	tpid = fork();
 	if (tpid == -1)
 		return (1);
