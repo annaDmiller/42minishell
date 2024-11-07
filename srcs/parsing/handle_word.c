@@ -28,7 +28,7 @@ char	*handle_word(t_all *all, int in_dollar)
 	}
 	str = (char *) malloc(sizeof(char) * (ind + 1));
 	if (!str)
-		error("handle_word: Malloc error\n", all, SIGTERM);
+		error("handle_word: Malloc error", all, SIGTERM);
 	ft_strlcpy(str, all->line, ind + 1);
 	all->line += ind;
 	return (str);

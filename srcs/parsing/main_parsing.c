@@ -20,6 +20,8 @@ void	parse_line(t_all *all)
 		add_cmd(all);
 	all->line = all->temp_l;
 	all->temp_l = NULL;
+	if (all->err)
+		all = init_all_struct(all, all->msh);
 	return ;
 }
 

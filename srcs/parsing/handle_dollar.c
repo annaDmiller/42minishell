@@ -25,7 +25,7 @@ char	*handle_dollar(t_all *all, t_cmd *cmd)
 		all->line++;
 		exitstatus = ft_itoa(all->msh->exit);
 		if (!exitstatus)
-			error("handle_dollar: ft_itoa error\n", all, SIGINT);
+			error("handle_dollar: ft_itoa error", all, SIGINT);
 		return (exitstatus);
 	}
 	if (!is_quote(*(all->line)))
@@ -48,7 +48,7 @@ static char	*add_env_var(t_all *all)
 		len_name++;
 	env_name = (char *) malloc((len_name + 1) * sizeof(char));
 	if (!env_name)
-		error("handle_dollar: Malloc error\n", all, SIGTERM);
+		error("handle_dollar: Malloc error", all, SIGTERM);
 	ft_strlcpy(env_name, all->line, len_name + 1);
 	tmp = env_retrieve_var(all->msh->env, env_name);
 	if (tmp && tmp->var)

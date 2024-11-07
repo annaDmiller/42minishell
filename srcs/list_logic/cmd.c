@@ -17,7 +17,7 @@ t_cmd	*cmd_new(t_all *all)
 
 	new = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!new)
-		error("cmd_new: Malloc error\n", all, SIGTERM);
+		error("cmd_new: Malloc error", all, SIGTERM);
 	new->next = NULL;
 	new->prev = NULL;
 	new->name = NULL;

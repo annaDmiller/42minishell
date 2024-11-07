@@ -29,7 +29,7 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 
 	addr = read_addr(all, cmd);
 	if (!addr)
-		return (error("input_redir: syntax error\n", all, SIGINT), 1);
+		return (error("input_redir: syntax error", all, SIGINT), 1);
 	if (cmd->redir->fd_infile > 0)
 		close(cmd->redir->fd_infile);
 	if (cmd->redir->in_txt)
@@ -41,7 +41,7 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_infile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		fprintf(stderr, "%s: No such file or directory\n", addr);
+		fprintf(stderr, "%s: No such file or directory", addr);
 	}
 	else
 		cmd->redir->in_type = 'f';

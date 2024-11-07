@@ -42,6 +42,7 @@ void	arg_add_el_back(t_cmd *last_cmd, t_args *new_el);
 t_args	*arg_last_el(t_cmd *last_cmd);
 //main part
 int		validate_line(t_all *all);
+t_all	*init_all_struct(t_all *all, t_msh *msh);
 //parsing main
 void	parse_line(t_all *all);
 void	parse_cmd(t_all *all, t_cmd *last);

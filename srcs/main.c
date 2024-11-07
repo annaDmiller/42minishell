@@ -14,7 +14,6 @@
 volatile int	g_sig;
 
 static	void	process_line(t_all *all, t_msh *msh);
-static	t_all	*init_all_struct(t_all *all, t_msh *msh);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -57,13 +56,13 @@ static	void	process_line(t_all *all, t_msh *msh)
 	minishell(all, msh);
 }
 
-static t_all	*init_all_struct(t_all *all, t_msh *msh)
+t_all	*init_all_struct(t_all *all, t_msh *msh)
 {
 	if (!all)
 	{
 		all = (t_all *) malloc(sizeof(t_all));
 		if (!all)
-			error("init_all_struct: Malloc error\n", NULL, SIGTERM);
+			error("init_all_struct: Malloc error", NULL, SIGTERM);
 		all->line = NULL;
 	}
 	all->msh = msh;

@@ -21,10 +21,10 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 	all->temp_for_free = ft_strjoin(temp, "\n");
 	free(temp);
 	if (!all->temp_for_free)
-		return (error("input_from_stdin: Malloc error\n", all, SIGTERM), 1);
+		return (error("input_from_stdin: Malloc error", all, SIGTERM), 1);
 	if (read_from_stdin(all, cmd) == 1)
 		if (!g_sig)
-			error("read_from_stdin: Malloc error\n", all, SIGTERM);
+			error("read_from_stdin: Malloc error", all, SIGTERM);
 	free(all->temp_for_free);
 	all->temp_for_free = NULL;
 	cmd->redir->in_type = 's';
@@ -51,7 +51,7 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 		free(temp);
 		free(gnl);
 		if (!cmd->redir->in_txt)
-			return (error("read_from_stdin: Malloc error\n", all, SIGTERM), 1);
+			return (error("read_from_stdin: Malloc error", all, SIGTERM), 1);
 		ft_printf("> ");
 		gnl = get_next_line(0);
 	}
@@ -78,7 +78,7 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 		temp = ret;
 		ret = ft_strjoin(temp, all->temp_for_free);
 		if (!ret)
-			return (error("read_addr: Malloc error\n", all, SIGTERM), NULL);
+			return (error("read_addr: Malloc error", all, SIGTERM), NULL);
 		free(temp);
 		free(all->temp_for_free);
 		all->temp_for_free = NULL;
@@ -96,7 +96,7 @@ static int	temp_input(t_all *all, t_cmd *cmd)
 		cmd->redir->fd_infile = open(".eof", O_WRONLY
 				| O_TRUNC | O_CREAT, 0666);
 		if (cmd->redir->fd_infile == -1)
-			return (error("temp_input: open error\n", all, SIGINT), 1);
+			return (error("temp_input: open error", all, SIGINT), 1);
 		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->fd_infile);
 		close(cmd->redir->fd_infile);
 		all->hdc_situation = 1;
