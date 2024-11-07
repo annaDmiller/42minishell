@@ -71,6 +71,7 @@ void	free_args(t_args *lst_arg);
 void	init_redir(t_redir *redir);
 
 int		input_from_stdin(t_all *all, t_cmd *cmd);
+int		hdc_writing(t_all *all, t_cmd *cmd);
 
 ///////////////////	EXEC
 void	minishell(t_all *all, t_msh *msh);

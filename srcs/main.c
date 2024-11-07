@@ -55,6 +55,7 @@ static	void	process_line(t_all *all, t_msh *msh)
 		return ;
 	parse_line(all);
 	minishell(all, msh);
+	(void)msh;
 }
 
 static t_all	*init_all_struct(t_all *all, t_msh *msh)
