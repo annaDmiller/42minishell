@@ -11,15 +11,16 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+static	int	cmd_check(t_msh *msh, t_cmd *cmd);
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
+	struct sigaction	*old;
 	pid_t				tpid;
 	int					rtval;
-	struct sigaction	*old;
 
-	if (!cmd->has_to_be_executed)
+	if (!cmd_check(msh, cmd))
 		return (0);
 	if (((!tstrcmp(cmd->name, "unset")) || (!tstrcmp(cmd->name, "cd"))
 			|| ((!tstrcmp(cmd->name, "export") && cmd->argv))
@@ -65,7 +66,24 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			fsplit(msh->data->envp);
 			free_exit(all, msh, 0);
 			printf("execution failed\n");
-			exit(243);
+			exit(EXIT_FAILURE);
 		}
 	}
+}
+
+static	int	cmd_check(t_msh *msh, t_cmd *cmd)
+{
+	DIR	*dir;
+
+	if (!cmd || (cmd && !cmd->name) || (!cmd->has_to_be_executed))
+		return (0);
+	dir = opendir(cmd->name);
+	if (dir)
+	{
+		printf("%s: Is a directory\n", cmd->name);
+		closedir(dir);
+		msh->exit = 126;
+		return (0);
+	}
+	return (1);
 }

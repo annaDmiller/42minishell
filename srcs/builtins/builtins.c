@@ -19,7 +19,7 @@ int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 		return (pwd(msh));
 	else if (!tstrcmp(cmd->name, "echo"))
 	{
-		msh->exit = 0;
+		msh->exit = EXIT_SUCCESS;
 		return (echo(cmd->argv));
 	}
 	else if (!tstrcmp(cmd->name, "cd"))
@@ -28,7 +28,7 @@ int	is_a_buitin(t_msh *msh, t_cmd *cmd)
 		return (env(msh->env));
 	else if (!tstrcmp(cmd->name, "unset"))
 	{
-		msh->exit = 0;
+		msh->exit = EXIT_SUCCESS;
 		return (unset(msh, cmd->argv));
 	}
 	else if (!tstrcmp(cmd->name, "exit"))

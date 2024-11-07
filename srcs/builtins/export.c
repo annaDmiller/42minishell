@@ -141,7 +141,7 @@ static	char	**fill_names(t_msh *msh, int *order)
 	i = -1;
 	if (!order)
 		return (NULL);
-	names = malloc(sizeof(char *) * (l_envsize(msh->env)));
+	names = malloc(sizeof(char *) * ((l_envsize(msh->env) + 1)));
 	if (!names)
 	{
 		free(order);
@@ -153,5 +153,6 @@ static	char	**fill_names(t_msh *msh, int *order)
 		names[++i] = tstrdup(tmp->name);
 		tmp = tmp->next;
 	}
+	names[++i] = NULL;
 	return (names);
 }

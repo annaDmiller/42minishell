@@ -41,6 +41,8 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos, char *str)
 {
 	free(msh->pwd);
+	if (msh->home)
+		free(msh->home);
 	free(msh->data);
 	freenv(msh->env);
 	if (pos != SOLO)

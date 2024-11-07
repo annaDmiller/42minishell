@@ -70,6 +70,7 @@ typedef struct s_msh
 	t_env		*env;
 	t_execve	*data;
 	char		*pwd;
+	char		*home;
 	int			pipe_fd[2];
 	int			exit;
 	int			builtin_exit;
