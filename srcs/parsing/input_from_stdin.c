@@ -69,7 +69,7 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 	ret = NULL;
 	while (!is_white_space(*(all->line)) && *(all->line))
 		all->line++;
-	while (is_white_space(*(all->line)) && *(all->line))
+	while (is_white_space(*(all->line)) && *(all->line) && is_redir(*all->line))
 	{
 		if (!is_quote(*(all->line)))
 			all->temp_for_free = handle_quotes(all, cmd, 1);

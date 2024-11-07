@@ -61,7 +61,7 @@ char	*read_addr(t_all *all, t_cmd *cmd)
 	ret = NULL;
 	while (!is_white_space(*(all->line)) && *(all->line))
 		all->line++;
-	while (is_white_space(*(all->line)) && *(all->line))
+	while (is_white_space(*(all->line)) && *(all->line) && is_redir(*all->line))
 	{
 		if (*(all->line) == '$')
 			all->temp_for_free = handle_dollar(all, cmd);

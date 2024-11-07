@@ -53,6 +53,8 @@ static	void	process_line(t_all *all, t_msh *msh)
 	if (!check_line)
 		return ;
 	parse_line(all);
+	if (!all->line)
+		return ;
 	minishell(all, msh);
 }
 
