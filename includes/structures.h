@@ -51,7 +51,6 @@ typedef struct s_redir
 	char	*in_txt;
 	int		fd_infile;
 	int		fd_outfile;
-	t_pos	pos;
 }		t_redir;
 
 typedef struct s_cmd
