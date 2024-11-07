@@ -29,7 +29,7 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 
 	addr = read_addr(all, cmd);
 	if (!addr)
-		return (error("input_redir: syntax error\n", all), 1);
+		return (error("input_redir: syntax error\n", all, SIGINT), 1);
 	if (cmd->redir->fd_infile > 0)
 		close(cmd->redir->fd_infile);
 	if (cmd->redir->in_txt)

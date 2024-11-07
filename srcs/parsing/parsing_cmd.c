@@ -54,7 +54,7 @@ static void	process_str(t_all *all, t_cmd *cmd, char **str)
 		free(temp);
 		free(add_temp);
 		if (!(*str))
-			error("process_str: Malloc error\n", all);
+			error("process_str: Malloc error\n", all, SIGTERM);
 	}
 	else
 		*str = take_str(all, cmd);
@@ -67,7 +67,7 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 	{
 		cmd->redir = (t_redir *) malloc(sizeof(t_redir));
 		if (!cmd->redir)
-			error("take_str: Malloc error\n", all);
+			error("take_str: Malloc error\n", all, SIGTERM);
 		init_redir(cmd->redir);
 	}
 	if (*(all->line) == '$' && is_white_space(*(all->line + 1)))

@@ -21,7 +21,7 @@ char	*handle_redir(t_all *all, t_cmd *cmd)
 	{
 		redir = (t_redir *) malloc(sizeof(t_redir));
 		if (!redir)
-			error("handle_redir: Malloc error\n", all);
+			error("handle_redir: Malloc error\n", all, SIGTERM);
 		init_redir(redir);
 		cmd->redir = redir;
 	}
@@ -72,7 +72,7 @@ char	*read_addr(t_all *all, t_cmd *cmd)
 		temp = ret;
 		ret = ft_strjoin(temp, all->temp_for_free);
 		if (!ret)
-			error("read_addr: Malloc error\n", all);
+			error("read_addr: Malloc error\n", all, SIGTERM);
 		free(temp);
 		free(all->temp_for_free);
 		all->temp_for_free = NULL;

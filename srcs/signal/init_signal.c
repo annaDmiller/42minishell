@@ -22,9 +22,9 @@ void	init_signals(t_all *all)
 	act_bs = init_sig_bs_logic();
 	act_c = init_sig_c_logic();
 	if (sigaction(SIGQUIT, &act_bs, NULL) == -1)
-		error("init_signals: sigaction error\n", all);
+		error("init_signals: sigaction error\n", all, SIGTERM);
 	if (sigaction(SIGINT, &act_c, NULL) == -1)
-		error("init_signals: sigaction error\n", all);
+		error("init_signals: sigaction error\n", all, SIGTERM);
 	return ;
 }
 

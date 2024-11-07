@@ -31,7 +31,7 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	all->line++;
 	addr = read_addr(all, cmd);
 	if (!addr)
-		error("output reditect: syntax error\n", all);
+		error("output reditect: syntax error\n", all, SIGINT);
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
 		if (cmd->redir->fd_outfile != -2)
@@ -44,7 +44,7 @@ static void	output_append(t_all *all, t_cmd *cmd)
 		close(cmd->redir->fd_outfile);
 	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_APPEND | O_CREAT, 0666);
 	if (cmd->redir->fd_infile == -1)
-		error("input_from_file: impossible to open file\n", all);
+		error("input_from_file: impossible to open file\n", all, SIGINT);
 	free(addr);
 	cmd->redir->out_type = 'a';
 	return ;
@@ -56,7 +56,7 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 
 	addr = read_addr(all, cmd);
 	if (!addr)
-		error("output reditect: syntax error\n", all);
+		error("output reditect: syntax error\n", all, SIGINT);
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
 		if (cmd->redir->fd_outfile != -2)
@@ -69,7 +69,7 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 		close(cmd->redir->fd_outfile);
 	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	if (cmd->redir->fd_infile == -1)
-		error("input_from_file: impossible to open file\n", all);
+		error("input_from_file: impossible to open file\n", all, SIGINT);
 	free(addr);
 	cmd->redir->out_type = 'r';
 	return ;

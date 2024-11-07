@@ -41,7 +41,7 @@ static char	*handle_double_quotes(t_all *all, t_cmd *cmd, int in_dollar)
 	}
 	str = (char *) malloc(sizeof(char) * (ind + 1));
 	if (!str)
-		error("handle_doub_quotes: Malloc error\n", all);
+		error("handle_doub_quotes: Malloc error\n", all, SIGTERM);
 	ft_strlcpy(str, all->line, ind + 1);
 	all->line += ind;
 	check_ending(all, cmd);
@@ -65,7 +65,7 @@ static char	*handle_single_quotes(t_all *all, t_cmd *cmd)
 	}
 	str = (char *) malloc(sizeof(char) * (ind + 1));
 	if (!str)
-		error("handle_sing_quotes: Malloc error\n", all);
+		error("handle_sing_quotes: Malloc error\n", all, SIGTERM);
 	ft_strlcpy(str, all->line, ind + 1);
 	cmd->quote = 0;
 	all->line += ind + 1;
@@ -95,7 +95,7 @@ static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 		free(env_val);
 	all->temp_for_free = NULL;
 	if (*head)
-		error("handle_quotes: Malloc error\n", all);
+		error("handle_quotes: Malloc error\n", all, SIGTERM);
 	if (!(*(all->line)))
 		return (*head);
 	all->temp_for_free = *head;
@@ -105,6 +105,6 @@ static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 	free(all->temp_for_free);
 	all->temp_for_free = NULL;
 	if (*head)
-		error("handle_quotes: Malloc error\n", all);
+		error("handle_quotes: Malloc error\n", all, SIGTERM);
 	return (*head);
 }

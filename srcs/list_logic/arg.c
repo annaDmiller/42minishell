@@ -17,7 +17,7 @@ t_args	*arg_new(t_all *all)
 
 	argv = (t_args *) malloc(sizeof(t_args));
 	if (!argv)
-		error("init_arg: Malloc error\n", all);
+		error("init_arg: Malloc error\n", all, SIGTERM);
 	argv->arg = NULL;
 	argv->next = NULL;
 	argv->prev = NULL;

@@ -62,7 +62,7 @@ void	handle_output(t_all *all, t_cmd *cmd);
 char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar);
 char	*handle_word(t_all *all, int in_dollar);
 //finalization part
-void	error(char *mess, t_all *all);
+void	error(char *mess, t_all *all, int sig);
 void	free_all_struct(t_all *all, int is_clear_env);
 void	free_cmd_struct(t_cmd *lst_cmd);
 void	free_redir_struct(t_redir *redir);

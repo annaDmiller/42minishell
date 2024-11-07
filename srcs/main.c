@@ -63,7 +63,7 @@ static t_all	*init_all_struct(t_all *all, t_msh *msh)
 	{
 		all = (t_all *) malloc(sizeof(t_all));
 		if (!all)
-			error("init_all_struct: Malloc error\n", NULL);
+			error("init_all_struct: Malloc error\n", NULL, SIGTERM);
 		all->line = NULL;
 	}
 	all->msh = msh;
