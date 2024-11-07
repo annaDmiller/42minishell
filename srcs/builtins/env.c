@@ -19,14 +19,8 @@ int	env(t_env *env)
 	while (tmp)
 	{
 		if (tmp->name)
-		{
-			putstr(tmp->name);
-			write(1, "=", 1);
 			if (tmp->var)
-				printf("%s\n", tmp->var);
-			else
-				write(1, "\n", 1);
-		}
+				printf("%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
 	return (1);

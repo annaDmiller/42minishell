@@ -25,10 +25,13 @@ int	cd(t_msh *msh, t_args *argv)
 		msh->pwd = getcwd(NULL, 0);
 		reset_pwd(msh);
 		msh->exit = EXIT_SUCCESS;
+		if (argv && argv->arg && argv->arg[0] == '-' && !argv->arg[1])
+			printf("%s\n", msh->pwd);
 		return (1);
 	}
-	if (argv && argv->arg && argv->arg[0] != '~')
-		printf("cd: %s: No such file or directory\n", argv->arg);
+	if (argv && argv->arg)
+		if ((!(!argv->arg[1] && (argv->arg[0] == '-'))) && argv->arg[0] != '~')
+			printf("cd: %s: No such file or directory\n", argv->arg);
 	msh->exit = EXIT_FAILURE;
 	return (1);
 }
@@ -48,13 +51,13 @@ int	valid_cd(t_msh *msh, t_args *argv)
 			printf("cd: OLDPWD not set\n");
 		return (0);
 	}
-	if ((argv && argv->arg && argv->arg[0] == '~' && wave(msh, argv->arg))
+	if ((argv && argv->arg && chdir(argv->arg) == 0)
 		|| ((argv && argv->arg && !tstrcmp(argv->arg, "-"))
 			&& (env_retrieve_var(msh->env, "OLDPWD")
 				&& (!chdir(env_retrieve_var(msh->env, "OLDPWD")->var))))
 		|| (!argv && env_retrieve_var(msh->env, "HOME")
 			&& (!chdir(env_retrieve_var(msh->env, "HOME")->var)))
-		|| (argv && argv->arg && chdir(argv->arg) == 0))
+		|| (argv && argv->arg && argv->arg[0] == '~' && wave(msh, argv->arg)))
 		return (1);
 	return (0);
 }
@@ -94,7 +97,10 @@ int	wave(t_msh *msh, char *str)
 	char	*path;
 
 	if (!msh->home)
+	{
+		printf("cd: Couldn't retrieve home path\n");
 		return (0);
+	}
 	path = NULL;
 	if (str && str[0] == '~')
 		str++;
@@ -104,7 +110,7 @@ int	wave(t_msh *msh, char *str)
 		free(path);
 		return (1);
 	}
+	printf("cd: %s: No such file or directory\n", path);
 	free(path);
-	printf("cd: Couldn't retrieve home path\n");
 	return (0);
 }

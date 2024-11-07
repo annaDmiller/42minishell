@@ -46,9 +46,6 @@ int	export(t_msh *msh, t_args *argv)
 	return (1);
 }
 
-/// @brief leaks sur env_varname(str) && env_var(str)
-/// le noeud cree n'est pas relie correctement a la list ?
-/// if not a valid indentifier we still need to create the node 
 void	export_def(t_msh *msh, t_args *argv)
 {
 	t_env	*new;

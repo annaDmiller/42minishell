@@ -83,6 +83,7 @@ void	env_build(t_msh *msh, int i);
 
 ///// EXECUTION
 int		_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+int		cmd_check(t_msh *msh, t_cmd *cmd);
 
 int		set_execve(t_msh *msh, t_cmd *cmd);
 char	**setup_env(t_env *env);

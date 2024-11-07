@@ -14,9 +14,13 @@
 int	pwd(t_msh *msh)
 {
 	if (msh->pwd)
+		free(msh->pwd);
+	msh->pwd = NULL;
+	msh->pwd = getcwd(NULL, 0);
+	if (msh->pwd)
 		printf("%s\n", msh->pwd);
 	else
-		printf("error retrieving current directory: getcwd:\
+		printf("error retrieving current directory: getcwd: \
 cannot access parent directories: No such file or directory\n");
 	return (1);
 }

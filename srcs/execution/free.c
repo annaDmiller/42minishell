@@ -58,7 +58,7 @@ void	freenvar(t_env *var)
 void	fsplit(char **str)
 {
 	int	i;
-	
+
 	i = -1;
 	if (str)
 	{

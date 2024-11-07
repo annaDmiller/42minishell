@@ -18,7 +18,11 @@ int	set_execve(t_msh *msh, t_cmd *cmd)
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
 	{
-		printf("%s: command not found\n", cmd->name);
+		if (cmd_check(msh, cmd))
+		{
+			printf("%s: command not found\n", cmd->name);
+			msh->exit = 127;
+		}
 		return (0);
 	}
 	msh->data->argv = setup_args(cmd->name, cmd->argv);
@@ -95,8 +99,8 @@ char	*fpath(t_env *env, char *cmd, int i)
 	char	**str;
 	char	*path;
 
-	if (!access(cmd, F_OK | X_OK))
-		return (cmd);
+	if (cmd && cmd[0] == '/' && !access(cmd, F_OK | X_OK))
+		return (tstrdup(cmd));
 	if (!env_retrieve_var(env, "PATH") || !env_retrieve_var(env, "PATH")->var)
 		return (NULL);
 	path = NULL;
