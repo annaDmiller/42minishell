@@ -72,6 +72,7 @@ static t_all	*init_all_struct(t_all *all, t_msh *msh)
 		free_all_struct(all, 0);
 	}
 	all->line = NULL;
+	all->err = 0;
 	all->lst_cmd = NULL;
 	all->temp_l = NULL;
 	all->temp_for_free = NULL;

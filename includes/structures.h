@@ -86,5 +86,6 @@ typedef struct s_all
 	char			*temp_l;
 	char			*temp_for_free;
 	int				hdc_situation;
+	int				err;
 }		t_all;
 #endif
