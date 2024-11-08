@@ -98,7 +98,7 @@ char	*fpath(t_env *env, char *cmd, int i)
 	char	**str;
 	char	*path;
 
-	if (cmd && cmd[0] == '/' && !access(cmd, F_OK | X_OK))
+	if (!access(cmd, F_OK | X_OK))
 		return (tstrdup(cmd));
 	if (!env_retrieve_var(env, "PATH") || !env_retrieve_var(env, "PATH")->var)
 		return (NULL);

@@ -19,13 +19,12 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	pid_t				tpid;
 	int					rtval;
 
-	if (!cmd || (cmd && !cmd->name) || (!cmd->has_to_be_executed))
+	if (!cmd || (!cmd->has_to_be_executed))
 		return (0);
-	if (pos == SOLO && ((!tstrcmp(cmd->name, "unset"))
-			|| (!tstrcmp(cmd->name, "cd"))
-			|| (!tstrcmp(cmd->name, "exit"))
-			|| ((!tstrcmp(cmd->name, "export") && cmd->argv))))
-		return (is_a_buitin(msh, cmd));
+	// if (cmd && !cmd->name)
+		// gerer en fonction, il n'y a que des redirections
+	if (pos == SOLO && is_a_buitin(msh, cmd))
+		return (0);
 	tpid = fork();
 	if (tpid == -1)
 		return (1);

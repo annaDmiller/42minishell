@@ -48,6 +48,7 @@ typedef struct s_redir
 	char	is_pipe;
 	char	in_type;
 	char	out_type;
+	char	*name_delim;
 	char	*stdin_delim;
 	int		fd_infile;
 	int		fd_outfile;
@@ -75,6 +76,7 @@ typedef struct s_msh
 	int			builtin_exit;
 	int			have_to_exit;
 	int			_stdin_save;
+	int			hdc_situation;
 }		t_msh;
 
 typedef struct s_all
@@ -84,7 +86,6 @@ typedef struct s_all
 	char			*line;
 	char			*temp_l;
 	char			*temp_for_free;
-	int				hdc_situation;
 	int				err;
 }		t_all;
 #endif

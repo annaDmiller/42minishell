@@ -35,11 +35,15 @@ int	main(int argc, char **argv, char **envp)
 		all->line = line;
 		if (is_empty_line(all->line))
 			process_line(all, &msh);
+		printf("all->msh->hdc_situation == %d\tUNLINK ???????\n", all->msh->hdc_situation);
+		if (all->msh->hdc_situation)
+				unlink(".eof");
 		g_sig = 0;
 		rl_on_new_line();
 	}
+	if (!line)
+		printf("exit\n");
 	rl_clear_history();
-	printf("exit\n");
 	free_exit(all, &msh, 1);
 	return (msh.exit);
 }
@@ -79,6 +83,6 @@ t_all	*init_all_struct(t_all *all, t_msh *msh)
 	all->lst_cmd = NULL;
 	all->temp_l = NULL;
 	all->temp_for_free = NULL;
-	all->hdc_situation = 0;
+	all->msh->hdc_situation = 0;
 	return (all);
 }

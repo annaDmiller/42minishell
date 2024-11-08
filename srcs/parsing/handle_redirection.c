@@ -42,6 +42,7 @@ void	init_redir(t_redir *redir)
 	redir->in_type = '0';
 	redir->out_type = '0';
 	redir->stdin_delim = NULL;
+	redir->name_delim = NULL;
 	return ;
 }
 
