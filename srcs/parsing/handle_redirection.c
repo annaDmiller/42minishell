@@ -41,7 +41,7 @@ void	init_redir(t_redir *redir)
 	redir->fd_outfile = -2;
 	redir->in_type = '0';
 	redir->out_type = '0';
-	redir->in_txt = NULL;
+	redir->stdin_delim = NULL;
 	return ;
 }
 

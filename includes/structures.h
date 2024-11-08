@@ -48,7 +48,7 @@ typedef struct s_redir
 	char	is_pipe;
 	char	in_type;
 	char	out_type;
-	char	*in_txt;
+	char	*stdin_delim;
 	int		fd_infile;
 	int		fd_outfile;
 }		t_redir;

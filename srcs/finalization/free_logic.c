@@ -63,8 +63,8 @@ void	free_cmd_struct(t_cmd *lst_cmd)
 
 void	free_redir_struct(t_redir *redir)
 {
-	if (redir->in_txt)
-		free(redir->in_txt);
+	if (redir->stdin_delim)
+		free(redir->stdin_delim);
 	if (redir->fd_infile > 0)
 		close(redir->fd_infile);
 	if (redir->fd_outfile > 1)
