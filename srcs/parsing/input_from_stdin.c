@@ -2,7 +2,6 @@
 
 static int	read_from_stdin(t_all *all, t_cmd *cmd);
 static char	*read_keyword(t_all *all, t_cmd *cmd);
-static int	temp_input(t_all *all, t_cmd *cmd);
 
 int	input_from_stdin(t_all *all, t_cmd *cmd)
 {
@@ -56,7 +55,7 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 		gnl = get_next_line(0);
 	}
 	free(gnl);
-	temp_input(all, cmd);
+	// temp_input(all, cmd);
 	return (0);
 }
 
@@ -87,16 +86,16 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 	return (ret);
 }
 
-static int	temp_input(t_all *all, t_cmd *cmd)
+int	hdc_writing(t_all *all, t_cmd *cmd)
 {
-	if (cmd->redir->in_txt)
+	if (cmd && cmd->redir && cmd->redir->in_txt)
 	{
 		if (cmd->redir->fd_infile > 0)
 			close(cmd->redir->fd_infile);
 		cmd->redir->fd_infile = open(".eof", O_WRONLY
 				| O_TRUNC | O_CREAT, 0666);
 		if (cmd->redir->fd_infile == -1)
-			return (error("temp_input: open error", all, SIGINT), 1);
+			return (error("hdc_writing: open error\n", all, SIGTERM), 1);
 		ft_putstr_fd(cmd->redir->in_txt, cmd->redir->fd_infile);
 		close(cmd->redir->fd_infile);
 		all->hdc_situation = 1;

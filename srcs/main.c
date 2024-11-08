@@ -57,6 +57,7 @@ static	void	process_line(t_all *all, t_msh *msh)
 	if (!all->line || g_sig)
 		return ;
 	minishell(all, msh);
+	(void)msh;
 }
 
 t_all	*init_all_struct(t_all *all, t_msh *msh)
