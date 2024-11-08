@@ -30,7 +30,7 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 	return (0);
 }
 
-static int	read_from_stdin(t_all *all, t_cmd *cmd)
+/*static int	read_from_stdin(t_all *all, t_cmd *cmd)
 {
 	char	*gnl;
 	char	*temp;
@@ -56,7 +56,7 @@ static int	read_from_stdin(t_all *all, t_cmd *cmd)
 	free(gnl);
 	// temp_input(all, cmd);
 	return (0);
-}
+}*/
 
 static char	*read_keyword(t_all *all, t_cmd *cmd)
 {
