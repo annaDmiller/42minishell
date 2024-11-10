@@ -61,6 +61,8 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		return ;
 	if (cmd->redir->in_type == 's')
 		read_from_stdin(all, cmd);
+	if (g_sig)
+		return (free_exit(all, msh, 0), exit(SIGINT));
 	if (pos != SOLO)
 		close(msh->_stdin_save);
 	if (pos == START || pos == MID)

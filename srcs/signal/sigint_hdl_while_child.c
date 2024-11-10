@@ -23,10 +23,3 @@ void	restore_sigint_hdl(t_all *all, struct sigaction *old_act)
 	free(old_act);
 	return ;
 }
-
-void	ign_handler(int sig)
-{
-	printf("\n");
-	(void) sig;
-	return ;
-}

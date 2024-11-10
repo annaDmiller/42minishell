@@ -34,16 +34,16 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	{
 		old = sigint_ign_wait(all);
 		waitpid(tpid, &rtval, 0);
-		restore_sigint_hdl(all, old);
 		if (WIFEXITED(rtval))
 			msh->exit = WEXITSTATUS(rtval);
+		restore_sigint_hdl(all, old);
 	}
 	return (0);
 }
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
-	signal (SIGINT, SIG_DFL);
+	init_signals(all, 'c');
 	chromakopia(all, msh, cmd, pos);
 	if (is_a_buitin(msh, cmd))
 	{

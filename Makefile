@@ -28,6 +28,7 @@ PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/list_logic/arg.c \
 		srcs/list_logic/cmd.c \
 		srcs/signal/init_signal.c \
+		srcs/signal/signal_handlers.c \
 		srcs/signal/sigint_hdl_while_child.c  \
 		srcs/lexer/validate_input.c
 
