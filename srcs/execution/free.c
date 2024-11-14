@@ -21,6 +21,7 @@ void	free_exit(t_all *all, t_msh *msh, int t)
 	freenv(msh->env);
 	if (!t)
 		return ;
+	rl_clear_history();
 	free_all_struct(all, 1);
 }
 

@@ -43,7 +43,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	if (!line)
 		printf("exit\n");
-	rl_clear_history();
 	free_exit(all, &msh, 1);
 	return (msh.exit);
 }

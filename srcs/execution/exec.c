@@ -19,6 +19,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	pid_t				tpid;
 	int					rtval;
 
+	rtval = 0;
 	if (!cmd || (!cmd->has_to_be_executed))
 		return (0);
 	// if (cmd && !cmd->name)
@@ -34,9 +35,9 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	{
 		old = sigint_ign_wait(all);
 		waitpid(tpid, &rtval, 0);
+		restore_sigint_hdl(all, old);
 		if (WIFEXITED(rtval))
 			msh->exit = WEXITSTATUS(rtval);
-		restore_sigint_hdl(all, old);
 	}
 	return (0);
 }
