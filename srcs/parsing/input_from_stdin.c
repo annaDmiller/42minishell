@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input_from_stdin.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amelniko <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/14 10:49:04 by amelniko          #+#    #+#             */
+/*   Updated: 2024/11/14 10:49:45 by amelniko         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 // static int	read_from_stdin(t_all *all, t_cmd *cmd);
@@ -23,7 +35,7 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 	if (!cmd->redir->name_delim)
 		return (error("input_from_stdin: Malloc error", all, SIGTERM), 1);
 	cmd->redir->in_type = 's';
-	cmd->redir->fd_infile =	 '0';
+	cmd->redir->fd_infile = '0';
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 21:11:09 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/30 21:11:12 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:48:26 by amelniko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
@@ -63,7 +63,7 @@ static struct sigaction	init_sig_c_logic_parent(void)
 
 static struct sigaction	init_sig_c_logic_child(void)
 {
-		struct sigaction	act;
+	struct sigaction	act;
 	sigset_t			set;
 
 	ft_memset(&act, 0, sizeof(act));
@@ -72,5 +72,5 @@ static struct sigaction	init_sig_c_logic_child(void)
 	sigemptyset(&set);
 	sigaddset(&set, SIGINT);
 	act.sa_mask = set;
-	return (act);	
+	return (act);
 }
