@@ -30,6 +30,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		_exec_child(all, msh, cmd, pos);
 	if (pos == SOLO || pos == END)
 	{
+		rtval = 0;
 		old = sigint_ign_wait(all);
 		waitpid(tpid, &rtval, 0);
 		if (WIFEXITED(rtval))
