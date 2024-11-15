@@ -35,9 +35,6 @@ int	main(int argc, char **argv, char **envp)
 		all->line = line;
 		if (is_empty_line(all->line))
 			process_line(all, &msh);
-		printf("all->msh->hdc_situation == %d\tUNLINK ???????\n", all->msh->hdc_situation);
-		if (all->msh->hdc_situation)
-				unlink(".eof");
 		g_sig = 0;
 		rl_on_new_line();
 	}
@@ -61,7 +58,8 @@ static	void	process_line(t_all *all, t_msh *msh)
 	if (!all->line || g_sig)
 		return ;
 	minishell(all, msh);
-	(void)msh;
+	if (msh->hdc_situation)
+		unlink(".eof");
 }
 
 t_all	*init_all_struct(t_all *all, t_msh *msh)

@@ -43,7 +43,7 @@ static	void	print_param(t_cmd *cmd)
 	t_cmd	*tmp;
 
 	tmp = cmd;
-	while (tmp)
+	while (!tmp)
 	{
 		if (!tmp->redir)
 			fprintf(stderr, "!REDIR\n");
