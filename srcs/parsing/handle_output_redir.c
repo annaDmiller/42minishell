@@ -47,9 +47,8 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	{
 		cmd->has_to_be_executed = 0;
 		printf("%s: couldnt retrieve / create that file\n", addr);
-		
+//////		// error("input_from_file: impossible to open file", all, SIGINT);
 	}
-		// error("input_from_file: impossible to open file", all, SIGINT);
 	free(addr);
 	cmd->redir->out_type = 'a';
 	return ;
@@ -77,8 +76,8 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	{
 		cmd->has_to_be_executed = 0;
 		printf("%s: couldnt retrieve / create that file\n", addr);
+//////		// error("input_from_file: impossible to open file", all, SIGINT);
 	}
-		// error("input_from_file: impossible to open file", all, SIGINT);
 	free(addr);
 	cmd->redir->out_type = 'r';
 	return ;

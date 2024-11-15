@@ -24,13 +24,13 @@ PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/parsing/parsing_utils.c \
 		srcs/finalization/error_logic.c \
 		srcs/finalization/free_logic.c \
-		srcs/finalization/exit_logic.c \
 		srcs/list_logic/arg.c \
 		srcs/list_logic/cmd.c \
 		srcs/signal/init_signal.c \
 		srcs/signal/signal_handlers.c \
 		srcs/signal/sigint_hdl_while_child.c  \
 		srcs/lexer/validate_input.c
+		# srcs/finalization/exit_logic.c \
 
 TEST = srcs/main.c \
 	# unit.c \
