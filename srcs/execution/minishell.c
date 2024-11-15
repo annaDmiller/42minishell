@@ -57,6 +57,7 @@ static	void	print_param(t_cmd *cmd)
 			fprintf(stderr, "fd_infile // %d\n", tmp->redir->fd_infile);
 			fprintf(stderr, "fd_outfile // %d\n", tmp->redir->fd_outfile);
 			fprintf(stderr, "stdin_delim // \n\n%s\n", tmp->redir->stdin_delim);
+			fprintf(stderr, "has_to_be_executed // \n\n%d\n", tmp->has_to_be_executed);
 		}
 		tmp = tmp->next;
 		fprintf(stderr, "\n____________________________\n\n");

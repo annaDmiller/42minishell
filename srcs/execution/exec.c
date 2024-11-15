@@ -19,7 +19,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	pid_t				tpid;
 	int					rtval;
 
-	if (!cmd || (cmd && !cmd->name) || (!cmd->has_to_be_executed))
+	if ((!cmd->has_to_be_executed) || !cmd || (cmd && !cmd->name))
 		return (0);
 	if (pos == SOLO && !cmd->redir && is_a_buitin(msh, cmd))
 		return (0);

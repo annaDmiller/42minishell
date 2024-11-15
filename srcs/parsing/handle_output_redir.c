@@ -43,8 +43,13 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
 	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_APPEND | O_CREAT, 0666);
-	if (cmd->redir->fd_infile == -1)
-		error("input_from_file: impossible to open file", all, SIGINT);
+	if (cmd->redir->fd_outfile == -1)
+	{
+		cmd->has_to_be_executed = 0;
+		printf("%s: couldnt retrieve / create that file\n", addr);
+		
+	}
+		// error("input_from_file: impossible to open file", all, SIGINT);
 	free(addr);
 	cmd->redir->out_type = 'a';
 	return ;
@@ -68,8 +73,12 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
 	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	if (cmd->redir->fd_infile == -1)
-		error("input_from_file: impossible to open file", all, SIGINT);
+	if (cmd->redir->fd_outfile == -1)
+	{
+		cmd->has_to_be_executed = 0;
+		printf("%s: couldnt retrieve / create that file\n", addr);
+	}
+		// error("input_from_file: impossible to open file", all, SIGINT);
 	free(addr);
 	cmd->redir->out_type = 'r';
 	return ;
