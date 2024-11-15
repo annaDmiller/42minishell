@@ -14,18 +14,21 @@
 static char	*take_str(t_all *all, t_cmd *cmd);
 static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str);
 static void	process_str(t_all *all, t_cmd *cmd, char **str);
+static void	skip_cmd(t_all *all);
 
 void	parse_cmd(t_all *all, t_cmd *last)
 {
 	char	*str;
 
 	str = NULL;
-	while (*(all->line) || str)
+	while ((*(all->line) || str))
 	{
 		if (last->redir)
 			if (last->redir->is_pipe == 'y')
 				break ;
 		add_str_to_cmd(all, last, &str);
+		if (last->has_to_be_executed)
+			return (skip_cmd(all));
 		while (!is_white_space(*(all->line)) && *(all->line))
 			all->line++;
 		if (*all->line == '\0')
@@ -90,5 +93,14 @@ static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str)
 	else
 		add_arg(all, cmd, str);
 	*str = NULL;
+	return ;
+}
+
+static void	skip_cmd(t_all *all)
+{
+	while (*(all->line) != '|' && *all->line)
+		all->line++;
+	if (*(all->line) == '|')
+		all->line++;
 	return ;
 }
