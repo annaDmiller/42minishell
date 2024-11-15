@@ -30,12 +30,6 @@ void	free_all_struct(t_all *all, int is_clear_env)
 	}
 	if (all->lst_cmd)
 		free_cmd_struct(all->lst_cmd);
-	if (all->msh->hdc_situation)
-	{
-		printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-		unlink(".eof");
-		printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-	}
 	if (!is_clear_env)
 		return ;
 	free(all);
@@ -96,10 +90,3 @@ void	free_args(t_args *lst_arg)
 	lst_arg = NULL;
 	return ;
 }
-
-
-// t_all *oui()
-// {
-// 	static t_all;
-// 	return (t_all);
-// }
