@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static void	output_replace(t_all *all, t_cmd *cmd);
-static void	output_append(t_all *all, t_cmd *cmd);
+static int	output_replace(t_all *all, t_cmd *cmd);
+static int	output_append(t_all *all, t_cmd *cmd);
 
 void	handle_output(t_all *all, t_cmd *cmd)
 {
@@ -24,21 +24,21 @@ void	handle_output(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-static void	output_append(t_all *all, t_cmd *cmd)
+static int	output_append(t_all *all, t_cmd *cmd)
 {
 	char	*addr;
 
 	all->line++;
 	addr = read_addr(all, cmd);
 	if (!addr)
-		error("output reditect: syntax error", all, SIGINT);
+		return (error("output reditect: syntax error", all, SIGINT), 1);
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
 		if (cmd->redir->fd_outfile != -2)
-			return ;
+			return (0);
 		cmd->redir->fd_outfile = 1;
 		cmd->redir->out_type = 'a';
-		return ;
+		return (0);
 	}
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
@@ -46,28 +46,27 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		printf("%s: couldnt retrieve / create that file\n", addr);
-//////		// error("input_from_file: impossible to open file", all, SIGINT);
+		return (printf("%s: couldnt retrieve / create that file\n", addr));
 	}
 	free(addr);
 	cmd->redir->out_type = 'a';
-	return ;
+	return (0);
 }
 
-static void	output_replace(t_all *all, t_cmd *cmd)
+static int	output_replace(t_all *all, t_cmd *cmd)
 {
 	char	*addr;
 
 	addr = read_addr(all, cmd);
 	if (!addr)
-		error("output reditect: syntax error", all, SIGINT);
+		return (error("output reditect: syntax error", all, SIGINT), 1);
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
 		if (cmd->redir->fd_outfile != -2)
-			return ;
+			return (0);
 		cmd->redir->fd_outfile = 1;
 		cmd->redir->out_type = 'r';
-		return ;
+		return (0);
 	}
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
@@ -75,10 +74,9 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		printf("%s: couldnt retrieve / create that file\n", addr);
-//////		// error("input_from_file: impossible to open file", all, SIGINT);
+		return (printf("%s: couldnt retrieve / create that file\n", addr));
 	}
 	free(addr);
 	cmd->redir->out_type = 'r';
-	return ;
+	return (0);
 }

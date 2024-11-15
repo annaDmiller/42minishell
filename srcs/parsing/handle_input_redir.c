@@ -40,9 +40,8 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 	cmd->redir->fd_infile = open(addr, O_RDONLY);
 	if (cmd->redir->fd_infile == -1)
 	{
-		// error("input_from_file: incorrect file", all, SIGINT);
 		cmd->has_to_be_executed = 0;
-		printf("%s: No such file or directory\n", addr);
+		return (printf("%s: No such file or directory\n", addr));
 	}
 	cmd->redir->in_type = 'f';
 	free(addr);
