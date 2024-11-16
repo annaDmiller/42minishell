@@ -28,12 +28,16 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 			close(cmd->redir->fd_infile);
 		if (cmd->redir->stdin_delim)
 			free(cmd->redir->stdin_delim);
+		if (cmd->redir->name_delim)
+			free(cmd->redir->name_delim);
 		cmd->redir->stdin_delim = NULL;
+		cmd->redir->name_delim = NULL;
 	}
 	cmd->redir->name_delim = ft_strjoin(temp, "\n");
 	free(temp);
 	if (!cmd->redir->name_delim)
 		return (error("input_from_stdin: Malloc error", all, SIGTERM), 1);
+	read_from_stdin(all, cmd);
 	cmd->redir->in_type = 's';
 	cmd->redir->fd_infile = '0';
 	return (0);
@@ -49,7 +53,7 @@ int	read_from_stdin(t_all *all, t_cmd *cmd)
 	len_key = ft_strlen(cmd->redir->name_delim);
 	ft_printf("> ");
 	gnl = get_next_line(0);
-	if (!gnl)
+	if (!gnl || g_sig)
 		return (1);
 	while (ft_strncmp(cmd->redir->name_delim, gnl, len_key + 1) && !g_sig)
 	{
