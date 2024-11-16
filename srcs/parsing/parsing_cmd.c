@@ -21,7 +21,7 @@ void	parse_cmd(t_all *all, t_cmd *last)
 	char	*str;
 
 	str = NULL;
-	while ((*(all->line) || str))
+	while ((*(all->line) || str) && !g_sig)
 	{
 		if (last->redir)
 			if (last->redir->is_pipe == 'y')

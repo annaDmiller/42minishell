@@ -16,7 +16,7 @@ static void	add_cmd(t_all *all);
 void	parse_line(t_all *all)
 {
 	all->temp_l = all->line;
-	while (*(all->line))
+	while (*(all->line) && !g_sig)
 		add_cmd(all);
 	all->line = all->temp_l;
 	all->temp_l = NULL;
