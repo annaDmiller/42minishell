@@ -20,9 +20,9 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	int					rtval;
 
 	rtval = 0;
-	if (!cmd || (!cmd->has_to_be_executed) || (cmd && !cmd->name))
+	if (!cmd || (!cmd->has_to_be_executed))
 		return (0);
-	if (pos == SOLO && !cmd->redir && is_a_buitin(msh, cmd))
+	if (pos == SOLO && !cmd->redir && (cmd->name && is_a_buitin(msh, cmd)))
 		return (0);
 	tpid = fork();
 	if (tpid == -1)
@@ -45,6 +45,12 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	init_signals(all, 'c');
 	chromakopia(all, msh, cmd, pos);
+	if (!cmd->name)
+	{
+		printf("JE RENTRE LA \n\n");
+		free_exit(all, msh, 1);
+		exit(0);
+	}
 	if (is_a_buitin(msh, cmd))
 	{
 		free_exit(all, msh, 1);
@@ -59,7 +65,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		}
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 		{
-			printf("%s: Is a directory\n", cmd->name);
+			printf("%s: execution failed\n", cmd->name);
 			free(msh->data->path);
 			fsplit(msh->data->argv);
 			fsplit(msh->data->envp);

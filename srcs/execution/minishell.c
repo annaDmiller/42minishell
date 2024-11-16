@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 16:51:07 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/11 00:53:24 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/15 22:20:45 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
@@ -43,7 +43,7 @@ static	void	print_param(t_cmd *cmd)
 	t_cmd	*tmp;
 
 	tmp = cmd;
-	while (tmp)
+	while (!tmp)
 	{
 		if (!tmp->redir)
 			fprintf(stderr, "!REDIR\n");
