@@ -102,17 +102,14 @@ int	hdc_writing(t_all *all, t_cmd *cmd)
 {
 	free(cmd->redir->name_delim);
 	cmd->redir->name_delim = NULL;
-	if (cmd->redir->stdin_delim)
-	{
-		if (cmd->redir->fd_infile > 0)
-			close(cmd->redir->fd_infile);
-		cmd->redir->fd_infile = open(".eof", O_WRONLY
-				| O_TRUNC | O_CREAT, 0666);
-		if (cmd->redir->fd_infile == -1)
-			return (error("temp_input: open error", all, SIGINT), 1);
-		ft_putstr_fd(cmd->redir->stdin_delim, cmd->redir->fd_infile);
+	if (cmd->redir->fd_infile > 0)
 		close(cmd->redir->fd_infile);
-		all->msh->hdc_situation = 1;
-	}
+	cmd->redir->fd_infile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+	if (cmd->redir->fd_infile == -1)
+		return (error("temp_input: open error", all, SIGINT), 1);
+	if (cmd->redir->stdin_delim)
+		ft_putstr_fd(cmd->redir->stdin_delim, cmd->redir->fd_infile);
+	close(cmd->redir->fd_infile);
+	all->msh->hdc_situation = 1;
 	return (0);
 }

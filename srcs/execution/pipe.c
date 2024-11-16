@@ -20,7 +20,7 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	close(msh->pipe_fd[1]);
 	close(msh->pipe_fd[0]);
 	cmd = cmd->next;
-	while (cmd && cmd->name && cmd->next) // still have to exec if no cmd->name
+	while (cmd && cmd->next) // still have to exec if no cmd->name
 	{
 		if (pipe(msh->pipe_fd) == -1)
 			return ;
@@ -30,7 +30,7 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 		close(msh->pipe_fd[0]);
 		cmd = cmd->next;
 	}
-	if (cmd && cmd->name) // still have to exec if no cmd->name
+	if (cmd) // still have to exec if no cmd->name
 	{
 		_execmd(all, msh, cmd, END);
 		close(msh->pipe_fd[1]);
