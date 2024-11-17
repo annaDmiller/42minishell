@@ -19,7 +19,8 @@ int	set_execve(t_msh *msh, t_cmd *cmd)
 	{
 		if (cmd_check(msh, cmd))
 		{
-			printf("%s: command not found\n", cmd->name);
+			ft_putstr_fd(cmd->name, 2);
+			ft_putstr_fd(": command not found\n", 2);
 			msh->exit = 127;
 		}
 		return (0);
@@ -39,15 +40,6 @@ int	set_execve(t_msh *msh, t_cmd *cmd)
 	}
 	return (1);
 }
-
-	// msh->data->argv = malloc(sizeof(char *) * 2);
-	// if (!msh->data->argv)
-	// {
-	// 	free(msh->data->path);
-	// 	return (0);
-	// }
-	// msh->data->argv[0] = tstrdup(".eof");
-	// msh->data->argv[1] = NULL;
 
 char	**setup_args(char *name, t_args *argv)
 {

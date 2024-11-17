@@ -29,19 +29,26 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 	if (!cmd->prev && !cmd->next)
 		printf("exit\n");
 	if (!argv)
+	{
+		msh->exit = 0;
 		msh->have_to_exit = 1;
+	}
 	else if (argv->next)
-		printf("exit: too many arguments\n");
+	{
+		fprintf(stderr, "exit: too many arguments\n");
+		msh->exit = 1;
+	}
 	else
 	{
 		while (argv->arg[i] && ft_isdigit(argv->arg[i]))
 			i++;
 		if (argv->arg[i])
 		{
-			printf("error: numeric argument required\n");
-			exit(2);
+			fprintf(stderr, "error: %s:numeric argument required\n", argv->arg);
+			msh->exit = 2;
 		}
-		msh->exit = val_exit(ft_atoi(argv->arg));
+		else
+			msh->exit = val_exit(ft_atoi(argv->arg));
 		msh->have_to_exit = 1;
 	}
 	return (1);

@@ -27,7 +27,10 @@ int	validate_line(t_all *all)
 	check_r = validate_redir(all);
 	check_p = validate_pipes(all);
 	if (!check_p || !check_q || !check_r)
+	{
+		all->msh->exit = 2;
 		ft_putstr_fd("Syntax error: ", 2);
+	}
 	if (!check_p)
 		return (ft_putstr_fd("unexpected token '|'\n", 2), 0);
 	if (!check_r)

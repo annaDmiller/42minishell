@@ -20,7 +20,7 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	close(msh->pipe_fd[1]);
 	close(msh->pipe_fd[0]);
 	cmd = cmd->next;
-	while (cmd && cmd->next) // still have to exec if no cmd->name
+	while (cmd && cmd->next)
 	{
 		if (pipe(msh->pipe_fd) == -1)
 			return ;
@@ -30,7 +30,7 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 		close(msh->pipe_fd[0]);
 		cmd = cmd->next;
 	}
-	if (cmd) // still have to exec if no cmd->name
+	if (cmd)
 	{
 		_execmd(all, msh, cmd, END);
 		close(msh->pipe_fd[1]);
@@ -38,7 +38,7 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	}
 }
 
-static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos, char *str)
+static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos)
 {
 	free(msh->pwd);
 	if (msh->home)
@@ -51,7 +51,6 @@ static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos, char *str)
 		close(msh->pipe_fd[1]);
 	}
 	free_all_struct(all, 1);
-	printf("pipe // %s\n", str);
 	exit(22);
 }
 
@@ -65,17 +64,17 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		close(msh->_stdin_save);
 	if (pos == START || pos == MID)
 		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
-			wgas_pipe(all, msh, pos, "!chromakopia // 66\n");
+			wgas_pipe(all, msh, pos);
 	if (cmd->redir->in_type != '0')
 	{
 		if (cmd->redir->in_type == 's')
 			cmd->redir->fd_infile = open(".eof", O_RDONLY, 0644);
 		if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
-			wgas_pipe(all, msh, pos, "!chromakopia // 70\n");
+			wgas_pipe(all, msh, pos);
 	}
 	if (cmd->redir->out_type != '0')
 		if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
-			wgas_pipe(all, msh, pos, "!chromakopia // 73\n");
+			wgas_pipe(all, msh, pos);
 	if (pos == SOLO)
 		return ;
 	close(msh->pipe_fd[0]);

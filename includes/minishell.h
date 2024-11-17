@@ -98,7 +98,8 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 ///// EXECUTION
 
 ///// BUILTINS
-int		is_a_buitin(t_msh *msh, t_cmd *cmd);
+int		exec_buitin(t_msh *msh, t_cmd *cmd);
+int		is_a_buitin(char *cmd_name);
 
 int		cd(t_msh *msh, t_args *argv);
 int		valid_cd(t_msh *msh, t_args *argv);

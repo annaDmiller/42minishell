@@ -22,7 +22,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	rtval = 0;
 	if (!cmd || (!cmd->has_to_be_executed))
 		return (0);
-	if (pos == SOLO && !cmd->redir && (cmd->name && is_a_buitin(msh, cmd)))
+	if (pos == SOLO && !cmd->redir && (cmd->name && exec_buitin(msh, cmd)))
 		return (0);
 	tpid = fork();
 	if (tpid == -1)
@@ -47,12 +47,12 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	chromakopia(all, msh, cmd, pos);
 	if (!cmd->name)
 	{
-		printf("JE RENTRE LA \n\n");
 		free_exit(all, msh, 1);
 		exit(0);
 	}
-	if (is_a_buitin(msh, cmd))
+	if (is_a_buitin(cmd->name))
 	{
+		exec_buitin(msh, cmd);
 		free_exit(all, msh, 1);
 		exit(msh->exit);
 	}
