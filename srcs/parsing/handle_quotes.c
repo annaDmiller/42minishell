@@ -94,7 +94,7 @@ static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 	if (env_val)
 		free(env_val);
 	all->temp_for_free = NULL;
-	if (*head)
+	if (!(*head))
 		error("handle_quotes: Malloc error", all, SIGTERM);
 	if (!(*(all->line)))
 		return (*head);
@@ -104,7 +104,7 @@ static char	*add_tail(t_all *all, t_cmd *cmd, char **head, int in_dollar)
 	free(tail);
 	free(all->temp_for_free);
 	all->temp_for_free = NULL;
-	if (*head)
+	if (!(*head))
 		error("handle_quotes: Malloc error", all, SIGTERM);
 	return (*head);
 }

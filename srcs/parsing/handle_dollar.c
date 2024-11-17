@@ -18,7 +18,7 @@ char	*handle_dollar(t_all *all, t_cmd *cmd)
 	char	*exitstatus;
 
 	all->line++;
-	if (ft_isalpha(*(all->line)))
+	if (ft_isalpha(*(all->line)) || *all->line == '_')
 		return (add_env_var(all));
 	if (*all->line == '?')
 	{
@@ -43,8 +43,8 @@ static char	*add_env_var(t_all *all)
 
 	len_name = 0;
 	env_val = NULL;
-	while (is_white_space(all->line[len_name])
-		&& *all->line && ft_isalnum(all->line[len_name]))
+	while (is_white_space(all->line[len_name]) && *all->line
+		&& (ft_isalnum(all->line[len_name]) || *all->line == '_'))
 		len_name++;
 	env_name = (char *) malloc((len_name + 1) * sizeof(char));
 	if (!env_name)
