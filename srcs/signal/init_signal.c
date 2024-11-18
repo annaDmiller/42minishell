@@ -14,9 +14,9 @@
 
 static struct sigaction	init_sig_bs_logic(void);
 static struct sigaction	init_sig_c_logic_parent(void);
-static struct sigaction	init_sig_c_logic_child(void);
+//static struct sigaction	init_sig_c_logic_child(void);
 
-void	init_signals(t_all *all, char proc)
+void	init_signals(t_all *all)
 {
 	struct sigaction	act_bs;
 	struct sigaction	act_c;
@@ -24,10 +24,7 @@ void	init_signals(t_all *all, char proc)
 	act_bs = init_sig_bs_logic();
 	if (sigaction(SIGQUIT, &act_bs, NULL) == -1)
 		error("init_signals: sigaction error", all, SIGTERM);
-	if (proc == 'p')
-		act_c = init_sig_c_logic_parent();
-	else if (proc == 'c')
-		act_c = init_sig_c_logic_child();
+	act_c = init_sig_c_logic_parent();
 	if (sigaction(SIGINT, &act_c, NULL) == -1)
 		error("init_signals: sigaction error", all, SIGTERM);
 	return ;
@@ -61,16 +58,16 @@ static struct sigaction	init_sig_c_logic_parent(void)
 	return (act);
 }
 
-static struct sigaction	init_sig_c_logic_child(void)
-{
-	struct sigaction	act;
-	sigset_t			set;
-
-	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = sigint_hdl_child;
-	act.sa_flags = 0;
-	sigemptyset(&set);
-	sigaddset(&set, SIGINT);
-	act.sa_mask = set;
-	return (act);
-}
+//static struct sigaction	init_sig_c_logic_child(void)
+//{
+//	struct sigaction	act;
+//	sigset_t			set;
+//
+//	ft_memset(&act, 0, sizeof(act));
+//	act.sa_handler = sigint_hdl_child;
+//	act.sa_flags = 0;
+//	sigemptyset(&set);
+//	sigaddset(&set, SIGINT);
+//	act.sa_mask = set;
+//	return (act);
+//}

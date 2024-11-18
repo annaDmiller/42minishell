@@ -32,20 +32,22 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	if (pos == SOLO || pos == END)
 	{
 		rtval = 0;
-		old = sigint_ign_wait(all);
+		old = sigint_ign_wait(all, 1);
 		waitpid(tpid, &rtval, 0);
 		restore_sigint_hdl(all, old);
 		if (WIFEXITED(rtval))
 			msh->exit = WEXITSTATUS(rtval);
+		if (WIFSIGNALED(rtval) && WTERMSIG(rtval) == SIGINT)
+			printf("\n");
 	}
 	return (0);
 }
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
-	init_signals(all, 'c');
+	signal(SIGINT, SIG_DFL);
 	chromakopia(all, msh, cmd, pos);
-	if (!cmd->name)
+	if (!cmd->name || g_sig)
 	{
 		printf("JE RENTRE LA \n\n");
 		free_exit(all, msh, 1);

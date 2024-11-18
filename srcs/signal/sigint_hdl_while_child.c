@@ -12,12 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-struct sigaction	*sigint_ign_wait(t_all *all)
+struct sigaction	*sigint_ign_wait(t_all *all, int is_child)
 {
 	struct sigaction	*old_act;
 	struct sigaction	new_act;
 
-	new_act.sa_handler = ign_handler;
+	if (!is_child)
+		new_act.sa_handler = ign_handler;
+	else
+		new_act.sa_handler = SIG_IGN;
 	new_act.sa_flags = 0;
 	sigemptyset(&new_act.sa_mask);
 	sigaddset(&new_act.sa_mask, SIGINT);
