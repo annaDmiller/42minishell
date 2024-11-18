@@ -33,12 +33,7 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		msh->exit = 0;
 		msh->have_to_exit = 1;
 	}
-	else if (argv->next)
-	{
-		fprintf(stderr, "exit: too many arguments\n");
-		msh->exit = 1;
-	}
-	else
+	else if (argv)
 	{
 		while (argv->arg[i] && ft_isdigit(argv->arg[i]))
 			i++;
@@ -50,6 +45,13 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		else
 			msh->exit = val_exit(ft_atoi(argv->arg));
 		msh->have_to_exit = 1;
+
+	}
+	if (argv->next)
+	{
+		fprintf(stderr, "exit: too many arguments\n");
+		msh->have_to_exit = 0;
+		msh->exit = 1;
 	}
 	return (1);
 }
