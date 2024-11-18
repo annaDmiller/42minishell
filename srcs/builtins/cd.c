@@ -14,9 +14,10 @@
 static	void	reset_pwd(t_msh *msh);
 static	void	reset_oldpwd(t_msh *msh);
 
-int	cd(t_msh *msh, t_args *argv)
+int	cd(t_msh *msh, t_args *argv, char *str, int tzy)
 {
-	if (valid_cd(msh, argv))
+	tzy = valid_cd(msh, argv);
+	if (tzy == 1)
 	{
 		reset_oldpwd(msh);
 		if (msh->pwd)
@@ -29,9 +30,18 @@ int	cd(t_msh *msh, t_args *argv)
 			printf("%s\n", msh->pwd);
 		return (1);
 	}
-	if (argv && argv->arg)
-		if ((!(!argv->arg[1] && (argv->arg[0] == '-'))) && argv->arg[0] != '~')
-			printf("cd: %s: No such file or directory\n", argv->arg);
+	if (tzy == 2 && argv && argv->arg && (((!(!argv->arg[1] && (argv->arg[0] == '-')))
+		&& argv->arg[0] != '~')))
+	{
+		if (dir_check(argv->arg))
+			printf("cd : %s: Is a directory", argv->arg);
+		else
+		{
+			str = tjoin(tstrdup("cd : "), argv->arg);
+			perror(str);
+			free(str);
+		}
+	}	
 	msh->exit = EXIT_FAILURE;
 	return (1);
 }
@@ -59,7 +69,7 @@ int	valid_cd(t_msh *msh, t_args *argv)
 			&& (!chdir(env_retrieve_var(msh->env, "HOME")->var)))
 		|| (argv && argv->arg && argv->arg[0] == '~' && wave(msh, argv->arg)))
 		return (1);
-	return (0);
+	return (2);
 }
 
 static	void	reset_pwd(t_msh *msh)

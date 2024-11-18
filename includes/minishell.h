@@ -101,7 +101,7 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 int		exec_buitin(t_msh *msh, t_cmd *cmd);
 int		is_a_buitin(char *cmd_name);
 
-int		cd(t_msh *msh, t_args *argv);
+int		cd(t_msh *msh, t_args *argv, char *str, int tzy);
 int		valid_cd(t_msh *msh, t_args *argv);
 int		wave(t_msh *msh, char *str);
 
@@ -139,6 +139,7 @@ char	*tstrdup(char *src);
 char	*tjoin(char *str, char *add);
 int		tstrlen(char *str);
 int		tstrcmp(char *str, char *cmp);
+int		dir_check(char *file);
 ///// TLIB.c
 
 ///// TLIST.c

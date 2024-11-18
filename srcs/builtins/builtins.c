@@ -23,7 +23,7 @@ int	exec_buitin(t_msh *msh, t_cmd *cmd)
 		return (echo(cmd->argv));
 	}
 	else if (!tstrcmp(cmd->name, "cd"))
-		return (cd(msh, cmd->argv));
+		return (cd(msh, cmd->argv, NULL, 0));
 	else if (!tstrcmp(cmd->name, "env"))
 		return (env(msh->env));
 	else if (!tstrcmp(cmd->name, "unset"))

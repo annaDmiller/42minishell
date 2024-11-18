@@ -68,3 +68,18 @@ int	tstrcmp(char *str, char *cmp)
 			return (str[i] - cmp[i]);
 	return (0);
 }
+
+int	dir_check(char *file)
+{
+	DIR	*dir;
+
+	if (!file)
+		return (0);
+	dir = opendir(file);
+	if (dir)
+	{
+		closedir(dir);
+		return (1);
+	}
+	return (0);
+}
