@@ -47,7 +47,7 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_infile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		return (printf("%s: No such file or directory\n", addr));
+		return (printf("%s: No such file or directory\n", addr), free(addr), 1);
 	}
 	cmd->redir->in_type = 'f';
 	free(addr);
