@@ -58,10 +58,12 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	}
 	else if (cmd && cmd->name)
 	{
-		if (!set_execve(msh, cmd))
+		if (!cmd_check(msh, cmd) || !set_execve(msh, cmd))
 		{
+			ft_putstr_fd(cmd->name, 2);
+			ft_putstr_fd(": command not found\n", 2);
 			free_exit(all, msh, 1);
-			exit(msh->exit);
+			exit(127);
 		}
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 		{
@@ -70,7 +72,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			fsplit(msh->data->argv);
 			fsplit(msh->data->envp);
 			free_exit(all, msh, 1);
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 	}
 }
@@ -84,7 +86,6 @@ int	cmd_check(t_msh *msh, t_cmd *cmd)
 	dir = opendir(cmd->name);
 	if (dir)
 	{
-		printf("%s: Is a directory\n", cmd->name);
 		closedir(dir);
 		msh->exit = 126;
 		return (0);

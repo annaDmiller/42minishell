@@ -33,14 +33,16 @@ int	cd(t_msh *msh, t_args *argv, char *str, int tzy)
 	if (tzy == 2 && argv && argv->arg && (((!(!argv->arg[1] && (argv->arg[0] == '-')))
 		&& argv->arg[0] != '~')))
 	{
-		// if (!dir_check(argv->arg))
-			// printf("cd : %s: No such file or directory\n", argv->arg);
-		// if
+		if (dir_check(argv->arg) == 0)
+			printf("cd : %s: Not a directory\n", argv->arg);
+		// else if (dir_check(argv->arg) == 1)
 		// {
-			str = tjoin(tstrdup("cd : "), argv->arg);
-			perror(str);
-			free(str);
+		// 	str = tjoin(tstrdup("/////////////////cd : "), argv->arg);
+		// 	perror(str);
+		// 	free(str);
 		// }
+		else if (dir_check(argv->arg) == 2)
+			printf("cd : %s: No such file or directory\n", argv->arg);
 	}
 	(void)str;
 	msh->exit = EXIT_FAILURE;
@@ -66,7 +68,7 @@ int	valid_cd(t_msh *msh, t_args *argv)
 		|| ((argv && argv->arg && !tstrcmp(argv->arg, "-"))
 			&& (env_retrieve_var(msh->env, "OLDPWD")
 				&& (!chdir(env_retrieve_var(msh->env, "OLDPWD")->var))))
-		|| (!argv && env_retrieve_var(msh->env, "HOME")
+		|| (!argv && env_retrieve_var(msh->env, "HOME") && env_retrieve_var(msh->env, "HOME")->var
 			&& (!chdir(env_retrieve_var(msh->env, "HOME")->var)))
 		|| (argv && argv->arg && argv->arg[0] == '~' && wave(msh, argv->arg)))
 		return (1);

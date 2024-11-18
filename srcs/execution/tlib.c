@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
+#include "dirent.h"
 
 char	*tstrdup(char *src)
 {
@@ -72,6 +73,7 @@ int	tstrcmp(char *str, char *cmp)
 int	dir_check(char *file)
 {
 	DIR	*dir;
+	struct	dirent *ye;
 
 	if (!file)
 		return (0);
@@ -81,6 +83,17 @@ int	dir_check(char *file)
 		closedir(dir);
 		return (1);
 	}
-	// dir = readdir(dir);
-	return (0);
+	dir = opendir(".");
+	ye = readdir(dir);
+	while (ye)
+	{
+		if (!tstrcmp(ye->d_name, file) && ye->d_type == DT_REG)
+		{
+			closedir(dir);
+			return (0);
+		}
+		ye = readdir(dir);
+	}
+	closedir(dir);
+	return (2);
 }

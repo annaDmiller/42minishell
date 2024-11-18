@@ -16,15 +16,7 @@ int	set_execve(t_msh *msh, t_cmd *cmd)
 {
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
-	{
-		if (cmd_check(msh, cmd))
-		{
-			ft_putstr_fd(cmd->name, 2);
-			ft_putstr_fd(": command not found\n", 2);
-			msh->exit = 127;
-		}
 		return (0);
-	}
 	msh->data->argv = setup_args(cmd->name, cmd->argv);
 	if (!msh->data->argv)
 	{

@@ -31,6 +31,7 @@ int	unset(t_msh *msh, t_args *argv)
 			free(name);
 		argv = argv->next;
 	}
+	msh->exit = 0;
 	return (1);
 }
 
