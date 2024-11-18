@@ -33,15 +33,16 @@ int	cd(t_msh *msh, t_args *argv, char *str, int tzy)
 	if (tzy == 2 && argv && argv->arg && (((!(!argv->arg[1] && (argv->arg[0] == '-')))
 		&& argv->arg[0] != '~')))
 	{
-		if (dir_check(argv->arg))
-			printf("cd : %s: Is a directory", argv->arg);
-		else
-		{
+		// if (!dir_check(argv->arg))
+			// printf("cd : %s: No such file or directory\n", argv->arg);
+		// if
+		// {
 			str = tjoin(tstrdup("cd : "), argv->arg);
 			perror(str);
 			free(str);
-		}
-	}	
+		// }
+	}
+	(void)str;
 	msh->exit = EXIT_FAILURE;
 	return (1);
 }

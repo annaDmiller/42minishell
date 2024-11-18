@@ -81,5 +81,6 @@ int	dir_check(char *file)
 		closedir(dir);
 		return (1);
 	}
+	// dir = readdir(dir);
 	return (0);
 }
