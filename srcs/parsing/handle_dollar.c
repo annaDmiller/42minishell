@@ -59,4 +59,11 @@ static char	*add_env_var(t_all *all)
 	if (!env_val)
 		return (NULL);
 	return (env_val);
+	//return (process_env_val(all, &(env_val)));
 }
+
+//static char	*process_env_val(t_all *all, char **env)
+//{
+//
+//}
+//

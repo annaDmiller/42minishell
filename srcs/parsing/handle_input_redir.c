@@ -20,7 +20,7 @@ void	handle_input(t_all *all, t_cmd *cmd)
 	all->line++;
 	if (*(all->line) == '<')
 	{
-		old_act = sigint_ign_wait(all);
+		old_act = sigint_ign_wait(all, 0);
 		input_from_stdin(all, cmd);
 		restore_sigint_hdl(all, old_act);
 	}
@@ -47,7 +47,7 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_infile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		return (printf("%s: No such file or directory\n", addr));
+		return (printf("%s: No such file or directory\n", addr), free(addr), 1);
 	}
 	cmd->redir->in_type = 'f';
 	free(addr);

@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	g_sig = 0;
 	all = NULL;
 	everyinit(&msh, envp, argc, argv);
-	init_signals(all, 'p');
+	init_signals(all);
 	while (!msh.have_to_exit)
 	{
 		line = readline(PROMPT);
