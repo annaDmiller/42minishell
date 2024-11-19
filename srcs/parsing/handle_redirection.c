@@ -69,7 +69,7 @@ char	*read_addr(t_all *all, t_cmd *cmd)
 		else if (!is_quote(*(all->line)))
 			all->temp_for_free = handle_quotes(all, cmd, 0);
 		else
-			all->temp_for_free = handle_word(all, 0);
+			all->temp_for_free = handle_word(all, 0, 0);
 		temp = ret;
 		ret = ft_strjoin(temp, all->temp_for_free);
 		if (!ret)

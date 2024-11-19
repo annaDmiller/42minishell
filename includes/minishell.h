@@ -47,6 +47,7 @@ t_all	*init_all_struct(t_all *all, t_msh *msh);
 void	parse_line(t_all *all);
 void	parse_cmd(t_all *all, t_cmd *last);
 void	add_arg(t_all *all, t_cmd *last, char **str);
+void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str);
 void	init_redir(t_redir *redir);
 //parsing utils
 int		is_white_space(char car);
@@ -55,13 +56,14 @@ int		is_quote(char car);
 int		is_redir(char car);
 //parsing main functions
 char	*handle_dollar(t_all *all, t_cmd *cmd);
+char    *parse_env_val(t_all *all, char **env_val, t_cmd *cmd);
 char	*handle_redir(t_all *all, t_cmd *cmd);
 char	*read_addr(t_all *all, t_cmd *cmd);
 void	handle_input(t_all *all, t_cmd *cmd);
 int		input_from_stdin(t_all *all, t_cmd *cmd);
 void	handle_output(t_all *all, t_cmd *cmd);
 char	*handle_quotes(t_all *all, t_cmd *cmd, int in_dollar);
-char	*handle_word(t_all *all, int in_dollar);
+char	*handle_word(t_all *all, int in_dollar, int in_redir);
 //finalization part
 void	error(char *mess, t_all *all, int sig);
 void	free_all_struct(t_all *all, int is_clear_env);
