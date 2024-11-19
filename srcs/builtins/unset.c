@@ -82,25 +82,3 @@ char	*setup_name(char *str)
 	return (name);
 }
 
-/// @brief reset '$_' variable with the last command line entered
-void	_var(t_all *all, t_msh *msh)
-{
-	t_env	*var;
-	char	*str;
-	char	*_prefix;
-
-	var = env_retrieve_var(msh->env, "_");
-	if (var && all && all->line)
-	{
-		free(var->var);
-		_prefix = malloc(sizeof(char) * 3);
-		if (!_prefix)
-			return ;
-		_prefix[0] = '_';
-		_prefix[1] = '=';
-		_prefix[2] = '\0';
-		str = tjoin(_prefix, all->line);
-		var->var = env_var(str);
-		free(str);
-	}
-}

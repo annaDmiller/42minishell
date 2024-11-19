@@ -13,9 +13,26 @@
 
 // NOT WORKING
 // oldwork =en
-
 static	int	*set_order(t_msh *msh, int length, int i);
 static	char	**fill_names(t_msh *msh, int *order);
+static	int	invalid_name(char *n);
+
+static	int	invalid_name(char *n)
+{
+	int	i;
+
+	i = -1;
+	if (!n || (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97
+					&& n[0] <= 122)) && n[0] != '_'))
+		return (1);
+	while (n[++i] && n[i] != '=')
+	{
+		if (n[i] == '@' || n[i] == '~' || n[i] == '-' || n[i] == '.' || n[i] == '{' || n[i] == '}' || n[i] == '*' || n[i] == '#' || n[i] == '!' || n[i] == '+' )
+			return (1);
+	}
+
+	return (0);
+}
 
 int	export(t_msh *msh, t_args *argv)
 {
@@ -26,9 +43,11 @@ int	export(t_msh *msh, t_args *argv)
 	while (argv)
 	{
 		n = setup_name(argv->arg);
-		if (!n || (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97
-						&& n[0] <= 122)) && n[0] != '_'))
+		if (invalid_name(argv->arg))
+		{
 			printf("export: `%s': not a valid indentifier\n", argv->arg);
+			msh->exit = 1;
+		}
 		else
 		{
 			if (env_retrieve_var(msh->env, n))
