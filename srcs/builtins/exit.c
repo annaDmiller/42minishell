@@ -30,7 +30,7 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		printf("exit\n");
 	if (!argv)
 	{
-		msh->exit = 0;
+		// msh->exit = 0;
 		msh->have_to_exit = 1;
 	}
 	else if (argv)
@@ -47,7 +47,7 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		msh->have_to_exit = 1;
 
 	}
-	if (argv->next)
+	if (argv && argv->next)
 	{
 		fprintf(stderr, "exit: too many arguments\n");
 		msh->have_to_exit = 0;
