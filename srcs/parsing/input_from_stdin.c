@@ -85,7 +85,7 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 		if (!is_quote(*(all->line)))
 			all->temp_for_free = handle_quotes(all, cmd, 1);
 		else
-			all->temp_for_free = handle_word(all, 1);
+			all->temp_for_free = handle_word(all, 1, 0);
 		temp = ret;
 		ret = ft_strjoin(temp, all->temp_for_free);
 		if (!ret)

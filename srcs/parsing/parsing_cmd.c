@@ -12,7 +12,6 @@
 #include "../../includes/minishell.h"
 
 static char	*take_str(t_all *all, t_cmd *cmd);
-static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str);
 static void	process_str(t_all *all, t_cmd *cmd, char **str);
 static void	skip_cmd(t_all *all);
 
@@ -79,10 +78,10 @@ static char	*take_str(t_all *all, t_cmd *cmd)
 		return (handle_quotes(all, cmd, 0));
 	if (!is_redir(*(all->line)))
 		return (handle_redir(all, cmd));
-	return (handle_word(all, 0));
+	return (handle_word(all, 0, 0));
 }
 
-static void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str)
+void	add_str_to_cmd(t_all *all, t_cmd *cmd, char **str)
 {
 	if (cmd->quote || !(*str))
 		return ;

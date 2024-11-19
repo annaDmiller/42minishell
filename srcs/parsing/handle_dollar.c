@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static char	*add_env_var(t_all *all);
+static char	*add_env_var(t_all *all, t_cmd *cmd);
 
 char	*handle_dollar(t_all *all, t_cmd *cmd)
 {
@@ -19,7 +19,7 @@ char	*handle_dollar(t_all *all, t_cmd *cmd)
 
 	all->line++;
 	if (ft_isalpha(*(all->line)) || *all->line == '_')
-		return (add_env_var(all));
+		return (add_env_var(all, cmd));
 	if (*all->line == '?')
 	{
 		all->line++;
@@ -31,10 +31,10 @@ char	*handle_dollar(t_all *all, t_cmd *cmd)
 	if (!is_quote(*(all->line)))
 		return (handle_quotes(all, cmd, 1));
 	all->line--;
-	return (handle_word(all, 1));
+	return (handle_word(all, 1, 0));
 }
 
-static char	*add_env_var(t_all *all)
+static char	*add_env_var(t_all *all, t_cmd *cmd)
 {
 	char	*env_val;
 	char	*env_name;
@@ -58,8 +58,7 @@ static char	*add_env_var(t_all *all)
 	all->line += len_name;
 	if (!env_val)
 		return (NULL);
-	return (env_val);
-	//return (process_env_val(all, &(env_val)));
+	return (parse_env_val(all, &env_val, cmd), free(env_val), NULL);
 }
 
 //static char	*process_env_val(t_all *all, char **env)

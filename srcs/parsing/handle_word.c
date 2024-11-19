@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-char	*handle_word(t_all *all, int in_dollar)
+char	*handle_word(t_all *all, int in_dollar, int in_redir)
 {
 	int		ind;
 	char	*str;
@@ -22,7 +22,9 @@ char	*handle_word(t_all *all, int in_dollar)
 		if (!in_dollar && all->line[ind] == '$'
 			&& is_white_space(all->line[ind + 1]))
 			break ;
-		if (!is_quote(all->line[ind]) || !is_redir(all->line[ind]))
+		if (!is_quote(all->line[ind]))
+			break ;
+		if (!in_redir && !is_redir(all->line[ind]))
 			break ;
 		ind++;
 	}
