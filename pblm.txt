@@ -1,19 +1,7 @@
-745
-758
-761
-464
-461
-385
+745 - here doc processing of env var
+758 - here doc processing of env var
 
 299 / 329	expand matter
-
-need to expand a variable and parse it only if
-	there is only one word  (=                  bonjour$USER                  )
-	no quote (= " || ' )
-
-
-check EXIT builtin
-
 
 
 CASES:
@@ -29,4 +17,4 @@ In our minishell, we doesn't process $ with numbers. So I added in handler only 
 
 220 - it makes our minishell to turn into zombi mode (sleeping) and it works
 
-219 - 
+219 - we can protect it as it is said that ctrl+\ must do NOTHING based on the task of project
