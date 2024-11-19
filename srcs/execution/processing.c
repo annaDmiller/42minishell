@@ -140,7 +140,7 @@ void	envinit(t_msh *msh, char **envp, int i)
 // 			msh->env->name = env_varname("_");
 // 			msh->env->var = env_var("_=/usr/bin/env");
 // 		}
-// 		msh->env->id = i + 1;
+// 		msh->env->id = i + 1;putst
 // 		msh->env->next = NULL;
 // 		msh->env = msh->env->next;
 // 	}

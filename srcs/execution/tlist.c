@@ -34,3 +34,24 @@ int	l_argsize(t_args *argv)
 		tmp = tmp->next;
 	return (l);
 }
+
+void	putstderr(char *str)
+{
+	while (*str)
+		write(2, str++, 1);
+}
+
+void	stderr_msg(char *ft, char *arg, char *str)
+{
+	if (ft)
+	{
+		putstderr(ft);
+		write(2, ": ", 2);
+	}
+	if (arg)
+	{
+		putstderr(arg);
+		write(2, ": ", 2);
+	}
+	putstderr(str);
+}

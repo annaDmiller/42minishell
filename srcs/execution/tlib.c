@@ -72,8 +72,8 @@ int	tstrcmp(char *str, char *cmp)
 
 int	dir_check(char *file)
 {
-	DIR	*dir;
-	struct	dirent *ye;
+	struct dirent	*ye;
+	DIR				*dir;
 
 	if (!file)
 		return (0);

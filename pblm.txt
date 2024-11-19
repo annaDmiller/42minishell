@@ -30,3 +30,6 @@ In our minishell, we doesn't process $ with numbers. So I added in handler only 
 220 - it makes our minishell to turn into zombi mode (sleeping) and it works
 
 219 - 
+
+299 / 329 - Dont have to handle it since its an Internal field Separtor utils that handle it on bash
+		and it is not written in the subject as something we have to do

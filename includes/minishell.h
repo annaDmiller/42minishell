@@ -56,7 +56,7 @@ int		is_quote(char car);
 int		is_redir(char car);
 //parsing main functions
 char	*handle_dollar(t_all *all, t_cmd *cmd);
-char    *parse_env_val(t_all *all, char **env_val, t_cmd *cmd);
+char	*parse_env_val(t_all *all, char **env_val, t_cmd *cmd);
 char	*handle_redir(t_all *all, t_cmd *cmd);
 char	*read_addr(t_all *all, t_cmd *cmd);
 void	handle_input(t_all *all, t_cmd *cmd);
@@ -103,9 +103,12 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 int		exec_buitin(t_msh *msh, t_cmd *cmd);
 int		is_a_buitin(char *cmd_name);
 
-int		cd(t_msh *msh, t_args *argv, char *str, int tzy);
+int		cd(t_msh *msh, t_args *argv, int tzy);
 int		valid_cd(t_msh *msh, t_args *argv);
 int		wave(t_msh *msh, char *str);
+
+void	stderr_msg(char *ft, char *arg, char *str);
+void	putstderr(char *str);
 
 int		echo(t_args *argv);
 void	putstr(char *str);
