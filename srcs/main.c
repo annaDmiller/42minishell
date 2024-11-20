@@ -13,7 +13,7 @@
 
 volatile int	g_sig;
 
-static	void	process_line(t_all *all, t_msh *msh);
+static	void	process_line(t_all *all, t_msh *msh, char **line);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -34,9 +34,8 @@ int	main(int argc, char **argv, char **envp)
 		all = init_all_struct(all, &msh);
 		if (!line)
 			break ;
-		all->line = line;
-		if (is_empty_line(all->line))
-			process_line(all, &msh);
+		if (is_empty_line(line))
+			process_line(all, &msh, &line);
 		rl_on_new_line();
 	}
 	if (!line)
@@ -45,11 +44,12 @@ int	main(int argc, char **argv, char **envp)
 	return (msh.exit);
 }
 
-static	void	process_line(t_all *all, t_msh *msh)
+static	void	process_line(t_all *all, t_msh *msh, char **line)
 {
 	int	check_line;
 
 	check_line = 1;
+	all->line = *line;
 	add_history(all->line);
 	check_line = validate_line(all);
 	if (!check_line)
