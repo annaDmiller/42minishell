@@ -20,9 +20,8 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	int					rtval;
 
 	rtval = 0;
-	if (!cmd || (!cmd->has_to_be_executed))
-		return (0);
-	if (pos == SOLO && !cmd->redir && (cmd->name && exec_buitin(msh, cmd)))
+	if (!cmd || (!cmd->has_to_be_executed) || ((pos == SOLO && !cmd->redir
+				&& (cmd->name && exec_buitin(msh, cmd)))))
 		return (0);
 	tpid = fork();
 	if (tpid == -1)
@@ -60,16 +59,16 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	}
 	else if (cmd && cmd->name)
 	{
-		if (!cmd_check(all, msh, cmd) || (!tstrcmp(cmd->name, "")) || !set_execve(msh, cmd))
+		if (!cmd_check(all, msh, cmd) || (!tstrcmp(cmd->name, ""))
+			|| !set_execve(msh, cmd))
 		{
-			ft_putstr_fd(cmd->name, 2);
-			ft_putstr_fd(": command not found\n", 2);
+			stderr_msg(NULL, cmd->name, "command not found\n");
 			free_exit(all, msh, 1);
 			exit(127);
 		}
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 		{
-			printf("%s: execution failed\n", cmd->name);
+			stderr_msg(NULL, cmd->name, "execution failed\n");
 			free(msh->data->path);
 			fsplit(msh->data->argv);
 			fsplit(msh->data->envp);
@@ -89,8 +88,7 @@ int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 	if (dir)
 	{
 		closedir(dir);
-		ft_putstr_fd(cmd->name, 2);
-		ft_putstr_fd(": Is a directory\n", 2);
+		stderr_msg(NULL, cmd->name, "Is a directory\n");
 		free_exit(all, msh, 1);
 		exit(126);
 		return (0);

@@ -81,4 +81,3 @@ char	*setup_name(char *str)
 		name[i] = str[i];
 	return (name);
 }
-

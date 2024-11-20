@@ -1,29 +1,29 @@
 #include "../../includes/minishell.h"
 
 static void	proc_env_val(t_all *all, t_cmd *cmd, char **str);
-static char	*take_env_word(t_all *all, t_cmd *cmd); 
+static char	*take_env_word(t_all *all, t_cmd *cmd);
 
-char    *parse_env_val(t_all *all, char **env_val, t_cmd *cmd)
+char	*parse_env_val(t_all *all, char **env_val, t_cmd *cmd)
 {
-    char    *temp;
-    char    *str;
+	char	*temp;
+	char	*str;
 
-    temp = all->line;
-    all->line = *env_val;
-    all->temp_for_free = *env_val;
-    str = NULL;
+	temp = all->line;
+	all->line = *env_val;
+	all->temp_for_free = *env_val;
+	str = NULL;
 	while ((*(all->line) || str) && !g_sig)
 	{
 		add_str_to_cmd(all, cmd, &str);
-        if (!(*(all->line)))
-            break ;
+		if (!(*(all->line)))
+			break ;
 		while (!is_white_space(*(all->line)) && *all->line)
-			all->line++;
-        proc_env_val(all,cmd, &str);
+				all->line++;
+		proc_env_val(all, cmd, &str);
 	}
-    all->line = temp;
-    all->temp_for_free = NULL;
-    return (NULL);
+	all->line = temp;
+	all->temp_for_free = NULL;
+	return (NULL);
 }
 
 static void	proc_env_val(t_all *all, t_cmd *cmd, char **str)
