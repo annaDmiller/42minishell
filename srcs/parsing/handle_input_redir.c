@@ -15,14 +15,17 @@ static int	input_from_file(t_all *all, t_cmd *cmd);
 
 void	handle_input(t_all *all, t_cmd *cmd)
 {
-	struct sigaction	*old_act;
+	struct sigaction	*old_act_int;
+	struct sigaction	*old_act_quit;
 
 	all->line++;
 	if (*(all->line) == '<')
 	{
-		old_act = sigint_ign_wait(all, 0);
+		old_act_int = sigint_ign_wait(all, 0);
+		old_act_quit = sigquit_ign_def(all);
 		input_from_stdin(all, cmd);
-		restore_sigint_hdl(all, old_act);
+		restore_sigint_hdl(all, old_act_int);
+		restore_sigquit_hdl(all, old_act_quit);
 	}
 	else
 		input_from_file(all, cmd);

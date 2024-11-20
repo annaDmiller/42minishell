@@ -28,8 +28,6 @@ int	main(int argc, char **argv, char **envp)
 	while (!msh.have_to_exit)
 	{
 		line = readline(PROMPT);
-		if (g_sig)
-			msh.exit = 130;
 		g_sig = 0;
 		all = init_all_struct(all, &msh);
 		if (!line)

@@ -14,7 +14,6 @@
 
 static struct sigaction	init_sig_bs_logic(void);
 static struct sigaction	init_sig_c_logic_parent(void);
-//static struct sigaction	init_sig_c_logic_child(void);
 
 void	init_signals(t_all *all)
 {
@@ -58,16 +57,9 @@ static struct sigaction	init_sig_c_logic_parent(void)
 	return (act);
 }
 
-//static struct sigaction	init_sig_c_logic_child(void)
-//{
-//	struct sigaction	act;
-//	sigset_t			set;
-//
-//	ft_memset(&act, 0, sizeof(act));
-//	act.sa_handler = sigint_hdl_child;
-//	act.sa_flags = 0;
-//	sigemptyset(&set);
-//	sigaddset(&set, SIGINT);
-//	act.sa_mask = set;
-//	return (act);
-//}
+void	init_signals_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	return ;
+}
