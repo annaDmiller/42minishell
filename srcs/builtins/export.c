@@ -51,12 +51,12 @@ int	export(t_msh *msh, t_args *argv)
 		}
 		else
 		{
-			if (env_retrieve_var(msh->env, n))
+			if (env_retrieve_var(msh->env, n) && env_retrieve_var(msh->env, n)->var && env_var(argv->arg))
 			{
 				free(env_retrieve_var(msh->env, n)->var);
 				env_retrieve_var(msh->env, n)->var = env_var(argv->arg);
 			}
-			else
+			else if (!env_retrieve_var(msh->env, n))
 				export_def(msh, argv);
 		}
 		argv = argv->next;
