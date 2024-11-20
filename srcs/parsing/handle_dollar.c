@@ -62,9 +62,3 @@ static char	*add_env_var(t_all *all, t_cmd *cmd)
 		return (env_val);
 	return (parse_env_val(all, &env_val, cmd), free(env_val), NULL);
 }
-
-//static char	*process_env_val(t_all *all, char **env)
-//{
-//
-//}
-//

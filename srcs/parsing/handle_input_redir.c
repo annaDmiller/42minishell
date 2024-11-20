@@ -29,6 +29,10 @@ void	handle_input(t_all *all, t_cmd *cmd)
 	}
 	else
 		input_from_file(all, cmd);
+	if (g_sig == SIGINT)
+		all->msh->exit = 130;
+	if (g_sig == SIGQUIT)
+		all->msh->exit = 131;
 	return ;
 }
 
