@@ -12,3 +12,11 @@ probleme export => export a=$USER probleme d'expand, l'expand est traite comme u
 
 Leak quand expand avec "$USER";
 Probleme expand avec "" de maniere generale;
+
+
+export a="cat Makefile | wc -l"
+> $a
+cat: '|': No such file or directory
+cat: wc: No such file or directory
+
+	bash expand une variable commme UNE commande et seulement UNE

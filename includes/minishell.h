@@ -152,4 +152,12 @@ int		l_envsize(t_env *env);
 int		l_argsize(t_args *argv);
 ///// TLIST.c
 
+///// EXPAND_BEFORE_PARSING.c
+// int	expand_line(t_all *all, char *str);
+char	*expand_line(t_all *all, char *str);
+int	_expand_line_length(t_all *all, char *str);
+// sttaic	char	_expand_var_exists(t_all *all, char *str, int i);
+
+
+
 #endif
