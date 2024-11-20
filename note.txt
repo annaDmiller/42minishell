@@ -1,0 +1,14 @@
+exit changer le else if 
+
+	67 dkwndkn 
+	dmdkwk 67
+
+export avec quote
+
+exit code avec signaux ctrl-\
+
+probleme export => Quand on fait export a et que dans l'export a="" est deja present ne pas remplacer a
+probleme export => export a=$USER probleme d'expand, l'expand est traite comme une deuxieme variable d'environnement
+
+Leak quand expand avec "$USER";
+Probleme expand avec "" de maniere generale;

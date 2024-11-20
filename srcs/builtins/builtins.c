@@ -20,7 +20,7 @@ int	exec_buitin(t_msh *msh, t_cmd *cmd)
 	else if (!tstrcmp(cmd->name, "echo"))
 	{
 		msh->exit = 0;
-		return (echo(cmd->argv));
+		return (echo(msh, cmd->argv));
 	}
 	else if (!tstrcmp(cmd->name, "cd"))
 		return (cd(msh, cmd->argv, 0));

@@ -28,6 +28,8 @@ int	main(int argc, char **argv, char **envp)
 	while (!msh.have_to_exit)
 	{
 		line = readline(PROMPT);
+		if (g_sig == 2)
+			msh.exit = 130;
 		g_sig = 0;
 		all = init_all_struct(all, &msh);
 		if (!line)
@@ -35,7 +37,6 @@ int	main(int argc, char **argv, char **envp)
 		all->line = line;
 		if (is_empty_line(all->line))
 			process_line(all, &msh);
-		g_sig = 0;
 		rl_on_new_line();
 	}
 	if (!line)
@@ -57,8 +58,9 @@ static	void	process_line(t_all *all, t_msh *msh)
 	if (!all->line || g_sig)
 		return ;
 	minishell(all, msh);
-	if (msh->hdc_situation)
-		unlink(".eof");
+	if (g_sig == 2)
+		msh->exit = 130;
+	unlink(".eof");
 }
 
 t_all	*init_all_struct(t_all *all, t_msh *msh)

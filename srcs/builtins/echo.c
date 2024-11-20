@@ -26,7 +26,7 @@ static int	valid(char *str)
 	return (22);
 }
 
-int	echo(t_args *argv)
+int	echo(t_msh *msh, t_args *argv)
 {
 	int	state;
 	int	n;
@@ -44,7 +44,12 @@ int	echo(t_args *argv)
 		if (!(valid(argv->arg) && state == 1))
 		{
 			state = 0;
-			putstr(argv->arg);
+			if (!putstr(argv->arg))
+			{
+				stderr_msg("echo", "write error", "No space left on device\n");
+				msh->exit = 1;
+				return (1);
+			}
 			if (argv->next)
 				write(1, " ", 1);
 		}
@@ -55,8 +60,10 @@ int	echo(t_args *argv)
 	return (1);
 }
 
-void	putstr(char *str)
+int	putstr(char *str)
 {
 	while (*str)
-		write(1, str++, 1);
+		if (write(1, str++, 1) == -1)
+			return (0);
+	return (1);
 }

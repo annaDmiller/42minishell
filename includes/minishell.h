@@ -110,8 +110,8 @@ int		wave(t_msh *msh, char *str);
 void	stderr_msg(char *ft, char *arg, char *str);
 void	putstderr(char *str);
 
-int		echo(t_args *argv);
-void	putstr(char *str);
+int		echo(t_msh *msh, t_args *argv);
+int		putstr(char *str);
 
 int		env(t_env *env);
 char	*env_var(char *str);
