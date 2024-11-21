@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static int	output_replace(t_all *all, t_cmd *cmd);
-static int	output_append(t_all *all, t_cmd *cmd);
+static void	output_replace(t_all *all, t_cmd *cmd);
+static void	output_append(t_all *all, t_cmd *cmd);
 
 void	handle_output(t_all *all, t_cmd *cmd)
 {
@@ -24,21 +24,21 @@ void	handle_output(t_all *all, t_cmd *cmd)
 	return ;
 }
 
-static int	output_append(t_all *all, t_cmd *cmd)
+static void	output_append(t_all *all, t_cmd *cmd)
 {
 	char	*addr;
 
 	all->line++;
 	addr = read_addr(all, cmd);
 	if (!addr)
-		return (error("output reditect: syntax error", all, SIGINT), 1);
+		return (error("output reditect: syntax error", all, SIGINT));
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
 		if (cmd->redir->fd_outfile != -2)
-			return (0);
+			return ;
 		cmd->redir->fd_outfile = 1;
 		cmd->redir->out_type = 'a';
-		return (0);
+		return ;
 	}
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
@@ -46,27 +46,27 @@ static int	output_append(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr), 1);
+		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr));
 	}
 	free(addr);
 	cmd->redir->out_type = 'a';
-	return (0);
+	return ;
 }
 
-static int	output_replace(t_all *all, t_cmd *cmd)
+static void	output_replace(t_all *all, t_cmd *cmd)
 {
 	char	*addr;
 
 	addr = read_addr(all, cmd);
 	if (!addr)
-		return (error("output reditect: syntax error", all, SIGINT), 1);
+		return (error("output reditect: syntax error", all, SIGINT));
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
 		if (cmd->redir->fd_outfile != -2)
-			return (0);
+			return ;
 		cmd->redir->fd_outfile = 1;
 		cmd->redir->out_type = 'r';
-		return (0);
+		return ;
 	}
 	if (cmd->redir->fd_outfile != -2)
 		close(cmd->redir->fd_outfile);
@@ -74,9 +74,9 @@ static int	output_replace(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr), 1);
+		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr));
 	}
 	free(addr);
 	cmd->redir->out_type = 'r';
-	return (0);
+	return ;
 }
