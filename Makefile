@@ -7,6 +7,7 @@ EXEC_PRT = srcs/execution/pipe.c \
                 srcs/execution/free.c \
                 srcs/execution/tlib.c \
                 srcs/execution/tlist.c \
+		srcs/execution/utils.c \
                 srcs/execution/minishell.c \
 		srcs/execution/set_execve.c \
                 srcs/execution/processing.c \

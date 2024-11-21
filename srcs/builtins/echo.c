@@ -11,28 +11,10 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static int	valid(char *str)
+static int	valid(char *str);
+
+int	echo(t_msh *msh, t_args *argv, int state, int n)
 {
-	int	i;
-
-	i = 0;
-	if (!(str[0] == '-'))
-		return (0);
-	while (str[++i])
-	{
-		if (str[i] != 'n')
-			return (0);
-	}
-	return (22);
-}
-
-int	echo(t_msh *msh, t_args *argv)
-{
-	int	state;
-	int	n;
-
-	n = 1;
-	state = 0;
 	if (argv && argv->arg && valid(argv->arg))
 	{
 		n = 0;
@@ -46,8 +28,8 @@ int	echo(t_msh *msh, t_args *argv)
 			state = 0;
 			if (!putstr(argv->arg))
 			{
-				stderr_msg("echo", "write error", "No space left on device\n");
 				msh->exit = 1;
+				stderr_msg("echo", "write error", "No space left on device\n");
 				return (1);
 			}
 			if (argv->next)
@@ -58,6 +40,21 @@ int	echo(t_msh *msh, t_args *argv)
 	if (n)
 		write(1, "\n", 1);
 	return (1);
+}
+
+static int	valid(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!(str[0] == '-'))
+		return (0);
+	while (str[++i])
+	{
+		if (str[i] != 'n')
+			return (0);
+	}
+	return (22);
 }
 
 int	putstr(char *str)

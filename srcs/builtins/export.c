@@ -6,60 +6,24 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:54:36 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/14 19:54:37 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/21 01:04:50 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-// NOT WORKING
-// oldwork =en
 static	int	*set_order(t_msh *msh, int length, int i);
 static	char	**fill_names(t_msh *msh, int *order);
-static	int	valid_export(t_msh *msh, char *n);
-
-static	int	valid_export(t_msh *msh, char *n)
-{
-	int	i;
-
-	i = -1;
-	if (!n || (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97
-					&& n[0] <= 122)) && n[0] != '_'))
-	{
-		ft_putstr_fd("export: `", 2);
-		ft_putstr_fd(n, 2);
-		ft_putstr_fd("': not a valid indentifier\n", 2);
-		msh->exit = 1;
-		return (0);
-	}
-	while (n[++i] && n[i] != '=')
-	{
-		if (n[i] == '@' || n[i] == '~' || n[i] == '-' || n[i] == '.'
-			|| n[i] == '{' || n[i] == '}' || n[i] == '*' || n[i] == '#'
-			|| n[i] == '!' || n[i] == '+' )
-		{
-			ft_putstr_fd("export: `", 2);
-			ft_putstr_fd(n, 2);
-			ft_putstr_fd("': not a valid indentifier\n", 2);
-			msh->exit = 1;
-			return (0);
-		}
-	}
-	return (1);
-}
-	// change to stderrrmsg
 
 int	export(t_msh *msh, t_args *argv)
 {
 	char	*name;
 	char	*argument;
 
-	if (!argv)
-		export_no_opt(msh);
 	while (argv)
 	{
 		name = setup_name(argv->arg);
 		argument = env_var(argv->arg);
-		if (valid_export(msh, argv->arg))
+		if (valid_export(msh, argv->arg, -1))
 		{
 			if (!env_retrieve_var(msh->env, name))
 				export_def(msh, argv);
