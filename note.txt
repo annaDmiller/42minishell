@@ -1,0 +1,20 @@
+exit changer le else if 
+
+	67 dkwndkn 
+	dmdkwk 67
+
+export avec quote
+exit code avec signaux ctrl-\ // manque Quit (core dumped)
+
+probleme export => Quand on fait export a et que dans l'export a="" est deja present ne pas remplacer a
+probleme export => export a=$USER probleme d'expand, l'expand est traite comme une deuxieme variable d'environnement
+
+Leak quand expand avec "$USER"; // regle
+Probleme expand avec "" de maniere generale;
+
+export a="cat Makefile | wc -l"
+> $a
+cat: '|': No such file or directory
+cat: wc: No such file or directory
+
+	bash expand une variable commme UNE commande et seulement UNE

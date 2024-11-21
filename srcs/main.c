@@ -6,7 +6,7 @@
 /*   By: amelniko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 20:15:36 by amelniko          #+#    #+#             */
-/*   Updated: 2024/10/06 20:15:40 by amelniko         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:55:42 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/minishell.h"
@@ -28,7 +28,11 @@ int	main(int argc, char **argv, char **envp)
 	while (!msh.have_to_exit)
 	{
 		line = readline(PROMPT);
+<<<<<<< HEAD
 		if (g_sig == SIGINT)
+=======
+		if (g_sig == 2)
+>>>>>>> execution
 			msh.exit = 130;
 		g_sig = 0;
 		all = init_all_struct(all, &msh);
@@ -58,8 +62,7 @@ static	void	process_line(t_all *all, t_msh *msh, char **line)
 	if (!all->line || g_sig)
 		return ;
 	minishell(all, msh);
-	if (msh->hdc_situation)
-		unlink(".eof");
+	unlink(".eof");
 }
 
 t_all	*init_all_struct(t_all *all, t_msh *msh)

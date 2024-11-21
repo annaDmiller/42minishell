@@ -6,7 +6,7 @@
 /*   By: amelniko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 20:16:13 by amelniko          #+#    #+#             */
-/*   Updated: 2024/10/21 16:15:13 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/21 01:06:13 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -101,7 +101,6 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 
 ///// BUILTINS
 int		exec_buitin(t_msh *msh, t_cmd *cmd);
-int		is_a_buitin(char *cmd_name);
 
 int		cd(t_msh *msh, t_args *argv, int tzy);
 int		valid_cd(t_msh *msh, t_args *argv);
@@ -110,8 +109,8 @@ int		wave(t_msh *msh, char *str);
 void	stderr_msg(char *ft, char *arg, char *str);
 void	putstderr(char *str);
 
-int		echo(t_args *argv);
-void	putstr(char *str);
+int		echo(t_msh *msh, t_args *argv, int state, int n);
+int		putstr(char *str);
 
 int		env(t_env *env);
 char	*env_var(char *str);
@@ -151,5 +150,13 @@ int		dir_check(char *file);
 int		l_envsize(t_env *env);
 int		l_argsize(t_args *argv);
 ///// TLIST.c
+
+///// EXPAND_BEFORE_PARSING.c
+// int	expand_line(t_all *all, char *str);
+char	*expand_line(t_all *all, char *str);
+int		_expand_line_length(t_all *all, char *str);
+// static	char	_expand_var_exists(t_all *all, char *str, int i);
+
+int		valid_export(t_msh *msh, char *n, int i);
 
 #endif

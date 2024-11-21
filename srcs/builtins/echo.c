@@ -11,6 +11,37 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+static int	valid(char *str);
+
+int	echo(t_msh *msh, t_args *argv, int state, int n)
+{
+	if (argv && argv->arg && valid(argv->arg))
+	{
+		n = 0;
+		state = 1;
+		argv = argv->next;
+	}
+	while (argv && argv->arg)
+	{
+		if (!(valid(argv->arg) && state == 1))
+		{
+			state = 0;
+			if (!putstr(argv->arg))
+			{
+				msh->exit = 1;
+				stderr_msg("echo", "write error", "No space left on device\n");
+				return (1);
+			}
+			if (argv->next)
+				write(1, " ", 1);
+		}
+		argv = argv->next;
+	}
+	if (n)
+		write(1, "\n", 1);
+	return (1);
+}
+
 static int	valid(char *str)
 {
 	int	i;
@@ -26,37 +57,10 @@ static int	valid(char *str)
 	return (22);
 }
 
-int	echo(t_args *argv)
-{
-	int	state;
-	int	n;
-
-	n = 1;
-	state = 0;
-	if (argv && argv->arg && valid(argv->arg))
-	{
-		n = 0;
-		state = 1;
-		argv = argv->next;
-	}
-	while (argv && argv->arg)
-	{
-		if (!(valid(argv->arg) && state == 1))
-		{
-			state = 0;
-			putstr(argv->arg);
-			if (argv->next)
-				write(1, " ", 1);
-		}
-		argv = argv->next;
-	}
-	if (n)
-		write(1, "\n", 1);
-	return (1);
-}
-
-void	putstr(char *str)
+int	putstr(char *str)
 {
 	while (*str)
-		write(1, str++, 1);
+		if (write(1, str++, 1) == -1)
+			return (0);
+	return (1);
 }

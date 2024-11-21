@@ -6,62 +6,38 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:54:36 by tespandj          #+#    #+#             */
-/*   Updated: 2024/10/14 19:54:37 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/21 01:04:50 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-// NOT WORKING
-// oldwork =en
 static	int	*set_order(t_msh *msh, int length, int i);
 static	char	**fill_names(t_msh *msh, int *order);
-static	int	invalid_name(char *n);
-
-static	int	invalid_name(char *n)
-{
-	int	i;
-
-	i = -1;
-	if (!n || (!((n[0] >= 65 && n[0] <= 90) || (n[0] >= 97
-					&& n[0] <= 122)) && n[0] != '_'))
-		return (1);
-	while (n[++i] && n[i] != '=')
-	{
-		if (n[i] == '@' || n[i] == '~' || n[i] == '-' || n[i] == '.'
-			|| n[i] == '{' || n[i] == '}' || n[i] == '*' || n[i] == '#'
-			|| n[i] == '!' || n[i] == '+' )
-			return (1);
-	}
-	return (0);
-}
 
 int	export(t_msh *msh, t_args *argv)
 {
-	char	*n;
+	char	*name;
+	char	*argument;
 
-	if (!argv)
-		export_no_opt(msh);
 	while (argv)
 	{
-		n = setup_name(argv->arg);
-		if (invalid_name(argv->arg))
+		name = setup_name(argv->arg);
+		argument = env_var(argv->arg);
+		if (valid_export(msh, argv->arg, -1))
 		{
-			printf("export: `%s': not a valid indentifier\n", argv->arg);
-			msh->exit = 1;
-		}
-		else
-		{
-			if (env_retrieve_var(msh->env, n))
-			{
-				free(env_retrieve_var(msh->env, n)->var);
-				env_retrieve_var(msh->env, n)->var = env_var(argv->arg);
-			}
-			else
+			if (!env_retrieve_var(msh->env, name))
 				export_def(msh, argv);
+			else if (env_retrieve_var(msh->env, name) && argument)
+			{
+				free(env_retrieve_var(msh->env, name)->var);
+				env_retrieve_var(msh->env, name)->var = tstrdup(argument);
+			}
 		}
 		argv = argv->next;
-		if (n)
-			free(n);
+		if (name)
+			free(name);
+		if (argument)
+			free(argument);
 	}
 	return (1);
 }

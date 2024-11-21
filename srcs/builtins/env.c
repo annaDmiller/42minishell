@@ -35,6 +35,8 @@ char	*env_var(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
+	if (str[i] != '=')
+		return (NULL);
 	i++;
 	d = tstrlen(str) - i;
 	if (d == -1)

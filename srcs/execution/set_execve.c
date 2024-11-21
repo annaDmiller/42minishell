@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-//// how to handle '.' or '..'
 int	set_execve(t_msh *msh, t_cmd *cmd)
 {
 	msh->data->path = fpath(msh->env, cmd->name, -1);

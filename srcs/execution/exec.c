@@ -6,12 +6,13 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:23:32 by tespandj          #+#    #+#             */
-/*   Updated: 2024/11/06 22:12:29 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/21 01:08:15 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd);
 
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
@@ -51,9 +52,8 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		free_exit(all, msh, 1);
 		exit(0);
 	}
-	if (is_a_buitin(cmd->name))
+	if (exec_buitin(msh, cmd))
 	{
-		exec_buitin(msh, cmd);
 		free_exit(all, msh, 1);
 		exit(msh->exit);
 	}
@@ -67,31 +67,16 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			exit(127);
 		}
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
-		{
-			stderr_msg(NULL, cmd->name, "execution failed\n");
-			free(msh->data->path);
-			fsplit(msh->data->argv);
-			fsplit(msh->data->envp);
-			free_exit(all, msh, 1);
-			exit(1);
-		}
+			exec_fail(all, msh, cmd);
 	}
 }
 
-int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
+static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 {
-	DIR	*dir;
-
-	if (!cmd || (cmd && !cmd->name) || (!cmd->has_to_be_executed))
-		return (0);
-	dir = opendir(cmd->name);
-	if (dir)
-	{
-		closedir(dir);
-		stderr_msg(NULL, cmd->name, "Is a directory\n");
-		free_exit(all, msh, 1);
-		exit(126);
-		return (0);
-	}
-	return (1);
+	stderr_msg(NULL, cmd->name, "execution failed\n");
+	free(msh->data->path);
+	fsplit(msh->data->argv);
+	fsplit(msh->data->envp);
+	free_exit(all, msh, 1);
+	exit(1);
 }

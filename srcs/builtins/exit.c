@@ -21,16 +21,24 @@ static	int	val_exit(int n)
 	return (n);
 }
 
+static	int	check_exit(t_msh *msh, t_cmd *cmd, t_args *argv)
+{
+	if (!cmd->prev && !cmd->next)
+		printf("exit\n");
+	if (!argv)
+	{
+		msh->have_to_exit = 1;
+		return (0);
+	}
+	return (1);
+}
+
 int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 {
 	int	i;
 
 	i = 0;
-	if (!cmd->prev && !cmd->next)
-		printf("exit\n");
-	if (!argv)
-		msh->have_to_exit = 1;
-	else if (argv)
+	if (check_exit(msh, cmd, argv) && argv)
 	{
 		while (argv->arg[i] && ft_isdigit(argv->arg[i]))
 			i++;
@@ -39,15 +47,16 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 			stderr_msg("error", argv->arg, "numeric argument required\n");
 			msh->exit = 2;
 		}
+		else if (argv && argv->next)
+		{
+			stderr_msg("exit", NULL, "too many arguments\n");
+			msh->exit = 1;
+		}
 		else
+		{
 			msh->exit = val_exit(ft_atoi(argv->arg));
-		msh->have_to_exit = 1;
-	}
-	else if (argv && argv->next)
-	{
-		stderr_msg("exit", NULL, "too many arguments\n");
-		msh->have_to_exit = 0;
-		msh->exit = 1;
+			msh->have_to_exit = 1;
+		}
 	}
 	return (1);
 }
