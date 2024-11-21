@@ -12,9 +12,8 @@
 
 #include "../../includes/minishell.h"
 
-// static int	read_from_stdin(t_all *all, t_cmd *cmd);
 static char	*read_keyword(t_all *all, t_cmd *cmd);
-// static int	temp_input(t_all *all, t_cmd *cmd);
+static void	print_eof_hdc(t_cmd *cmd);
 
 int	input_from_stdin(t_all *all, t_cmd *cmd)
 {
@@ -38,6 +37,7 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 	if (!cmd->redir->name_delim)
 		return (error("input_from_stdin: Malloc error", all, SIGTERM), 1);
 	read_from_stdin(all, cmd);
+	print_eof_hdc(cmd);
 	cmd->redir->in_type = 's';
 	cmd->redir->fd_infile = '0';
 	return (0);
@@ -112,4 +112,14 @@ int	hdc_writing(t_all *all, t_cmd *cmd)
 	close(cmd->redir->fd_infile);
 	all->msh->hdc_situation = 1;
 	return (0);
+}
+
+static void	print_eof_hdc(t_cmd *cmd)
+{
+	if (g_sig || cmd->redir->stdin_delim)
+		return ;
+	ft_putstr_fd("\nHere-doc is ended with EOF: wanted '", 2);
+	write(2, cmd->redir->name_delim, ft_strlen(cmd->redir->name_delim) - 1);
+	ft_putstr_fd("'\n", 2);
+	return ;
 }
