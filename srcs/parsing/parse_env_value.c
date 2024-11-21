@@ -29,7 +29,7 @@ char	*parse_env_val(t_all *all, char **env_val, t_cmd *cmd)
 		if (!(*(all->line)))
 			break ;
 		while (!is_white_space(*(all->line)) && *all->line)
-				all->line++;
+			all->line++;
 		proc_env_val(all, cmd, &str);
 	}
 	all->line = temp;

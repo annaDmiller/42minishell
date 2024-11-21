@@ -31,13 +31,13 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		_exec_child(all, msh, cmd, pos);
 	if (pos == SOLO || pos == END)
 	{
-		rtval = 0;
 		old = sigint_ign_wait(all, 1);
 		waitpid(tpid, &rtval, 0);
 		restore_sigint_hdl(all, old);
 		if (WIFEXITED(rtval))
 			msh->exit = WEXITSTATUS(rtval);
-		if (WIFSIGNALED(rtval) && (WTERMSIG(rtval) == SIGINT || WTERMSIG(rtval) == SIGQUIT))
+		if (WIFSIGNALED(rtval) && (WTERMSIG(rtval) == SIGINT
+				|| WTERMSIG(rtval) == SIGQUIT))
 			printf("\n");
 	}
 	return (0);
