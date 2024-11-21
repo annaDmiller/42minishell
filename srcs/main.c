@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	while (!msh.have_to_exit)
 	{
 		line = readline(PROMPT);
-		if (g_sig == 2)
+		if (g_sig == SIGINT)
 			msh.exit = 130;
 		g_sig = 0;
 		all = init_all_struct(all, &msh);

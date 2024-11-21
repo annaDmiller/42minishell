@@ -31,13 +31,13 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		_exec_child(all, msh, cmd, pos);
 	if (pos == SOLO || pos == END)
 	{
-		rtval = 0;
 		old = sigint_ign_wait(all, 1);
 		waitpid(tpid, &rtval, 0);
 		restore_sigint_hdl(all, old);
 		if (WIFEXITED(rtval))
 			msh->exit = WEXITSTATUS(rtval);
-		if (WIFSIGNALED(rtval) && WTERMSIG(rtval) == SIGINT)
+		if (WIFSIGNALED(rtval) && (WTERMSIG(rtval) == SIGINT
+				|| WTERMSIG(rtval) == SIGQUIT))
 			printf("\n");
 	}
 	return (0);
@@ -45,7 +45,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
-	signal(SIGINT, SIG_DFL);
+	init_signals_child();
 	chromakopia(all, msh, cmd, pos);
 	if (!cmd->name || g_sig)
 	{

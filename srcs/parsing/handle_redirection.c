@@ -25,12 +25,14 @@ char	*handle_redir(t_all *all, t_cmd *cmd)
 		init_redir(redir);
 		cmd->redir = redir;
 	}
+	cmd->quote = 1;
 	if (*(all->line) == '>')
 		handle_output(all, cmd);
 	if (*(all->line) == '<')
 		handle_input(all, cmd);
 	if (*(all->line) == '|')
 		handle_pipe(all, cmd);
+	cmd->quote = 0;
 	return (NULL);
 }
 
