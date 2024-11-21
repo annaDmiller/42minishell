@@ -39,3 +39,20 @@ void	restore_sigint_hdl(t_all *all, struct sigaction *old_act)
 	free(old_act);
 	return ;
 }
+
+struct sigaction	*sigint_heredoc(t_all *all)
+{
+	struct sigaction	*old_act;
+	struct sigaction	new_act;
+
+	new_act.sa_handler = heredoc_handler;
+	new_act.sa_flags = 0;
+	sigemptyset(&new_act.sa_mask);
+	sigaddset(&new_act.sa_mask, SIGINT);
+	old_act = (struct sigaction *) malloc(sizeof(struct sigaction));
+	if (!old_act)
+		error("ign_signal: malloc error", all, SIGTERM);
+	if (sigaction(SIGINT, &new_act, old_act) == -1)
+		error("ign_signal: sigaction error", all, SIGTERM);
+	return (old_act);
+}

@@ -23,15 +23,20 @@ void	sigint_hdl_parent(int sig)
 	return ;
 }
 
-void	sigint_hdl_child(int sig)
-{
-	g_sig = sig;
-	return ;
-}
-
 void	ign_handler(int sig)
 {
 	g_sig = sig;
 	printf("\n");
+	return ;
+}
+
+void	heredoc_handler(int sig)
+{
+	if (ioctl(STDIN_FILENO, TIOCSTI, "\n") == -1)
+		return ;
+	g_sig = sig;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_done = 1;
 	return ;
 }

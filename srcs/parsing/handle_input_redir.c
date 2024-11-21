@@ -20,7 +20,7 @@ void	handle_input(t_all *all, t_cmd *cmd)
 	all->line++;
 	if (*(all->line) == '<')
 	{
-		old_act_int = sigint_ign_wait(all, 0);
+		old_act_int = sigint_heredoc(all);
 		input_from_stdin(all, cmd);
 		restore_sigint_hdl(all, old_act_int);
 	}

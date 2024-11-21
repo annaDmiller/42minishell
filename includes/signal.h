@@ -24,9 +24,10 @@
 //signals
 void				init_signals(t_all *all);
 void				sigint_hdl_parent(int sig);
-void				sigint_hdl_child(int sig);
 struct sigaction	*sigint_ign_wait(t_all *all, int is_child);
+struct sigaction	*sigint_heredoc(t_all *all);
 void				restore_sigint_hdl(t_all *all, struct sigaction *old_act);
 void				ign_handler(int sig);
+void	heredoc_handler(int sig);
 void				init_signals_child(void);
 #endif
