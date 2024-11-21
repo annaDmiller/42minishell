@@ -19,7 +19,7 @@ char	*get_next_line(int fd)
 	static char	*tails[1024];
 	int			check;
 
-	if (fd < 0 || fd > 1023 || BUFFER_SIZE <= 0 || g_sig)
+	if (fd < 0 || fd > 1023 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = NULL;
 	buff = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
