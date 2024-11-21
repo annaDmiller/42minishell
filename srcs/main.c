@@ -44,6 +44,25 @@ int	main(int argc, char **argv, char **envp)
 	return (msh.exit);
 }
 
+// static	void	process_line(t_all *all, t_msh *msh, char **line)
+// {
+// 	int	check_line;
+
+// 	check_line = 1;
+// 	all->line = *line;
+// 	check_line = validate_line(all);
+// 	add_history(all->line);
+// 	if (!check_line)
+// 		return ;
+// 	if (_expand_line_length(all, *line) != tstrlen(*line))
+// 		all->line = expand_line(all, tstrdup(*line));
+// 	parse_line(all);
+// 	if (!all->line || g_sig)
+// 		return ;
+// 	minishell(all, msh);
+// }
+
+
 static	void	process_line(t_all *all, t_msh *msh, char **line)
 {
 	int	check_line;

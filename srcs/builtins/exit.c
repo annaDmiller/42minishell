@@ -11,13 +11,62 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-static	int	val_exit(int n)
+static	int	check_lli(char *argv)
+{
+	long long int	nt;
+	int				i;
+	int				sign;
+
+	i = 0;
+	nt = 0;
+	sign = 1;
+	if ((argv[i] == '-') || (argv[i] == '+'))
+	{
+		if (argv[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (argv[i] >= '0' && argv[i] <= '9')
+	{
+		nt = nt * 10 + (argv[i] - 48);
+		i++;
+	}
+	nt *= sign;
+	if (nt > 9223372036854775807 || nt < -9223372036854775807)
+		return (0);
+	return (1);
+}
+
+static	int	atolli(char *argv)
+{
+	long long int	nt;
+	int				i;
+	int				sign;
+
+	i = 0;
+	nt = 0;
+	sign = 1;
+	if ((argv[i] == '-') || (argv[i] == '+'))
+	{
+		if (argv[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (argv[i] >= '0' && argv[i] <= '9')
+	{
+		nt = nt * 10 + (argv[i] - 48);
+		i++;
+	}
+	return (nt *= sign);
+}
+
+static	int	val_exit(long long int n)
 {
 	if (!n)
 		return (0);
 	n %= 256;
 	if (n < 0)
-		n = -n;
+		n = 256 + n;
 	return (n);
 }
 
@@ -40,9 +89,10 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 	i = 0;
 	if (check_exit(msh, cmd, argv) && argv)
 	{
-		while (argv->arg[i] && ft_isdigit(argv->arg[i]))
+		while (argv->arg[i] && (ft_isdigit(argv->arg[i])
+				|| (argv->arg[0] == '-')))
 			i++;
-		if (argv->arg[i])
+		if (!check_lli(argv->arg) || argv->arg[i])
 		{
 			stderr_msg("error", argv->arg, "numeric argument required\n");
 			msh->exit = 2;
@@ -54,7 +104,7 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		}
 		else
 		{
-			msh->exit = val_exit(ft_atoi(argv->arg));
+			msh->exit = val_exit(atolli(argv->arg));
 			msh->have_to_exit = 1;
 		}
 	}

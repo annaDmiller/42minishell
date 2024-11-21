@@ -22,7 +22,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 
 	rtval = 0;
 	if (!cmd || (!cmd->has_to_be_executed) || ((pos == SOLO && !cmd->redir
-				&& (cmd->name && exec_buitin(msh, cmd)))))
+				&& (cmd->name && tstrcmp(cmd->name, "env") && exec_buitin(msh, cmd)))))
 		return (0);
 	tpid = fork();
 	if (tpid == -1)

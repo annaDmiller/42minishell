@@ -60,5 +60,5 @@ static char	*add_env_var(t_all *all, t_cmd *cmd)
 		return (NULL);
 	if (cmd->quote)
 		return (env_val);
-	return (parse_env_val(all, &env_val, cmd), free(env_val), NULL);
+	return (env_val);
 }

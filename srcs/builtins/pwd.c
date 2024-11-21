@@ -24,8 +24,9 @@ int	pwd(t_msh *msh)
 	}
 	else
 	{
-		printf("error retrieving current directory: getcwd: \
-cannot access parent directories: No such file or directory\n");
+		stderr_msg("pwd: error retrieving current directory",
+			"getcwd: cannot access parent directories",
+			"No such file or directory\n");
 		msh->exit = 1;
 	}
 	return (1);

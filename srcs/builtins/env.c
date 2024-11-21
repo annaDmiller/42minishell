@@ -18,9 +18,8 @@ int	env(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (tmp->name)
-			if (tmp->var)
-				printf("%s=%s\n", tmp->name, tmp->var);
+		if (tmp->name && tmp->var)
+			printf("%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
 	return (1);
