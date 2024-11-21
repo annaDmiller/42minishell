@@ -80,11 +80,10 @@ static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 	exit(1);
 }
 
-
 static	void	check_signal_exit(t_all *all, int rtval)
 {
 	if (WIFSIGNALED(rtval) && (WTERMSIG(rtval) == SIGINT
-				|| WTERMSIG(rtval) == SIGQUIT))
+			|| WTERMSIG(rtval) == SIGQUIT))
 	{
 		if (WTERMSIG(rtval) == SIGINT)
 			all->msh->exit = 130;
