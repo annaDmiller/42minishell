@@ -56,7 +56,6 @@ int		is_quote(char car);
 int		is_redir(char car);
 //parsing main functions
 char	*handle_dollar(t_all *all, t_cmd *cmd);
-char	*parse_env_val(t_all *all, char **env_val, t_cmd *cmd);
 char	*handle_redir(t_all *all, t_cmd *cmd);
 char	*read_addr(t_all *all, t_cmd *cmd);
 void	handle_input(t_all *all, t_cmd *cmd);
@@ -106,7 +105,7 @@ int		cd(t_msh *msh, t_args *argv, int tzy);
 int		valid_cd(t_msh *msh, t_args *argv);
 int		wave(t_msh *msh, char *str);
 
-void	stderr_msg(char *ft, char *arg, char *str);
+void	err_msg(char *ft, char *arg, char *str);
 void	putstderr(char *str);
 
 int		echo(t_msh *msh, t_args *argv, int state, int n);
@@ -123,6 +122,7 @@ int		texit(t_msh *msh, t_cmd *cmd, t_args *argv);
 int		export(t_msh *msh, t_args *argv);
 void	export_no_opt(t_msh *msh);
 void	export_def(t_msh *msh, t_args *argv);
+int		valid_export(t_msh *msh, char *n, int i);
 
 int		pwd(t_msh *msh);
 
@@ -150,12 +150,6 @@ int		dir_check(char *file);
 int		l_envsize(t_env *env);
 int		l_argsize(t_args *argv);
 ///// TLIST.c
-
-///// EXPAND_BEFORE_PARSING.c
-// int	expand_line(t_all *all, char *str);
-char	*expand_line(t_all *all, char *str);
-int		_expand_line_length(t_all *all, char *str);
-// static	char	_expand_var_exists(t_all *all, char *str, int i);
 
 int		valid_export(t_msh *msh, char *n, int i);
 

@@ -16,16 +16,16 @@ static int	input_from_file(t_all *all, t_cmd *cmd);
 void	handle_input(t_all *all, t_cmd *cmd)
 {
 	struct sigaction	*old_act_int;
-	struct sigaction	*old_act_quit;
+	//struct sigaction	*old_act_quit;
 
 	all->line++;
 	if (*(all->line) == '<')
 	{
 		old_act_int = sigint_ign_wait(all, 0);
-		old_act_quit = sigquit_ign_def(all);
+		//old_act_quit = sigquit_ign_def(all);
 		input_from_stdin(all, cmd);
 		restore_sigint_hdl(all, old_act_int);
-		restore_sigquit_hdl(all, old_act_quit);
+		//restore_sigquit_hdl(all, old_act_quit);
 	}
 	else
 		input_from_file(all, cmd);
@@ -54,7 +54,8 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_infile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		return (printf("%s: No such file or directory\n", addr), free(addr), 1);
+		return (err_msg(NULL, addr,
+				"No such file or directory\n"), free(addr), 1);
 	}
 	cmd->redir->in_type = 'f';
 	free(addr);

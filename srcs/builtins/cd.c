@@ -34,9 +34,9 @@ int	cd(t_msh *msh, t_args *argv, int tzy)
 						&& (argv->arg[0] == '-'))) && argv->arg[0] != '~')))
 	{
 		if (dir_check(argv->arg) == 0)
-			stderr_msg("cd", argv->arg, "Not a directory\n");
+			err_msg("cd", argv->arg, "Not a directory\n");
 		else if (dir_check(argv->arg) == 2)
-			stderr_msg("cd", argv->arg, "No such file or directory\n");
+			err_msg("cd", argv->arg, "No such file or directory\n");
 	}
 	msh->exit = EXIT_FAILURE;
 	return (1);
@@ -117,7 +117,7 @@ int	wave(t_msh *msh, char *str)
 		free(path);
 		return (1);
 	}
-	stderr_msg("cd", path, "No such file or directory\n");
+	err_msg("cd", path, "No such file or directory\n");
 	free(path);
 	return (0);
 }

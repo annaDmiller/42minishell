@@ -13,6 +13,7 @@
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd);
+static	void	check_signal_exit(t_all *all, int rtval);
 
 int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
@@ -21,8 +22,8 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	int					rtval;
 
 	rtval = 0;
-	if (!cmd || (!cmd->has_to_be_executed) || ((pos == SOLO && !cmd->redir
-				&& (cmd->name && tstrcmp(cmd->name, "env") && exec_buitin(msh, cmd)))))
+	if (!cmd || ((pos == SOLO && !cmd->redir && (cmd->name
+					&& tstrcmp(cmd->name, "env") && exec_buitin(msh, cmd)))))
 		return (0);
 	tpid = fork();
 	if (tpid == -1)
@@ -36,9 +37,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		restore_sigint_hdl(all, old);
 		if (WIFEXITED(rtval))
 			msh->exit = WEXITSTATUS(rtval);
-		if (WIFSIGNALED(rtval) && (WTERMSIG(rtval) == SIGINT
-				|| WTERMSIG(rtval) == SIGQUIT))
-			printf("\n");
+		check_signal_exit(all, rtval);
 	}
 	return (0);
 }
@@ -47,7 +46,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	init_signals_child();
 	chromakopia(all, msh, cmd, pos);
-	if (!cmd->name || g_sig)
+	if (!cmd->name || g_sig || !cmd->has_to_be_executed)
 	{
 		free_exit(all, msh, 1);
 		exit(0);
@@ -62,7 +61,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		if (!cmd_check(all, msh, cmd) || (!tstrcmp(cmd->name, ""))
 			|| !set_execve(msh, cmd))
 		{
-			stderr_msg(NULL, cmd->name, "command not found\n");
+			err_msg(NULL, cmd->name, "command not found\n");
 			free_exit(all, msh, 1);
 			exit(127);
 		}
@@ -73,10 +72,27 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 {
-	stderr_msg(NULL, cmd->name, "execution failed\n");
+	err_msg(NULL, cmd->name, "execution failed\n");
 	free(msh->data->path);
 	fsplit(msh->data->argv);
 	fsplit(msh->data->envp);
 	free_exit(all, msh, 1);
 	exit(1);
+}
+
+
+static	void	check_signal_exit(t_all *all, int rtval)
+{
+	if (WIFSIGNALED(rtval) && (WTERMSIG(rtval) == SIGINT
+				|| WTERMSIG(rtval) == SIGQUIT))
+	{
+		if (WTERMSIG(rtval) == SIGINT)
+			all->msh->exit = 130;
+		if (WTERMSIG(rtval) == SIGQUIT)
+		{
+			putstderr("Quit (core dumped)");
+			all->msh->exit = 131;
+		}
+		printf("\n");
+	}
 }

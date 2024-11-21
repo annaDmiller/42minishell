@@ -46,7 +46,7 @@ static int	output_append(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		return (printf("%s: couldnt retrieve/create\n", addr), free(addr), 1);
+		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr), 1);
 	}
 	free(addr);
 	cmd->redir->out_type = 'a';
@@ -74,7 +74,7 @@ static int	output_replace(t_all *all, t_cmd *cmd)
 	if (cmd->redir->fd_outfile == -1)
 	{
 		cmd->has_to_be_executed = 0;
-		return (printf("%s: couldnt retrieve/create\n", addr), free(addr), 1);
+		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr), 1);
 	}
 	free(addr);
 	cmd->redir->out_type = 'r';

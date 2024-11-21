@@ -11,11 +11,9 @@ EXEC_PRT = srcs/execution/pipe.c \
                 srcs/execution/minishell.c \
 		srcs/execution/set_execve.c \
                 srcs/execution/processing.c \
-		srcs/execution/expand_before_parsing.c \
 
 PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/parsing/handle_dollar.c \
-		srcs/parsing/parse_env_value.c \
 		srcs/parsing/handle_input_redir.c \
 		srcs/parsing/input_from_stdin.c \
 		srcs/parsing/handle_output_redir.c \

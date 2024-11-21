@@ -41,7 +41,7 @@ void	putstderr(char *str)
 		write(2, str++, 1);
 }
 
-void	stderr_msg(char *ft, char *arg, char *str)
+void	err_msg(char *ft, char *arg, char *str)
 {
 	if (ft)
 	{
