@@ -95,6 +95,7 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		if (!check_lli(argv->arg) || argv->arg[i])
 		{
 			err_msg("error", argv->arg, "numeric argument required\n");
+			msh->have_to_exit = 1;
 			msh->exit = 2;
 		}
 		else if (argv && argv->next)
@@ -107,6 +108,35 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 			msh->exit = val_exit(atolli(argv->arg));
 			msh->have_to_exit = 1;
 		}
+	}
+	return (1);
+}
+
+int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
+{
+	int	i;
+
+	i = 0;
+	if (!(check_exit(msh, cmd, argv) && argv))
+		return (1);
+	while (argv->arg[i] && (ft_isdigit(argv->arg[i])
+			|| (argv->arg[0] == '-')))
+		i++;
+	if (!check_lli(argv->arg) || argv->arg[i])
+	{
+		err_msg("error", argv->arg, "numeric argument required\n");
+		msh->have_to_exit = 1;
+		msh->exit = 2;
+	}
+	else if (argv && argv->next)
+	{
+		err_msg("exit", NULL, "too many arguments\n");
+		msh->exit = 1;
+	}
+	else
+	{
+		msh->exit = val_exit(atolli(argv->arg));
+		msh->have_to_exit = 1;
 	}
 	return (1);
 }
