@@ -36,6 +36,7 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 		write(2, cmd->redir->name_delim, ft_strlen(cmd->redir->name_delim));
 		ft_putstr_fd("'\n", 2);
 	}
+	hdc_writing(all, cmd);
 	cmd->redir->in_type = 's';
 	cmd->redir->fd_infile = '0';
 	return (0);
@@ -53,7 +54,7 @@ int	read_from_stdin(t_all *all, t_cmd *cmd)
 	{
 		gnl = readline("> ");
 		if (!gnl || g_sig)
-			return (1);
+			return (free(gnl), 1);
 		if (!ft_strncmp(cmd->redir->name_delim, gnl, len_key + 1))
 			break ;
 		temp = cmd->redir->stdin_delim;
@@ -65,7 +66,6 @@ int	read_from_stdin(t_all *all, t_cmd *cmd)
 		add_nl_to_line(all, cmd);
 		rl_on_new_line();
 	}
-	hdc_writing(all, cmd);
 	return (free(gnl), 0);
 }
 
@@ -115,7 +115,7 @@ int	hdc_writing(t_all *all, t_cmd *cmd)
 static void	add_nl_to_line(t_all *all, t_cmd *cmd)
 {
 	char	*temp;
-	
+
 	temp = cmd->redir->stdin_delim;
 	cmd->redir->stdin_delim = ft_strjoin(temp, "\n");
 	free(temp);

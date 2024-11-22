@@ -37,6 +37,5 @@ void	heredoc_handler(int sig)
 	g_sig = sig;
 	rl_replace_line("", 0);
 	rl_on_new_line();
-	rl_done = 1;
 	return ;
 }
