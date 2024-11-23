@@ -154,4 +154,6 @@ int		l_argsize(t_args *argv);
 
 int		valid_export(t_msh *msh, char *n, int i);
 
+int		curr_dir(void);
+
 #endif

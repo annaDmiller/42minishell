@@ -33,9 +33,9 @@ int	cd(t_msh *msh, t_args *argv, int tzy)
 	if (tzy == 2 && argv && argv->arg && (((!(!argv->arg[1]
 						&& (argv->arg[0] == '-'))) && argv->arg[0] != '~')))
 	{
-		if (dir_check(argv->arg) == 0)
+		if (curr_dir() && dir_check(argv->arg) == 0)
 			err_msg("cd", argv->arg, "Not a directory\n");
-		else if (dir_check(argv->arg) == 2)
+		else if (!curr_dir() || dir_check(argv->arg) == 2)
 			err_msg("cd", argv->arg, "No such file or directory\n");
 	}
 	msh->exit = EXIT_FAILURE;

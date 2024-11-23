@@ -35,6 +35,17 @@ int	l_argsize(t_args *argv)
 	return (l);
 }
 
+int	curr_dir(void)
+{
+	DIR	*dir;
+
+	dir = opendir(".");
+	if (!dir)
+		return (0);
+	closedir(dir);
+	return (1);
+}
+
 void	putstderr(char *str)
 {
 	while (*str)
