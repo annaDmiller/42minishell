@@ -6,12 +6,13 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:23:32 by tespandj          #+#    #+#             */
-/*   Updated: 2024/11/21 01:08:15 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/23 05:02:01 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
+static	int	fds(t_cmd *cmd);
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd);
 static	void	check_signal_exit(t_all *all, int rtval);
 
@@ -65,9 +66,19 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			free_exit(all, msh, 1);
 			exit(127);
 		}
+		fds(cmd);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 			exec_fail(all, msh, cmd);
 	}
+}
+
+static	int	fds(t_cmd *cmd)
+{
+	if (cmd->redir && cmd->redir->fd_infile)
+		close(cmd->redir->fd_infile);
+	if (cmd->redir && cmd->redir->fd_outfile)
+		close(cmd->redir->fd_outfile);
+	return (1);
 }
 
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)

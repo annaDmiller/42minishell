@@ -17,6 +17,12 @@ int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 
 	if (!cmd || (cmd && !cmd->name) || (!cmd->has_to_be_executed))
 		return (0);
+	msh->data->path = fpath(msh->env, cmd->name, -1);
+	if (msh->data->path)
+	{
+		free(msh->data->path);
+		return (1);
+	}
 	dir = opendir(cmd->name);
 	if (dir)
 	{

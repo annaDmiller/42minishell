@@ -97,3 +97,4 @@ int	dir_check(char *file)
 	closedir(dir);
 	return (2);
 }
+
