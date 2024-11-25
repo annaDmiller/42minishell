@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:23:32 by tespandj          #+#    #+#             */
-/*   Updated: 2024/11/23 05:02:01 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/25 00:00:52 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
@@ -67,6 +67,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			exit(127);
 		}
 		fds(cmd);
+		printf("[PATH] / %s\n", msh->data->path);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 			exec_fail(all, msh, cmd);
 	}

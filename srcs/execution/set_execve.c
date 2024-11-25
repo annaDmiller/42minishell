@@ -11,15 +11,16 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-// static	int	accessible(char *cmd);
-// static	char	*abspath(char *cmd);
-// static	int	is_a_directory(char *name);
-
 int	set_execve(t_msh *msh, t_cmd *cmd)
 {
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
-		return (0);
+	{
+		if (!access(cmd->name, F_OK | X_OK))
+			msh->data->path = tstrdup(cmd->name);
+		else
+			return (0);
+	}
 	msh->data->argv = setup_args(cmd->name, cmd->argv);
 	if (!msh->data->argv)
 	{
@@ -85,8 +86,6 @@ char	*fpath(t_env *env, char *cmd, int i)
 	char	**str;
 	char	*path;
 
-	if (!access(cmd, F_OK | X_OK))
-		return (tstrdup(cmd));
 	if (!env_retrieve_var(env, "PATH") || !env_retrieve_var(env, "PATH")->var)
 		return (NULL);
 	path = NULL;
@@ -104,97 +103,3 @@ char	*fpath(t_env *env, char *cmd, int i)
 	fsplit(str);
 	return (path);
 }
-
-// if (accessible(cmd))
-// 		return (abspath(cmd));
-
-// static	int	accessible(char *cmd)
-// {
-// 	char	*path;
-// 	int	i;
-
-// 	i = 0;
-// 	path = NULL;
-// 	while (cmd && cmd[++i])
-// 		if (cmd[i] == '/')
-// 			break ;
-// 	if (cmd && cmd[i]) {
-// 		if (!access(cmd, F_OK | X_OK))
-// 			return (1);
-// 	}
-// 	path = tjoin(tstrdup("./"), cmd);
-// 	if (!path)
-// 		return (0);
-// 	if (!access(path, F_OK | X_OK))
-// 	{
-// 		free(path);
-// 		return (1);
-// 	}
-// 	free(path);
-// 	if (!access(cmd, F_OK | X_OK))
-// 		return (1);
-// 	return (0);
-// }
-
-// static	char	*abspath(char *cmd)
-// {
-// 	char	*path;
-// 	int	i;
-
-// 	i = 0;
-// 	path = NULL;
-// 	while (cmd && cmd[++i])
-// 		if (cmd[i] == '/')
-// 			break ;
-// 	if (cmd && cmd[i])
-// 		if (!access(cmd, F_OK | X_OK))
-// 			return (tstrdup(cmd));
-// 	path = tjoin(tstrdup("./"), cmd);
-// 	if (!path)
-// 		return (0);
-// 	if (!access(path, F_OK | X_OK) && !is_a_directory(cmd))
-// 		return (path);
-// 	free(path);
-// 	if (!access(cmd, F_OK | X_OK))
-// 		return (tstrdup(cmd));
-// 	return (NULL);
-
-// }
-
-// static	int	is_a_directory(char *name)
-// {
-// 	DIR	*dir;
-
-// 	dir = opendir(name);
-// 	if (dir)
-// 	{
-// 		closedir(dir);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// int	set_execve(t_msh *msh, t_cmd *cmd)
-// {
-// 	msh->data->path = fpath(msh->env, cmd->name, -1);
-// 	if (!msh->data->path)
-// 	{
-// 		if (accessible(cmd->name))
-// 			msh->data->path = abspath(cmd->name);
-// 		return (0);
-// 	}
-// 	msh->data->argv = setup_args(cmd->name, cmd->argv);
-// 	if (!msh->data->argv)
-// 	{
-// 		free(msh->data->path);
-// 		return (0);
-// 	}
-// 	msh->data->envp = setup_env(msh->env);
-// 	if (!msh->data->envp)
-// 	{
-// 		free(msh->data->path);
-// 		fsplit(msh->data->argv);
-// 		return (0);
-// 	}
-// 	return (1);
-// }

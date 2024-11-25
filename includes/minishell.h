@@ -133,10 +133,10 @@ char	*setup_name(char *str);
 ///// BUILTINS
 
 ///// FREE.c
-void	free_exit(t_all *all, t_msh *msh, int t); // free in child process
-void	freenv(t_env *env); // free env linked list 
-void	freenvar(t_env *var); // free only one environment variable
-void	fsplit(char **str); // free a char **
+void	free_exit(t_all *all, t_msh *msh, int t);
+void	freenv(t_env *env);
+void	freenvar(t_env *var);
+void	fsplit(char **str);
 ///// FREE.c
 
 ///// TLIB.c
@@ -155,5 +155,8 @@ int		l_argsize(t_args *argv);
 int		valid_export(t_msh *msh, char *n, int i);
 
 int		curr_dir(void);
+
+char	*ltoa(long long int in);
+long long int		atolli(char *argv);
 
 #endif

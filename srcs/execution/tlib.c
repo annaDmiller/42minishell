@@ -6,7 +6,7 @@
 /*   By: tespandj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 21:22:11 by tespandj          #+#    #+#             */
-/*   Updated: 2024/11/23 02:42:34 by tespandj         ###   ########.fr       */
+/*   Updated: 2024/11/25 00:01:10 by tespandj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
@@ -97,4 +97,3 @@ int	dir_check(char *file)
 	closedir(dir);
 	return (2);
 }
-
