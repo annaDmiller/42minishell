@@ -79,6 +79,5 @@ long long int	atolli(char *argv)
 		nt = nt * 10 + (argv[i] - 48);
 		i++;
 	}
-
 	return (nt *= sign);
 }

@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-
-
 static	int	val_exit(long long int n)
 {
 	if (!n)
