@@ -12,7 +12,6 @@
 #include "../../includes/minishell.h"
 
 static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos);
-static	int	fds(t_cmd *cmd);
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd);
 static	void	check_signal_exit(t_all *all, int rtval);
 
@@ -66,19 +65,25 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			free_exit(all, msh, 1);
 			exit(127);
 		}
-		fds(cmd);
-		printf("[PATH] / %s\n", msh->data->path);
+		fds(all);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 			exec_fail(all, msh, cmd);
 	}
 }
 
-static	int	fds(t_cmd *cmd)
+int	fds(t_all *all)
 {
-	if (cmd->redir && cmd->redir->fd_infile)
-		close(cmd->redir->fd_infile);
-	if (cmd->redir && cmd->redir->fd_outfile)
-		close(cmd->redir->fd_outfile);
+	t_cmd	*cmd;
+
+	cmd = all->lst_cmd;
+	while (cmd)
+	{
+		if (cmd->fds && cmd->fds->fd_infile)
+			close(cmd->fds->fd_infile);
+		if (cmd->fds && cmd->fds->fd_outfile)
+			close(cmd->fds->fd_outfile);
+		cmd = cmd->next;
+	}
 	return (1);
 }
 

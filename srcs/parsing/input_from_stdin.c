@@ -18,15 +18,19 @@ static void	add_nl_to_line(t_all *all, t_cmd *cmd);
 int	input_from_stdin(t_all *all, t_cmd *cmd)
 {
 	all->line++;
-	if (cmd->redir->fd_infile >= 0)
+	if (cmd->redir->infile)
 	{
-		if (cmd->redir->fd_infile)
-			close(cmd->redir->fd_infile);
-		if (cmd->redir->stdin_delim)
-			free(cmd->redir->stdin_delim);
-		if (cmd->redir->name_delim)
-			free(cmd->redir->name_delim);
+		free(cmd->redir->infile);
+		cmd->redir->infile = NULL;
+	}
+	if (cmd->redir->stdin_delim)
+	{
+		free(cmd->redir->stdin_delim);
 		cmd->redir->stdin_delim = NULL;
+	}
+	if (cmd->redir->name_delim)
+	{
+		free(cmd->redir->name_delim);
 		cmd->redir->name_delim = NULL;
 	}
 	cmd->redir->name_delim = read_keyword(all, cmd);
@@ -37,9 +41,7 @@ int	input_from_stdin(t_all *all, t_cmd *cmd)
 		ft_putstr_fd("'\n", 2);
 	}
 	hdc_writing(all, cmd);
-	cmd->redir->in_type = 's';
-	cmd->redir->fd_infile = '0';
-	return (0);
+	return (cmd->redir->in_type = 's', 0);
 }
 
 int	read_from_stdin(t_all *all, t_cmd *cmd)
@@ -98,16 +100,17 @@ static char	*read_keyword(t_all *all, t_cmd *cmd)
 
 int	hdc_writing(t_all *all, t_cmd *cmd)
 {
+	int	fd;
+
+	fd = 0;
 	free(cmd->redir->name_delim);
 	cmd->redir->name_delim = NULL;
-	if (cmd->redir->fd_infile > 0)
-		close(cmd->redir->fd_infile);
-	cmd->redir->fd_infile = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	if (cmd->redir->fd_infile == -1)
+	fd = open(".eof", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+	if (fd == -1)
 		return (error("temp_input: open error", all, SIGINT), 1);
 	if (cmd->redir->stdin_delim)
-		ft_putstr_fd(cmd->redir->stdin_delim, cmd->redir->fd_infile);
-	close(cmd->redir->fd_infile);
+		ft_putstr_fd(cmd->redir->stdin_delim, fd);
+	close(fd);
 	all->msh->hdc_situation = 1;
 	return (0);
 }

@@ -54,9 +54,34 @@ static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos)
 	exit(22);
 }
 
+static int	fds_opening(t_cmd *cmd, t_fds *fds)
+{
+	if (cmd->redir->in_type != '0')
+	{
+		if (cmd->redir->in_type == 'f')
+			fds->fd_infile = open(cmd->redir->infile, O_RDONLY);
+		if (fds->fd_infile == -1)
+			return (cmd->has_to_be_executed = 0, err_msg(NULL,
+					cmd->redir->infile, "No such file or directory\n"), 0);
+	}
+	if (cmd->redir->out_type != '0')
+	{
+		if (cmd->redir->out_type == 'r')
+			fds->fd_outfile = open(cmd->redir->outfile,
+					O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		else if (cmd->redir->out_type == 'a')
+			fds->fd_outfile = open(cmd->redir->outfile,
+					O_WRONLY | O_APPEND | O_CREAT, 0666);
+		if (fds->fd_outfile == -1)
+			return (cmd->has_to_be_executed = 0, err_msg(NULL,
+					cmd->redir->outfile, "couldnt retrieve/create\n"), 0);
+	}
+	return (1);
+}
+
 void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
-	if (!cmd->redir)
+	if (!cmd->redir || !fds_opening(cmd, cmd->fds))
 		return ;
 	if (g_sig)
 		return (free_exit(all, msh, 1), exit(SIGINT));
@@ -68,12 +93,12 @@ void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	if (cmd->redir->in_type != '0')
 	{
 		if (cmd->redir->in_type == 's')
-			cmd->redir->fd_infile = open(".eof", O_RDONLY, 0644);
-		if (dup2(cmd->redir->fd_infile, STDIN_FILENO) == -1)
+			cmd->fds->fd_infile = open(".eof", O_RDONLY, 0644);
+		if (dup2(cmd->fds->fd_infile, STDIN_FILENO) == -1)
 			wgas_pipe(all, msh, pos);
 	}
 	if (cmd->redir->out_type != '0')
-		if (dup2(cmd->redir->fd_outfile, STDOUT_FILENO) == -1)
+		if (dup2(cmd->fds->fd_outfile, STDOUT_FILENO) == -1)
 			wgas_pipe(all, msh, pos);
 	if (pos == SOLO)
 		return ;

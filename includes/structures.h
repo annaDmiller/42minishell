@@ -50,9 +50,15 @@ typedef struct s_redir
 	char	out_type;
 	char	*name_delim;
 	char	*stdin_delim;
-	int		fd_infile;
-	int		fd_outfile;
+	char	*infile;
+	char	*outfile;
 }		t_redir;
+
+typedef struct s_fds
+{
+	int	fd_infile;
+	int	fd_outfile;
+}		t_fds;
 
 typedef struct s_cmd
 {
@@ -60,6 +66,7 @@ typedef struct s_cmd
 	struct s_redir	*redir;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
+	struct s_fds	*fds;
 	char			*name;
 	int				quote;
 	int				has_to_be_executed;

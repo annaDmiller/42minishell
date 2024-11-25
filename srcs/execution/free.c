@@ -22,6 +22,7 @@ void	free_exit(t_all *all, t_msh *msh, int t)
 	if (!t)
 		return ;
 	rl_clear_history();
+	fds(all);
 	free_all_struct(all, 1);
 }
 

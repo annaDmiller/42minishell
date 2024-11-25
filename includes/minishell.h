@@ -156,7 +156,6 @@ int		valid_export(t_msh *msh, char *n, int i);
 
 int		curr_dir(void);
 
-char	*ltoa(long long int in);
-long long int		atolli(char *argv);
+int		fds(t_all *all);
 
 #endif

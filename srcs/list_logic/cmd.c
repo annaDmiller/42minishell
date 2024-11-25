@@ -25,6 +25,14 @@ t_cmd	*cmd_new(t_all *all)
 	new->redir = NULL;
 	new->quote = 0;
 	new->has_to_be_executed = 1;
+	new->fds = (t_fds *) malloc(sizeof(t_fds));
+	if (!new->fds)
+	{
+		free(new);
+		error("cmd_new: Malloc error", all, SIGTERM);
+	}
+	new->fds->fd_infile = 0;
+	new->fds->fd_outfile = 0;
 	return (new);
 }
 

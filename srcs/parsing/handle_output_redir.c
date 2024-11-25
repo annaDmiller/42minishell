@@ -13,6 +13,7 @@
 
 static void	output_replace(t_all *all, t_cmd *cmd);
 static void	output_append(t_all *all, t_cmd *cmd);
+static void	open_and_close(t_cmd *cmd, char type);
 
 void	handle_output(t_all *all, t_cmd *cmd)
 {
@@ -34,22 +35,20 @@ static void	output_append(t_all *all, t_cmd *cmd)
 		return (error("output reditect: syntax error", all, SIGINT));
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
-		if (cmd->redir->fd_outfile != -2)
-			return ;
-		cmd->redir->fd_outfile = 1;
+		if (cmd->redir->outfile)
+			return (free(addr));
+		cmd->redir->outfile = addr;
 		cmd->redir->out_type = 'a';
 		return ;
 	}
-	if (cmd->redir->fd_outfile != -2)
-		close(cmd->redir->fd_outfile);
-	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_APPEND | O_CREAT, 0666);
-	if (cmd->redir->fd_outfile == -1)
+	if (cmd->redir->outfile)
 	{
-		cmd->has_to_be_executed = 0;
-		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr));
+		free(cmd->redir->outfile);
+		cmd->redir->outfile = NULL;
 	}
-	free(addr);
+	cmd->redir->outfile = addr;
 	cmd->redir->out_type = 'a';
+	open_and_close(cmd, cmd->redir->out_type);
 	return ;
 }
 
@@ -62,21 +61,31 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 		return (error("output reditect: syntax error", all, SIGINT));
 	if (!ft_strncmp(addr, "/dev/stdout", 11))
 	{
-		if (cmd->redir->fd_outfile != -2)
-			return ;
-		cmd->redir->fd_outfile = 1;
+		if (cmd->redir->outfile)
+			return (free(addr));
+		cmd->redir->outfile = addr;
 		cmd->redir->out_type = 'r';
 		return ;
 	}
-	if (cmd->redir->fd_outfile != -2)
-		close(cmd->redir->fd_outfile);
-	cmd->redir->fd_outfile = open(addr, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	if (cmd->redir->fd_outfile == -1)
+	if (cmd->redir->outfile)
 	{
-		cmd->has_to_be_executed = 0;
-		return (err_msg(NULL, addr, "couldnt retrieve/create\n"), free(addr));
+		free(cmd->redir->outfile);
+		cmd->redir->outfile = NULL;
 	}
-	free(addr);
+	cmd->redir->outfile = addr;
 	cmd->redir->out_type = 'r';
+	open_and_close(cmd, cmd->redir->out_type);
+	return ;
+}
+
+static void	open_and_close(t_cmd *cmd, char type)
+{
+	int	fd;
+
+	if (type == 'a')
+		fd = open(cmd->redir->outfile, O_WRONLY | O_APPEND | O_CREAT, 0666);
+	if (type == 'r')
+		fd = open(cmd->redir->outfile, O_TRUNC | O_WRONLY | O_CREAT, 0666);
+	close(fd);
 	return ;
 }

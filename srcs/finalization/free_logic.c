@@ -51,6 +51,8 @@ void	free_cmd_struct(t_cmd *lst_cmd)
 			free_redir_struct(cmd->redir);
 		if (cmd->argv)
 			free_args(cmd->argv);
+		if (cmd->fds)
+			free(cmd->fds);
 		temp = cmd->next;
 		free(cmd);
 		cmd = temp;
@@ -63,10 +65,10 @@ void	free_redir_struct(t_redir *redir)
 {
 	if (redir->stdin_delim)
 		free(redir->stdin_delim);
-	if (redir->fd_infile > 0)
-		close(redir->fd_infile);
-	if (redir->fd_outfile > 1)
-		close (redir->fd_outfile);
+	if (redir->infile)
+		free(redir->infile);
+	if (redir->outfile)
+		free (redir->outfile);
 	if (redir->name_delim)
 		free(redir->name_delim);
 	free(redir);

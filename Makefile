@@ -5,7 +5,6 @@ CFLAGS = -Wall -Werror -Wextra -g3
 EXEC_PRT = srcs/execution/pipe.c \
                 srcs/execution/exec.c \
                 srcs/execution/free.c \
-		srcs/execution/ltoa.c \
                 srcs/execution/tlib.c \
                 srcs/execution/tlist.c \
 		srcs/execution/utils.c \

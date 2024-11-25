@@ -39,8 +39,8 @@ char	*handle_redir(t_all *all, t_cmd *cmd)
 void	init_redir(t_redir *redir)
 {
 	redir->is_pipe = 'n';
-	redir->fd_infile = -2;
-	redir->fd_outfile = -2;
+	redir->infile = NULL;
+	redir->outfile = NULL;
 	redir->in_type = '0';
 	redir->out_type = '0';
 	redir->stdin_delim = NULL;

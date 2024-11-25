@@ -40,21 +40,17 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 	addr = read_addr(all, cmd);
 	if (!addr)
 		return (error("input_redir: syntax error", all, SIGINT), 1);
-	if (cmd->redir->fd_infile > 0)
-		close(cmd->redir->fd_infile);
+	if (cmd->redir->infile)
+	{
+		free(cmd->redir->infile);
+		cmd->redir->infile = NULL;
+	}
 	if (cmd->redir->stdin_delim)
 	{
 		free(cmd->redir->stdin_delim);
 		cmd->redir->stdin_delim = NULL;
 	}
-	cmd->redir->fd_infile = open(addr, O_RDONLY);
-	if (cmd->redir->fd_infile == -1)
-	{
-		cmd->has_to_be_executed = 0;
-		return (err_msg(NULL, addr,
-				"No such file or directory\n"), free(addr), 1);
-	}
+	cmd->redir->infile = addr;
 	cmd->redir->in_type = 'f';
-	free(addr);
 	return (0);
 }
