@@ -5,6 +5,7 @@ CFLAGS = -Wall -Werror -Wextra -g3
 EXEC_PRT = srcs/execution/pipe.c \
                 srcs/execution/exec.c \
                 srcs/execution/free.c \
+		srcs/execution/ltoa.c \
                 srcs/execution/tlib.c \
                 srcs/execution/tlist.c \
 		srcs/execution/utils.c \
@@ -31,10 +32,8 @@ PARSING_PRT = srcs/parsing/adding_arguement.c \
 		srcs/signal/signal_handlers.c \
 		srcs/signal/sigint_hdl_while_child.c  \
 		srcs/lexer/validate_input.c
-		# srcs/finalization/exit_logic.c \
 
 TEST = srcs/main.c \
-	# unit.c \
 
 BUILTINS = srcs/builtins/builtins.c \
 		srcs/builtins/env.c \
