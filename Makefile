@@ -40,6 +40,7 @@ BUILTINS = srcs/builtins/builtins.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/exit.c \
+		srcs/builtins/ltoa.c \
 		srcs/builtins/unset.c \
 		srcs/builtins/export.c \
 

@@ -158,4 +158,8 @@ int		curr_dir(void);
 
 int		fds(t_all *all);
 
+long long int	atolli(char *argv);
+int	check_lli(char *argv);
+int	valid_lli(long long int nt, char c, int sign, int situation);
+
 #endif
