@@ -45,13 +45,13 @@ int	texit(t_msh *msh, t_cmd *cmd, t_args *argv)
 		i++;
 	if (!check_lli(argv->arg) || argv->arg[i])
 	{
-		err_msg("error", argv->arg, "numeric argument required\n");
+		err_msg("error", argv->arg, "numeric argument required");
 		msh->have_to_exit = 1;
 		msh->exit = 2;
 	}
 	else if (argv && argv->next)
 	{
-		err_msg("exit", NULL, "too many arguments\n");
+		err_msg("exit", NULL, "too many arguments");
 		msh->exit = 1;
 	}
 	else

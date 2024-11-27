@@ -22,7 +22,7 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	int					rtval;
 
 	rtval = 0;
-	if (!cmd || ((pos == SOLO && !cmd->redir && (cmd->name
+	if (!cmd || !cmd->has_to_be_executed || ((pos == SOLO && !cmd->redir && (cmd->name
 					&& tstrcmp(cmd->name, "env") && exec_buitin(msh, cmd)))))
 		return (0);
 	tpid = fork();
@@ -61,7 +61,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		if (!cmd_check(all, msh, cmd) || (!tstrcmp(cmd->name, ""))
 			|| !set_execve(msh, cmd))
 		{
-			err_msg(NULL, cmd->name, "command not found\n");
+			err_msg(cmd->name, "command not found", NULL); // a regler pour chmod 000 a ./a
 			free_exit(all, msh, 1);
 			exit(127);
 		}
@@ -84,12 +84,14 @@ int	fds(t_all *all)
 			close(cmd->fds->fd_outfile);	
 		cmd = cmd->next;
 	}
+	if (all->msh->_stdin_save > 0)
+		close(all->msh->_stdin_save);
 	return (1);
 }
 
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 {
-	err_msg(NULL, cmd->name, "execution failed\n");
+	err_msg(cmd->name, "execution failed", NULL);
 	free(msh->data->path);
 	fsplit(msh->data->argv);
 	fsplit(msh->data->envp);

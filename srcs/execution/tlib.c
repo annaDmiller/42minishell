@@ -14,10 +14,11 @@
 
 char	*tstrdup(char *src)
 {
-	int		i;
 	char	*dest;
+	int		i;
 
 	i = -1;
+	dest = NULL;
 	if (!src)
 		return (NULL);
 	dest = malloc(sizeof(char) * (tstrlen(src) + 1));

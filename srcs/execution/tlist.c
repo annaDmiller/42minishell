@@ -48,23 +48,38 @@ int	curr_dir(void)
 
 void	putstderr(char *str)
 {
+	int		save;
+
 	if (!str)
 		return ;
-	while (*str)
-		write(2, str++, 1);
+	save = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	printf("%s", str);
+	dup2(save, STDOUT_FILENO);
+	close(save);
 }
 
 void	err_msg(char *ft, char *arg, char *str)
 {
-	if (ft)
-	{
-		putstderr(ft);
-		write(2, ": ", 2);
-	}
+	char	*msg;
+	int		save;
+
+	msg = tstrdup(ft);
 	if (arg)
 	{
-		putstderr(arg);
-		write(2, ": ", 2);
+		msg = tjoin(msg, ": ");
+		msg = tjoin(msg, arg);
 	}
-	putstderr(str);
+	if (str)
+	{
+		msg = tjoin(msg, ": ");
+		msg = tjoin(msg, str);
+	}
+	msg = tjoin(msg, "\n");
+	save = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	printf("%s", msg);
+	dup2(save, STDOUT_FILENO);
+	close(save);
+	free(msg);
 }

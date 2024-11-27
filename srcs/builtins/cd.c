@@ -34,9 +34,9 @@ int	cd(t_msh *msh, t_args *argv, int tzy)
 						&& (argv->arg[0] == '-'))) && argv->arg[0] != '~')))
 	{
 		if (curr_dir() && dir_check(argv->arg) == 0)
-			err_msg("cd", argv->arg, "Not a directory\n");
+			err_msg("cd", argv->arg, "Not a directory");
 		else if (!curr_dir() || dir_check(argv->arg) == 2)
-			err_msg("cd", argv->arg, "No such file or directory\n");
+			err_msg("cd", argv->arg, "No such file or directory");
 	}
 	msh->exit = EXIT_FAILURE;
 	return (1);
@@ -71,32 +71,26 @@ int	valid_cd(t_msh *msh, t_args *argv)
 
 static	void	reset_pwd(t_msh *msh)
 {
-	t_args	export;
-
-	export.arg = tjoin(tjoin(tstrdup("PWD"), "="), msh->pwd);
 	if (env_retrieve_var(msh->env, "PWD"))
 	{
 		if (env_retrieve_var(msh->env, "PWD")->var)
 			free(env_retrieve_var(msh->env, "PWD")->var);
-		env_retrieve_var(msh->env, "PWD")->var = tstrdup(msh->pwd);
+		if (!msh->pwd)
+			env_retrieve_var(msh->env, "PWD")->var = tstrdup("..");
+		else if (msh->pwd)
+			env_retrieve_var(msh->env, "PWD")->var = tstrdup(msh->pwd);
 	}
-	if (export.arg)
-		free(export.arg);
 }
 
 static	void	reset_oldpwd(t_msh *msh)
 {
-	t_args	export;
-
-	export.arg = tjoin(tjoin(tstrdup("OLDPWD"), "="), msh->pwd);
-	if (env_retrieve_var(msh->env, "OLDPWD"))
+	if (env_retrieve_var(msh->env, "OLDPWD") && env_retrieve_var(msh->env, "PWD")
+		&& env_retrieve_var(msh->env, "PWD")->var)
 	{
 		if (env_retrieve_var(msh->env, "OLDPWD")->var)
 			free(env_retrieve_var(msh->env, "OLDPWD")->var);
-		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(msh->pwd);
+		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(env_retrieve_var(msh->env, "PWD")->var);
 	}
-	if (export.arg)
-		free(export.arg);
 }
 
 int	wave(t_msh *msh, char *str)
@@ -117,7 +111,7 @@ int	wave(t_msh *msh, char *str)
 		free(path);
 		return (1);
 	}
-	err_msg("cd", path, "No such file or directory\n");
+	err_msg("cd", path, "No such file or directory");
 	free(path);
 	return (0);
 }

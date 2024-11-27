@@ -29,7 +29,7 @@ int	echo(t_msh *msh, t_args *argv, int state, int n)
 			if (!putstr(argv->arg))
 			{
 				msh->exit = 1;
-				err_msg("echo", "write error", "No space left on device\n");
+				err_msg("echo", "write error", "No space left on device");
 				return (1);
 			}
 			if (argv->next)

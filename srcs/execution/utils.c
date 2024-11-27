@@ -27,7 +27,7 @@ int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 	if (dir)
 	{
 		closedir(dir);
-		err_msg(NULL, cmd->name, "Is a directory\n");
+		err_msg(NULL, cmd->name, "Is a directory");
 		free_exit(all, msh, 1);
 		exit(126);
 		return (0);

@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
+static int	fds_opening(t_cmd *cmd, t_fds *fds);
+static void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos);
+
 void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 {
 	if (pipe(msh->pipe_fd) == -1)
@@ -38,8 +41,36 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 	}
 }
 
+void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
+{
+	if (!cmd->redir || !fds_opening(cmd, cmd->fds))
+		return ;
+	if (g_sig)
+		return (free_exit(all, msh, 1), exit(SIGINT));
+	if (pos != SOLO)
+		close(msh->_stdin_save);
+	if (pos == START || pos == MID)
+		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
+			wgas_pipe(all, msh, pos);
+	if (cmd->redir->in_type != '0')
+	{
+		if (cmd->redir->in_type == 's')
+			cmd->fds->fd_infile = open(".eof", O_RDONLY, 0644);
+		if (dup2(cmd->fds->fd_infile, STDIN_FILENO) == -1)
+			wgas_pipe(all, msh, pos);
+	}
+	if (cmd->redir->out_type != '0')
+		if (dup2(cmd->fds->fd_outfile, STDOUT_FILENO) == -1)
+			wgas_pipe(all, msh, pos);
+	if (pos == SOLO)
+		return ;
+	close(msh->pipe_fd[0]);
+	close(msh->pipe_fd[1]);
+}
+
 static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos)
 {
+	fds(all);
 	if (msh->pwd)
 		free(msh->pwd);
 	if (msh->home)
@@ -76,31 +107,4 @@ static int	fds_opening(t_cmd *cmd, t_fds *fds)
 			return (0);
 	}
 	return (1);
-}
-
-void	chromakopia(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
-{
-	if (!cmd->redir || !fds_opening(cmd, cmd->fds))
-		return ;
-	if (g_sig)
-		return (free_exit(all, msh, 1), exit(SIGINT));
-	if (pos != SOLO)
-		close(msh->_stdin_save);
-	if (pos == START || pos == MID)
-		if (dup2(msh->pipe_fd[1], STDOUT_FILENO) == -1)
-			wgas_pipe(all, msh, pos);
-	if (cmd->redir->in_type != '0')
-	{
-		if (cmd->redir->in_type == 's')
-			cmd->fds->fd_infile = open(".eof", O_RDONLY, 0644);
-		if (dup2(cmd->fds->fd_infile, STDIN_FILENO) == -1)
-			wgas_pipe(all, msh, pos);
-	}
-	if (cmd->redir->out_type != '0')
-		if (dup2(cmd->fds->fd_outfile, STDOUT_FILENO) == -1)
-			wgas_pipe(all, msh, pos);
-	if (pos == SOLO)
-		return ;
-	close(msh->pipe_fd[0]);
-	close(msh->pipe_fd[1]);
 }
