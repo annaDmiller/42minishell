@@ -40,7 +40,8 @@ void	tpipe(t_all *all, t_msh *msh, t_cmd *cmd)
 
 static	void	wgas_pipe(t_all *all, t_msh *msh, t_pos pos)
 {
-	free(msh->pwd);
+	if (msh->pwd)
+		free(msh->pwd);
 	if (msh->home)
 		free(msh->home);
 	free(msh->data);
@@ -61,8 +62,7 @@ static int	fds_opening(t_cmd *cmd, t_fds *fds)
 		if (cmd->redir->in_type == 'f')
 			fds->fd_infile = open(cmd->redir->infile, O_RDONLY);
 		if (fds->fd_infile == -1)
-			return (cmd->has_to_be_executed = 0, err_msg(NULL,
-					cmd->redir->infile, "No such file or directory\n"), 0);
+			return (0);
 	}
 	if (cmd->redir->out_type != '0')
 	{
@@ -73,8 +73,7 @@ static int	fds_opening(t_cmd *cmd, t_fds *fds)
 			fds->fd_outfile = open(cmd->redir->outfile,
 					O_WRONLY | O_APPEND | O_CREAT, 0666);
 		if (fds->fd_outfile == -1)
-			return (cmd->has_to_be_executed = 0, err_msg(NULL,
-					cmd->redir->outfile, "couldnt retrieve/create\n"), 0);
+			return (0);
 	}
 	return (1);
 }
