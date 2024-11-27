@@ -101,6 +101,7 @@ static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 		err_msg(cmd->name, "execution failed", NULL);
 		msh->exit = 22;
 	}
+	msh->exit = 126;
 	free(msh->data->path);
 	fsplit(msh->data->argv);
 	fsplit(msh->data->envp);
