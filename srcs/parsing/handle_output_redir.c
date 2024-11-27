@@ -47,7 +47,7 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	}
 	cmd->redir->outfile = addr;
 	cmd->redir->out_type = 'a';
-	open_and_close(cmd, cmd->redir->out_type);
+	open_and_close(all, cmd, cmd->redir->out_type);
 	return ;
 }
 
@@ -73,6 +73,6 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	}
 	cmd->redir->outfile = addr;
 	cmd->redir->out_type = 'r';
-	open_and_close(cmd, cmd->redir->out_type);
+	open_and_close(all, cmd, cmd->redir->out_type);
 	return ;
 }

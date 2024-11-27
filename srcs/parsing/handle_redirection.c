@@ -84,7 +84,7 @@ char	*read_addr(t_all *all, t_cmd *cmd)
 	return (ret);
 }
 
-void	open_and_close(t_cmd *cmd, char type)
+void	open_and_close(t_all *all, t_cmd *cmd, char type)
 {
 	int	fd;
 
@@ -96,6 +96,7 @@ void	open_and_close(t_cmd *cmd, char type)
 	if (fd == -1)
 	{
 		cmd->has_to_be_executed = 0;
+		all->msh->exit = 1;
 		return (perror(cmd->redir->outfile));
 	}
 	if (type == 'f')
@@ -103,6 +104,7 @@ void	open_and_close(t_cmd *cmd, char type)
 	if (fd == -1)
 	{
 		cmd->has_to_be_executed = 0;
+		all->msh->exit = 1;
 		return (perror(cmd->redir->infile));
 	}
 	close(fd);

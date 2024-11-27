@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-// bash-5.1$ env -i unset PATH
-// env: ‘unset’: No such file or directory
-// bash-5.1$
 int	unset(t_msh *msh, t_args *argv)
 {
 	t_env	*save;

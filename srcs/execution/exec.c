@@ -46,7 +46,7 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 {
 	init_signals_child();
 	chromakopia(all, msh, cmd, pos);
-	if (!cmd->name || g_sig || !cmd->has_to_be_executed)
+	if (!cmd->name || g_sig)
 	{
 		free_exit(all, msh, 1);
 		exit(0);
@@ -58,8 +58,8 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	}
 	else if (cmd && cmd->name)
 	{
-		if (!cmd_check(all, msh, cmd) || (!tstrcmp(cmd->name, ""))
-			|| !set_execve(msh, cmd))
+		if (!cmd_check(all, msh, cmd) || (!tstrcmp(cmd->name, "") || !tstrcmp(cmd->name, ".")
+			|| !tstrcmp(cmd->name, "..")) || !set_execve(msh, cmd))
 		{
 			err_msg(cmd->name, "command not found", NULL); // a regler pour chmod 000 a ./a
 			free_exit(all, msh, 1);
@@ -91,12 +91,21 @@ int	fds(t_all *all)
 
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 {
-	err_msg(cmd->name, "execution failed", NULL);
+	if (is_a_dir(cmd->name))
+	{
+		err_msg(cmd->name, "Is a directory", NULL);
+		msh->exit = 126;
+	}
+	else
+	{
+		err_msg(cmd->name, "execution failed", NULL);
+		msh->exit = 22;
+	}
 	free(msh->data->path);
 	fsplit(msh->data->argv);
 	fsplit(msh->data->envp);
 	free_exit(all, msh, 1);
-	exit(1);
+	exit(msh->exit);
 }
 
 static	void	check_signal_exit(t_all *all, int rtval)

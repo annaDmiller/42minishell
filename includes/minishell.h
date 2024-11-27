@@ -60,7 +60,7 @@ int				is_redir(char car);
 //parsing main functions
 char			*handle_dollar(t_all *all, t_cmd *cmd);
 char			*handle_redir(t_all *all, t_cmd *cmd);
-void	        open_and_close(t_cmd *cmd, char type);
+void			open_and_close(t_all *all, t_cmd *cmd, char type);
 char			*read_addr(t_all *all, t_cmd *cmd);
 void			handle_input(t_all *all, t_cmd *cmd);
 int				input_from_stdin(t_all *all, t_cmd *cmd);
@@ -163,5 +163,7 @@ int				fds(t_all *all);
 
 int				check_lli(char *argv);
 int				valid_lli(long long int nt, char c, int sign, int situation);
+
+int				is_a_dir(char	*folder);
 
 #endif

@@ -13,24 +13,20 @@
 
 int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 {
-	DIR	*dir;
-
-	if (!cmd || (cmd && !cmd->name) || (!cmd->has_to_be_executed))
+	if (!tstrcmp(cmd->name, "."))
+	{
+		err_msg("bash", ".", "filename argument required");
+		err_msg(".", "usage", ". filename [arguments]");
+		free_exit(all, msh, 1);
+		exit(2);
+	}
+	else if (!tstrcmp(cmd->name, "..") || (!tstrcmp(cmd->name, "")))
 		return (0);
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (msh->data->path)
 	{
 		free(msh->data->path);
 		return (1);
-	}
-	dir = opendir(cmd->name);
-	if (dir)
-	{
-		closedir(dir);
-		err_msg(NULL, cmd->name, "Is a directory");
-		free_exit(all, msh, 1);
-		exit(126);
-		return (0);
 	}
 	return (1);
 }

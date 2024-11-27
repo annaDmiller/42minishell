@@ -76,8 +76,6 @@ int	dir_check(char *file)
 	struct dirent	*ye;
 	DIR				*dir;
 
-	if (!file)
-		return (0);
 	dir = opendir(file);
 	if (dir)
 	{
@@ -97,4 +95,17 @@ int	dir_check(char *file)
 	}
 	closedir(dir);
 	return (2);
+}
+
+int	is_a_dir(char	*folder)
+{
+	DIR	*dir;
+
+	dir = opendir(folder);
+	if (dir)
+	{
+		closedir(dir);
+		return (1);
+	}
+	return (0);
 }

@@ -52,6 +52,6 @@ static int	input_from_file(t_all *all, t_cmd *cmd)
 	}
 	cmd->redir->infile = addr;
 	cmd->redir->in_type = 'f';
-	open_and_close(cmd, cmd->redir->in_type);
+	open_and_close(all, cmd, cmd->redir->in_type);
 	return (0);
 }
