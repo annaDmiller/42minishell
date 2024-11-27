@@ -28,9 +28,14 @@ int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 		free(msh->data->path);
 		return (1);
 	}
+	if (!msh->data->path)
+		if (!access(cmd->name, F_OK | X_OK))
+			return (1);
 	msh->exit = 127;
 	if (access(cmd->name, F_OK) == 0 && access(cmd->name, X_OK) == -1)
 		msh->exit = 126;
+	if (msh->exit == 127)
+		err_msg(cmd->name, "command not found", NULL);
 	return (0);
 }
 

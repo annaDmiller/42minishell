@@ -22,8 +22,9 @@ int	_execmd(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	int					rtval;
 
 	rtval = 0;
-	if (!cmd || !cmd->has_to_be_executed || ((pos == SOLO && !cmd->redir && (cmd->name
-					&& tstrcmp(cmd->name, "env") && exec_buitin(msh, cmd)))))
+	if (!cmd || !cmd->has_to_be_executed || ((pos == SOLO && !cmd->redir
+				&& (cmd->name && tstrcmp(cmd->name, "env")
+					&& exec_buitin(msh, cmd)))))
 		return (0);
 	tpid = fork();
 	if (tpid == -1)
@@ -62,8 +63,6 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 		{
 			if (msh->exit == 126)
 				err_msg(cmd->name, "Permission denied", NULL);
-			else
-				err_msg(cmd->name, "command not found", NULL); // a regler pour chmod 000 a ./a
 			free_exit(all, msh, 1);
 			exit(msh->exit);
 		}
@@ -83,7 +82,7 @@ int	fds(t_all *all)
 		if (cmd->fds && cmd->fds->fd_infile > 0)
 			close(cmd->fds->fd_infile);
 		if (cmd->fds && cmd->fds->fd_outfile > 0)
-			close(cmd->fds->fd_outfile);	
+			close(cmd->fds->fd_outfile);
 		cmd = cmd->next;
 	}
 	if (all->msh->_stdin_save > 0)

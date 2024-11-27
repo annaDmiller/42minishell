@@ -84,12 +84,17 @@ static	void	reset_pwd(t_msh *msh)
 
 static	void	reset_oldpwd(t_msh *msh)
 {
-	if (env_retrieve_var(msh->env, "OLDPWD") && env_retrieve_var(msh->env, "PWD")
+	char	*pwd;
+
+	pwd = NULL;
+	if (env_retrieve_var(msh->env, "OLDPWD")
+		&& env_retrieve_var(msh->env, "PWD")
 		&& env_retrieve_var(msh->env, "PWD")->var)
 	{
+		pwd = env_retrieve_var(msh->env, "PWD")->var;
 		if (env_retrieve_var(msh->env, "OLDPWD")->var)
 			free(env_retrieve_var(msh->env, "OLDPWD")->var);
-		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(env_retrieve_var(msh->env, "PWD")->var);
+		env_retrieve_var(msh->env, "OLDPWD")->var = tstrdup(pwd);
 	}
 }
 
