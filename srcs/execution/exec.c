@@ -78,10 +78,10 @@ int	fds(t_all *all)
 	cmd = all->lst_cmd;
 	while (cmd)
 	{
-		if (cmd->fds && cmd->fds->fd_infile)
+		if (cmd->fds && cmd->fds->fd_infile > 0)
 			close(cmd->fds->fd_infile);
-		if (cmd->fds && cmd->fds->fd_outfile)
-			close(cmd->fds->fd_outfile);
+		if (cmd->fds && cmd->fds->fd_outfile > 0)
+			close(cmd->fds->fd_outfile);	
 		cmd = cmd->next;
 	}
 	return (1);
