@@ -28,7 +28,10 @@ int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 		free(msh->data->path);
 		return (1);
 	}
-	return (1);
+	msh->exit = 127;
+	if (access(cmd->name, F_OK) == 0 && access(cmd->name, X_OK) == -1)
+		msh->exit = 126;
+	return (0);
 }
 
 int	valid_export(t_msh *msh, char *n, int i)

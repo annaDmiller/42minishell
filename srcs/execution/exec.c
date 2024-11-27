@@ -58,12 +58,14 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	}
 	else if (cmd && cmd->name)
 	{
-		if (!cmd_check(all, msh, cmd) || (!tstrcmp(cmd->name, "") || !tstrcmp(cmd->name, ".")
-			|| !tstrcmp(cmd->name, "..")) || !set_execve(msh, cmd))
+		if (!cmd_check(all, msh, cmd) || !set_execve(msh, cmd))
 		{
-			err_msg(cmd->name, "command not found", NULL); // a regler pour chmod 000 a ./a
+			if (msh->exit == 126)
+				err_msg(cmd->name, "Permission denied", NULL);
+			else
+				err_msg(cmd->name, "command not found", NULL); // a regler pour chmod 000 a ./a
 			free_exit(all, msh, 1);
-			exit(127);
+			exit(msh->exit);
 		}
 		fds(all);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
@@ -92,15 +94,9 @@ int	fds(t_all *all)
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 {
 	if (is_a_dir(cmd->name))
-	{
 		err_msg(cmd->name, "Is a directory", NULL);
-		msh->exit = 126;
-	}
 	else
-	{
 		err_msg(cmd->name, "execution failed", NULL);
-		msh->exit = 22;
-	}
 	msh->exit = 126;
 	free(msh->data->path);
 	fsplit(msh->data->argv);
