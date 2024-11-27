@@ -83,3 +83,22 @@ char	*read_addr(t_all *all, t_cmd *cmd)
 	all->temp_for_free = NULL;
 	return (ret);
 }
+
+void	open_and_close(t_cmd *cmd, char type)
+{
+	int	fd;
+
+	fd = 0;
+	if (type == 'a')
+		fd = open(cmd->redir->outfile, O_WRONLY | O_APPEND | O_CREAT, 0666);
+	if (type == 'r')
+		fd = open(cmd->redir->outfile, O_TRUNC | O_WRONLY | O_CREAT, 0666);
+	if (fd == -1)
+		return (err_msg(cmd->redir->outfile, NULL, NULL), perror(cmd->redir->outfile));
+	if (type == 'f')
+		fd = open(cmd->redir->infile, O_RDONLY);
+	if (fd == -1)
+		return (err_msg(cmd->redir->infile, NULL, NULL), perror(cmd->redir->infile));
+	close(fd);
+	return ;
+}
