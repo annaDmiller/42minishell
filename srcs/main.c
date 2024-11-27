@@ -22,6 +22,8 @@ int	main(int argc, char **argv, char **envp)
 	t_msh	msh;
 
 	g_sig = 0;
+	if (!isatty(STDIN_FILENO))
+		return (1);
 	all = NULL;
 	everyinit(&msh, envp, argc, argv);
 	init_signals(all);

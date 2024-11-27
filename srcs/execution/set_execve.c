@@ -15,12 +15,7 @@ int	set_execve(t_msh *msh, t_cmd *cmd)
 {
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
-	{
-		if (!access(cmd->name, F_OK | X_OK))
-			msh->data->path = tstrdup(cmd->name);
-		else
-			return (0);
-	}
+		return (0);
 	msh->data->argv = setup_args(cmd->name, cmd->argv);
 	if (!msh->data->argv)
 	{
@@ -95,7 +90,7 @@ char	*fpath(t_env *env, char *cmd, int i)
 	while (str[++i])
 	{
 		str[i] = tjoin(tjoin(str[i], "/"), cmd);
-		if (!access(str[i], F_OK | X_OK))
+		if (!access(str[i], F_OK | X_OK | R_OK) && !is_a_dir(str[i]))
 			break ;
 	}
 	if (str[i])

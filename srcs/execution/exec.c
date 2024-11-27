@@ -67,6 +67,9 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			exit(msh->exit);
 		}
 		fds(all);
+		printf("%s\n", msh->data->path);
+		printf("%s\n", msh->data->argv[0]);
+		printf("%s\n", msh->data->envp[0]);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 			exec_fail(all, msh, cmd);
 	}
@@ -92,11 +95,12 @@ int	fds(t_all *all)
 
 static	int	exec_fail(t_all *all, t_msh *msh, t_cmd *cmd)
 {
+	msh->exit = 0;
 	if (is_a_dir(cmd->name))
+	{
 		err_msg(cmd->name, "Is a directory", NULL);
-	else
-		err_msg(cmd->name, "execution failed", NULL);
-	msh->exit = 126;
+		msh->exit = 126;
+	}
 	free(msh->data->path);
 	fsplit(msh->data->argv);
 	fsplit(msh->data->envp);
