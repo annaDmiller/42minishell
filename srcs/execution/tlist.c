@@ -48,6 +48,8 @@ int	curr_dir(void)
 
 void	putstderr(char *str)
 {
+	if (!str)
+		return ;
 	while (*str)
 		write(2, str++, 1);
 }

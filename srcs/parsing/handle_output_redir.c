@@ -13,7 +13,6 @@
 
 static void	output_replace(t_all *all, t_cmd *cmd);
 static void	output_append(t_all *all, t_cmd *cmd);
-static void	open_and_close(t_cmd *cmd, char type);
 
 void	handle_output(t_all *all, t_cmd *cmd)
 {
@@ -75,17 +74,5 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	cmd->redir->outfile = addr;
 	cmd->redir->out_type = 'r';
 	open_and_close(cmd, cmd->redir->out_type);
-	return ;
-}
-
-static void	open_and_close(t_cmd *cmd, char type)
-{
-	int	fd;
-
-	if (type == 'a')
-		fd = open(cmd->redir->outfile, O_WRONLY | O_APPEND | O_CREAT, 0666);
-	if (type == 'r')
-		fd = open(cmd->redir->outfile, O_TRUNC | O_WRONLY | O_CREAT, 0666);
-	close(fd);
 	return ;
 }
