@@ -85,6 +85,8 @@ static	int	validate_pipes(t_all *all)
 		}
 		ind++;
 	}
+	if (al_num == 0)
+		return (0);
 	return (1);
 }
 
