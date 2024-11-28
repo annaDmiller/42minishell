@@ -15,7 +15,12 @@ int	set_execve(t_msh *msh, t_cmd *cmd)
 {
 	msh->data->path = fpath(msh->env, cmd->name, -1);
 	if (!msh->data->path)
-		return (0);
+	{
+		if (!access(cmd->name, F_OK | R_OK | X_OK))
+			msh->data->path = tstrdup(cmd->name);
+		else
+			return (0);
+	}
 	msh->data->argv = setup_args(cmd->name, cmd->argv);
 	if (!msh->data->argv)
 	{

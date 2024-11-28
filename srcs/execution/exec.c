@@ -61,7 +61,12 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 	{
 		if (!cmd_check(all, msh, cmd) || !set_execve(msh, cmd))
 		{
-			if (msh->exit == 126)
+			if (is_a_dir(cmd->name))
+			{
+				err_msg(cmd->name, "Is a directory", NULL);
+				msh->exit = 126;
+			}
+			else if (msh->exit == 126)
 				err_msg(cmd->name, "Permission denied", NULL);
 			free_exit(all, msh, 1);
 			exit(msh->exit);
