@@ -20,6 +20,7 @@ void	init_signals(t_all *all)
 	struct sigaction	act_bs;
 	struct sigaction	act_c;
 
+	g_sig = 0;
 	act_bs = init_sig_bs_logic();
 	if (sigaction(SIGQUIT, &act_bs, NULL) == -1)
 		error("init_signals: sigaction error", all, SIGTERM);

@@ -21,7 +21,6 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_msh	msh;
 
-	g_sig = 0;
 	if (!isatty(STDIN_FILENO))
 		return (1);
 	all = NULL;
@@ -36,8 +35,7 @@ int	main(int argc, char **argv, char **envp)
 		all = init_all_struct(all, &msh);
 		if (!line)
 			break ;
-		if (is_empty_line(line))
-			process_line(all, &msh, &line);
+		process_line(all, &msh, &line);
 		rl_on_new_line();
 	}
 	if (!line)
@@ -50,6 +48,8 @@ static	void	process_line(t_all *all, t_msh *msh, char **line)
 {
 	int	check_line;
 
+	if (!is_empty_line(*line))
+		return ;
 	check_line = 1;
 	all->line = *line;
 	add_history(all->line);
