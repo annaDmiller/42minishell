@@ -36,11 +36,8 @@ static void	output_append(t_all *all, t_cmd *cmd)
 	{
 		if (cmd->redir->outfile)
 			return (free(addr));
-		cmd->redir->outfile = addr;
-		cmd->redir->out_type = 'a';
-		return ;
 	}
-	if (cmd->redir->outfile)
+	else if (cmd->redir->outfile)
 	{
 		free(cmd->redir->outfile);
 		cmd->redir->outfile = NULL;
@@ -62,11 +59,8 @@ static void	output_replace(t_all *all, t_cmd *cmd)
 	{
 		if (cmd->redir->outfile)
 			return (free(addr));
-		cmd->redir->outfile = addr;
-		cmd->redir->out_type = 'r';
-		return ;
 	}
-	if (cmd->redir->outfile)
+	else if (cmd->redir->outfile)
 	{
 		free(cmd->redir->outfile);
 		cmd->redir->outfile = NULL;
