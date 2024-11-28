@@ -67,9 +67,6 @@ static	void	_exec_child(t_all *all, t_msh *msh, t_cmd *cmd, t_pos pos)
 			exit(msh->exit);
 		}
 		fds(all);
-		printf("%s\n", msh->data->path);
-		printf("%s\n", msh->data->argv[0]);
-		printf("%s\n", msh->data->envp[0]);
 		if (execve(msh->data->path, msh->data->argv, msh->data->envp) == -1)
 			exec_fail(all, msh, cmd);
 	}

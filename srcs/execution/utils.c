@@ -22,8 +22,6 @@ static	int	check_slash(char *str)
 	return (0);
 }
 
-
-
 int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 {
 	if (!tstrcmp(cmd->name, "."))
@@ -37,7 +35,8 @@ int	cmd_check(t_all *all, t_msh *msh, t_cmd *cmd)
 		return (0);
 	if (check_slash(cmd->name))
 	{
-		if (access(cmd->name, F_OK)) {
+		if (access(cmd->name, F_OK))
+		{
 			msh->exit = 127;
 			err_msg(cmd->name, "No such file or directory", NULL);
 			return (0);

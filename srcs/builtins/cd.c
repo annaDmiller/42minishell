@@ -101,7 +101,7 @@ static	void	reset_oldpwd(t_msh *msh)
 int	wave(t_msh *msh, char *str)
 {
 	char	*path;
-	
+
 	if (!msh->home)
 	{
 		putstderr("cd: Couldn't retrieve home path\n");
